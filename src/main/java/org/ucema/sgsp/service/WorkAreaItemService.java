@@ -27,9 +27,11 @@ public class WorkAreaItemService {
 	}
 
 	@Transactional
-	public void saveOrUpdate(WorkAreaItemDTO workAreaItem) {
-		workAreaItemDAO.save(workAreaItemTransformation
+	public WorkAreaItemDTO saveOrUpdate(WorkAreaItemDTO workAreaItem) {
+		WorkAreaItem response = workAreaItemDAO.save(workAreaItemTransformation
 				.transformToModel(workAreaItem));
+		workAreaItem.setId(response.getId());
+		return workAreaItem;
 	}
 
 	@Transactional

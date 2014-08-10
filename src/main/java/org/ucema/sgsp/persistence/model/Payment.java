@@ -28,6 +28,15 @@ public class Payment {
     @Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
+	public Payment(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public Payment() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}

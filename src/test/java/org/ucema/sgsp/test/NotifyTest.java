@@ -13,7 +13,7 @@ public class NotifyTest extends BaseTest {
 	private NotifyService notifyService;
 	
 	@Test
-	public void insertAndVerifyUser() {
+	public void insertAndVerifyNotify() {
 		
 		Long id = null;
 		Long orderId = null;

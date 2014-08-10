@@ -26,8 +26,10 @@ public class QuoteService {
 	}
 
 	@Transactional
-	public void saveOrUpdate(QuoteDTO quote) {
-		quoteDAO.save(quoteTransformation.transformToModel(quote));
+	public QuoteDTO saveOrUpdate(QuoteDTO quote) {
+		Quote response = quoteDAO.save(quoteTransformation.transformToModel(quote));
+		quote.setId(response.getId());
+		return quote;
 	}
 
 	@Transactional

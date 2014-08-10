@@ -15,7 +15,7 @@ public class OrderTest extends BaseTest {
 	private OrderService orderService;
 
 	@Test
-	public void insertAndVerifyUser() {
+	public void insertAndVerifyOrder() {
 		
 		Long id = null;
 		Long userId = null;

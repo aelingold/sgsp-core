@@ -9,7 +9,20 @@ public class WorkAreaDTO implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
-	private List<WorkAreaItemDTO> workAreaItems;
+	private List<Long> workAreaItemIds;
+
+	public WorkAreaDTO(Long id, String name, String description,
+			List<Long> workAreaItemIds) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.workAreaItemIds = workAreaItemIds;
+	}
+
+	public WorkAreaDTO() {
+		super();
+	}
 
 	public Long getId() {
 		return id;
@@ -35,12 +48,12 @@ public class WorkAreaDTO implements Serializable {
 		this.description = description;
 	}
 
-	public List<WorkAreaItemDTO> getWorkAreaItems() {
-		return workAreaItems;
+	public List<Long> getWorkAreaItemIds() {
+		return workAreaItemIds;
 	}
 
-	public void setWorkAreaItems(List<WorkAreaItemDTO> workAreaItems) {
-		this.workAreaItems = workAreaItems;
+	public void setWorkAreaItemIds(List<Long> workAreaItemIds) {
+		this.workAreaItemIds = workAreaItemIds;
 	}
 
 	@Override
@@ -52,8 +65,8 @@ public class WorkAreaDTO implements Serializable {
 		builder.append(name);
 		builder.append(", description=");
 		builder.append(description);
-		builder.append(", workAreaItems=");
-		builder.append(workAreaItems);
+		builder.append(", workAreaItemIds=");
+		builder.append(workAreaItemIds);
 		builder.append("]");
 		return builder.toString();
 	}

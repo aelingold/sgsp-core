@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.persistence.model.WorkArea;
+import org.ucema.sgsp.persistence.model.WorkAreaItem;
 
 @Component
 public class WorkAreaTransformation {
@@ -41,11 +42,20 @@ public class WorkAreaTransformation {
 		result.setDescription(workArea.getDescription());
 		result.setName(workArea.getName());
 		if (workArea.getWorkAreaItems() != null) {
-			result.setWorkAreaItems(workAreaItemTransformation
-					.transformToApi(workArea.getWorkAreaItems()));
+			result.setWorkAreaItemIds(getWorkAreaItemIds(workArea.getWorkAreaItems()));
 		}
 
 		return result;
+	}
+	
+	private List<Long> getWorkAreaItemIds(List<WorkAreaItem> workAreaItems){
+		List<Long> response = new ArrayList<Long>();
+		
+		for (WorkAreaItem workAreaItem : workAreaItems) {
+			response.add(workAreaItem.getId());
+		}
+		
+		return response;
 	}
 
 	public WorkArea transformToModel(WorkAreaDTO workArea) {
@@ -54,11 +64,20 @@ public class WorkAreaTransformation {
 		result.setId(workArea.getId());
 		result.setDescription(workArea.getDescription());
 		result.setName(workArea.getName());
-		if (workArea.getWorkAreaItems() != null) {
-			result.setWorkAreaItems(workAreaItemTransformation
-					.transformToModel(workArea.getWorkAreaItems()));
+		if (workArea.getWorkAreaItemIds() != null) {
+			result.setWorkAreaItems(getWorkAreaItems(workArea.getWorkAreaItemIds()));
 		}
 
 		return result;
 	}
+	
+	private List<WorkAreaItem> getWorkAreaItems(List<Long> workAreaItemIds){
+		List<WorkAreaItem> response = new ArrayList<WorkAreaItem>();
+		
+		for (Long workAreaItemId : workAreaItemIds) {
+			response.add(new WorkAreaItem(workAreaItemId));
+		}
+		
+		return response;
+	}	
 }

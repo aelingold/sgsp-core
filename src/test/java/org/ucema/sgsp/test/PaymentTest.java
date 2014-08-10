@@ -13,7 +13,7 @@ public class PaymentTest extends BaseTest {
 	private PaymentService paymentService;
 	
 	@Test
-	public void insertAndVerifyUser() {
+	public void insertAndVerifyPayment() {
 		
 		Long id = null;
 		String type = "DEPOSIT";

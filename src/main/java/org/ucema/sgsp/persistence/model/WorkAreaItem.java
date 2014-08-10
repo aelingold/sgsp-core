@@ -34,6 +34,15 @@ public class WorkAreaItem {
     @Column(name="is_enabled")
 	private Boolean isEnabled;
 
+	public WorkAreaItem(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public WorkAreaItem() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}

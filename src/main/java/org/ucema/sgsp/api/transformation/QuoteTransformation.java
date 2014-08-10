@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.QuoteDTO;
+import org.ucema.sgsp.persistence.model.Order;
 import org.ucema.sgsp.persistence.model.Quote;
+import org.ucema.sgsp.security.model.User;
 
 @Component
 public class QuoteTransformation {
@@ -43,10 +45,10 @@ public class QuoteTransformation {
 		result.setAmount(quote.getAmount());
 		result.setDescription(quote.getDescription());
 		if (quote.getOrder() != null) {
-			result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
+			result.setOrderId(quote.getOrder().getId());
 		}
 		if (quote.getUser() != null) {
-			result.setUser(userTransformation.transformToApi(quote.getUser()));
+			result.setUserId(quote.getUser().getId());
 		}
 
 		return result;
@@ -58,12 +60,11 @@ public class QuoteTransformation {
 		result.setId(quote.getId());
 		result.setAmount(quote.getAmount());
 		result.setDescription(quote.getDescription());
-		if (quote.getOrder() != null) {
-			result.setOrder(orderTransformation.transformToModel(quote
-					.getOrder()));
+		if (quote.getOrderId() != null) {
+			result.setOrder(new Order(quote.getOrderId()));
 		}
-		if (quote.getUser() != null) {
-			result.setUser(userTransformation.transformToModel(quote.getUser()));
+		if (quote.getUserId() != null) {
+			result.setUser(new User(quote.getUserId()));
 		}
 
 		return result;
