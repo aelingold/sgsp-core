@@ -55,17 +55,17 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
         return exceptionResolver;
     }    
     
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-// 
-//        viewResolver.setViewClass(JstlView.class);
-//        viewResolver.setPrefix("/WEB-INF/jsp/");
-//        viewResolver.setSuffix(".jsp");
-//        viewResolver.setOrder(0);
-// 
-//        return viewResolver;
-//    }
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+ 
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/jsp/");
+        viewResolver.setSuffix(".jsp");
+        viewResolver.setOrder(2);
+ 
+        return viewResolver;
+    }
     
     @Bean
     public ViewResolver freemarkerViewResolver() {
