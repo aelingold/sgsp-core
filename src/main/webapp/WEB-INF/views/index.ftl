@@ -1,3 +1,4 @@
+<#assign c=JspTaglibs["http://java.sun.com/jsp/jstl/core"]/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +13,10 @@
     <title>Servihome - Tu casa en orden</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="${pageContext.request.contextPath}/static/new/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<@c.url value='/static/new/css/bootstrap.min.css'/>" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath}/static/new/css/agency.css" rel="stylesheet">
+    <link href="<@c.url value='/static/new/css/agency.css'/>" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -354,22 +355,22 @@
     </div>
 
     <!-- jQuery Version 1.11.0 -->
-    <script src="${pageContext.request.contextPath}/static/new/js/jquery-1.11.0.js"></script>
+    <script src="<@c.url value='/static/new/js/jquery-1.11.0.js'/>"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/new/js/classie.js"></script>
-    <script src="${pageContext.request.contextPath}/static/new/js/cbpAnimatedHeader.js"></script>
+    <script src="<@c.url value='/static/new/js/classie.js'/>"></script>
+    <script src="<@c.url value='/static/new/js/cbpAnimatedHeader.js'/>"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/new/js/jqBootstrapValidation.js"></script>
-    <script src="${pageContext.request.contextPath}/static/new/js/contact_me.js"></script>
+    <script src="<@c.url value='/static/new/js/jqBootstrapValidation.js'/>"></script>
+    <script src="<@c.url value='/static/new/js/contact_me.js'/>"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/new/js/agency.js"></script>
+    <script src="<@c.url value='/static/new/js/agency.js'/>"></script>
 
 </body>
 
