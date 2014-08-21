@@ -67,8 +67,10 @@
                         <a class="page-scroll" href="#contact">Contacto</a>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-danger">Registrarme</button>
-                        <button type="button" class="btn btn-info">Ingresar</button>                        
+                    	<div>
+	                        <a href="register" class="button btn btn-danger">Registrarme</a>
+	                        <a href="login" class="button btn btn-info">Ingresar</a>
+                        </div>                        
                     </li>
                 </ul>
             </div>

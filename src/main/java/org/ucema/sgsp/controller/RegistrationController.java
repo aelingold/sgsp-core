@@ -58,6 +58,20 @@ public class RegistrationController {
 
         return VIEW_NAME_REGISTRATION_PAGE;
     }
+    
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String showUserRegistrationForm(WebRequest request, Model model) {
+        LOGGER.debug("Rendering registration page.");
+
+        Connection<?> connection = ProviderSignInUtils.getConnection(request);
+
+        RegistrationForm registration = createRegistrationDTO(connection);
+        LOGGER.debug("Rendering registration form with information: {}", registration);
+
+        model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
+
+        return "registration";
+    }
 
     /**
      * Creates the form object used in the registration form.
