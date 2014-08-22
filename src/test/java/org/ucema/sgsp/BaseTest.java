@@ -17,6 +17,6 @@ import org.ucema.sgsp.security.persistence.SocialContext;
 @WebAppConfiguration
 @TransactionConfiguration
 @Transactional
-public class BaseTest {
+public abstract class BaseTest {
 
 }
