@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
-import org.ucema.sgsp.registration.dto.RegistrationForm;
-import org.ucema.sgsp.registration.service.UserService;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.security.util.SecurityUtil;
+import org.ucema.sgsp.service.UserService;
 
 @Controller
 @SessionAttributes("user")
@@ -33,7 +33,7 @@ public class RegistrationController {
 
     protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
-    protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/registrationForm";
+    protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/RegistrationDTO";
 
     private UserService service;
 
@@ -46,12 +46,12 @@ public class RegistrationController {
      * Renders the registration page.
      */
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
+    public String showRegistrationDTO(WebRequest request, Model model) {
         LOGGER.debug("Rendering registration page.");
 
         Connection<?> connection = ProviderSignInUtils.getConnection(request);
 
-        RegistrationForm registration = createRegistrationDTO(connection);
+        RegistrationDTO registration = createRegistrationDTO(connection);
         LOGGER.debug("Rendering registration form with information: {}", registration);
 
         model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
@@ -60,12 +60,12 @@ public class RegistrationController {
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String showUserRegistrationForm(WebRequest request, Model model) {
+    public String showUserRegistrationDTO(WebRequest request, Model model) {
         LOGGER.debug("Rendering registration page.");
 
         Connection<?> connection = ProviderSignInUtils.getConnection(request);
 
-        RegistrationForm registration = createRegistrationDTO(connection);
+        RegistrationDTO registration = createRegistrationDTO(connection);
         LOGGER.debug("Rendering registration form with information: {}", registration);
 
         model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
@@ -80,8 +80,8 @@ public class RegistrationController {
      *          object populated by the values given by the provider. Otherwise this method returns
      *          an empty form object (normal form registration).
      */
-    private RegistrationForm createRegistrationDTO(Connection<?> connection) {
-        RegistrationForm dto = new RegistrationForm();
+    private RegistrationDTO createRegistrationDTO(Connection<?> connection) {
+        RegistrationDTO dto = new RegistrationDTO();
 
         if (connection != null) {
             UserProfile socialMediaProfile = connection.fetchUserProfile();
@@ -100,7 +100,7 @@ public class RegistrationController {
      * Processes the form submissions of the registration form.
      */
     @RequestMapping(value ="/user/register", method = RequestMethod.POST)
-    public String registerUserAccount(@Valid @ModelAttribute("user") RegistrationForm userAccountData,
+    public String registerUserAccount(@Valid @ModelAttribute("user") RegistrationDTO userAccountData,
                                       BindingResult result,
                                       WebRequest request) throws DuplicateEmailException {
         LOGGER.debug("Registering user account with information: {}", userAccountData);
@@ -136,7 +136,7 @@ public class RegistrationController {
      * Creates a new user account by calling the service method. If the email address is found
      * from the database, this method adds a field error to the email field of the form object.
      */
-    private User createUserAccount(RegistrationForm userAccountData, BindingResult result) {
+    private User createUserAccount(RegistrationDTO userAccountData, BindingResult result) {
         LOGGER.debug("Creating user account with information: {}", userAccountData);
         User registered = null;
 
@@ -147,7 +147,7 @@ public class RegistrationController {
             LOGGER.debug("An email address: {} exists.", userAccountData.getEmail());
             addFieldError(
                     MODEL_NAME_REGISTRATION_DTO,
-                    RegistrationForm.FIELD_NAME_EMAIL,
+                    RegistrationDTO.FIELD_NAME_EMAIL,
                     userAccountData.getEmail(),
                     ERROR_CODE_EMAIL_EXIST,
                     result);

@@ -1,8 +1,9 @@
-package org.ucema.sgsp.registration.dto;
+package org.ucema.sgsp.api.dto;
+
+import java.util.List;
 
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.ucema.sgsp.common.validator.PasswordsNotEmpty;
@@ -21,7 +22,7 @@ import org.ucema.sgsp.security.model.SocialMediaService;
         passwordFieldName = "password",
         passwordVerificationFieldName = "passwordVerification"
 )
-public class RegistrationForm {
+public class RegistrationDTO {
 
     public static final String FIELD_NAME_EMAIL = "email";
 
@@ -37,6 +38,14 @@ public class RegistrationForm {
     @NotEmpty
     @Size(max = 100)
     private String lastName;
+    
+    @Size(max = 100)
+    private String telephone;
+    
+    @NotEmpty
+    private UserTypeDTO userType;
+    
+    private List<Long> workAreaIds;
 
     private String password;
 
@@ -44,7 +53,7 @@ public class RegistrationForm {
 
     private SocialMediaService signInProvider;
 
-    public RegistrationForm() {
+    public RegistrationDTO() {
 
     }
 
@@ -104,13 +113,27 @@ public class RegistrationForm {
         this.signInProvider = signInProvider;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("email", email)
-                .append("firstName", firstName)
-                .append("lastName", lastName)
-                .append("signInProvider", signInProvider)
-                .toString();
-    }
+	public List<Long> getWorkAreaIds() {
+		return workAreaIds;
+	}
+
+	public void setWorkAreaIds(List<Long> workAreaIds) {
+		this.workAreaIds = workAreaIds;
+	}
+
+	public UserTypeDTO getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserTypeDTO userType) {
+		this.userType = userType;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 }

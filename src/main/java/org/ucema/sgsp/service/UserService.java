@@ -1,15 +1,15 @@
-package org.ucema.sgsp.registration.service;
+package org.ucema.sgsp.service;
 
 import java.util.List;
 
+import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
-import org.ucema.sgsp.registration.dto.RegistrationForm;
 import org.ucema.sgsp.security.model.User;
 
 public interface UserService {
 	 
-    public User registerNewUserAccount(RegistrationForm userAccountData) throws DuplicateEmailException;
+    public User registerNewUserAccount(RegistrationDTO userAccountData) throws DuplicateEmailException;
     
     public List<UserDTO> list();
     

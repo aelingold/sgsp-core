@@ -127,7 +127,7 @@
                         <div class="row pro-field">
                             <div class="form-group col-lg-4">
                                 <label>Teléfono</label>
-	                        	<input type="text" name="phone" class="form-control">
+	                        	<input type="text" name="telephone" class="form-control">
                             </div>
                         </div>
                         

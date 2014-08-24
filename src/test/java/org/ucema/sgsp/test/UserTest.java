@@ -9,8 +9,8 @@ import org.ucema.sgsp.BaseTest;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
-import org.ucema.sgsp.registration.service.UserService;
 import org.ucema.sgsp.security.model.Role;
+import org.ucema.sgsp.service.UserService;
 
 public class UserTest extends BaseTest {
 

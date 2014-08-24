@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -48,12 +49,16 @@ public class User extends BaseEntity<Long> {
 	private String telephone;
 	
 	@OneToMany
-	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area"))
+    @JoinTable(
+            name="user_work_areas",
+            joinColumns = @JoinColumn( name="user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user_id")),
+            inverseJoinColumns = @JoinColumn( name="work_area_id", foreignKey = @ForeignKey(name = "fk_user_work_area_work_area_id"))
+    )	
 	private List<WorkArea> workAreas;
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
 	@Column(name = "is_professional")
-	private Boolean isProfessional;	
+	private boolean isProfessional;	
 
     public User() {
     }
@@ -152,7 +157,7 @@ public class User extends BaseEntity<Long> {
 		this.userWorkRates = userWorkRates;
 	}
 
-	public void setIsProfessional(Boolean isProfessional) {
+	public void setIsProfessional(boolean isProfessional) {
 		this.isProfessional = isProfessional;
 	}
 
@@ -222,7 +227,12 @@ public class User extends BaseEntity<Long> {
         public Builder telephone(String telephone) {
             user.telephone = telephone;
             return this;
-        }      
+        } 
+        
+        public Builder professional(boolean isProfessional) {
+            user.isProfessional = isProfessional;
+            return this;
+        }        
         
         public Builder workAreas(List<WorkArea> workAreas) {
             user.workAreas = workAreas;

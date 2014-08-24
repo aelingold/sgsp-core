@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.ucema.sgsp.api.dto.UserDTO;
-import org.ucema.sgsp.registration.service.UserService;
+import org.ucema.sgsp.service.UserService;
 
 @Controller
 public class UserController {
