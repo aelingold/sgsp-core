@@ -2,6 +2,7 @@ package org.ucema.sgsp.api.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -42,7 +43,7 @@ public class RegistrationDTO {
     @Size(max = 100)
     private String telephone;
     
-    @NotEmpty
+    @NotNull
     private UserTypeDTO userType;
     
     private List<Long> workAreaIds;

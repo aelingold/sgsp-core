@@ -87,7 +87,8 @@
                     <h2 class="section-heading">Registración</h2>                    
                 </div>
                 <div class="col-lg-12">                	
-                	<form action="/user/register" method="POST" enctype="utf8">
+                	<form action="/register" method="POST" enctype="utf8">
+                		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 		<input type="radio" name="userType" value="user" checked> Usuario
                 		<input type="radio" name="userType" value="professional"> Profesional
                 	

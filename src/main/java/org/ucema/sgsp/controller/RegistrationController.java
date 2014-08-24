@@ -33,7 +33,7 @@ public class RegistrationController {
 
     protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
-    protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/RegistrationDTO";
+    protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
 
     private UserService service;
 
@@ -99,7 +99,7 @@ public class RegistrationController {
     /**
      * Processes the form submissions of the registration form.
      */
-    @RequestMapping(value ="/user/register", method = RequestMethod.POST)
+    @RequestMapping(value ="/register", method = RequestMethod.POST)
     public String registerUserAccount(@Valid @ModelAttribute("user") RegistrationDTO userAccountData,
                                       BindingResult result,
                                       WebRequest request) throws DuplicateEmailException {
