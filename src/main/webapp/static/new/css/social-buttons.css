@@ -1,0 +1,21 @@
+.fb-button{
+	background-color: #1a60ab;
+	height: 60px;
+	border-radius: 5px;	
+	text-align: center;
+	position: relative;
+}
+.fb-button img{
+	height: 100%;
+	width: auto;
+	border-radius: 5px;
+	display: inline-block;
+	position: absolute;
+	left: 0px;
+}
+.fb-button span{
+	color: #fff;
+	font-size: 18px;
+	margin-top: 17px;
+	display: inline-block;
+}

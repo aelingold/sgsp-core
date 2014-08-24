@@ -14,6 +14,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="<@c.url value='/static/new/css/bootstrap.min.css'/>" rel="stylesheet">
+    
+    <link href="<@c.url value='/static/new/css/login.css'/>" rel="stylesheet">
+    <link href="<@c.url value='/static/new/css/social-buttons.css'/>" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<@c.url value='/static/new/css/agency.css'/>" rel="stylesheet">
@@ -58,12 +61,6 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Servicios</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#team">Team</a>
-                    </li>
-                    <li>
                         <a class="page-scroll" href="#contact">Contacto</a>
                     </li>
                     <li>
@@ -83,75 +80,36 @@
     <section id="services" style="margin-top: 120px;">
         <div class="container no-top-border-radius">
             <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="section-heading">Registración</h2>                    
-                </div>
-                <div class="col-lg-12">                	
-                	<form action="/register" method="POST" enctype="utf8">
-                		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                		<input type="radio" name="userType" value="user" checked> Usuario
-                		<input type="radio" name="userType" value="professional"> Profesional
-                	
-                		<h3 class="text-muted">Ingresá estos datos y empezá a resolver tus problemas.</h3>
-                	
-	                    <div class="row">
-	                        <div class="form-group col-lg-4">
-	                        	<label>Nombre</label>
-	                        	<input type="text" name="firstName" class="form-control">
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="form-group col-lg-4">
-	                            <label>Apellido</label>
-	                        	<input type="text" name="lastName" class="form-control">
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="form-group col-lg-4">
-	                            <label>Email</label>
-	                        	<input type="text" name="email" class="form-control">
-	                        </div>
-	                    </div>	                    
-                        <div class="row">
-                            <div class="form-group col-lg-4">
-                                <label>Contraseña</label>
-	                        	<input type="text" name="password" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-4">
-                                <label>Repetir contraseña</label>
-	                        	<input type="text" name="passwordVerification" class="form-control">
-                            </div>
-                        </div>
-                        
-                        <div class="row pro-field">
-                            <div class="form-group col-lg-4">
-                                <label>Teléfono</label>
-	                        	<input type="text" name="telephone" class="form-control">
-                            </div>
-                        </div>
-                        
-                        <div class="row pro-field">
-                        	<div class="col-lg-12">
-                        		<label>Seleccione los rubros a los que se dedica</label>
-                        	</div>
-                            <div class="col-lg-12">                                
-                                <label>Linea Blanca</label>
-	                        	<input name="rubro-1" type="checkbox"> Heladera
-	                        	<input name="rubro-2" type="checkbox"> Microhondas	                        	
-                            </div>
-                        </div>
-          					                    
-	                    <button type="submit" class="btn btn-default">Registrarme</button>
-	                </form>
-               	</div>                
+                <div class="col-lg-6" style="border-right: 1px solid #ddd;">     
+			      <form action="/login" method="POST" enctype="utf8" class="form-signin">
+			      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			        <h2 class="form-signin-heading">Ingrese sus datos</h2>
+			        <input type="email" class="form-control" placeholder="Email" required="" autofocus="">
+			        <input type="password" class="form-control" placeholder="Contraseña" required="">
+			        <div class="checkbox">
+			          <label>
+			            <input type="checkbox" value="remember-me"> Recordarme
+			          </label>
+			        </div>
+			        <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+			      </form>
+               	</div>  
+           	 	<div class="col-lg-6">     
+           	 		<div class="social-column">
+           	 			<a href="">
+				      		<div class="fb-button">
+				      			<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
+				      			<span>Ingresar con facebook</span>
+				      		</div>
+				      	</a>
+		      		</div>
+           		</div>               
             </div>
         </div>
     </section>
 
 	<#include "footer.ftl">
-   
+
     <!-- jQuery Version 1.11.0 -->
     <script src="<@c.url value='/static/new/js/jquery-1.11.0.js'/>"></script>
 

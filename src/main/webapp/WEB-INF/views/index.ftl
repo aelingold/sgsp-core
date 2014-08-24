@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Servihome - Tu casa en orden</title>
+    <title>Sin Guía - Profesionales de confianza</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<@c.url value='/static/new/css/bootstrap.min.css'/>" rel="stylesheet">
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Servihome</a>
+                <a class="navbar-brand page-scroll" href="#page-top">Sin Guía</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -292,34 +292,8 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Servihome 2014</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline quicklinks">
-                        <li><a href="#">Política de privacidad</a>
-                        </li>
-                        <li><a href="#">Términos de uso</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+	<#include "footer.ftl">
+   
     <!-- Portfolio Modals -->
     <!-- Use the modals below to showcase details about your portfolio projects! -->
 
