@@ -1,3 +1,4 @@
+<#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <div class="container">
     <div class="header-shadow"></div>
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,15 +24,16 @@
             <li>
                 <a class="page-scroll" href="#contact">Contacto</a>
             </li>
-            <li>    
-            	<#if user?? && user.firstName??>
-               		<span class="login-name">Hola ${user.firstName}! (<a href="" style="text-transform: none;">Salir</a>)</span>
-               	<#else>
+            <li>
+            <@security.authorize access="isAuthenticated()">
+            <span class="login-name">Hola <@security.authentication property="principal.firstName"/> <@security.authentication property="principal.lastName"/> (<a href="/logout" style="text-transform: none;">Salir</a>)</span>
+            </@security.authorize>
+			<@security.authorize access="isAnonymous()">	
                		<div>
             			<a href="register" class="button btn btn-danger">Registrarme</a>
                     	<a href="login" class="button btn btn-info">Ingresar</a>
                 	</div>
-          	 	</#if>                  
+			</@security.authorize>                 
             </li>
         </ul>
     </div>
