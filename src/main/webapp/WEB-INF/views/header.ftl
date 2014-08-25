@@ -26,7 +26,7 @@
             </li>
             <li>
             <@security.authorize access="isAuthenticated()">
-            <span class="login-name">Hola <@security.authentication property="principal.firstName"/> <@security.authentication property="principal.lastName"/> (<a href="/logout" style="text-transform: none;">Salir</a>)</span>
+            <span class="login-name">Hola <@security.authentication property="principal.firstName"/> <@security.authentication property="principal.lastName"/> <form action="/logout" method="POST" name="logout"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>(<a href="javascript:logout.submit()" style="text-transform: none;">Salir</a>)</form></span>
             </@security.authorize>
 			<@security.authorize access="isAnonymous()">	
                		<div>
