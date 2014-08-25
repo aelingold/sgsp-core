@@ -8,6 +8,7 @@
 	<description>SGSP</description>
 	<packaging>war</packaging>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<hibernate.validator.version>5.1.1.Final</hibernate.validator.version>
 		<mysql.connector.version>5.1.30</mysql.connector.version>
@@ -308,6 +309,14 @@
 				<version>2.4</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
 		</plugins>

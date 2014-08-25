@@ -74,6 +74,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
       resolver.setPrefix("");
       resolver.setSuffix(".ftl");
       resolver.setOrder(1);
+      resolver.setContentType("text/html;charset=UTF-8");
       return resolver;
     }
 
@@ -81,6 +82,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
     public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {      
       FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
       configurer.setTemplateLoaderPaths("/WEB-INF/views/","classpath:/WEB-INF/views/");
+      configurer.setDefaultEncoding("UTF-8");
       return configurer;      
     }    
 }
