@@ -106,7 +106,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6 item-service">
                     <a href="" class="service-link">
-                        <img src="img/portfolio/roundicons.png" class="img-responsive" alt="">
+                        <img src="<@c.url value='/static/new/img/portfolio/roundicons.png'/>" class="img-responsive" alt="">
                         <div class="service-caption">
                             <h4>Round Icons</h4>
                         </div>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 item-service">
                     <a href="" class="service-link">
-                        <img src="img/portfolio/startup-framework.png" class="img-responsive" alt="">
+                        <img src="<@c.url value='/static/new/img/portfolio/startup-framework.png'/>" class="img-responsive" alt="">
                         <div class="service-caption">
                             <h4>Round Icons</h4>
                         </div>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 item-service">
                     <a href="" class="service-link">
-                        <img src="img/portfolio/treehouse.png" class="img-responsive" alt="">
+                        <img src="<@c.url value='/static/new/img/portfolio/treehouse.png'/>" class="img-responsive" alt="">
                         <div class="service-caption">
                             <h4>Round Icons</h4>
                         </div>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 item-service">
                     <a href="" class="service-link">
-                        <img src="img/portfolio/golden.png" class="img-responsive" alt="">
+                        <img src="<@c.url value='/static/new/img/portfolio/golden.png'/>" class="img-responsive" alt="">
                         <div class="service-caption">
                             <h4>Round Icons</h4>
                         </div>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 item-service">
                     <a href="" class="service-link">
-                        <img src="img/portfolio/escape.png" class="img-responsive" alt="">
+                        <img src="<@c.url value='/static/new/img/portfolio/escape.png'/>" class="img-responsive" alt="">
                         <div class="service-caption">
                             <h4>Round Icons</h4>
                         </div>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 item-service">
                     <a href="" class="service-link">
-                        <img src="img/portfolio/dreams.png" class="img-responsive" alt="">
+                        <img src="<@c.url value='/static/new/img/portfolio/dreams.png'/>" class="img-responsive" alt="">
                         <div class="service-caption">
                             <h4>Round Icons</h4>
                         </div>
@@ -168,7 +168,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="team-member">
-                        <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
+                        <img src="<@c.url value='/static/new/img/team/1.jpg'/>" class="img-responsive img-circle" alt="">
                         <h4>Kay Garland</h4>
                         <p class="text-muted">Lead Designer</p>
                         <ul class="list-inline social-buttons">
@@ -183,7 +183,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="team-member">
-                        <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
+                        <img src="<@c.url value='/static/new/img/team/2.jpg'/>" class="img-responsive img-circle" alt="">
                         <h4>Larry Parker</h4>
                         <p class="text-muted">Lead Marketer</p>
                         <ul class="list-inline social-buttons">
@@ -198,7 +198,8 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="team-member">
-                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                    
+                        <img src="<@c.url value='/static/new/img/team/3.jpg'/>" class="img-responsive img-circle" alt="">
                         <h4>Diana Pertersen</h4>
                         <p class="text-muted">Lead Developer</p>
                         <ul class="list-inline social-buttons">
@@ -226,22 +227,22 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/envato.jpg" class="img-responsive img-centered" alt="">
+                        <img src="<@c.url value='/static/new/img/logos/envato.jpg'/>" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/designmodo.jpg" class="img-responsive img-centered" alt="">
+                        <img src="<@c.url value='/static/new/img/logos/designmodo.jpg'/>" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/themeforest.jpg" class="img-responsive img-centered" alt="">
+                        <img src="<@c.url value='/static/new/img/logos/themeforest.jpg'/>" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/creative-market.jpg" class="img-responsive img-centered" alt="">
+                        <img src="<@c.url value='/static/new/img/logos/creative-market.jpg'/>" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
             </div>
@@ -313,7 +314,7 @@
                             <!-- Project Details Go Here -->
                             <h2>Project Name</h2>
                             <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                            <img class="img-responsive" src="img/portfolio/roundicons-free.png" alt="">
+                            <img class="img-responsive" src="<@c.url value='/static/new/img/portfolio/roundicons-free.png'/>" alt="">
                             <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
                             <p>
                                 <strong>Want these icons in this portfolio item sample?</strong>You can download 60 of them for free, courtesy of <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">RoundIcons.com</a>, or you can purchase the 1500 icon set <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">here</a>.</p>
