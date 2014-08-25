@@ -943,3 +943,9 @@ body {
 .text-align-left{
 	text-align: left;
 }
+
+.login-name{
+	color: #fff;
+	margin-top: 15px;
+	display: inline-block;
+}
