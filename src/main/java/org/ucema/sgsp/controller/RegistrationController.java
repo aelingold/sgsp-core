@@ -36,6 +36,8 @@ public class RegistrationController {
     protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
 
     private UserService service;
+    
+    private final ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
 
     @Autowired
     public RegistrationController(UserService service) {
@@ -49,7 +51,7 @@ public class RegistrationController {
     public String showRegistrationDTO(WebRequest request, Model model) {
         LOGGER.debug("Rendering registration page.");
 
-        Connection<?> connection = ProviderSignInUtils.getConnection(request);
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 
         RegistrationDTO registration = createRegistrationDTO(connection);
         LOGGER.debug("Rendering registration form with information: {}", registration);
@@ -63,7 +65,7 @@ public class RegistrationController {
     public String showUserRegistrationDTO(WebRequest request, Model model) {
         LOGGER.debug("Rendering registration page.");
 
-        Connection<?> connection = ProviderSignInUtils.getConnection(request);
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 
         RegistrationDTO registration = createRegistrationDTO(connection);
         LOGGER.debug("Rendering registration form with information: {}", registration);
@@ -127,7 +129,7 @@ public class RegistrationController {
         //If the user is signing in by using a social provider, this method call stores
         //the connection to the UserConnection table. Otherwise, this method does not
         //do anything.
-        ProviderSignInUtils.handlePostSignUp(registered.getEmail(), request);
+        providerSignInUtils.doPostSignUp(registered.getEmail(), request);
 
         return "redirect:/";
     }
