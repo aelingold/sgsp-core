@@ -1,6 +1,7 @@
 package org.ucema.sgsp.config;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import freemarker.template.TemplateException;
+import freemarker.template.utility.XmlEscape;
 
 @Configuration
 @EnableWebMvc
@@ -83,6 +85,16 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
       FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
       configurer.setTemplateLoaderPaths("/WEB-INF/views/","classpath:/WEB-INF/views/");
       configurer.setDefaultEncoding("UTF-8");
+
+      Properties settings = new Properties();
+      settings.setProperty("number_format", "0.######");
+      settings.setProperty("auto_import", "spring.ftl as spring");
+      configurer.setFreemarkerSettings(settings);
+      Map<String, Object> variables = new java.util.HashMap<String, Object>();
+
+      variables.put("xml_escape", new XmlEscape());
+      configurer.setFreemarkerVariables(variables);
+      
       return configurer;      
     }    
 }

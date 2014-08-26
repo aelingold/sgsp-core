@@ -24,158 +24,169 @@ import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.security.util.SecurityUtil;
 import org.ucema.sgsp.service.UserService;
+import org.ucema.sgsp.service.WorkAreaService;
 
 @Controller
 @SessionAttributes("user")
 public class RegistrationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(RegistrationController.class);
 
-    protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
-    protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
-    protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
+	protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
+	protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
+	protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
 
-    private UserService service;
-    
-    private final ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
+	private UserService service;
+	private WorkAreaService workAreaService;
 
-    @Autowired
-    public RegistrationController(UserService service) {
-        this.service = service;
-    }
+	private final ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
 
-    /**
-     * Renders the registration page.
-     */
-    @RequestMapping(value = "/user/register", method = RequestMethod.GET)
-    public String showRegistrationDTO(WebRequest request, Model model) {
-        LOGGER.debug("Rendering registration page.");
+	@Autowired
+	public RegistrationController(UserService service,
+			WorkAreaService workAreaService) {
+		this.service = service;
+		this.workAreaService = workAreaService;
+	}
 
-        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+	/**
+	 * Renders the registration page.
+	 */
+	@RequestMapping(value = "/user/register", method = RequestMethod.GET)
+	public String showRegistrationDTO(WebRequest request, Model model) {
+		LOGGER.debug("Rendering registration page.");
 
-        RegistrationDTO registration = createRegistrationDTO(connection);
-        LOGGER.debug("Rendering registration form with information: {}", registration);
+		Connection<?> connection = providerSignInUtils
+				.getConnectionFromSession(request);
 
-        model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
+		RegistrationDTO registration = createRegistrationDTO(connection);
+		LOGGER.debug("Rendering registration form with information: {}",
+				registration);
 
-        return VIEW_NAME_REGISTRATION_PAGE;
-    }
-    
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String showUserRegistrationDTO(WebRequest request, Model model) {
-        LOGGER.debug("Rendering registration page.");
+		model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
 
-        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+		return VIEW_NAME_REGISTRATION_PAGE;
+	}
 
-        RegistrationDTO registration = createRegistrationDTO(connection);
-        LOGGER.debug("Rendering registration form with information: {}", registration);
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String showUserRegistrationDTO(WebRequest request, Model model) {
+		LOGGER.debug("Rendering registration page.");
 
-        model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
+		Connection<?> connection = providerSignInUtils
+				.getConnectionFromSession(request);
 
-        return "registration";
-    }
+		RegistrationDTO registration = createRegistrationDTO(connection);
+		LOGGER.debug("Rendering registration form with information: {}",
+				registration);
 
-    /**
-     * Creates the form object used in the registration form.
-     * @param connection
-     * @return  If a user is signing in by using a social provider, this method returns a form
-     *          object populated by the values given by the provider. Otherwise this method returns
-     *          an empty form object (normal form registration).
-     */
-    private RegistrationDTO createRegistrationDTO(Connection<?> connection) {
-        RegistrationDTO dto = new RegistrationDTO();
+		model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
+		
+		model.addAttribute("workAreas", workAreaService.list());
 
-        if (connection != null) {
-            UserProfile socialMediaProfile = connection.fetchUserProfile();
-            dto.setEmail(socialMediaProfile.getEmail());
-            dto.setFirstName(socialMediaProfile.getFirstName());
-            dto.setLastName(socialMediaProfile.getLastName());
+		return "registration";
+	}
 
-            ConnectionKey providerKey = connection.getKey();
-            dto.setSignInProvider(SocialMediaService.valueOf(providerKey.getProviderId().toUpperCase()));
-        }
+	/**
+	 * Creates the form object used in the registration form.
+	 * 
+	 * @param connection
+	 * @return If a user is signing in by using a social provider, this method
+	 *         returns a form object populated by the values given by the
+	 *         provider. Otherwise this method returns an empty form object
+	 *         (normal form registration).
+	 */
+	private RegistrationDTO createRegistrationDTO(Connection<?> connection) {
+		RegistrationDTO dto = new RegistrationDTO();
 
-        return dto;
-    }
+		if (connection != null) {
+			UserProfile socialMediaProfile = connection.fetchUserProfile();
+			dto.setEmail(socialMediaProfile.getEmail());
+			dto.setFirstName(socialMediaProfile.getFirstName());
+			dto.setLastName(socialMediaProfile.getLastName());
 
-    /**
-     * Processes the form submissions of the registration form.
-     */
-    @RequestMapping(value ="/register", method = RequestMethod.POST)
-    public String registerUserAccount(@Valid @ModelAttribute("user") RegistrationDTO userAccountData,
-                                      BindingResult result,
-                                      WebRequest request) throws DuplicateEmailException {
-        LOGGER.debug("Registering user account with information: {}", userAccountData);
-        if (result.hasErrors()) {
-            LOGGER.debug("Validation errors found. Rendering form view.");
-            return VIEW_NAME_REGISTRATION_PAGE;
-        }
+			ConnectionKey providerKey = connection.getKey();
+			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
+					.getProviderId().toUpperCase()));
+		}
 
-        LOGGER.debug("No validation errors found. Continuing registration process.");
+		return dto;
+	}
 
-        User registered = createUserAccount(userAccountData, result);
+	/**
+	 * Processes the form submissions of the registration form.
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registerUserAccount(
+			@Valid @ModelAttribute("user") RegistrationDTO userAccountData,
+			BindingResult result, WebRequest request)
+			throws DuplicateEmailException {
+		LOGGER.debug("Registering user account with information: {}",
+				userAccountData);
+		if (result.hasErrors()) {
+			LOGGER.debug("Validation errors found. Rendering form view.");
+			return VIEW_NAME_REGISTRATION_PAGE;
+		}
 
-        //If email address was already found from the database, render the form view.
-        if (registered == null) {
-            LOGGER.debug("An email address was found from the database. Rendering form view.");
-            return VIEW_NAME_REGISTRATION_PAGE;
-        }
+		LOGGER.debug("No validation errors found. Continuing registration process.");
 
-        LOGGER.debug("Registered user account with information: {}", registered);
+		User registered = createUserAccount(userAccountData, result);
 
-        //Logs the user in.
-        SecurityUtil.logInUser(registered);
-        LOGGER.debug("User {} has been signed in", registered);
-        //If the user is signing in by using a social provider, this method call stores
-        //the connection to the UserConnection table. Otherwise, this method does not
-        //do anything.
-        providerSignInUtils.doPostSignUp(registered.getEmail(), request);
+		// If email address was already found from the database, render the form
+		// view.
+		if (registered == null) {
+			LOGGER.debug("An email address was found from the database. Rendering form view.");
+			return VIEW_NAME_REGISTRATION_PAGE;
+		}
 
-        return "redirect:/";
-    }
+		LOGGER.debug("Registered user account with information: {}", registered);
 
-    /**
-     * Creates a new user account by calling the service method. If the email address is found
-     * from the database, this method adds a field error to the email field of the form object.
-     */
-    private User createUserAccount(RegistrationDTO userAccountData, BindingResult result) {
-        LOGGER.debug("Creating user account with information: {}", userAccountData);
-        User registered = null;
+		// Logs the user in.
+		SecurityUtil.logInUser(registered);
+		LOGGER.debug("User {} has been signed in", registered);
+		// If the user is signing in by using a social provider, this method
+		// call stores
+		// the connection to the UserConnection table. Otherwise, this method
+		// does not
+		// do anything.
+		providerSignInUtils.doPostSignUp(registered.getEmail(), request);
 
-        try {
-            registered = service.registerNewUserAccount(userAccountData);
-        }
-        catch (DuplicateEmailException ex) {
-            LOGGER.debug("An email address: {} exists.", userAccountData.getEmail());
-            addFieldError(
-                    MODEL_NAME_REGISTRATION_DTO,
-                    RegistrationDTO.FIELD_NAME_EMAIL,
-                    userAccountData.getEmail(),
-                    ERROR_CODE_EMAIL_EXIST,
-                    result);
-        }
+		return "redirect:/";
+	}
 
-        return registered;
-    }
+	/**
+	 * Creates a new user account by calling the service method. If the email
+	 * address is found from the database, this method adds a field error to the
+	 * email field of the form object.
+	 */
+	private User createUserAccount(RegistrationDTO userAccountData,
+			BindingResult result) {
+		LOGGER.debug("Creating user account with information: {}",
+				userAccountData);
+		User registered = null;
 
-    private void addFieldError(String objectName, String fieldName, String fieldValue,  String errorCode, BindingResult result) {
-        LOGGER.debug(
-                "Adding field error object's: {} field: {} with error code: {}",
-                objectName,
-                fieldName,
-                errorCode
-        );
-        FieldError error = new FieldError(
-                objectName,
-                fieldName,
-                fieldValue,
-                false,
-                new String[]{errorCode},
-                new Object[]{},
-                errorCode
-        );
+		try {
+			registered = service.registerNewUserAccount(userAccountData);
+		} catch (DuplicateEmailException ex) {
+			LOGGER.debug("An email address: {} exists.",
+					userAccountData.getEmail());
+			addFieldError(MODEL_NAME_REGISTRATION_DTO,
+					RegistrationDTO.FIELD_NAME_EMAIL,
+					userAccountData.getEmail(), ERROR_CODE_EMAIL_EXIST, result);
+		}
 
-        result.addError(error);
-        LOGGER.debug("Added field error: {} to binding result: {}", error, result);
-    }
+		return registered;
+	}
+
+	private void addFieldError(String objectName, String fieldName,
+			String fieldValue, String errorCode, BindingResult result) {
+		LOGGER.debug(
+				"Adding field error object's: {} field: {} with error code: {}",
+				objectName, fieldName, errorCode);
+		FieldError error = new FieldError(objectName, fieldName, fieldValue,
+				false, new String[] { errorCode }, new Object[] {}, errorCode);
+
+		result.addError(error);
+		LOGGER.debug("Added field error: {} to binding result: {}", error,
+				result);
+	}
 }

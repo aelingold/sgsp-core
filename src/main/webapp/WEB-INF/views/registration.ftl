@@ -99,9 +99,9 @@
                         		<label>Seleccione los rubros a los que se dedica</label>
                         	</div>
                             <div class="col-lg-12">                                
-                                <label>Linea Blanca</label>
-	                        	<input name="rubro-1" type="checkbox"> Heladera
-	                        	<input name="rubro-2" type="checkbox"> Microhondas	                        	
+                                <#list workAreas as workArea>
+                                	<input name="${workArea.id}" type="checkbox"> ${workArea.name}
+                                </#list>                        	
                             </div>
                         </div>
           					                    
