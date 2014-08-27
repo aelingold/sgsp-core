@@ -25,7 +25,8 @@ public class RepositoryUserService implements UserService {
 			.getLogger(RepositoryUserService.class);
 
 	private PasswordEncoder passwordEncoder;
-
+	@Autowired
+	private WorkAreaService workAreaService;
 	private UserRepository repository;
 
 	@Autowired
@@ -101,7 +102,19 @@ public class RepositoryUserService implements UserService {
 				.telephone(userAccountData.getTelephone())
 				.professional(
 						userAccountData.getUserType().equals(
-								UserTypeDTO.professional)).workAreas(buildWorkAreas(userAccountData.getWorkAreaIds()));
+								UserTypeDTO.professional));
+
+		if (userAccountData.getWorkAreaIds() != null
+				&& userAccountData.getWorkAreaIds().size() > 0) {
+			user = user.workAreas(buildWorkAreaIds(userAccountData
+					.getWorkAreaIds()));
+		}
+
+		if (userAccountData.getWorkAreaCodes() != null
+				&& userAccountData.getWorkAreaCodes().size() > 0) {
+			user = user.workAreas(buildWorkAreaCodes(userAccountData
+					.getWorkAreaCodes()));
+		}
 
 		if (userAccountData.isSocialSignIn()) {
 			user.signInProvider(userAccountData.getSignInProvider());
@@ -114,16 +127,34 @@ public class RepositoryUserService implements UserService {
 		return repository.save(registered);
 	}
 
-	private List<WorkArea> buildWorkAreas(List<Long> workAreaIds) {
+	private List<WorkArea> buildWorkAreaCodes(List<String> workAreaCodes) {
 
 		List<WorkArea> result = new ArrayList<WorkArea>();
-		
-		if (workAreaIds != null){
-			for (Long workAreaId : workAreaIds) {
-				result.add(new WorkArea(workAreaId));
+
+		if (workAreaCodes != null) {
+			for (String workAreaCode : workAreaCodes) {
+				if (workAreaCode != null) {
+					result.add(new WorkArea(workAreaService.findByCode(
+							workAreaCode).getId()));
+				}
 			}
 		}
-		
+
+		return result;
+	}
+
+	private List<WorkArea> buildWorkAreaIds(List<Long> workAreaIds) {
+
+		List<WorkArea> result = new ArrayList<WorkArea>();
+
+		if (workAreaIds != null) {
+			for (Long workAreaId : workAreaIds) {
+				if (workAreaId != null) {
+					result.add(new WorkArea(workAreaId));
+				}
+			}
+		}
+
 		return result;
 	}
 

@@ -100,7 +100,7 @@
                         	</div>
                             <div class="col-lg-12">                                
                                 <#list workAreas as workArea>
-                                	<input name="workAreaIds[${workArea_index}]" value="${workArea.id}" type="checkbox"> ${workArea.name}
+                                	<input name="workAreaCodes[${workArea_index}]" value="${workArea.code}" type="checkbox"> ${workArea.description}
                                 </#list>                        	
                             </div>
                         </div>

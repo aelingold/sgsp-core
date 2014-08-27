@@ -45,7 +45,9 @@ public class WorkAreaItemTransformation {
 		result.setGroupType(workAreaItem.getGroupType().name());
 		if (workAreaItem.getWorkArea() != null) {
 			result.setWorkAreaId(workAreaItem.getWorkArea().getId());
+			result.setWorkAreaCode(workAreaItem.getWorkArea().getCode());
 		}
+		result.setCode(workAreaItem.getCode());
 
 		return result;
 	}
@@ -59,6 +61,7 @@ public class WorkAreaItemTransformation {
 		if (workAreaItem.getWorkAreaId() != null) {
 			result.setWorkArea(new WorkArea(workAreaItem.getWorkAreaId()));
 		}
+		result.setCode(workAreaItem.getCode());
 
 		return result;
 	}

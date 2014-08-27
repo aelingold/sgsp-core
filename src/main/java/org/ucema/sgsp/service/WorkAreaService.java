@@ -53,5 +53,14 @@ public class WorkAreaService {
 			throw new RuntimeException("workArea not found");
 		}		
 		return workAreaTransformation.transformToApi(workArea);
-	}		
+	}
+	
+	@Transactional
+	public WorkAreaDTO findByCode(String code){
+		WorkArea workArea = workAreaDAO.findByCode(code);
+		if (workArea == null) {
+			throw new RuntimeException("workArea not found");
+		}		
+		return workAreaTransformation.transformToApi(workArea);		
+	}
 }

@@ -47,6 +47,8 @@ public class RegistrationDTO {
     private UserTypeDTO userType;
     
     private List<Long> workAreaIds;
+    
+    private List<String> workAreaCodes;
 
     private String password;
 
@@ -55,7 +57,6 @@ public class RegistrationDTO {
     private SocialMediaService signInProvider;
 
     public RegistrationDTO() {
-
     }
 
     public boolean isNormalRegistration() {
@@ -136,5 +137,13 @@ public class RegistrationDTO {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public List<String> getWorkAreaCodes() {
+		return workAreaCodes;
+	}
+
+	public void setWorkAreaCodes(List<String> workAreaCodes) {
+		this.workAreaCodes = workAreaCodes;
 	}
 }

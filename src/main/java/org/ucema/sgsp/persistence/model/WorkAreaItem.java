@@ -14,27 +14,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "work_area_items")
+@Table(name = "work_area_items", uniqueConstraints = @UniqueConstraint(name = "uq_work_area_item_code", columnNames = { "code" }))
 public class WorkAreaItem {
 
 	@Id
 	@GeneratedValue
 	private Long id;
+	private String code;
 	@Enumerated(EnumType.STRING)
 	private GroupType groupType;
 	private String description;
 	@ManyToOne
 	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_work_area_items_work_area"))
-	private WorkArea workArea;	
-    @Column(name="created_at")
-    @Temporal(TemporalType.TIMESTAMP)
+	private WorkArea workArea;
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
-    @Column(name="updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-    @Column(name="is_enabled")
+	@Column(name = "is_enabled")
 	private Boolean isEnabled;
 
 	public WorkAreaItem(Long id) {
@@ -100,5 +102,13 @@ public class WorkAreaItem {
 
 	public void setGroupType(GroupType groupType) {
 		this.groupType = groupType;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

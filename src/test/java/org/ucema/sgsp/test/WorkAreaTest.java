@@ -19,11 +19,14 @@ public class WorkAreaTest extends BaseTest {
 
 		Long id = null;
 		String description = "Description";
-		String name = "Name";
+		String code = "XXX";
 		List<Long> workAreaItemIds = null;
 
-		WorkAreaDTO response = workAreaService.saveOrUpdate(new WorkAreaDTO(id,
-				name, description, workAreaItemIds));
+		WorkAreaDTO workAreaDTO = WorkAreaDTO.newInstance().withCode(code)
+				.withDescription(description).withId(id)
+				.withWorkAreaItemIds(workAreaItemIds).build();
+
+		WorkAreaDTO response = workAreaService.saveOrUpdate(workAreaDTO);
 
 		WorkAreaDTO retrieved = workAreaService.get(response.getId());
 		Assert.assertNotNull(retrieved);

@@ -7,18 +7,51 @@ public class WorkAreaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String name;
+	private String code;
 	private String description;
 	private List<Long> workAreaItemIds;
+	private List<String> workAreaItemCodes;
 
-	public WorkAreaDTO(Long id, String name, String description,
-			List<Long> workAreaItemIds) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.workAreaItemIds = workAreaItemIds;
+	public static WorkAreaDTO newInstance() {
+		return new WorkAreaDTO();
 	}
+
+	public WorkAreaDTO build() {
+		WorkAreaDTO result = new WorkAreaDTO();
+
+		result.setId(id);
+		result.setDescription(description);
+		result.setWorkAreaItemIds(workAreaItemIds);
+		result.setCode(code);
+		result.setWorkAreaItemCodes(workAreaItemCodes);
+
+		return result;
+	}
+	
+	public WorkAreaDTO withId(Long id) {
+		this.id = id;
+		return this;
+	}
+	
+	public WorkAreaDTO withWorkAreaItemCodes(List<String> workAreaItemCodes) {
+		this.workAreaItemCodes = workAreaItemCodes;
+		return this;
+	}	
+	
+	public WorkAreaDTO withWorkAreaItemIds(List<Long> workAreaItemIds) {
+		this.workAreaItemIds = workAreaItemIds;
+		return this;
+	}		
+	
+	public WorkAreaDTO withCode(String code) {
+		this.code = code;
+		return this;
+	}	
+	
+	public WorkAreaDTO withDescription(String description) {
+		this.description = description;
+		return this;
+	}	
 
 	public WorkAreaDTO() {
 		super();
@@ -30,14 +63,6 @@ public class WorkAreaDTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDescription() {
@@ -56,18 +81,19 @@ public class WorkAreaDTO implements Serializable {
 		this.workAreaItemIds = workAreaItemIds;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("WorkAreaDTO [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", workAreaItemIds=");
-		builder.append(workAreaItemIds);
-		builder.append("]");
-		return builder.toString();
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public List<String> getWorkAreaItemCodes() {
+		return workAreaItemCodes;
+	}
+
+	public void setWorkAreaItemCodes(List<String> workAreaItemCodes) {
+		this.workAreaItemCodes = workAreaItemCodes;
 	}
 }

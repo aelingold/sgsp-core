@@ -11,25 +11,26 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "work_areas")
+@Table(name = "work_areas", uniqueConstraints = @UniqueConstraint(name = "uq_work_area_code", columnNames = { "code" }))
 public class WorkArea {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String name;
+	private String code;
 	private String description;
-	@OneToMany(mappedBy="workArea")
-	private List<WorkAreaItem> workAreaItems; 
-    @Column(name="created_at")
-    @Temporal(TemporalType.TIMESTAMP)
+	@OneToMany(mappedBy = "workArea")
+	private List<WorkAreaItem> workAreaItems;
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
-    @Column(name="updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-    @Column(name="is_enabled")
+	@Column(name = "is_enabled")
 	private Boolean isEnabled;
 
 	public WorkArea() {
@@ -47,14 +48,6 @@ public class WorkArea {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDescription() {
@@ -95,5 +88,13 @@ public class WorkArea {
 
 	public void setWorkAreaItems(List<WorkAreaItem> workAreaItems) {
 		this.workAreaItems = workAreaItems;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

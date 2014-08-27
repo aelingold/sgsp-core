@@ -40,14 +40,25 @@ public class WorkAreaTransformation {
 
 		result.setId(workArea.getId());
 		result.setDescription(workArea.getDescription());
-		result.setName(workArea.getName());
+		result.setCode(workArea.getCode());
 		if (workArea.getWorkAreaItems() != null) {
 			result.setWorkAreaItemIds(getWorkAreaItemIds(workArea.getWorkAreaItems()));
+			result.setWorkAreaItemCodes(getWorkAreaItemCodes(workArea.getWorkAreaItems()));
 		}
 
 		return result;
 	}
 	
+	private List<String> getWorkAreaItemCodes(List<WorkAreaItem> workAreaItems) {
+		List<String> response = new ArrayList<String>();
+		
+		for (WorkAreaItem workAreaItem : workAreaItems) {
+			response.add(workAreaItem.getCode());
+		}
+		
+		return response;
+	}
+
 	private List<Long> getWorkAreaItemIds(List<WorkAreaItem> workAreaItems){
 		List<Long> response = new ArrayList<Long>();
 		
@@ -63,7 +74,7 @@ public class WorkAreaTransformation {
 
 		result.setId(workArea.getId());
 		result.setDescription(workArea.getDescription());
-		result.setName(workArea.getName());
+		result.setCode(workArea.getCode());
 		if (workArea.getWorkAreaItemIds() != null) {
 			result.setWorkAreaItems(getWorkAreaItems(workArea.getWorkAreaItemIds()));
 		}

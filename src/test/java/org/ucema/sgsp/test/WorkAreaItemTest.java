@@ -17,12 +17,13 @@ public class WorkAreaItemTest extends BaseTest {
 
 		Long id = null;
 		String description = "Description";
+		String code = "XXX";
 		String groupType = "WORK";
 		Long workAreaId = null;
 
 		WorkAreaItemDTO workAreaItemDTO = WorkAreaItemDTO.newInstance()
 				.withDescription(description).withGroupType(groupType)
-				.withId(id).withWorkAreaId(workAreaId).build();
+				.withId(id).withWorkAreaId(workAreaId).withCode(code).build();
 
 		WorkAreaItemDTO response = workAreaItemService
 				.saveOrUpdate(workAreaItemDTO);

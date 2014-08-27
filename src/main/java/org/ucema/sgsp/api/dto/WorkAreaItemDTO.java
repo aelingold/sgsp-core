@@ -6,9 +6,11 @@ public class WorkAreaItemDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private String code;
 	private String groupType;
 	private String description;
 	private Long workAreaId;
+	private String workAreaCode;
 
 	public WorkAreaItemDTO() {
 		super();
@@ -25,9 +27,21 @@ public class WorkAreaItemDTO implements Serializable {
 		result.setGroupType(groupType);
 		result.setDescription(description);
 		result.setWorkAreaId(workAreaId);
+		result.setCode(code);
+		result.setWorkAreaCode(workAreaCode);
 
 		return result;
 	}
+	
+	public WorkAreaItemDTO withWorkAreaCode(String workAreaCode) {
+		this.workAreaCode = workAreaCode;
+		return this;
+	}	
+	
+	public WorkAreaItemDTO withCode(String code) {
+		this.code = code;
+		return this;
+	}	
 	
 	public WorkAreaItemDTO withDescription(String description) {
 		this.description = description;
@@ -79,5 +93,21 @@ public class WorkAreaItemDTO implements Serializable {
 
 	public void setGroupType(String groupType) {
 		this.groupType = groupType;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getWorkAreaCode() {
+		return workAreaCode;
+	}
+
+	public void setWorkAreaCode(String workAreaCode) {
+		this.workAreaCode = workAreaCode;
 	}
 }
