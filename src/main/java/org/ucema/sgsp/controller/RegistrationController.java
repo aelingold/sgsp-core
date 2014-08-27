@@ -49,25 +49,6 @@ public class RegistrationController {
 		this.workAreaService = workAreaService;
 	}
 
-	/**
-	 * Renders the registration page.
-	 */
-	@RequestMapping(value = "/user/register", method = RequestMethod.GET)
-	public String showRegistrationDTO(WebRequest request, Model model) {
-		LOGGER.debug("Rendering registration page.");
-
-		Connection<?> connection = providerSignInUtils
-				.getConnectionFromSession(request);
-
-		RegistrationDTO registration = createRegistrationDTO(connection);
-		LOGGER.debug("Rendering registration form with information: {}",
-				registration);
-
-		model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
-
-		return VIEW_NAME_REGISTRATION_PAGE;
-	}
-
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showUserRegistrationDTO(WebRequest request, Model model) {
 		LOGGER.debug("Rendering registration page.");
@@ -83,7 +64,7 @@ public class RegistrationController {
 		
 		model.addAttribute("workAreas", workAreaService.list());
 
-		return "registration";
+		return VIEW_NAME_REGISTRATION_PAGE;
 	}
 
 	/**
