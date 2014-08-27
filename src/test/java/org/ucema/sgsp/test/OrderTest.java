@@ -16,27 +16,32 @@ public class OrderTest extends BaseTest {
 
 	@Test
 	public void insertAndVerifyOrder() {
-		
+
 		Long id = null;
 		Long userId = null;
 		String title = "Title";
 		Long workAreaId = null;
 		String workDescription = "workDescription";
 		String workProblem = "workProblem";
+		String workDateType = "URGENT";
 		Date workDate = new Date();
 		String place = "place";
 		Boolean pendingNotify = true;
 		Boolean pendingQuotes = true;
 
-		OrderDTO order = new OrderDTO(id, userId, title, workAreaId,
-				workDescription, workProblem, workDate, place, pendingNotify,
-				pendingQuotes);
-		
+		OrderDTO order = OrderDTO.newInstance().withId(id)
+				.withPendingNotify(pendingNotify)
+				.withPendingQuotes(pendingQuotes).withPlace(place)
+				.withTitle(title).withUserId(userId).withWorkAreaId(workAreaId)
+				.withWorkDate(workDate).withWorkDateType(workDateType)
+				.withWorkDescription(workDescription)
+				.withWorkProblem(workProblem);
+
 		OrderDTO response = orderService.saveOrUpdate(order);
 		Assert.assertNotNull(response);
-		
+
 		OrderDTO orderRetrieved = orderService.get(response.getId());
-		
+
 		Assert.assertEquals(title, orderRetrieved.getTitle());
 	}
 }

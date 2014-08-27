@@ -16,26 +16,88 @@ public class OrderDTO implements Serializable {
 	private String place;
 	private Boolean pendingNotify = true;
 	private Boolean pendingQuotes = true;
+	private String workDateType;
 
 	public OrderDTO() {
 		super();
 	}
 
-	public OrderDTO(Long id, Long userId, String title, Long workAreaId,
-			String workDescription, String workProblem, Date workDate,
-			String place, Boolean pendingNotify, Boolean pendingQuotes) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.title = title;
-		this.workAreaId = workAreaId;
-		this.workDescription = workDescription;
-		this.workProblem = workProblem;
-		this.workDate = workDate;
-		this.place = place;
-		this.pendingNotify = pendingNotify;
-		this.pendingQuotes = pendingQuotes;
+	public static OrderDTO newInstance() {
+		return new OrderDTO();
 	}
+
+	public OrderDTO build() {
+		OrderDTO result = new OrderDTO();
+
+		result.setId(id);
+		result.setPendingNotify(pendingNotify);
+		result.setPendingQuotes(pendingQuotes);
+		result.setPlace(place);
+		result.setTitle(title);
+		result.setUserId(userId);
+		result.setWorkAreaId(workAreaId);
+		result.setWorkDate(workDate);
+		result.setWorkDateType(workDateType);
+		result.setWorkDescription(workDescription);
+		result.setWorkProblem(workProblem);
+
+		return result;
+	}
+
+	public OrderDTO withId(Long id) {
+		this.id = id;
+		return this;
+	}
+	
+	public OrderDTO withUserId(Long userId) {
+		this.userId = userId;
+		return this;
+	}
+	
+	public OrderDTO withWorkAreaId(Long workAreaId) {
+		this.workAreaId = workAreaId;
+		return this;
+	}
+	
+	public OrderDTO withWorkDate(Date workDate) {
+		this.workDate = workDate;
+		return this;
+	}
+	
+	public OrderDTO withWorkProblem(String workProblem) {
+		this.workProblem = workProblem;
+		return this;
+	}	
+	
+	public OrderDTO withWorkDescription(String workDescription) {
+		this.workDescription = workDescription;
+		return this;
+	}	
+	
+	public OrderDTO withWorkDateType(String workDateType) {
+		this.workDateType = workDateType;
+		return this;
+	}	
+	
+	public OrderDTO withPendingNotify(Boolean pendingNotify) {
+		this.pendingNotify = pendingNotify;
+		return this;
+	}
+	
+	public OrderDTO withPendingQuotes(Boolean pendingQuotes) {
+		this.pendingQuotes = pendingQuotes;
+		return this;
+	}
+	
+	public OrderDTO withPlace(String place) {
+		this.place = place;
+		return this;
+	}
+	
+	public OrderDTO withTitle(String title) {
+		this.title = title;
+		return this;
+	}	
 
 	public Long getUserId() {
 		return userId;
@@ -117,30 +179,11 @@ public class OrderDTO implements Serializable {
 		this.pendingQuotes = pendingQuotes;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("OrderDTO [id=");
-		builder.append(id);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", workAreaId=");
-		builder.append(workAreaId);
-		builder.append(", workDescription=");
-		builder.append(workDescription);
-		builder.append(", workProblem=");
-		builder.append(workProblem);
-		builder.append(", workDate=");
-		builder.append(workDate);
-		builder.append(", place=");
-		builder.append(place);
-		builder.append(", pendingNotify=");
-		builder.append(pendingNotify);
-		builder.append(", pendingQuotes=");
-		builder.append(pendingQuotes);
-		builder.append("]");
-		return builder.toString();
+	public String getWorkDateType() {
+		return workDateType;
+	}
+
+	public void setWorkDateType(String workDateType) {
+		this.workDateType = workDateType;
 	}
 }

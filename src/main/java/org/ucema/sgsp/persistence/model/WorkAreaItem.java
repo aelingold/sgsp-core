@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +22,8 @@ public class WorkAreaItem {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private GroupType groupType;
 	private String description;
 	@ManyToOne
 	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_work_area_items_work_area"))
@@ -49,14 +52,6 @@ public class WorkAreaItem {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDescription() {
@@ -97,5 +92,13 @@ public class WorkAreaItem {
 
 	public void setWorkArea(WorkArea workArea) {
 		this.workArea = workArea;
+	}
+
+	public GroupType getGroupType() {
+		return groupType;
+	}
+
+	public void setGroupType(GroupType groupType) {
+		this.groupType = groupType;
 	}
 }

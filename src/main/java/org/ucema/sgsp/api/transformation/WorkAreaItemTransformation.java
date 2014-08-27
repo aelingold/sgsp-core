@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.WorkAreaItemDTO;
+import org.ucema.sgsp.persistence.model.GroupType;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
 
@@ -41,7 +42,7 @@ public class WorkAreaItemTransformation {
 
 		result.setId(workAreaItem.getId());
 		result.setDescription(workAreaItem.getDescription());
-		result.setName(workAreaItem.getName());
+		result.setGroupType(workAreaItem.getGroupType().name());
 		if (workAreaItem.getWorkArea() != null) {
 			result.setWorkAreaId(workAreaItem.getWorkArea().getId());
 		}
@@ -54,7 +55,7 @@ public class WorkAreaItemTransformation {
 
 		result.setId(workAreaItem.getId());
 		result.setDescription(workAreaItem.getDescription());
-		result.setName(workAreaItem.getName());
+		result.setGroupType(GroupType.valueOf(workAreaItem.getGroupType()));
 		if (workAreaItem.getWorkAreaId() != null) {
 			result.setWorkArea(new WorkArea(workAreaItem.getWorkAreaId()));
 		}

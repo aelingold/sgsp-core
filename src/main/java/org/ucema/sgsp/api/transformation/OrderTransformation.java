@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.persistence.model.Order;
 import org.ucema.sgsp.persistence.model.WorkArea;
+import org.ucema.sgsp.persistence.model.WorkDateType;
 import org.ucema.sgsp.security.model.User;
 
 @Component
@@ -55,6 +56,7 @@ public class OrderTransformation {
 		result.setWorkDate(order.getWorkDate());
 		result.setWorkDescription(order.getWorkDescription());
 		result.setWorkProblem(order.getWorkProblem());
+		result.setWorkDateType(order.getWorkDateType().name());
 
 		return result;
 	}
@@ -76,6 +78,7 @@ public class OrderTransformation {
 		result.setWorkDate(order.getWorkDate());
 		result.setWorkDescription(order.getWorkDescription());
 		result.setWorkProblem(order.getWorkProblem());
+		result.setWorkDateType(WorkDateType.valueOf(order.getWorkDateType()));
 
 		return result;
 	}

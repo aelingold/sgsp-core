@@ -6,22 +6,48 @@ public class WorkAreaItemDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String name;
+	private String groupType;
 	private String description;
 	private Long workAreaId;
-
-	public WorkAreaItemDTO(Long id, String name, String description,
-			Long workAreaId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.workAreaId = workAreaId;
-	}
 
 	public WorkAreaItemDTO() {
 		super();
 	}
+	
+	public static WorkAreaItemDTO newInstance() {
+		return new WorkAreaItemDTO();
+	}
+
+	public WorkAreaItemDTO build() {
+		WorkAreaItemDTO result = new WorkAreaItemDTO();
+
+		result.setId(id);
+		result.setGroupType(groupType);
+		result.setDescription(description);
+		result.setWorkAreaId(workAreaId);
+
+		return result;
+	}
+	
+	public WorkAreaItemDTO withDescription(String description) {
+		this.description = description;
+		return this;
+	}	
+	
+	public WorkAreaItemDTO withGroupType(String groupType) {
+		this.groupType = groupType;
+		return this;
+	}	
+
+	public WorkAreaItemDTO withId(Long id) {
+		this.id = id;
+		return this;
+	}
+	
+	public WorkAreaItemDTO withWorkAreaId(Long workAreaId) {
+		this.workAreaId = workAreaId;
+		return this;
+	}	
 
 	public Long getId() {
 		return id;
@@ -29,14 +55,6 @@ public class WorkAreaItemDTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDescription() {
@@ -55,18 +73,11 @@ public class WorkAreaItemDTO implements Serializable {
 		this.workAreaId = workAreaId;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("WorkAreaItemDTO [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", workAreaId=");
-		builder.append(workAreaId);
-		builder.append("]");
-		return builder.toString();
+	public String getGroupType() {
+		return groupType;
+	}
+
+	public void setGroupType(String groupType) {
+		this.groupType = groupType;
 	}
 }

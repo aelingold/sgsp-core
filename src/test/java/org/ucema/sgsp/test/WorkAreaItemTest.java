@@ -17,12 +17,15 @@ public class WorkAreaItemTest extends BaseTest {
 
 		Long id = null;
 		String description = "Description";
-		String name = "Name";
+		String groupType = "WORK";
 		Long workAreaId = null;
 
+		WorkAreaItemDTO workAreaItemDTO = WorkAreaItemDTO.newInstance()
+				.withDescription(description).withGroupType(groupType)
+				.withId(id).withWorkAreaId(workAreaId).build();
+
 		WorkAreaItemDTO response = workAreaItemService
-				.saveOrUpdate(new WorkAreaItemDTO(id, name, description,
-						workAreaId));
+				.saveOrUpdate(workAreaItemDTO);
 
 		WorkAreaItemDTO retrieved = workAreaItemService.get(response.getId());
 		Assert.assertNotNull(retrieved);

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,6 +38,9 @@ public class Order {
 	@Column(name = "work_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date workDate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "work_date_type", length = 20, nullable = false)	
+	private WorkDateType workDateType;
 	private String place;
 	@Column(name = "pending_notify")
 	private Boolean pendingNotify;
@@ -161,5 +166,13 @@ public class Order {
 
 	public void setPendingQuotes(Boolean pendingQuotes) {
 		this.pendingQuotes = pendingQuotes;
+	}
+
+	public WorkDateType getWorkDateType() {
+		return workDateType;
+	}
+
+	public void setWorkDateType(WorkDateType workDateType) {
+		this.workDateType = workDateType;
 	}
 }
