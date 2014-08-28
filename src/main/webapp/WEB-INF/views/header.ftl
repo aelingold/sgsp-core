@@ -19,9 +19,6 @@
                 <a href="#page-top"></a>
             </li>
             <li>
-                <a class="page-scroll" href="#services">Servicios</a>
-            </li>
-            <li>
                 <a class="page-scroll" href="#contact">Contacto</a>
             </li>
             <li>

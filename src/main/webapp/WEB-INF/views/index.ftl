@@ -45,142 +45,65 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <!--
-                <div class="intro-lead-in">Welcome To Our Studio!</div>
-                <div class="intro-heading">It's Nice To Meet You</div>
-                -->
-                <div class="header-search-title">Qué problema tenés en casa?</div>
-                <input type="text" class="search-input" placeholder="Ejemplos: Necesito colocar el aire acondicionado, No funciona el televisor, etc.">
-                <a href="#services" class="page-scroll btn btn-xl">Buscar solución</a>
+                
+                <div class="intro-lead-in">Resolvé los problemas de tu hogar</div>
+                <div class="intro-heading">Qué servicio necesitas?</div>
+                
+                
+                <div class="col-lg-12">
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Gasista
+                		</span>
+                	</div>
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Serrajero
+                		</span>
+                	</div>
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Linea blanca
+                		</span>
+                	</div>
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Aire acondicionado
+                		</span>
+                	</div>
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Flete
+                		</span>
+                	</div>
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Pisos
+            			</span>
+                	</div>
+                	<div class="col-lg-4 home-service">
+                		<span class="home-service-option">
+                			Pintor
+                		</span>
+                	</div>
+                </div>
+                
             </div>
         </div>
     </header>
 
     <!-- Services Section -->
-    <section id="services">
+    <section id="howItWorks">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Servicios</h2>
-                    <h3 class="section-subheading text-muted">Qué servicio necesitas? Lo mejores profesionales están esperando para resolver tus problemas.</h3>
+                    <h2 class="section-heading">Cómo funciona?</h2>
+                    <h3 class="section-subheading text-muted">
+                    	Explicación de cómo funciona
+					</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-6 item-service">
-                    <a href="" class="service-link">
-                        <img src="<@c.url value='/static/new/img/portfolio/roundicons.png'/>" class="img-responsive" alt="">
-                        <div class="service-caption">
-                            <h4>Round Icons</h4>
-                        </div>
-                    </a>                    
-                </div>
-                <div class="col-md-3 col-sm-6 item-service">
-                    <a href="" class="service-link">
-                        <img src="<@c.url value='/static/new/img/portfolio/startup-framework.png'/>" class="img-responsive" alt="">
-                        <div class="service-caption">
-                            <h4>Round Icons</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6 item-service">
-                    <a href="" class="service-link">
-                        <img src="<@c.url value='/static/new/img/portfolio/treehouse.png'/>" class="img-responsive" alt="">
-                        <div class="service-caption">
-                            <h4>Round Icons</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6 item-service">
-                    <a href="" class="service-link">
-                        <img src="<@c.url value='/static/new/img/portfolio/golden.png'/>" class="img-responsive" alt="">
-                        <div class="service-caption">
-                            <h4>Round Icons</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6 item-service">
-                    <a href="" class="service-link">
-                        <img src="<@c.url value='/static/new/img/portfolio/escape.png'/>" class="img-responsive" alt="">
-                        <div class="service-caption">
-                            <h4>Round Icons</h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-6 item-service">
-                    <a href="" class="service-link">
-                        <img src="<@c.url value='/static/new/img/portfolio/dreams.png'/>" class="img-responsive" alt="">
-                        <div class="service-caption">
-                            <h4>Round Icons</h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="team" class="bg-light-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Our Amazing Team</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="<@c.url value='/static/new/img/team/1.jpg'/>" class="img-responsive img-circle" alt="">
-                        <h4>Kay Garland</h4>
-                        <p class="text-muted">Lead Designer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="<@c.url value='/static/new/img/team/2.jpg'/>" class="img-responsive img-circle" alt="">
-                        <h4>Larry Parker</h4>
-                        <p class="text-muted">Lead Marketer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                    
-                        <img src="<@c.url value='/static/new/img/team/3.jpg'/>" class="img-responsive img-circle" alt="">
-                        <h4>Diana Pertersen</h4>
-                        <p class="text-muted">Lead Developer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-                </div>
-            </div>
-        </div>
+       </div>
     </section>
 
     <!-- Clients Aside -->
