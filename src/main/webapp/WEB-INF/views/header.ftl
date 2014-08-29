@@ -9,7 +9,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand page-scroll" href="#page-top">Sin Guía</a>
+        <a class="navbar-brand page-scroll" href="#page-top">
+			<img src="<@c.url value='/static/new/img/logos/singuia-128x128blanco.png'/>" style="height: 100%;">
+		</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
