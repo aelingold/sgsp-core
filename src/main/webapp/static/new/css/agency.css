@@ -968,3 +968,42 @@ body {
 .navbar-brand{
 	padding: 0px 15px;
 }
+
+.form-home-section{
+	width: 100%;
+	position: absolute;
+	z-index: 10;
+	top: 0px;
+	margin-top: 100px;
+}
+.form-home{
+	border-radius: 5px;
+	background: rgba(225,225,225,0.9);
+	padding: 15px;
+}
+.form-home-content{
+	text-align: left;
+	color: #444;
+}
+.form-home-content .row{
+	margin-bottom: 12px;
+}
+.form-home-content .edit-icon{
+	height: 15px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+.form-home-content .detail{
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid #aaa;
+}
+.selected-work-area{
+	font-size: 20px;
+	text-decoration: underline;
+}
+
+.col-centered{
+	float: none;
+	margin: 0 auto;
+}
