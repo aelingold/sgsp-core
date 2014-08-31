@@ -58,7 +58,7 @@ INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Canilla',true,'ARTIFACT',null,4,'A4CANI');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavarropa',true,'ARTIFACT',null,4,'A4LARO');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavavajilla',true,'ARTIFACT',null,4,'A4LAJI');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Cañeria',true,'ARTIFACT',null,4,'A4CANI');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Cañeria',true,'ARTIFACT',null,4,'A4CANE');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Otro',true,'ARTIFACT',null,4,'A4OTRO');
 
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Instalar/cambiar una cerradura',true,'WORK',null,5,'W5INST');
