@@ -13,8 +13,12 @@ body {
     font-size: 16px;
     color: #555;
 
-    background-image: url(../img/back.jpg);
-    background-size: 100%;
+    background: url("../img/back.png");
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size:cover;
 
     -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
@@ -198,12 +202,6 @@ i {
     font-weight: bold;
     text-shadow: rgb(0,0,0) 1px 1px 12px;
     margin-bottom: 20px;
-}
-
-@media(max-width:1024px) {
-    body{
-        background-size: auto 100%;
-    }    
 }
 
 .logo-social{
