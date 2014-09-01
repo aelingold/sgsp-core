@@ -6,12 +6,11 @@ import java.util.List;
 public class PlaceOrderDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Long userId;
-	private Long workAreaId;
+	private String username;
 	private String workAreaCode;
 	private String workDescription;
 	private String workDateType;
-	private String place;
+	private String location;
 	private List<String> workAreaItemCodes;
 
 	public PlaceOrderDTO() {
@@ -25,15 +24,19 @@ public class PlaceOrderDTO implements Serializable {
 	public PlaceOrderDTO build() {
 		PlaceOrderDTO result = new PlaceOrderDTO();
 
-		result.setPlace(place);
-		result.setUserId(userId);
-		result.setWorkAreaId(workAreaId);
+		result.setLocation(location);
 		result.setWorkAreaCode(workAreaCode);
 		result.setWorkDateType(workDateType);
 		result.setWorkDescription(workDescription);
 		result.setWorkAreaItemCodes(workAreaItemCodes);
+		result.setUsername(username);
 
 		return result;
+	}
+	
+	public PlaceOrderDTO withUsername(String username) {
+		this.username = username;
+		return this;
 	}	
 	
 	public PlaceOrderDTO withWorkAreaItemCodes(List<String> workAreaItemCodes) {
@@ -46,16 +49,6 @@ public class PlaceOrderDTO implements Serializable {
 		return this;
 	}	
 	
-	public PlaceOrderDTO withUserId(Long userId) {
-		this.userId = userId;
-		return this;
-	}
-	
-	public PlaceOrderDTO withWorkAreaId(Long workAreaId) {
-		this.workAreaId = workAreaId;
-		return this;
-	}
-	
 	public PlaceOrderDTO withWorkDescription(String workDescription) {
 		this.workDescription = workDescription;
 		return this;
@@ -66,26 +59,10 @@ public class PlaceOrderDTO implements Serializable {
 		return this;
 	}	
 	
-	public PlaceOrderDTO withPlace(String place) {
-		this.place = place;
+	public PlaceOrderDTO withLocation(String location) {
+		this.location = location;
 		return this;
 	}	
-	
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public Long getWorkAreaId() {
-		return workAreaId;
-	}
-
-	public void setWorkAreaId(Long workAreaId) {
-		this.workAreaId = workAreaId;
-	}
 
 	public String getWorkDescription() {
 		return workDescription;
@@ -103,14 +80,6 @@ public class PlaceOrderDTO implements Serializable {
 		this.workDateType = workDateType;
 	}
 
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
-	}
-
 	public List<String> getWorkAreaItemCodes() {
 		return workAreaItemCodes;
 	}
@@ -125,5 +94,21 @@ public class PlaceOrderDTO implements Serializable {
 
 	public void setWorkAreaCode(String workAreaCode) {
 		this.workAreaCode = workAreaCode;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

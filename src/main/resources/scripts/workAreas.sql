@@ -110,3 +110,7 @@ INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Anafe',true,'APPLIANCE',null,9,'A9ANAF');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Campana',true,'APPLIANCE',null,9,'A9CAMP');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Otro',true,'APPLIANCE',null,9,'A9OTRO');
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué tipo de inmueble es?','PROPERTY',null,1);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,1);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué artefacto es?','ARTIFACT',null,1);

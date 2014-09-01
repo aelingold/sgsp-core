@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.security.model.User;
 
 @Entity
@@ -40,7 +41,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "work_date_type", length = 20, nullable = false)	
 	private WorkDateType workDateType;
-	private String place;
+	private String location;
 	@Column(name = "pending_notify")
 	private Boolean pendingNotify;
 	@Column(name = "pending_quotes")
@@ -51,7 +52,8 @@ public class Order {
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order",orphanRemoval=true)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<OrderItem> orderItems;	
 
 	public Order(Long id) {
@@ -119,14 +121,6 @@ public class Order {
 		this.workDate = workDate;
 	}
 
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
-	}
-
 	public Boolean getPendingNotify() {
 		return pendingNotify;
 	}
@@ -157,5 +151,13 @@ public class Order {
 
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

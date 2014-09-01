@@ -16,25 +16,14 @@ public class OrderTest extends BaseTest {
 	@Test
 	public void insertAndVerifyOrder() {
 
-//		Long id = null;
-		Long userId = null;
-		Long workAreaId = null;
 		String workDescription = "workDescription";
 		String workDateType = "URGENT";
-//		Date workDate = new Date();
-		String place = "place";
-//		Boolean pendingNotify = true;
-//		Boolean pendingQuotes = true;
-
-		// OrderDTO order = OrderDTO.newInstance().withId(id)
-		// .withPendingNotify(pendingNotify)
-		// .withPendingQuotes(pendingQuotes).withPlace(place)
-		// .withUserId(userId).withWorkAreaId(workAreaId)
-		// .withWorkDate(workDate).withWorkDateType(workDateType)
-		// .withWorkDescription(workDescription);
-
-		PlaceOrderDTO order = PlaceOrderDTO.newInstance().withPlace(place)
-				.withUserId(userId).withWorkAreaId(workAreaId)
+		String location = "place";
+		String username = "username";		
+		String workAreaCode = "workAreaCode";
+		
+		PlaceOrderDTO order = PlaceOrderDTO.newInstance().withLocation(location)
+				.withUsername(username).withWorkAreaCode(workAreaCode)
 				.withWorkDateType(workDateType)
 				.withWorkDescription(workDescription);
 

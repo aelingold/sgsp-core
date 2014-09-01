@@ -9,12 +9,15 @@ import org.ucema.sgsp.api.dto.WorkAreaItemDTO;
 import org.ucema.sgsp.persistence.model.GroupType;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
+import org.ucema.sgsp.service.WorkAreaService;
 
 @Component
 public class WorkAreaItemTransformation {
 
 	@Autowired
 	private WorkAreaTransformation workAreaTransformation;
+	@Autowired
+	private WorkAreaService workAreaService;
 
 	public List<WorkAreaItemDTO> transformToApi(List<WorkAreaItem> workAreaItems) {
 		List<WorkAreaItemDTO> result = new ArrayList<WorkAreaItemDTO>();
@@ -44,7 +47,6 @@ public class WorkAreaItemTransformation {
 		result.setDescription(workAreaItem.getDescription());
 		result.setGroupType(workAreaItem.getGroupType().name());
 		if (workAreaItem.getWorkArea() != null) {
-			result.setWorkAreaId(workAreaItem.getWorkArea().getId());
 			result.setWorkAreaCode(workAreaItem.getWorkArea().getCode());
 		}
 		result.setCode(workAreaItem.getCode());
@@ -58,8 +60,9 @@ public class WorkAreaItemTransformation {
 		result.setId(workAreaItem.getId());
 		result.setDescription(workAreaItem.getDescription());
 		result.setGroupType(GroupType.valueOf(workAreaItem.getGroupType()));
-		if (workAreaItem.getWorkAreaId() != null) {
-			result.setWorkArea(new WorkArea(workAreaItem.getWorkAreaId()));
+		if (workAreaItem.getWorkAreaCode() != null) {
+			result.setWorkArea(new WorkArea(workAreaService.findByCode(
+					workAreaItem.getWorkAreaCode()).getId()));
 		}
 		result.setCode(workAreaItem.getCode());
 

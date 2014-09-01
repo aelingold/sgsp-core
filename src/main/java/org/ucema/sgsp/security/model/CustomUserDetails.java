@@ -2,6 +2,7 @@ package org.ucema.sgsp.security.model;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +17,10 @@ public class CustomUserDetails extends SocialUser {
     private String lastName;
     private Role role;
     private SocialMediaService socialSignInProvider;
- 
+	private String telephone;
+	private boolean isProfessional;
+	private List<String> workAreasCodes;
+    
     public static Builder getBuilder() {
         return new Builder();
     }    
@@ -65,6 +69,30 @@ public class CustomUserDetails extends SocialUser {
 		this.socialSignInProvider = socialSignInProvider;
 	}
 
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public boolean isProfessional() {
+		return isProfessional;
+	}
+
+	public void setProfessional(boolean isProfessional) {
+		this.isProfessional = isProfessional;
+	}
+
+	public List<String> getWorkAreasCodes() {
+		return workAreasCodes;
+	}
+
+	public void setWorkAreasCodes(List<String> workAreasCodes) {
+		this.workAreasCodes = workAreasCodes;
+	}
+
 	public static class Builder {
  
         private Long id;
@@ -75,10 +103,28 @@ public class CustomUserDetails extends SocialUser {
         private Role role;
         private SocialMediaService socialSignInProvider;
         private Set<GrantedAuthority> authorities;
+    	private String telephone;
+    	private boolean isProfessional;
+    	private List<String> workAreasCodes;        
  
 		public Builder() {
             this.authorities = new HashSet<GrantedAuthority>();
         }
+		
+        public Builder telephone(String telephone) {
+            this.telephone = telephone;
+            return this;
+        }
+        
+        public Builder workAreasCodes(List<String> workAreasCodes) {
+            this.workAreasCodes = workAreasCodes;
+            return this;
+        }         
+        
+        public Builder isProfessional(boolean isProfessional) {
+            this.isProfessional = isProfessional;
+            return this;
+        }        
  
         public Builder firstName(String firstName) {
             this.firstName = firstName;
@@ -131,6 +177,9 @@ public class CustomUserDetails extends SocialUser {
             user.lastName = lastName;
             user.role = role;
             user.socialSignInProvider = socialSignInProvider;
+            user.telephone = telephone;
+            user.isProfessional = isProfessional;
+            user.workAreasCodes = workAreasCodes;
  
             return user;
         }

@@ -19,11 +19,11 @@ public class WorkAreaItemTest extends BaseTest {
 		String description = "Description";
 		String code = "XXX";
 		String groupType = "WORK";
-		Long workAreaId = null;
+		String workAreaCode = "workAreaCode";
 
 		WorkAreaItemDTO workAreaItemDTO = WorkAreaItemDTO.newInstance()
 				.withDescription(description).withGroupType(groupType)
-				.withId(id).withWorkAreaId(workAreaId).withCode(code).build();
+				.withId(id).withWorkAreaCode(workAreaCode).withCode(code).build();
 
 		WorkAreaItemDTO response = workAreaItemService
 				.saveOrUpdate(workAreaItemDTO);

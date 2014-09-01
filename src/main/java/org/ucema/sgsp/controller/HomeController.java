@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.service.WorkAreaItemService;
+import org.ucema.sgsp.service.WorkAreaQuestionService;
 import org.ucema.sgsp.service.WorkAreaService;
 
 @Controller
@@ -19,7 +20,9 @@ public class HomeController {
     @Autowired
 	private WorkAreaService workAreaService;
     @Autowired
-	private WorkAreaItemService workAreaItemService;    
+	private WorkAreaItemService workAreaItemService;
+    @Autowired
+    private WorkAreaQuestionService workAreaQuestionService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String showHomePage(WebRequest request, Model model) {
@@ -27,6 +30,8 @@ public class HomeController {
         
         model.addAttribute("workAreas", workAreaService.list());
         model.addAttribute("workAreaItems", workAreaItemService.list());
+        
+        model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
         
         return VIEW_NAME_HOMEPAGE;
     }

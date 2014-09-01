@@ -38,6 +38,11 @@ public class RepositoryUserService implements UserService {
 		this.passwordEncoder = passwordEncoder;
 		this.repository = repository;
 	}
+	
+	@Transactional
+	public UserDTO findByEmail(String email) {
+		return userTransformation.transformToApi(repository.findByEmail(email));
+	}	
 
 	@Transactional
 	public List<UserDTO> list() {

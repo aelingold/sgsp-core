@@ -8,12 +8,15 @@ import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
+import org.ucema.sgsp.service.WorkAreaItemService;
 
 @Component
 public class WorkAreaTransformation {
 
 	@Autowired
 	private WorkAreaItemTransformation workAreaItemTransformation;
+	@Autowired
+	private WorkAreaItemService workAreaItemService;
 
 	public List<WorkAreaDTO> transformToApi(List<WorkArea> workAreas) {
 		List<WorkAreaDTO> result = new ArrayList<WorkAreaDTO>();
@@ -41,31 +44,22 @@ public class WorkAreaTransformation {
 		result.setId(workArea.getId());
 		result.setDescription(workArea.getDescription());
 		result.setCode(workArea.getCode());
+		
 		if (workArea.getWorkAreaItems() != null) {
-			result.setWorkAreaItemIds(getWorkAreaItemIds(workArea.getWorkAreaItems()));
-			result.setWorkAreaItemCodes(getWorkAreaItemCodes(workArea.getWorkAreaItems()));
+			result.setWorkAreaItemCodes(getWorkAreaItemCodes(workArea
+					.getWorkAreaItems()));
 		}
 
 		return result;
 	}
-	
+
 	private List<String> getWorkAreaItemCodes(List<WorkAreaItem> workAreaItems) {
 		List<String> response = new ArrayList<String>();
-		
+
 		for (WorkAreaItem workAreaItem : workAreaItems) {
 			response.add(workAreaItem.getCode());
 		}
-		
-		return response;
-	}
 
-	private List<Long> getWorkAreaItemIds(List<WorkAreaItem> workAreaItems){
-		List<Long> response = new ArrayList<Long>();
-		
-		for (WorkAreaItem workAreaItem : workAreaItems) {
-			response.add(workAreaItem.getId());
-		}
-		
 		return response;
 	}
 
@@ -75,20 +69,22 @@ public class WorkAreaTransformation {
 		result.setId(workArea.getId());
 		result.setDescription(workArea.getDescription());
 		result.setCode(workArea.getCode());
-		if (workArea.getWorkAreaItemIds() != null) {
-			result.setWorkAreaItems(getWorkAreaItems(workArea.getWorkAreaItemIds()));
+		if (workArea.getWorkAreaItemCodes() != null) {
+			result.setWorkAreaItems(getWorkAreaItems(workArea
+					.getWorkAreaItemCodes()));
 		}
 
 		return result;
 	}
-	
-	private List<WorkAreaItem> getWorkAreaItems(List<Long> workAreaItemIds){
+
+	private List<WorkAreaItem> getWorkAreaItems(List<String> workAreaItemCodes) {
 		List<WorkAreaItem> response = new ArrayList<WorkAreaItem>();
-		
-		for (Long workAreaItemId : workAreaItemIds) {
-			response.add(new WorkAreaItem(workAreaItemId));
+
+		for (String workAreaItemCode : workAreaItemCodes) {
+			response.add(new WorkAreaItem(workAreaItemService.findByCode(
+					workAreaItemCode).getId()));
 		}
-		
+
 		return response;
-	}	
+	}
 }

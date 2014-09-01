@@ -2,60 +2,53 @@ package org.ucema.sgsp.api.dto;
 
 import java.io.Serializable;
 
-public class WorkAreaItemDTO implements Serializable {
+public class WorkAreaQuestionDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String code;
 	private String groupType;
 	private String description;
 	private String workAreaCode;
 
-	public WorkAreaItemDTO() {
+	public WorkAreaQuestionDTO() {
 		super();
 	}
 	
-	public static WorkAreaItemDTO newInstance() {
-		return new WorkAreaItemDTO();
+	public static WorkAreaQuestionDTO newInstance() {
+		return new WorkAreaQuestionDTO();
 	}
 
-	public WorkAreaItemDTO build() {
-		WorkAreaItemDTO result = new WorkAreaItemDTO();
+	public WorkAreaQuestionDTO build() {
+		WorkAreaQuestionDTO result = new WorkAreaQuestionDTO();
 
 		result.setId(id);
 		result.setGroupType(groupType);
 		result.setDescription(description);
-		result.setCode(code);
 		result.setWorkAreaCode(workAreaCode);
 
 		return result;
 	}
 	
-	public WorkAreaItemDTO withWorkAreaCode(String workAreaCode) {
+	public WorkAreaQuestionDTO withWorkAreaCode(String workAreaCode) {
 		this.workAreaCode = workAreaCode;
 		return this;
-	}	
+	}		
 	
-	public WorkAreaItemDTO withCode(String code) {
-		this.code = code;
-		return this;
-	}	
-	
-	public WorkAreaItemDTO withDescription(String description) {
+	public WorkAreaQuestionDTO withDescription(String description) {
 		this.description = description;
 		return this;
 	}	
 	
-	public WorkAreaItemDTO withGroupType(String groupType) {
+	public WorkAreaQuestionDTO withGroupType(String groupType) {
 		this.groupType = groupType;
 		return this;
 	}	
 
-	public WorkAreaItemDTO withId(Long id) {
+	public WorkAreaQuestionDTO withId(Long id) {
 		this.id = id;
 		return this;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -78,14 +71,6 @@ public class WorkAreaItemDTO implements Serializable {
 
 	public void setGroupType(String groupType) {
 		this.groupType = groupType;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getWorkAreaCode() {

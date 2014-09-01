@@ -3,7 +3,10 @@ package org.ucema.sgsp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,21 +26,28 @@ public class OrderController {
 	public @ResponseBody OrderDTO get(@PathVariable Long id) {
 		return orderService.get(id);
 	}
-	
+
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public @ResponseBody List<OrderDTO> list() {
 		return orderService.list();
 	}
 
-//	@RequestMapping(value = "/orders", method = RequestMethod.POST)
-//	public @ResponseBody void saveOrUpdate(@RequestBody OrderDTO order) {
-//		orderService.saveOrUpdate(order);
-//	}
-	
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
-	public @ResponseBody void saveOrUpdate(@RequestBody PlaceOrderDTO order) {
+	public @ResponseBody void saveOrUpdate(@RequestBody OrderDTO order) {
 		orderService.saveOrUpdate(order);
-	}	
+	}
+
+	@RequestMapping(value = "/place-order", method = RequestMethod.POST)
+	public @ResponseBody void saveOrUpdate(
+			@ModelAttribute("order") PlaceOrderDTO order) {
+
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		String username = auth.getName(); // get logged in username
+		order.setUsername(username);
+		
+		orderService.saveOrUpdate(order);
+	}
 
 	@RequestMapping(value = "/orders/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {

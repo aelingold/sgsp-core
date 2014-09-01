@@ -12,7 +12,7 @@ public class OrderDTO implements Serializable {
 	private Long workAreaId;
 	private String workDescription;
 	private Date workDate;
-	private String place;
+	private String location;
 	private Boolean pendingNotify = true;
 	private Boolean pendingQuotes = true;
 	private String workDateType;
@@ -32,7 +32,7 @@ public class OrderDTO implements Serializable {
 		result.setId(id);
 		result.setPendingNotify(pendingNotify);
 		result.setPendingQuotes(pendingQuotes);
-		result.setPlace(place);
+		result.setLocation(location);
 		result.setUserId(userId);
 		result.setWorkAreaId(workAreaId);
 		result.setWorkDate(workDate);
@@ -88,8 +88,8 @@ public class OrderDTO implements Serializable {
 		return this;
 	}
 	
-	public OrderDTO withPlace(String place) {
-		this.place = place;
+	public OrderDTO withLocation(String location) {
+		this.location = location;
 		return this;
 	}
 
@@ -133,14 +133,6 @@ public class OrderDTO implements Serializable {
 		this.workDate = workDate;
 	}
 
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
-	}
-
 	public Boolean getPendingNotify() {
 		return pendingNotify;
 	}
@@ -171,5 +163,13 @@ public class OrderDTO implements Serializable {
 
 	public void setOrderItemIds(List<Long> orderItemIds) {
 		this.orderItemIds = orderItemIds;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

@@ -9,15 +9,17 @@ import org.ucema.sgsp.security.model.User;
 
 public interface UserService {
 	 
-    public User registerNewUserAccount(RegistrationDTO userAccountData) throws DuplicateEmailException;
+    User registerNewUserAccount(RegistrationDTO userAccountData) throws DuplicateEmailException;
     
-    public List<UserDTO> list();
+    List<UserDTO> list();
     
-    public UserDTO saveOrUpdate(UserDTO user);
+    UserDTO saveOrUpdate(UserDTO user);
     
-    public void delete(UserDTO user);
+    void delete(UserDTO user);
     
-    public void delete(Long id);
+    void delete(Long id);
     
-    public UserDTO get(Long id);
+    UserDTO get(Long id);
+    
+    UserDTO findByEmail(String email);
 }

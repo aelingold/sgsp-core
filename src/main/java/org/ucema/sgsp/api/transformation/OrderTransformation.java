@@ -1,6 +1,7 @@
 package org.ucema.sgsp.api.transformation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
 import org.ucema.sgsp.persistence.model.WorkDateType;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.service.UserService;
 import org.ucema.sgsp.service.WorkAreaItemService;
 import org.ucema.sgsp.service.WorkAreaService;
 
@@ -27,6 +29,8 @@ public class OrderTransformation {
 	private WorkAreaItemService workAreaItemService;
 	@Autowired
 	private WorkAreaService workAreaService;
+	@Autowired
+	private UserService userService;
 
 	public List<OrderDTO> transformToApi(List<Order> orders) {
 		List<OrderDTO> result = new ArrayList<OrderDTO>();
@@ -54,7 +58,7 @@ public class OrderTransformation {
 		result.setId(order.getId());
 		result.setPendingNotify(order.getPendingNotify());
 		result.setPendingQuotes(order.getPendingQuotes());
-		result.setPlace(order.getPlace());
+		result.setLocation(order.getLocation());
 		if (order.getUser() != null) {
 			result.setUserId(order.getUser().getId());
 		}
@@ -88,7 +92,7 @@ public class OrderTransformation {
 		result.setId(order.getId());
 		result.setPendingNotify(order.getPendingNotify());
 		result.setPendingQuotes(order.getPendingQuotes());
-		result.setPlace(order.getPlace());
+		result.setLocation(order.getLocation());
 		if (order.getUserId() != null) {
 			result.setUser(new User(order.getUserId()));
 		}
@@ -97,11 +101,15 @@ public class OrderTransformation {
 		}
 		result.setWorkDate(order.getWorkDate());
 		result.setWorkDescription(order.getWorkDescription());
-		result.setWorkDateType(WorkDateType.valueOf(order.getWorkDateType()));
+
+		if (order.getWorkDateType() != null) {
+			result.setWorkDateType(WorkDateType.valueOf(order.getWorkDateType()));
+		}
 
 		if (order.getOrderItemIds() != null) {
 			result.setOrderItems(getWorkAreaItems(order.getOrderItemIds()));
 		}
+		result.setCreatedAt(new Date());
 
 		return result;
 	}
@@ -121,12 +129,11 @@ public class OrderTransformation {
 
 		result.setPendingNotify(true);
 		result.setPendingQuotes(true);
-		result.setPlace(order.getPlace());
-		if (order.getUserId() != null) {
-			result.setUser(new User(order.getUserId()));
-		}
-		if (order.getWorkAreaId() != null) {
-			result.setWorkArea(new WorkArea(order.getWorkAreaId()));
+		result.setLocation(order.getLocation());
+
+		if (order.getUsername() != null) {
+			result.setUser(new User(userService
+					.findByEmail(order.getUsername()).getId()));
 		}
 
 		if (order.getWorkAreaCode() != null) {
@@ -135,12 +142,16 @@ public class OrderTransformation {
 		}
 
 		result.setWorkDescription(order.getWorkDescription());
-		result.setWorkDateType(WorkDateType.valueOf(order.getWorkDateType()));
+
+		if (order.getWorkDateType() != null) {
+			result.setWorkDateType(WorkDateType.valueOf(order.getWorkDateType()));
+		}
 
 		if (order.getWorkAreaItemCodes() != null) {
 			result.setOrderItems(buildOrderItems(result,
 					order.getWorkAreaItemCodes()));
 		}
+		result.setCreatedAt(new Date());
 
 		return result;
 	}
@@ -151,7 +162,9 @@ public class OrderTransformation {
 		List<OrderItem> result = new ArrayList<>();
 
 		for (String workAreaItemCode : workAreaItemCodes) {
-			result.add(buildOrderItem(order, workAreaItemCode));
+			if (workAreaItemCode != null) {
+				result.add(buildOrderItem(order, workAreaItemCode));
+			}
 		}
 
 		return result;

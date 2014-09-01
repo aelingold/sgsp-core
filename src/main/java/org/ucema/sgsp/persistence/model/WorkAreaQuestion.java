@@ -1,47 +1,48 @@
 package org.ucema.sgsp.persistence.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "work_areas", uniqueConstraints = @UniqueConstraint(name = "uq_work_area_code", columnNames = { "code" }))
-public class WorkArea {
+@Table(name = "work_area_questions", uniqueConstraints = @UniqueConstraint(name = "uq_work_area_item_code", columnNames = { "work_area_id","groupType" }))
+public class WorkAreaQuestion {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String code;
+	@Enumerated(EnumType.STRING)
+	private GroupType groupType;
 	private String description;
-	@OneToMany(mappedBy = "workArea")
-	private List<WorkAreaItem> workAreaItems;
-	@OneToMany(mappedBy = "workArea")
-	private List<WorkAreaQuestion> workAreaQuestions;	
+	@ManyToOne
+	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_work_area_items_work_area"))
+	private WorkArea workArea;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-	@Column(name = "is_enabled")
-	private Boolean isEnabled;
 
-	public WorkArea() {
-		super();
-	}
-
-	public WorkArea(Long id) {
+	public WorkAreaQuestion(Long id) {
 		super();
 		this.id = id;
+	}
+
+	public WorkAreaQuestion() {
+		super();
 	}
 
 	public Long getId() {
@@ -76,35 +77,19 @@ public class WorkArea {
 		this.updatedAt = updatedAt;
 	}
 
-	public Boolean getIsEnabled() {
-		return isEnabled;
+	public WorkArea getWorkArea() {
+		return workArea;
 	}
 
-	public void setIsEnabled(Boolean isEnabled) {
-		this.isEnabled = isEnabled;
+	public void setWorkArea(WorkArea workArea) {
+		this.workArea = workArea;
 	}
 
-	public List<WorkAreaItem> getWorkAreaItems() {
-		return workAreaItems;
+	public GroupType getGroupType() {
+		return groupType;
 	}
 
-	public void setWorkAreaItems(List<WorkAreaItem> workAreaItems) {
-		this.workAreaItems = workAreaItems;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public List<WorkAreaQuestion> getWorkAreaQuestions() {
-		return workAreaQuestions;
-	}
-
-	public void setWorkAreaQuestions(List<WorkAreaQuestion> workAreaQuestions) {
-		this.workAreaQuestions = workAreaQuestions;
+	public void setGroupType(GroupType groupType) {
+		this.groupType = groupType;
 	}
 }

@@ -20,11 +20,11 @@ public class WorkAreaTest extends BaseTest {
 		Long id = null;
 		String description = "Description";
 		String code = "XXX";
-		List<Long> workAreaItemIds = null;
+		List<String> workAreaItemCodes = null;
 
 		WorkAreaDTO workAreaDTO = WorkAreaDTO.newInstance().withCode(code)
 				.withDescription(description).withId(id)
-				.withWorkAreaItemIds(workAreaItemIds).build();
+				.withWorkAreaItemCodes(workAreaItemCodes).build();
 
 		WorkAreaDTO response = workAreaService.saveOrUpdate(workAreaDTO);
 

@@ -26,12 +26,12 @@ public class OrderService {
 		return orderTransformation.transformToApi(orderDAO.findAll());
 	}
 
-//	@Transactional
-//	public OrderDTO saveOrUpdate(OrderDTO order) {
-//		Order response = orderDAO.save(orderTransformation.transformToModel(order));
-//		order.setId(response.getId());
-//		return order;
-//	}
+	@Transactional
+	public OrderDTO saveOrUpdate(OrderDTO order) {
+		Order response = orderDAO.save(orderTransformation.transformToModel(order));
+		order.setId(response.getId());
+		return order;
+	}
 	
 	@Transactional
 	public OrderDTO saveOrUpdate(PlaceOrderDTO order) {
