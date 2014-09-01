@@ -5,4 +5,5 @@ import org.ucema.sgsp.persistence.model.WorkAreaItem;
 
 public interface WorkAreaItemDAO extends JpaRepository<WorkAreaItem, Long> {
 
+	WorkAreaItem findByCode(String code);
 }

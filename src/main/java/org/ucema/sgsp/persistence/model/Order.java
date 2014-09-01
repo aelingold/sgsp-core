@@ -1,6 +1,7 @@
 package org.ucema.sgsp.persistence.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,14 +29,11 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_order_user"))
 	private User user;
-	private String title;
 	@ManyToOne
 	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_order_work_area"))
 	private WorkArea workArea;
 	@Column(name = "work_description")
 	private String workDescription;
-	@Column(name = "work_problem")
-	private String workProblem;
 	@Column(name = "work_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date workDate;
@@ -52,8 +51,8 @@ public class Order {
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-	@Column(name = "is_enabled")
-	private Boolean isEnabled;
+	@OneToMany(mappedBy = "order")
+	private List<OrderItem> orderItems;	
 
 	public Order(Long id) {
 		super();
@@ -88,28 +87,12 @@ public class Order {
 		this.updatedAt = updatedAt;
 	}
 
-	public Boolean getIsEnabled() {
-		return isEnabled;
-	}
-
-	public void setIsEnabled(Boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public WorkArea getWorkArea() {
@@ -126,14 +109,6 @@ public class Order {
 
 	public void setWorkDescription(String workDescription) {
 		this.workDescription = workDescription;
-	}
-
-	public String getWorkProblem() {
-		return workProblem;
-	}
-
-	public void setWorkProblem(String workProblem) {
-		this.workProblem = workProblem;
 	}
 
 	public Date getWorkDate() {
@@ -174,5 +149,13 @@ public class Order {
 
 	public void setWorkDateType(WorkDateType workDateType) {
 		this.workDateType = workDateType;
+	}
+
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 }

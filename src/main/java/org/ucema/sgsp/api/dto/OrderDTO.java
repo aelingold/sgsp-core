@@ -2,21 +2,21 @@ package org.ucema.sgsp.api.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class OrderDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long userId;
-	private String title;
 	private Long workAreaId;
 	private String workDescription;
-	private String workProblem;
 	private Date workDate;
 	private String place;
 	private Boolean pendingNotify = true;
 	private Boolean pendingQuotes = true;
 	private String workDateType;
+	private List<Long> orderItemIds;
 
 	public OrderDTO() {
 		super();
@@ -33,16 +33,20 @@ public class OrderDTO implements Serializable {
 		result.setPendingNotify(pendingNotify);
 		result.setPendingQuotes(pendingQuotes);
 		result.setPlace(place);
-		result.setTitle(title);
 		result.setUserId(userId);
 		result.setWorkAreaId(workAreaId);
 		result.setWorkDate(workDate);
 		result.setWorkDateType(workDateType);
 		result.setWorkDescription(workDescription);
-		result.setWorkProblem(workProblem);
+		result.setOrderItemIds(orderItemIds);
 
 		return result;
 	}
+	
+	public OrderDTO withOrderItemIds(List<Long> orderItemIds) {
+		this.orderItemIds = orderItemIds;
+		return this;
+	}	
 
 	public OrderDTO withId(Long id) {
 		this.id = id;
@@ -61,11 +65,6 @@ public class OrderDTO implements Serializable {
 	
 	public OrderDTO withWorkDate(Date workDate) {
 		this.workDate = workDate;
-		return this;
-	}
-	
-	public OrderDTO withWorkProblem(String workProblem) {
-		this.workProblem = workProblem;
 		return this;
 	}	
 	
@@ -93,11 +92,6 @@ public class OrderDTO implements Serializable {
 		this.place = place;
 		return this;
 	}
-	
-	public OrderDTO withTitle(String title) {
-		this.title = title;
-		return this;
-	}	
 
 	public Long getUserId() {
 		return userId;
@@ -123,28 +117,12 @@ public class OrderDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getWorkDescription() {
 		return workDescription;
 	}
 
 	public void setWorkDescription(String workDescription) {
 		this.workDescription = workDescription;
-	}
-
-	public String getWorkProblem() {
-		return workProblem;
-	}
-
-	public void setWorkProblem(String workProblem) {
-		this.workProblem = workProblem;
 	}
 
 	public Date getWorkDate() {
@@ -185,5 +163,13 @@ public class OrderDTO implements Serializable {
 
 	public void setWorkDateType(String workDateType) {
 		this.workDateType = workDateType;
+	}
+
+	public List<Long> getOrderItemIds() {
+		return orderItemIds;
+	}
+
+	public void setOrderItemIds(List<Long> orderItemIds) {
+		this.orderItemIds = orderItemIds;
 	}
 }

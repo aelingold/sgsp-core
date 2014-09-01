@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.ucema.sgsp.api.dto.OrderDTO;
+import org.ucema.sgsp.api.dto.PlaceOrderDTO;
 import org.ucema.sgsp.service.OrderService;
 
 @Controller
@@ -28,10 +29,15 @@ public class OrderController {
 		return orderService.list();
 	}
 
+//	@RequestMapping(value = "/orders", method = RequestMethod.POST)
+//	public @ResponseBody void saveOrUpdate(@RequestBody OrderDTO order) {
+//		orderService.saveOrUpdate(order);
+//	}
+	
 	@RequestMapping(value = "/orders", method = RequestMethod.POST)
-	public @ResponseBody void saveOrUpdate(@RequestBody OrderDTO order) {
+	public @ResponseBody void saveOrUpdate(@RequestBody PlaceOrderDTO order) {
 		orderService.saveOrUpdate(order);
-	}
+	}	
 
 	@RequestMapping(value = "/orders/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {

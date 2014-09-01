@@ -57,4 +57,13 @@ public class WorkAreaItemService {
 		}
 		return workAreaItemTransformation.transformToApi(workAreaItem);
 	}
+	
+	@Transactional
+	public WorkAreaItemDTO findByCode(String code){
+		WorkAreaItem workAreaItem = workAreaItemDAO.findByCode(code);
+		if (workAreaItem == null) {
+			throw new RuntimeException("workAreaItem not found");
+		}		
+		return workAreaItemTransformation.transformToApi(workAreaItem);		
+	}	
 }

@@ -9,17 +9,34 @@
 		<div class="row">
 			<div class="col-md-6">
 				<label>¿Qué tipo de inmueble es?</label>
-				<select>
-					<option>Casa</option>
-					<option>Departamento</option>
+				<select name="workAreaItemCodes[0]">
+					<#list workAreas as workArea>
+						<#if workArea.code='GAS'>
+							<#list workArea.workAreaItemIds as workAreaItemId>
+    							<#list workAreaItems as workAreaItem>
+    								<#if workAreaItem.id=workAreaItemId && workAreaItem.groupType='PROPERTY'>
+										<option value='${workAreaItem.code}'>${workAreaItem.description}</option>    									
+    								</#if>
+    							</#list>
+							</#list>					
+						</#if>
+					</#list>					
 				</select>
 			</div>	    				
 			<div class="col-md-6">        				
 				<label>¿Qué hay que hacer?</label>
-				<select>
-					<option>Habilitar residencia</option>
-					<option>Controlar perdida</option>
-					<option>Otro</option>
+				<select name="workAreaItemCodes[1]">
+					<#list workAreas as workArea>
+						<#if workArea.code='GAS'>
+							<#list workArea.workAreaItemIds as workAreaItemId>
+    							<#list workAreaItems as workAreaItem>
+    								<#if workAreaItem.id=workAreaItemId && workAreaItem.groupType='WORK'>
+										<option value='${workAreaItem.code}'>${workAreaItem.description}</option>    									
+    								</#if>
+    							</#list>
+							</#list>					
+						</#if>
+					</#list>
 				</select>
 			</div>
 		</div>
@@ -27,26 +44,24 @@
 			<div class="col-md-12">        				
 				<label>¿Qué artefacto es?</label>	        				
 			</div>
-			<div class="col-md-4">
-				Calefón <input type="checkbox">
-			</div>
-			<div class="col-md-4">
-				Termotanque <input type="checkbox">
-			</div>
-			<div class="col-md-4">
-				Cocina / Horno <input type="checkbox">
-			</div>
-			<div class="col-md-4">
-				Estufa <input type="checkbox">
-			</div>
-			<div class="col-md-4">
-				Otro <input type="checkbox">
-			</div>
+					<#list workAreas as workArea>
+						<#if workArea.code='GAS'>
+							<#list workArea.workAreaItemIds as workAreaItemId>
+    							<#list workAreaItems as workAreaItem>
+    								<#if workAreaItem.id=workAreaItemId && workAreaItem.groupType='ARTIFACT'>
+										<div class="col-md-4">
+											${workAreaItem.description} <input name="workAreaItemCodes[${workAreaItem_index}]" value="${workAreaItem.code}" type="checkbox">
+										</div>									
+    								</#if>
+    							</#list>
+							</#list>					
+						</#if>
+					</#list>			
 		</div>
 		<div class="row">
 			<div class="col-md-12">    
 				<label>Detalle en qué consiste el trabajo</label>    				
-				<textarea class="detail" placeholder="Escriba aquí..."></textarea>
+				<textarea name="workDescription" id="workDescription" class="detail" placeholder="Escriba aquí..."></textarea>
 			</div>
 		</div>
 		<div class="row" style="margin-bottom: 0px">

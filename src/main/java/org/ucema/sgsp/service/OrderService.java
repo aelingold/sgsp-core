@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.OrderDTO;
+import org.ucema.sgsp.api.dto.PlaceOrderDTO;
 import org.ucema.sgsp.api.transformation.OrderTransformation;
 import org.ucema.sgsp.persistence.OrderDAO;
 import org.ucema.sgsp.persistence.model.Order;
@@ -25,12 +26,18 @@ public class OrderService {
 		return orderTransformation.transformToApi(orderDAO.findAll());
 	}
 
+//	@Transactional
+//	public OrderDTO saveOrUpdate(OrderDTO order) {
+//		Order response = orderDAO.save(orderTransformation.transformToModel(order));
+//		order.setId(response.getId());
+//		return order;
+//	}
+	
 	@Transactional
-	public OrderDTO saveOrUpdate(OrderDTO order) {
+	public OrderDTO saveOrUpdate(PlaceOrderDTO order) {
 		Order response = orderDAO.save(orderTransformation.transformToModel(order));
-		order.setId(response.getId());
-		return order;
-	}
+		return orderTransformation.transformToApi(response);
+	}	
 
 	@Transactional
 	public void delete(OrderDTO order) {
