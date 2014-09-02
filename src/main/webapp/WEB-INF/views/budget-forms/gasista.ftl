@@ -18,7 +18,7 @@
 							</#if>
 						</#list>
 					</label>
-					<select name="workAreaItemCodes[0]">
+					<select name="workAreaItemCodes[0]" class="form-control">
 						<#list workAreas as workArea>
 							<#if workArea.code='GAS'>
 								<#list workArea.workAreaItemCodes as workAreaItemCode>
@@ -40,7 +40,7 @@
 							</#if>
 						</#list>
 					</label>				        				
-					<select name="workAreaItemCodes[1]">
+					<select name="workAreaItemCodes[1]" class="form-control">
 						<#list workAreas as workArea>
 							<#if workArea.code='GAS'>
 								<#list workArea.workAreaItemCodes as workAreaItemCode>
@@ -53,18 +53,29 @@
 							</#if>
 						</#list>
 					</select>
+				</div>					
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label>¿Dónde hay que hacer el trabajo?</label>
+				</div>
+			
+								
+				<div class="col-md-6">
+					<span>Provincia</span>
+					<select class="form-control">
+						<option value=''>Capital Federal</option>
+						<option value=''>Buenos Aires</option>
+						<option value=''>Corrientes</option>											
+					</select>
 				</div>
 				<div class="col-md-6">
-					<label>¿Cuando queres hacer el trabajo?</label>
-					<select name="workDateType">
-						<option value='URGENT'>Urgente</option>
-						<option value='FLEXIBLE'>Flexible</option>					
+					<span>Localidad</span>
+					<select class="form-control">
+						<option value=''>Almagro</option>
+						<option value=''>Palermo</option>											
 					</select>
-				</div>	
-				<div class="col-md-6">
-					<label>¿Donde hay que hacer el trabajo?</label>
-					<input type="text" name="location" placeholder="Ingresa tu barrio o ciudad"/>
-				</div>							
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -76,29 +87,36 @@
 						</#list>
 					</label>				        					        				
 				</div>
-						<#list workAreas as workArea>
-							<#if workArea.code='GAS'>
-								<#list workArea.workAreaItemCodes as workAreaItemCode>
-	    							<#list workAreaItems as workAreaItem>
-	    								<#if workAreaItem.code=workAreaItemCode && workAreaItem.groupType='ARTIFACT'>
-											<div class="col-md-4">
-												${workAreaItem.description} <input name="workAreaItemCodes[${workAreaItem_index}]" value="${workAreaItem.code}" type="checkbox">
-											</div>									
-	    								</#if>
-	    							</#list>
-								</#list>					
-							</#if>
-						</#list>			
+				<#list workAreas as workArea>
+					<#if workArea.code='GAS'>
+						<#list workArea.workAreaItemCodes as workAreaItemCode>
+							<#list workAreaItems as workAreaItem>
+								<#if workAreaItem.code=workAreaItemCode && workAreaItem.groupType='ARTIFACT'>
+									<div class="col-md-4">
+										${workAreaItem.description} <input name="workAreaItemCodes[${workAreaItem_index}]" value="${workAreaItem.code}" type="checkbox">
+									</div>									
+								</#if>
+							</#list>
+						</#list>					
+					</#if>
+				</#list>			
 			</div>
 			<div class="row">
-				<div class="col-md-12">    
+				<div class="col-md-9">    
 					<label>Detalle en qué consiste el trabajo</label>    				
-					<textarea name="workDescription" id="workDescription" class="detail" placeholder="Escriba aquí..."></textarea>
+					<textarea name="workDescription" id="workDescription" class="detail form-control" placeholder="Escriba aquí..."></textarea>
+				</div>
+				<div class="col-md-3">
+					<label>¿Es urgente?</label>
+					<select name="workDateType" class="form-control">
+						<option value='FLEXIBLE'>No</option>
+						<option value='URGENT'>Si</option>											
+					</select>
 				</div>
 			</div>
 			<div class="row" style="margin-bottom: 0px">
 				<div class="col-md-12">    
-					<a href="javascript:document.orderForm.submit();" class="btn btn-md btn-primary pull-right">Aceptar</a>
+					<button type="submit" class="btn btn-md btn-primary pull-right">Aceptar</button>
 				</div>
 			</div>
 		</form>
