@@ -5,4 +5,5 @@ import org.ucema.sgsp.persistence.model.Country;
 
 public interface CountryDAO extends JpaRepository<Country, Long> {
 
+	Country findByCode(String code);
 }

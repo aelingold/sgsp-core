@@ -6,7 +6,6 @@ import java.util.List;
 public class CountryDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;
 	private String code;
 	private String description;
 	private List<StateDTO> states;
@@ -18,17 +17,11 @@ public class CountryDTO implements Serializable {
 	public CountryDTO build() {
 		CountryDTO result = new CountryDTO();
 
-		result.setId(id);
 		result.setDescription(description);
 		result.setCode(code);
 		result.setStates(states);
 
 		return result;
-	}
-	
-	public CountryDTO withId(Long id) {
-		this.id = id;
-		return this;
 	}
 	
 	public CountryDTO withStates(List<StateDTO> states) {
@@ -48,14 +41,6 @@ public class CountryDTO implements Serializable {
 
 	public CountryDTO() {
 		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getDescription() {

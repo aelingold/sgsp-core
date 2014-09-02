@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class CityDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;
 	private String code;
 	private String description;
+	private String stateCode;
 
 	public static CityDTO newInstance() {
 		return new CityDTO();
@@ -16,17 +16,17 @@ public class CityDTO implements Serializable {
 	public CityDTO build() {
 		CityDTO result = new CityDTO();
 
-		result.setId(id);
 		result.setDescription(description);
 		result.setCode(code);
+		result.setStateCode(stateCode);
 
 		return result;
-	}
+	}	
 	
-	public CityDTO withId(Long id) {
-		this.id = id;
+	public CityDTO withStateCode(String stateCode) {
+		this.stateCode = stateCode;
 		return this;
-	}		
+	}	
 	
 	public CityDTO withCode(String code) {
 		this.code = code;
@@ -40,14 +40,6 @@ public class CityDTO implements Serializable {
 
 	public CityDTO() {
 		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getDescription() {
@@ -64,5 +56,13 @@ public class CityDTO implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
 	}
 }

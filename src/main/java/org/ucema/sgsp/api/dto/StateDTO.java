@@ -6,10 +6,10 @@ import java.util.List;
 public class StateDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;
 	private String code;
 	private String description;
 	private List<CityDTO> cities;
+	private String countryCode;
 
 	public static StateDTO newInstance() {
 		return new StateDTO();
@@ -18,23 +18,23 @@ public class StateDTO implements Serializable {
 	public StateDTO build() {
 		StateDTO result = new StateDTO();
 
-		result.setId(id);
 		result.setDescription(description);
 		result.setCode(code);
 		result.setCities(cities);
+		result.setCountryCode(countryCode);
 
 		return result;
-	}
-	
-	public StateDTO withId(Long id) {
-		this.id = id;
-		return this;
 	}
 	
 	public StateDTO withCities(List<CityDTO> cities) {
 		this.cities = cities;
 		return this;
-	}		
+	}
+	
+	public StateDTO withCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+		return this;
+	}	
 	
 	public StateDTO withCode(String code) {
 		this.code = code;
@@ -48,14 +48,6 @@ public class StateDTO implements Serializable {
 
 	public StateDTO() {
 		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getDescription() {
@@ -80,5 +72,13 @@ public class StateDTO implements Serializable {
 
 	public void setCities(List<CityDTO> cities) {
 		this.cities = cities;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 }

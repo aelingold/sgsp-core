@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
+import org.ucema.sgsp.service.CityService;
+import org.ucema.sgsp.service.StateService;
 import org.ucema.sgsp.service.WorkAreaItemService;
 import org.ucema.sgsp.service.WorkAreaQuestionService;
 import org.ucema.sgsp.service.WorkAreaService;
@@ -23,6 +25,10 @@ public class HomeController {
 	private WorkAreaItemService workAreaItemService;
     @Autowired
     private WorkAreaQuestionService workAreaQuestionService;
+    @Autowired
+    private StateService stateService;
+    @Autowired
+    private CityService cityService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String showHomePage(WebRequest request, Model model) {
@@ -30,6 +36,10 @@ public class HomeController {
         
         model.addAttribute("workAreas", workAreaService.list());
         model.addAttribute("workAreaItems", workAreaItemService.list());
+        
+        model.addAttribute("states", stateService.list());
+        
+        model.addAttribute("cities", cityService.list());
         
         model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
         

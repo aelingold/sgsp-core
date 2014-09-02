@@ -2,11 +2,13 @@ package org.ucema.sgsp.persistence.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +27,11 @@ public class State {
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	@JoinColumn(name = "state_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_user"))
 	private List<City> cities;	
+	@Column(name = "is_enabled")
+	private Boolean isEnabled;
+	@ManyToOne
+	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_state_country"))
+	private Country country;	
 
 	public State(Long id) {
 		super();
@@ -66,6 +73,20 @@ public class State {
 	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
-	
-	
+
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
 }

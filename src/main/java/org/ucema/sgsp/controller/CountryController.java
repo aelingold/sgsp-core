@@ -21,13 +21,18 @@ public class CountryController {
 	public @ResponseBody CountryDTO get(@PathVariable Long id) {
 		return countryService.get(id);
 	}
+	
+	@RequestMapping(value = "/countries/code/{code}", method = RequestMethod.GET)
+	public @ResponseBody CountryDTO get(@PathVariable String code) {
+		return countryService.findByCode(code);
+	}	
 
 	@RequestMapping(value = "/countries", method = RequestMethod.GET)
 	public @ResponseBody List<CountryDTO> list() {
 		return countryService.list();
 	}
 
-	@RequestMapping(value = "/countries/import", method = RequestMethod.GET)
+	@RequestMapping(value = "/countries/import", method = RequestMethod.POST)
 	public @ResponseBody void saveOrUpdateAll() {
 		countryService.importGeo();
 	}
