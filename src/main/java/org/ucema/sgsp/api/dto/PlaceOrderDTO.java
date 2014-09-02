@@ -13,6 +13,7 @@ public class PlaceOrderDTO implements Serializable {
 	private String stateCode;
 	private String cityCode;
 	private String squareMeters;
+	private Integer airConditionerPower;
 	private List<String> workAreaItemCodes;
 
 	public PlaceOrderDTO() {
@@ -34,6 +35,7 @@ public class PlaceOrderDTO implements Serializable {
 		result.setSquareMeters(squareMeters);
 		result.setCityCode(cityCode);
 		result.setStateCode(stateCode);
+		result.setAirConditionerPower(airConditionerPower);
 
 		return result;
 	}
@@ -42,6 +44,11 @@ public class PlaceOrderDTO implements Serializable {
 		this.squareMeters = squareMeters;
 		return this;
 	}
+
+	public PlaceOrderDTO withAirConditionerPower(Integer airConditionerPower) {
+		this.airConditionerPower = airConditionerPower;
+		return this;
+	}	
 	
 	public PlaceOrderDTO withStateCode(String stateCode) {
 		this.stateCode = stateCode;
@@ -140,5 +147,13 @@ public class PlaceOrderDTO implements Serializable {
 
 	public void setSquareMeters(String squareMeters) {
 		this.squareMeters = squareMeters;
+	}
+
+	public Integer getAirConditionerPower() {
+		return airConditionerPower;
+	}
+
+	public void setAirConditionerPower(Integer airConditionerPower) {
+		this.airConditionerPower = airConditionerPower;
 	}
 }

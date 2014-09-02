@@ -15,6 +15,7 @@ public class OrderDTO implements Serializable {
 	private String stateCode;
 	private String cityCode;
 	private String squareMeters;
+	private Integer airConditionerPower;
 	private Boolean pendingNotify = true;
 	private Boolean pendingQuotes = true;
 	private String workDateType;
@@ -43,9 +44,15 @@ public class OrderDTO implements Serializable {
 		result.setWorkDateType(workDateType);
 		result.setWorkDescription(workDescription);
 		result.setOrderItemIds(orderItemIds);
+		result.setAirConditionerPower(airConditionerPower);		
 
 		return result;
 	}
+	
+	public OrderDTO withAirConditionerPower(Integer airConditionerPower) {
+		this.airConditionerPower = airConditionerPower;
+		return this;
+	}	
 	
 	public OrderDTO withSquareMeters(String squareMeters) {
 		this.squareMeters = squareMeters;
@@ -201,5 +208,13 @@ public class OrderDTO implements Serializable {
 
 	public void setSquareMeters(String squareMeters) {
 		this.squareMeters = squareMeters;
+	}
+
+	public Integer getAirConditionerPower() {
+		return airConditionerPower;
+	}
+
+	public void setAirConditionerPower(Integer airConditionerPower) {
+		this.airConditionerPower = airConditionerPower;
 	}
 }

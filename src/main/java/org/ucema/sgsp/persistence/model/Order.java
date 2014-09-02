@@ -64,6 +64,8 @@ public class Order {
 	private City city;
 	@Column(name = "square_meters")
 	private BigDecimal squareMeters;
+	@Column(name = "air_conditioner_power")
+	private Integer airConditionerPower;
 
 	public Order(Long id) {
 		super();
@@ -184,5 +186,13 @@ public class Order {
 
 	public void setSquareMeters(BigDecimal squareMeters) {
 		this.squareMeters = squareMeters;
+	}
+
+	public Integer getAirConditionerPower() {
+		return airConditionerPower;
+	}
+
+	public void setAirConditionerPower(Integer airConditionerPower) {
+		this.airConditionerPower = airConditionerPower;
 	}
 }

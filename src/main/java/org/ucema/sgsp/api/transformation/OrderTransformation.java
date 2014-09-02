@@ -86,6 +86,8 @@ public class OrderTransformation {
 			result.setSquareMeters(order.getSquareMeters().toString());
 		}
 
+		result.setAirConditionerPower(order.getAirConditionerPower());
+
 		if (order.getState() != null) {
 			result.setStateCode(order.getState().getCode());
 		}
@@ -130,7 +132,8 @@ public class OrderTransformation {
 		if (order.getOrderItemIds() != null) {
 			result.setOrderItems(getWorkAreaItems(order.getOrderItemIds()));
 		}
-		result.setCreatedAt(new Date());
+		result.setCreatedAt(new Date());		
+		result.setAirConditionerPower(order.getAirConditionerPower());
 
 		if (order.getSquareMeters() != null
 				&& !order.getSquareMeters().isEmpty()) {
@@ -187,6 +190,7 @@ public class OrderTransformation {
 					order.getWorkAreaItemCodes()));
 		}
 		result.setCreatedAt(new Date());
+		result.setAirConditionerPower(order.getAirConditionerPower());
 
 		if (order.getSquareMeters() != null) {
 			result.setSquareMeters(new BigDecimal(order.getSquareMeters()));

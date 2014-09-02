@@ -46,20 +46,29 @@ INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Poca presion',true,'PROBLEM',null,3,'P3POPR');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Otro',true,'PROBLEM',null,3,'P3OTRO');
 
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Inodoro',true,'ARTIFACT',null,3,'A3INOD');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Ducha/Bañera',true,'ARTIFACT',null,3,'A3DUBA');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavatorio/Bacha',true,'ARTIFACT',null,3,'A3LABA');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Bidet',true,'ARTIFACT',null,3,'A3BIDE');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Canilla',true,'ARTIFACT',null,3,'A3CANI');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavarropa',true,'ARTIFACT',null,3,'A3LARO');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavavajilla',true,'ARTIFACT',null,3,'A3LAJI');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Cañeria',true,'ARTIFACT',null,3,'A3CANE');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Otro',true,'ARTIFACT',null,3,'A3OTRO');
+
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Instalar',true,'WORK',null,4,'W4INST');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Reparar',true,'WORK',null,4,'W4REPA');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Cablear',true,'WORK',null,4,'W4CABL');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Realizar otro trabajo',true,'WORK',null,4,'W4ROTR');
 
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Inodoro',true,'ARTIFACT',null,4,'A4INOD');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Ducha/Bañera',true,'ARTIFACT',null,4,'A4DUBA');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavatorio/Bacha',true,'ARTIFACT',null,4,'A4LABA');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Bidet',true,'ARTIFACT',null,4,'A4BIDE');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Canilla',true,'ARTIFACT',null,4,'A4CANI');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavarropa',true,'ARTIFACT',null,4,'A4LARO');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Lavavajilla',true,'ARTIFACT',null,4,'A4LAJI');
-INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Cañeria',true,'ARTIFACT',null,4,'A4CANE');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Artefactos de Luz',true,'ARTIFACT',null,4,'A4ARLU');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Termica/Disyuntor',true,'ARTIFACT',null,4,'A4TEDI');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Tomas/Interruptores',true,'ARTIFACT',null,4,'A4TOIN');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Aire acondicionado',true,'ARTIFACT',null,4,'A4AACO');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Otro',true,'ARTIFACT',null,4,'A4OTRO');
+
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Casa',true,'PROPERTY',null,4,'P4CASA');
+INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Departamento',true,'PROPERTY',null,4,'P4DEPA');
 
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Instalar/cambiar una cerradura',true,'WORK',null,5,'W5INST');
 INSERT INTO `singuia`.`work_area_items` (`created_at`,`description`,`is_enabled`,`group_type`,`updated_at`,`work_area_id`,`code`) VALUES (curdate(),'Reparar una cerradura',true,'WORK',null,5,'W5RECE');
@@ -115,5 +124,25 @@ INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_t
 INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,1);
 INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué artefacto es?','ARTIFACT',null,1);
 
-INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué trabajo hay que hacer?','WORK',null,2);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,2);
 INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué tipo de inmueble es?','PROPERTY',null,2);
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,3);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Cuál es el problema?','PROBLEM',null,3);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué componentes?','ARTIFACT',null,3);
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,4);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué componentes?','ARTIFACT',null,4);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué tipo de inmueble es?','PROPERTY',null,4);
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,5);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué tipo de cerradura es?','LOCK',null,5);
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,6);
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,8);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué tipo de aire es?','AIR_SYSTEM',null,8);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Cuál es la marca?','BRAND',null,8);
+
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué hay que hacer?','WORK',null,9);
+INSERT INTO `singuia`.`work_area_questions` (`created_at`,`description`,`group_type`,`updated_at`,`work_area_id`) VALUES (now(),'¿Qué electrodomestico es?','APPLIANCE',null,9);
