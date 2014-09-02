@@ -1,4 +1,4 @@
-<div class="col-md-5 form-home col-centered">
+<div id="GAS-budget-form" class="col-md-5 form-home col-centered" style="display:none;">
 	<div class="form-home-content">
 		<form name="orderForm" id="orderForm" action="/place-order" method="POST" enctype="utf8">
 			<input type="hidden" name="workAreaCode" value="GAS">
@@ -6,7 +6,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<span class="selected-work-area">Necesito un Gasista</span>
-					<a href="" title="Cambiar"><img class="edit-icon" src="<@c.url value='/static/new/img/icons/edit.png'/>" alt=""></a>
+					<a class="changeServiceType" title="Cambiar"><img class="edit-icon" src="<@c.url value='/static/new/img/icons/edit.png'/>" alt=""></a>
 				</div>
 			</div>
 			<div class="row">

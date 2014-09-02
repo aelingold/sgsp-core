@@ -139,7 +139,8 @@
     <script src="<@c.url value='/static/new/js/contact_me.js'/>"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="<@c.url value='/static/new/js/agency.js'/>"></script>
+    <script src="<@c.url value='/static/new/js/agency.js'/>"></script>    
+    <script src="<@c.url value='/static/new/js/views/index.js'/>"></script>
 
 </body>
 

@@ -277,6 +277,7 @@ header {
 header .intro-text {
     padding-top: 100px;
     padding-bottom: 50px;
+    position: relative;
 }
 
 header .intro-text .intro-lead-in {
@@ -974,7 +975,7 @@ body {
 	position: absolute;
 	z-index: 10;
 	top: 0px;
-	margin-top: 100px;
+	margin-top: 85px;
 }
 .form-home{
 	border-radius: 5px;
@@ -1006,4 +1007,8 @@ body {
 .col-centered{
 	float: none;
 	margin: 0 auto;
+}
+
+.changeServiceType{
+	cursor: pointer;
 }
