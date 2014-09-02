@@ -1,5 +1,6 @@
 package org.ucema.sgsp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -22,7 +23,17 @@ public class WorkAreaService {
 
 	@Transactional
 	public List<WorkAreaDTO> list() {
-		return workAreaTransformation.transformToApi(workAreaDAO.findAll());
+		
+		List<WorkArea> workAreas = workAreaDAO.findAll();
+
+		List<WorkArea> workAreasFiltered = new ArrayList<WorkArea>();
+		for (WorkArea workArea : workAreas) {
+			if (workArea.getIsEnabled()) {
+				workAreasFiltered.add(workArea);
+			}
+		}
+
+		return workAreaTransformation.transformToApi(workAreasFiltered);		
 	}
 
 	@Transactional
@@ -52,7 +63,12 @@ public class WorkAreaService {
 		if (workArea == null) {
 			throw new RuntimeException("workArea not found");
 		}		
-		return workAreaTransformation.transformToApi(workArea);
+
+		if (workArea.getIsEnabled()) {
+			return workAreaTransformation.transformToApi(workArea);
+		} else {
+			return null;
+		}
 	}
 	
 	@Transactional
@@ -60,7 +76,12 @@ public class WorkAreaService {
 		WorkArea workArea = workAreaDAO.findByCode(code);
 		if (workArea == null) {
 			throw new RuntimeException("workArea not found");
-		}		
-		return workAreaTransformation.transformToApi(workArea);		
+		}
+		
+		if (workArea.getIsEnabled()) {
+			return workAreaTransformation.transformToApi(workArea);
+		} else {
+			return null;
+		}
 	}
 }

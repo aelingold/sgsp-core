@@ -27,6 +27,7 @@ public class CityTransformation {
 		result.setDescription(city.getDescription());
 		
 		result.setStateCode(city.getState().getCode());
+		result.setId(city.getId());
 
 		return result;
 	}

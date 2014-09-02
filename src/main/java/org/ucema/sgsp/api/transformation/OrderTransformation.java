@@ -1,5 +1,6 @@
 package org.ucema.sgsp.api.transformation;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.PlaceOrderDTO;
+import org.ucema.sgsp.persistence.model.City;
 import org.ucema.sgsp.persistence.model.Order;
 import org.ucema.sgsp.persistence.model.OrderItem;
+import org.ucema.sgsp.persistence.model.State;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
 import org.ucema.sgsp.persistence.model.WorkDateType;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.service.CityService;
+import org.ucema.sgsp.service.StateService;
 import org.ucema.sgsp.service.UserService;
 import org.ucema.sgsp.service.WorkAreaItemService;
 import org.ucema.sgsp.service.WorkAreaService;
@@ -31,6 +36,10 @@ public class OrderTransformation {
 	private WorkAreaService workAreaService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private StateService stateService;
+	@Autowired
+	private CityService cityService;
 
 	public List<OrderDTO> transformToApi(List<Order> orders) {
 		List<OrderDTO> result = new ArrayList<OrderDTO>();
@@ -58,7 +67,7 @@ public class OrderTransformation {
 		result.setId(order.getId());
 		result.setPendingNotify(order.getPendingNotify());
 		result.setPendingQuotes(order.getPendingQuotes());
-		result.setLocation(order.getLocation());
+
 		if (order.getUser() != null) {
 			result.setUserId(order.getUser().getId());
 		}
@@ -71,6 +80,18 @@ public class OrderTransformation {
 
 		if (order.getOrderItems() != null) {
 			result.setOrderItemIds(getOrderItemIds(order.getOrderItems()));
+		}
+
+		if (order.getSquareMeters() != null) {
+			result.setSquareMeters(order.getSquareMeters().toString());
+		}
+
+		if (order.getState() != null) {
+			result.setStateCode(order.getState().getCode());
+		}
+
+		if (order.getCity() != null) {
+			result.setCityCode(order.getCity().getCode());
 		}
 
 		return result;
@@ -92,7 +113,7 @@ public class OrderTransformation {
 		result.setId(order.getId());
 		result.setPendingNotify(order.getPendingNotify());
 		result.setPendingQuotes(order.getPendingQuotes());
-		result.setLocation(order.getLocation());
+
 		if (order.getUserId() != null) {
 			result.setUser(new User(order.getUserId()));
 		}
@@ -110,6 +131,21 @@ public class OrderTransformation {
 			result.setOrderItems(getWorkAreaItems(order.getOrderItemIds()));
 		}
 		result.setCreatedAt(new Date());
+
+		if (order.getSquareMeters() != null
+				&& !order.getSquareMeters().isEmpty()) {
+			result.setSquareMeters(new BigDecimal(order.getSquareMeters()));
+		}
+
+		if (order.getStateCode() != null && !order.getStateCode().isEmpty()) {
+			result.setState(new State(stateService.findByCode(
+					order.getStateCode()).getId()));
+		}
+
+		if (order.getCityCode() != null && !order.getCityCode().isEmpty()) {
+			result.setCity(new City(cityService.findByCode(order.getCityCode())
+					.getId()));
+		}
 
 		return result;
 	}
@@ -129,7 +165,6 @@ public class OrderTransformation {
 
 		result.setPendingNotify(true);
 		result.setPendingQuotes(true);
-		result.setLocation(order.getLocation());
 
 		if (order.getUsername() != null) {
 			result.setUser(new User(userService
@@ -152,6 +187,20 @@ public class OrderTransformation {
 					order.getWorkAreaItemCodes()));
 		}
 		result.setCreatedAt(new Date());
+
+		if (order.getSquareMeters() != null) {
+			result.setSquareMeters(new BigDecimal(order.getSquareMeters()));
+		}
+
+		if (order.getStateCode() != null && !order.getStateCode().isEmpty()) {
+			result.setState(new State(stateService.findByCode(
+					order.getStateCode()).getId()));
+		}
+
+		if (order.getCityCode() != null && !order.getCityCode().isEmpty()) {
+			result.setCity(new City(cityService.findByCode(order.getCityCode())
+					.getId()));
+		}
 
 		return result;
 	}

@@ -35,6 +35,7 @@ public class StateTransformation {
 		}
 		
 		result.setCountryCode(state.getCountry().getCode());
+		result.setId(state.getId());
 
 		return result;
 	}

@@ -1,5 +1,6 @@
 package org.ucema.sgsp.persistence.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,7 +43,6 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "work_date_type", length = 20, nullable = false)	
 	private WorkDateType workDateType;
-	private String location;
 	@Column(name = "pending_notify")
 	private Boolean pendingNotify;
 	@Column(name = "pending_quotes")
@@ -54,7 +55,15 @@ public class Order {
 	private Date updatedAt;
 	@OneToMany(mappedBy = "order",orphanRemoval=true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private List<OrderItem> orderItems;	
+	private List<OrderItem> orderItems;
+	@OneToOne
+	@JoinColumn(name = "state_id", foreignKey = @ForeignKey(name = "fk_order_state"))
+	private State state;
+	@OneToOne
+	@JoinColumn(name = "city_id", foreignKey = @ForeignKey(name = "fk_order_city"))	
+	private City city;
+	@Column(name = "square_meters")
+	private BigDecimal squareMeters;
 
 	public Order(Long id) {
 		super();
@@ -153,11 +162,27 @@ public class Order {
 		this.orderItems = orderItems;
 	}
 
-	public String getLocation() {
-		return location;
+	public State getState() {
+		return state;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public BigDecimal getSquareMeters() {
+		return squareMeters;
+	}
+
+	public void setSquareMeters(BigDecimal squareMeters) {
+		this.squareMeters = squareMeters;
 	}
 }

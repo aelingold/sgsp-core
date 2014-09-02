@@ -4,7 +4,7 @@
 	</div>											
 	<div class="col-md-6">
 		<span>Provincia</span>
-		<select class="form-control">
+		<select name="stateCode" class="form-control">
 			<#list states as state>			
 				<option value=${state.code}>${state.description}</option>
 			</#list>											
@@ -12,9 +12,10 @@
 	</div>
 	<div class="col-md-6">
 		<span>Localidad</span>
-		<select class="form-control">
-			<option value=''>Almagro</option>
-			<option value=''>Palermo</option>											
+		<select name="cityCode" class="form-control">
+			<#list cities as city>			
+				<option value=${city.code}>${city.description}</option>
+			</#list>											
 		</select>
 	</div>
 </div>			

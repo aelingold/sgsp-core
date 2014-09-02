@@ -12,7 +12,9 @@ public class OrderDTO implements Serializable {
 	private Long workAreaId;
 	private String workDescription;
 	private Date workDate;
-	private String location;
+	private String stateCode;
+	private String cityCode;
+	private String squareMeters;
 	private Boolean pendingNotify = true;
 	private Boolean pendingQuotes = true;
 	private String workDateType;
@@ -32,7 +34,9 @@ public class OrderDTO implements Serializable {
 		result.setId(id);
 		result.setPendingNotify(pendingNotify);
 		result.setPendingQuotes(pendingQuotes);
-		result.setLocation(location);
+		result.setSquareMeters(squareMeters);
+		result.setCityCode(cityCode);
+		result.setStateCode(stateCode);
 		result.setUserId(userId);
 		result.setWorkAreaId(workAreaId);
 		result.setWorkDate(workDate);
@@ -42,6 +46,21 @@ public class OrderDTO implements Serializable {
 
 		return result;
 	}
+	
+	public OrderDTO withSquareMeters(String squareMeters) {
+		this.squareMeters = squareMeters;
+		return this;
+	}
+	
+	public OrderDTO withStateCode(String stateCode) {
+		this.stateCode = stateCode;
+		return this;
+	}	
+	
+	public OrderDTO withCityCode(String cityCode) {
+		this.cityCode = cityCode;
+		return this;
+	}	
 	
 	public OrderDTO withOrderItemIds(List<Long> orderItemIds) {
 		this.orderItemIds = orderItemIds;
@@ -85,11 +104,6 @@ public class OrderDTO implements Serializable {
 	
 	public OrderDTO withPendingQuotes(Boolean pendingQuotes) {
 		this.pendingQuotes = pendingQuotes;
-		return this;
-	}
-	
-	public OrderDTO withLocation(String location) {
-		this.location = location;
 		return this;
 	}
 
@@ -165,11 +179,27 @@ public class OrderDTO implements Serializable {
 		this.orderItemIds = orderItemIds;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getStateCode() {
+		return stateCode;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public String getSquareMeters() {
+		return squareMeters;
+	}
+
+	public void setSquareMeters(String squareMeters) {
+		this.squareMeters = squareMeters;
 	}
 }

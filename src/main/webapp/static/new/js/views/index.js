@@ -7,6 +7,12 @@ $(".home-service-option").on("click", function(){
 			$("#GAS-budget-form").show();
 			$("#GAS-budget-form").animate({"right":"0%"}, 1000);
 			break;
+		case "PIN":
+			$(".intro-text").animate({"left":"-150%"}, 1000);			
+			$("#PIN-budget-form").css("right","-150%");
+			$("#PIN-budget-form").show();
+			$("#PIN-budget-form").animate({"right":"0%"}, 1000);
+			break;			
 		default:
 			break;
 	}

@@ -77,13 +77,13 @@
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label>Contraseña</label>
-	                        	<input type="text" name="password" class="form-control">
+	                        	<input type="password" name="password" class="form-control">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label>Repetir contraseña</label>
-	                        	<input type="text" name="passwordVerification" class="form-control">
+	                        	<input type="password" name="passwordVerification" class="form-control">
                             </div>
                         </div>
                         

@@ -1,6 +1,6 @@
 <div id="GAS-budget-form" class="col-md-5 form-home col-centered" style="display:none;">
 	<div class="form-home-content">
-		<form name="orderForm" id="orderForm" action="/place-order" method="POST" enctype="utf8">
+		<form name="GASorderForm" id="GASorderForm" action="/place-order" method="POST" enctype="utf8">
 			<input type="hidden" name="workAreaCode" value="GAS">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="row">
@@ -82,7 +82,7 @@
 			<#include "common.ftl">
 			<div class="row" style="margin-bottom: 0px">
 				<div class="col-md-12">    
-					<button type="submit" class="btn btn-md btn-primary pull-right">Aceptar</button>
+					<a href="javascript:document.GASorderForm.submit();" class="btn btn-md btn-primary pull-right">Aceptar</a>
 				</div>
 			</div>
 		</form>
