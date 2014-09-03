@@ -21,9 +21,10 @@ public class WorkAreaTest extends BaseTest {
 		String description = "Description";
 		String code = "XXX";
 		List<String> workAreaItemCodes = null;
-
+		Boolean isEnabled = true;
+		
 		WorkAreaDTO workAreaDTO = WorkAreaDTO.newInstance().withCode(code)
-				.withDescription(description).withId(id)
+				.withDescription(description).withId(id).withIsEnabled(isEnabled)
 				.withWorkAreaItemCodes(workAreaItemCodes).build();
 
 		WorkAreaDTO response = workAreaService.saveOrUpdate(workAreaDTO);

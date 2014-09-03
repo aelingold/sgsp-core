@@ -18,10 +18,10 @@ public class OrderTest extends BaseTest {
 
 		String workDescription = "workDescription";
 		String workDateType = "URGENT";
-		String stateCode = "state";
-		String cityCode = "city";
-		String username = "username";
-		String workAreaCode = "workAreaCode";
+		String stateCode = null;
+		String cityCode = null;
+		String username = null;
+		String workAreaCode = null;
 
 		PlaceOrderDTO order = PlaceOrderDTO.newInstance()
 				.withStateCode(stateCode).withCityCode(cityCode)

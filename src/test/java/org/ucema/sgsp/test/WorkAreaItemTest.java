@@ -19,7 +19,7 @@ public class WorkAreaItemTest extends BaseTest {
 		String description = "Description";
 		String code = "XXX";
 		String groupType = "WORK";
-		String workAreaCode = "workAreaCode";
+		String workAreaCode = null;
 
 		WorkAreaItemDTO workAreaItemDTO = WorkAreaItemDTO.newInstance()
 				.withDescription(description).withGroupType(groupType)

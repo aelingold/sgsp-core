@@ -16,41 +16,45 @@ import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
- 
+
 import javax.sql.DataSource;
- 
+
 @Configuration
 @EnableSocial
 public class SocialContext implements SocialConfigurer {
- 
-    @Autowired
-    private DataSource dataSource;
- 
-    public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-        cfConfig.addConnectionFactory(new TwitterConnectionFactory(
-                env.getProperty("twitter.consumer.key"),
-                env.getProperty("twitter.consumer.secret")
-        ));
-        cfConfig.addConnectionFactory(new FacebookConnectionFactory(
-                env.getProperty("facebook.app.id"),
-                env.getProperty("facebook.app.secret")
-        ));
-    }
- 
-    public UserIdSource getUserIdSource() {
-        return new AuthenticationNameUserIdSource();
-    }
- 
-    public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-        return new JdbcUsersConnectionRepository(
-                dataSource,
-                connectionFactoryLocator,
-                Encryptors.noOpText()
-        );
-    }
- 
-    @Bean
-    public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
-        return new ConnectController(connectionFactoryLocator, connectionRepository);
-    }
+
+	@Autowired
+	private DataSource dataSource;
+
+	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig,
+			Environment env) {
+		cfConfig.addConnectionFactory(new TwitterConnectionFactory(env
+				.getProperty("twitter.consumer.key"), env
+				.getProperty("twitter.consumer.secret")));
+
+		FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(
+				env.getProperty("facebook.app.id"),
+				env.getProperty("facebook.app.secret"));
+		facebookConnectionFactory.setScope("public_profile,email,offline_access,user_friends");
+
+		cfConfig.addConnectionFactory(facebookConnectionFactory);
+	}
+
+	public UserIdSource getUserIdSource() {
+		return new AuthenticationNameUserIdSource();
+	}
+
+	public UsersConnectionRepository getUsersConnectionRepository(
+			ConnectionFactoryLocator connectionFactoryLocator) {
+		return new JdbcUsersConnectionRepository(dataSource,
+				connectionFactoryLocator, Encryptors.noOpText());
+	}
+
+	@Bean
+	public ConnectController connectController(
+			ConnectionFactoryLocator connectionFactoryLocator,
+			ConnectionRepository connectionRepository) {
+		return new ConnectController(connectionFactoryLocator,
+				connectionRepository);
+	}
 }

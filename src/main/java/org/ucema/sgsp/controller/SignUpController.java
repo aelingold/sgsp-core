@@ -9,6 +9,6 @@ public class SignUpController {
  
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String redirectRequestToRegistrationPage() {
-        return "redirect:/user/register";
+        return "redirect:/register";
     }
 }

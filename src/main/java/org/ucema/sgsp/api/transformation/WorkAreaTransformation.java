@@ -49,6 +49,7 @@ public class WorkAreaTransformation {
 			result.setWorkAreaItemCodes(getWorkAreaItemCodes(workArea
 					.getWorkAreaItems()));
 		}
+		result.setIsEnabled(workArea.getIsEnabled());
 
 		return result;
 	}
@@ -73,6 +74,7 @@ public class WorkAreaTransformation {
 			result.setWorkAreaItems(getWorkAreaItems(workArea
 					.getWorkAreaItemCodes()));
 		}
+		result.setIsEnabled(workArea.getIsEnabled());
 
 		return result;
 	}

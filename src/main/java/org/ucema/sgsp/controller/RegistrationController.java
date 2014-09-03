@@ -80,12 +80,21 @@ public class RegistrationController {
 		RegistrationDTO dto = new RegistrationDTO();
 
 		if (connection != null) {
+			
+			LOGGER.debug("Connection object received with information: "+connection);
+			
 			UserProfile socialMediaProfile = connection.fetchUserProfile();
+			
+			LOGGER.debug("UserProfile received with information: "+socialMediaProfile);
+			
 			dto.setEmail(socialMediaProfile.getEmail());
 			dto.setFirstName(socialMediaProfile.getFirstName());
 			dto.setLastName(socialMediaProfile.getLastName());
 
 			ConnectionKey providerKey = connection.getKey();
+			
+			LOGGER.debug("ConnectionKey received with information: "+providerKey);
+			
 			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
 					.getProviderId().toUpperCase()));
 		}

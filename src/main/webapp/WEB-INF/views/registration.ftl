@@ -51,6 +51,7 @@
                 <div class="col-lg-12">                	
                 	<form action="/register" method="POST" enctype="utf8">
                 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                		<input type="hidden" name="signInProvider" value="${user.signInProvider}"/>
                 		<input type="radio" name="userType" value="user" checked> Usuario
                 		<input type="radio" name="userType" value="professional"> Profesional
                 	
@@ -59,19 +60,19 @@
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                        	<label>Nombre</label>
-	                        	<input type="text" name="firstName" class="form-control">
+	                        	<input type="text" name="firstName" class="form-control" value="${user.firstName}">
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                            <label>Apellido</label>
-	                        	<input type="text" name="lastName" class="form-control">
+	                        	<input type="text" name="lastName" class="form-control" value="${user.lastName}">
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                            <label>Email</label>
-	                        	<input type="text" name="email" class="form-control">
+	                        	<input type="text" name="email" class="form-control" value="(${user.email})!''">
 	                        </div>
 	                    </div>	                    
                         <div class="row">

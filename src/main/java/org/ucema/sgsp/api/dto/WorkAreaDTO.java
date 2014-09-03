@@ -10,6 +10,7 @@ public class WorkAreaDTO implements Serializable {
 	private String code;
 	private String description;
 	private List<String> workAreaItemCodes;
+	private Boolean isEnabled;
 
 	public static WorkAreaDTO newInstance() {
 		return new WorkAreaDTO();
@@ -22,9 +23,15 @@ public class WorkAreaDTO implements Serializable {
 		result.setDescription(description);
 		result.setCode(code);
 		result.setWorkAreaItemCodes(workAreaItemCodes);
+		result.setIsEnabled(isEnabled);
 
 		return result;
 	}
+	
+	public WorkAreaDTO withIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+		return this;
+	}	
 	
 	public WorkAreaDTO withId(Long id) {
 		this.id = id;
@@ -80,5 +87,13 @@ public class WorkAreaDTO implements Serializable {
 
 	public void setWorkAreaItemCodes(List<String> workAreaItemCodes) {
 		this.workAreaItemCodes = workAreaItemCodes;
+	}
+
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 }

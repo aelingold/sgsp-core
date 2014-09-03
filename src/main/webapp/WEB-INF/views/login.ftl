@@ -64,7 +64,7 @@
                	</div>  
            	 	<div class="col-lg-6">     
            	 		<div class="social-column">
-           	 			<a href="">
+           	 			<a href="<@c.url value='/auth/facebook'/>">
 				      		<div class="fb-button">
 				      			<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
 				      			<span>Ingresar con facebook</span>
