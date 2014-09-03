@@ -4,7 +4,7 @@ INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`
 INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (4,curdate(),'Electricista',true,'ELE',null);
 INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (5,curdate(),'Cerrajero',true,'CER',null);
 INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (6,curdate(),'Albañil',true,'ALB',null);
-INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (7,curdate(),'Flete',true,'FLE',null);
+INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (7,curdate(),'Flete',false,'FLE',null);
 INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (8,curdate(),'Service Aire Acondicionado',true,'SAA',null);
 INSERT INTO `singuia`.`work_areas` (`id`,`created_at`,`description`,`is_enabled`,`code`,`updated_at`) VALUES (9,curdate(),'Service Linea Blanca',true,'SLB',null);
 
