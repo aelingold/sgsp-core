@@ -108,10 +108,13 @@ public class RegistrationController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerUserAccount(
 			@Valid @ModelAttribute("user") RegistrationDTO userAccountData,
-			BindingResult result, WebRequest request)
+			BindingResult result, WebRequest request, Model model)
 			throws DuplicateEmailException {
 		LOGGER.debug("Registering user account with information: {}",
 				userAccountData);
+		
+		model.addAttribute("workAreas", workAreaService.list());		
+		
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
 			return VIEW_NAME_REGISTRATION_PAGE;

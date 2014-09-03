@@ -1,4 +1,6 @@
 <#assign c=JspTaglibs["http://java.sun.com/jsp/jstl/core"]/>
+<#assign form=JspTaglibs["http://www.springframework.org/tags/form"]/>
+<#import "/spring.ftl" as spring />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,8 +52,9 @@
                 </div>
                 <div class="col-lg-12">                	
                 	<form action="/register" method="POST" enctype="utf8">
+                		<@spring.bind "user" />      		
                 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                		<input type="hidden" name="signInProvider" value="${user.signInProvider}"/>
+                		<input type="hidden" name="signInProvider" value='${(user.signInProvider)!""}'/>
                 		<input type="radio" name="userType" value="user" checked> Usuario
                 		<input type="radio" name="userType" value="professional"> Profesional
                 	
@@ -60,38 +63,44 @@
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                        	<label>Nombre</label>
-	                        	<input type="text" name="firstName" class="form-control" value="${user.firstName}">
+	                        	<@spring.formInput "user.firstName", 'class="form-control"'/>
+	                        	<@spring.showErrors "<br>" />
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                            <label>Apellido</label>
-	                        	<input type="text" name="lastName" class="form-control" value="${user.lastName}">
+	                            <@spring.formInput "user.lastName", 'class="form-control"'/>
+	                        	<@spring.showErrors "<br>" />                        	
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
-	                            <label>Email</label>
-	                        	<input type="text" name="email" class="form-control" value="(${user.email})!''">
+	                            <label>Email</label>	                        	
+	                        	<@spring.formInput "user.email", 'class="form-control"'/>
+	                        	<@spring.showErrors "<br>" />	                        	
 	                        </div>
 	                    </div>	                    
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label>Contraseña</label>
-	                        	<input type="password" name="password" class="form-control">
+                                <@spring.formPasswordInput "user.password", 'class="form-control"'/>
+                                <@spring.showErrors "<br>" />	                        	
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label>Repetir contraseña</label>
-	                        	<input type="password" name="passwordVerification" class="form-control">
+                                <@spring.formPasswordInput "user.passwordVerification", 'class="form-control"'/>
+	                        	<@spring.showErrors "<br>" />
                             </div>
                         </div>
                         
                         <div class="row pro-field">
                             <div class="form-group col-lg-4">
                                 <label>Teléfono</label>
-	                        	<input type="text" name="telephone" class="form-control">
+                                <@spring.formInput "user.telephone", 'class="form-control"'/>
+                                <@spring.showErrors "<br>" />
                             </div>
                         </div>
                         

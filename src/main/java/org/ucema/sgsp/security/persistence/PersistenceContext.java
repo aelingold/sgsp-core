@@ -23,12 +23,12 @@ public class PersistenceContext {
 
 	@Resource
 	private Environment env;
-	 
-	 @Bean
+
+	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
-	}	 
-	
+	}
+
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
@@ -40,6 +40,17 @@ public class PersistenceContext {
 
 		return dataSource;
 	}
+
+//	@Bean
+//	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+//		DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//		dataSourceInitializer.setDataSource(dataSource);
+//		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+//		databasePopulator.addScript(new ClassPathResource("scripts/workAreas.sql"));
+//		dataSourceInitializer.setDatabasePopulator(databasePopulator);
+//		dataSourceInitializer.setEnabled(true);
+//		return dataSourceInitializer;
+//	}
 
 	@Bean
 	public JpaTransactionManager transactionManager() {
@@ -57,7 +68,8 @@ public class PersistenceContext {
 		entityManagerFactoryBean
 				.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		entityManagerFactoryBean.setPackagesToScan(
-				"org.ucema.sgsp.security.model","org.ucema.sgsp.persistence.model");
+				"org.ucema.sgsp.security.model",
+				"org.ucema.sgsp.persistence.model");
 
 		Properties jpaProperties = new Properties();
 		jpaProperties.put("hibernate.dialect",
