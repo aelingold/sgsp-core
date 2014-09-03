@@ -109,12 +109,6 @@ public class RepositoryUserService implements UserService {
 						userAccountData.getUserType().equals(
 								UserTypeDTO.professional));
 
-		if (userAccountData.getWorkAreaIds() != null
-				&& userAccountData.getWorkAreaIds().size() > 0) {
-			user = user.workAreas(buildWorkAreaIds(userAccountData
-					.getWorkAreaIds()));
-		}
-
 		if (userAccountData.getWorkAreaCodes() != null
 				&& userAccountData.getWorkAreaCodes().size() > 0) {
 			user = user.workAreas(buildWorkAreaCodes(userAccountData
@@ -141,21 +135,6 @@ public class RepositoryUserService implements UserService {
 				if (workAreaCode != null) {
 					result.add(new WorkArea(workAreaService.findByCode(
 							workAreaCode).getId()));
-				}
-			}
-		}
-
-		return result;
-	}
-
-	private List<WorkArea> buildWorkAreaIds(List<Long> workAreaIds) {
-
-		List<WorkArea> result = new ArrayList<WorkArea>();
-
-		if (workAreaIds != null) {
-			for (Long workAreaId : workAreaIds) {
-				if (workAreaId != null) {
-					result.add(new WorkArea(workAreaId));
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 package org.ucema.sgsp.api.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -26,6 +27,8 @@ import org.ucema.sgsp.security.model.SocialMediaService;
 public class RegistrationDTO {
 
     public static final String FIELD_NAME_EMAIL = "email";
+    public static final String FIELD_NAME_WORK_AREAS = "workAreaCodes";
+    public static final String FIELD_NAME_TELEPHONE = "telephone";
 
     @Email
     @NotEmpty
@@ -44,11 +47,9 @@ public class RegistrationDTO {
     private String telephone;
     
     @NotNull
-    private UserTypeDTO userType;
+    private UserTypeDTO userType = UserTypeDTO.user;
     
-    private List<Long> workAreaIds;
-    
-    private List<String> workAreaCodes;
+    private List<String> workAreaCodes = new ArrayList<String>();
 
     private String password;
 
@@ -114,14 +115,6 @@ public class RegistrationDTO {
     public void setSignInProvider(SocialMediaService signInProvider) {
         this.signInProvider = signInProvider;
     }
-
-	public List<Long> getWorkAreaIds() {
-		return workAreaIds;
-	}
-
-	public void setWorkAreaIds(List<Long> workAreaIds) {
-		this.workAreaIds = workAreaIds;
-	}
 
 	public UserTypeDTO getUserType() {
 		return userType;

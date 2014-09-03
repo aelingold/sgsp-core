@@ -55,8 +55,7 @@
                 		<@spring.bind "user" />      		
                 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 		<input type="hidden" name="signInProvider" value='${(user.signInProvider)!""}'/>
-                		<input type="radio" name="userType" value="user" checked> Usuario
-                		<input type="radio" name="userType" value="professional"> Profesional
+                		<@spring.formRadioButtons "user.userType", userTypeMap,""/>
                 	
                 		<h3 class="text-muted">Ingresá estos datos y empezá a resolver tus problemas.</h3>
                 	
@@ -108,11 +107,10 @@
                         	<div class="col-lg-12">
                         		<label>Seleccione los rubros a los que se dedica</label>
                         	</div>
-                            <div class="col-lg-12">                                
-                                <#list workAreas as workArea>
-                                	<input name="workAreaCodes[${workArea_index}]" value="${workArea.code}" type="checkbox"> ${workArea.description}
-                                </#list>                        	
+                            <div class="col-lg-12">
+                            	<@spring.formCheckboxes "user.workAreaCodes", workAreaMap,""/>                                                        	
                             </div>
+                            <@spring.showErrors "<br>" />
                         </div>
           					                    
 	                    <button type="submit" class="btn btn-default">Registrarme</button>

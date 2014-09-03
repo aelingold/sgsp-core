@@ -51,14 +51,12 @@
                 <div class="col-lg-6" style="border-right: 1px solid #ddd;">     
 			      <form action="/login/authenticate" method="POST" enctype="utf8" class="form-signin">
 			      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<#if RequestParameters.error?? && RequestParameters.error == 'bad_credentials'>
+					<@spring.message "text.login.page.login.failed.error"/>
+					</#if>			      	
 			        <h2 class="form-signin-heading">Ingrese sus datos</h2>
 			        <input type="email" name="username" class="form-control" placeholder="Email" required="" autofocus="">
 			        <input type="password" name="password" class="form-control" placeholder="Contraseña" required="">
-			        <div class="checkbox">
-			          <label>
-			            <input type="checkbox" value="remember-me"> Recordarme
-			          </label>
-			        </div>
 			        <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
 			      </form>
                	</div>  

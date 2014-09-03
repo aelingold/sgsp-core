@@ -1,5 +1,8 @@
 package org.ucema.sgsp.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
+import org.ucema.sgsp.api.dto.UserTypeDTO;
+import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
@@ -34,6 +39,8 @@ public class RegistrationController {
 			.getLogger(RegistrationController.class);
 
 	protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
+	protected static final String ERROR_CODE_EMPTY_WORK_AREAS = "EmptyWorkAreas.user.workAreaCodes";
+	protected static final String ERROR_CODE_EMPTY_TELEPHONE = "EmptyTelephone.user.workAreaCodes";
 	protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
 	protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
 
@@ -61,11 +68,32 @@ public class RegistrationController {
 				registration);
 
 		model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
-		
-		model.addAttribute("workAreas", workAreaService.list());
+		model.addAttribute("workAreas", workAreaService.list());		
+		model.addAttribute("userTypeMap",getUserTypeMap());
+		model.addAttribute("workAreaMap",getWorkAreaCodesMap());
 
 		return VIEW_NAME_REGISTRATION_PAGE;
 	}
+	
+	private Map<String,String> getUserTypeMap(){
+		
+		Map<String,String> userTypeMap = new LinkedHashMap<String,String>();
+		userTypeMap.put("user", "Usuario");
+		userTypeMap.put("professional", "Profesional");
+		
+		return userTypeMap;
+	}
+	
+	private Map<String,String> getWorkAreaCodesMap(){
+		
+		Map<String,String> workAreaMap = new LinkedHashMap<String,String>();
+				
+		for (WorkAreaDTO workArea : workAreaService.list()) {
+			workAreaMap.put(workArea.getCode(), workArea.getDescription());
+		}
+		
+		return workAreaMap;
+	}	
 
 	/**
 	 * Creates the form object used in the registration form.
@@ -80,21 +108,24 @@ public class RegistrationController {
 		RegistrationDTO dto = new RegistrationDTO();
 
 		if (connection != null) {
-			
-			LOGGER.debug("Connection object received with information: "+connection);
-			
+
+			LOGGER.debug("Connection object received with information: "
+					+ connection);
+
 			UserProfile socialMediaProfile = connection.fetchUserProfile();
-			
-			LOGGER.debug("UserProfile received with information: "+socialMediaProfile);
-			
+
+			LOGGER.debug("UserProfile received with information: "
+					+ socialMediaProfile);
+
 			dto.setEmail(socialMediaProfile.getEmail());
 			dto.setFirstName(socialMediaProfile.getFirstName());
 			dto.setLastName(socialMediaProfile.getLastName());
 
 			ConnectionKey providerKey = connection.getKey();
-			
-			LOGGER.debug("ConnectionKey received with information: "+providerKey);
-			
+
+			LOGGER.debug("ConnectionKey received with information: "
+					+ providerKey);
+
 			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
 					.getProviderId().toUpperCase()));
 		}
@@ -112,13 +143,37 @@ public class RegistrationController {
 			throws DuplicateEmailException {
 		LOGGER.debug("Registering user account with information: {}",
 				userAccountData);
-		
-		model.addAttribute("workAreas", workAreaService.list());		
-		
+
+		model.addAttribute("workAreas", workAreaService.list());
+		model.addAttribute("userTypeMap",getUserTypeMap());
+		model.addAttribute("workAreaMap",getWorkAreaCodesMap());
+
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
 			return VIEW_NAME_REGISTRATION_PAGE;
 		}
+
+		if (userAccountData.getUserType().equals(UserTypeDTO.professional)
+				&& (userAccountData.getWorkAreaCodes() == null || userAccountData
+						.getWorkAreaCodes().isEmpty())) {
+			
+			LOGGER.debug("WorkAreaCodes can not be empty for professional users");
+			addFieldError(MODEL_NAME_REGISTRATION_DTO,
+					RegistrationDTO.FIELD_NAME_WORK_AREAS,
+					null, ERROR_CODE_EMPTY_WORK_AREAS, result);		
+			return VIEW_NAME_REGISTRATION_PAGE;
+		}
+		
+		if (userAccountData.getUserType().equals(UserTypeDTO.professional)
+				&& (userAccountData.getTelephone() == null || userAccountData
+						.getTelephone().isEmpty())) {
+			
+			LOGGER.debug("Telephone can not be empty for professional users");
+			addFieldError(MODEL_NAME_REGISTRATION_DTO,
+					RegistrationDTO.FIELD_NAME_TELEPHONE,
+					null, ERROR_CODE_EMPTY_TELEPHONE, result);		
+			return VIEW_NAME_REGISTRATION_PAGE;
+		}		
 
 		LOGGER.debug("No validation errors found. Continuing registration process.");
 

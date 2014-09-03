@@ -61,33 +61,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				// Anyone can access the urls
 				.antMatchers("/auth/**", "/login", "/signin/**", "/signup/**",
-						"/user/register/**", "/register/**","/workAreas/**","/workAreaItems/**","/users/**","/cities/**","/states/**","/countries/**", "/").permitAll()
+						"/user/register/**", "/register/**", "/workAreas/**",
+						"/workAreaItems/**", "/users/**", "/cities/**",
+						"/states/**", "/countries/**", "/favicon.ico", "/")
+				.permitAll()
 				// The rest of the our application is protected.
 				.antMatchers("/**").hasRole("USER")
 				// Adds the SocialAuthenticationFilter to Spring Security's
 				// filter chain.
 				.and().apply(new SpringSocialConfigurer());
 	}
-	
-	  @Override
-	    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	        auth
-	                .userDetailsService(userDetailsService())
-	                .passwordEncoder(passwordEncoder());
-	    }
-	  
-	    @Bean
-	    public PasswordEncoder passwordEncoder() {
-	        return new BCryptPasswordEncoder(10);
-	    }
-	 
-	    @Bean
-	    public SocialUserDetailsService socialUserDetailsService() {
-	        return new SimpleSocialUserDetailsService(userDetailsService());
-	    }
-	 
-	    @Bean
-	    public UserDetailsService userDetailsService() {
-	        return new RepositoryUserDetailsService(userRepository);
-	    }	  
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth)
+			throws Exception {
+		auth.userDetailsService(userDetailsService()).passwordEncoder(
+				passwordEncoder());
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(10);
+	}
+
+	@Bean
+	public SocialUserDetailsService socialUserDetailsService() {
+		return new SimpleSocialUserDetailsService(userDetailsService());
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new RepositoryUserDetailsService(userRepository);
+	}
 }
