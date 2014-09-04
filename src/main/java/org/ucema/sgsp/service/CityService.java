@@ -37,6 +37,22 @@ public class CityService {
 	}
 
 	@Transactional
+	public List<CityDTO> list(String stateCode) {
+
+		List<City> cities = cityDAO.findAll();
+
+		List<City> citiesFiltered = new ArrayList<City>();
+		for (City city : cities) {
+			if (city.getIsEnabled()
+					&& city.getState().getCode().equals(stateCode)) {
+				citiesFiltered.add(city);
+			}
+		}
+
+		return cityTransformation.transformToApi(citiesFiltered);
+	}
+
+	@Transactional
 	public CityDTO get(Long id) {
 		City city = cityDAO.getOne(id);
 		if (city == null) {

@@ -31,4 +31,9 @@ public class CityController {
 	public @ResponseBody List<CityDTO> list() {
 		return cityService.list();
 	}
+	
+	@RequestMapping(value = "/cities/state/{stateCode}", method = RequestMethod.GET)
+	public @ResponseBody List<CityDTO> listState(@PathVariable String stateCode) {
+		return cityService.list(stateCode);
+	}	
 }
