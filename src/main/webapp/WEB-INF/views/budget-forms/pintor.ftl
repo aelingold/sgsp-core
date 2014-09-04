@@ -58,7 +58,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<label>¿Que tamaño tiene la superficie?</label>				        				
-					<input type="text" name="squareMeters" placeholder="Ingrese un valor en m2 aprox." size="30"/>
+					<input type="text" name="squareMeters" placeholder="Ingrese un valor en m2 aprox." size="30" class="form-control" />
 				</div>			
 			</div>
 			<#include "common.ftl">

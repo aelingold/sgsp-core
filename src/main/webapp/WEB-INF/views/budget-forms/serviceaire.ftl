@@ -82,7 +82,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<label>¿Cuantas frigorias tiene el aire?</label>
-					<input type="text" name="airConditionerPower" placeholder="Ej 2000, 3000, etc." size="30"/>
+					<input type="text" name="airConditionerPower" placeholder="Ej 2000, 3000, etc." size="30" class="form-control" />
 				</div>
 			</div>			
 			<#include "common.ftl">

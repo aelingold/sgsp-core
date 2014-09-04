@@ -1,59 +1,59 @@
+function showSelectService(){
+	$(".intro-text").animate({"left":"0%"}, 1000);
+}
+function hideSelectService(){
+	$(".intro-text").animate({"left":"-150%"}, 1000);
+}
+
+function showBudgetForm(serviceType){
+	$("#"+serviceType+"-budget-form").css("right","-150%");
+	$("#"+serviceType+"-budget-form").show();
+	$("#"+serviceType+"-budget-form").animate({"right":"0%"}, 1000);
+}
+function hideBudgetForm(serviceType){
+	$("#"+serviceType+"-budget-form").animate({"right":"-150%"}, 1000, function(){
+		$("#"+serviceType+"-budget-form").hide();
+	});
+}
+
 $(".home-service-option").on("click", function(){
 	var serviceType = $(this).attr("data-code");
 	switch(serviceType){
 		case "GAS":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#GAS-budget-form").css("right","-150%");
-			$("#GAS-budget-form").show();
-			$("#GAS-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()	
+			showBudgetForm(serviceType);
 			break;
 		case "PIN":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#PIN-budget-form").css("right","-150%");
-			$("#PIN-budget-form").show();
-			$("#PIN-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break;
 		case "PLO":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#PLO-budget-form").css("right","-150%");
-			$("#PLO-budget-form").show();
-			$("#PLO-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break;
 		case "ELE":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#ELE-budget-form").css("right","-150%");
-			$("#ELE-budget-form").show();
-			$("#ELE-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break;	
 		case "CER":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#CER-budget-form").css("right","-150%");
-			$("#CER-budget-form").show();
-			$("#CER-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break;
 		case "ALB":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#ALB-budget-form").css("right","-150%");
-			$("#ALB-budget-form").show();
-			$("#ALB-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break
 		case "FLE":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#FLE-budget-form").css("right","-150%");
-			$("#FLE-budget-form").show();
-			$("#FLE-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break
 		case "SAA":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#SAA-budget-form").css("right","-150%");
-			$("#SAA-budget-form").show();
-			$("#SAA-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break
 		case "SLB":
-			$(".intro-text").animate({"left":"-150%"}, 1000);			
-			$("#SLB-budget-form").css("right","-150%");
-			$("#SLB-budget-form").show();
-			$("#SLB-budget-form").animate({"right":"0%"}, 1000);
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break			
 		default:
 			break;
@@ -62,9 +62,25 @@ $(".home-service-option").on("click", function(){
 
 $(".changeServiceType").on("click", function(){
 	var serviceType = $($(this).parents("form")[0]).find("input[name='workAreaCode']").val();
-	
-	$(".intro-text").animate({"left":"0%"}, 1000);
-	$("#"+serviceType+"-budget-form").animate({"right":"-150%"}, 1000, function(){
-		$("#"+serviceType+"-budget-form").hide();
+	showSelectService();
+	hideBudgetForm(serviceType);	
+});
+
+$("select[name='stateCode']").change(function() {
+	var stateCode = $(this).val();
+	var citiesCombo = $(this).parents(".row").find("select[name='cityCode']");
+	$.ajax({
+	  type: "GET",
+	  url: basePath+"cities/state/"+stateCode
+	}).done(function(data) {
+		var citiesHTML = "";
+		if (data){
+			for(var i=0;i<data.length;i++){
+				var code = data[i].code;
+				var desc = data[i].description;
+				citiesHTML += "<option value='"+code+"'>"+desc+"</option>";
+			}
+		}
+		$(citiesCombo).html(citiesHTML);
 	});
 });

@@ -141,6 +141,10 @@
     <script src="<@c.url value='/static/new/js/jqBootstrapValidation.js'/>"></script>
     <script src="<@c.url value='/static/new/js/contact_me.js'/>"></script>
 
+	<script>
+		basePath="<@c.url value='/' />";
+	</script>
+
     <!-- Custom Theme JavaScript -->
     <script src="<@c.url value='/static/new/js/agency.js'/>"></script>    
     <script src="<@c.url value='/static/new/js/views/index.js'/>"></script>
