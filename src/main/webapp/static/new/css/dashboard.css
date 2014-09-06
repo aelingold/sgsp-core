@@ -1,0 +1,15 @@
+.nav-pills .active a{
+	background: #fed136 !important;
+}
+
+.dashboard-panel{
+	display:none;
+}
+
+.urgente{
+	color: #f00;	
+}
+
+.panel{
+	margin-top: 15px;
+}
