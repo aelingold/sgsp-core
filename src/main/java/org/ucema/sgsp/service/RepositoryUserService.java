@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionKey;
+import org.springframework.social.connect.UserProfile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
@@ -15,6 +18,7 @@ import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.persistence.model.WorkArea;
+import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.security.service.UserRepository;
 
@@ -38,6 +42,45 @@ public class RepositoryUserService implements UserService {
 		this.passwordEncoder = passwordEncoder;
 		this.repository = repository;
 	}
+	
+	/**
+	 * Creates the form object used in the registration form.
+	 * 
+	 * @param connection
+	 * @return If a user is signing in by using a social provider, this method
+	 *         returns a form object populated by the values given by the
+	 *         provider. Otherwise this method returns an empty form object
+	 *         (normal form registration).
+	 */
+	public RegistrationDTO createRegistrationDTO(Connection<?> connection) {
+		RegistrationDTO dto = new RegistrationDTO();
+
+		if (connection != null) {
+
+			LOGGER.debug("Connection object received with information: "
+					+ connection);
+
+			UserProfile socialMediaProfile = connection.fetchUserProfile();
+
+			LOGGER.debug("UserProfile received with information: "
+					+ socialMediaProfile);
+
+			dto.setEmail(socialMediaProfile.getEmail());
+			dto.setFirstName(socialMediaProfile.getFirstName());
+			dto.setLastName(socialMediaProfile.getLastName());
+
+			ConnectionKey providerKey = connection.getKey();
+
+			LOGGER.debug("ConnectionKey received with information: "
+					+ providerKey);
+
+			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
+					.getProviderId().toUpperCase()));
+		}
+
+		return dto;
+	}	
+	
 	
 	@Transactional
 	public UserDTO findByEmail(String email) {

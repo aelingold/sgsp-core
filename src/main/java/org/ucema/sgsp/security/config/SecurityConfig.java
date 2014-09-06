@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 				// Anyone can access the urls
-				.antMatchers("/auth/**", "/login", "/signin/**", "/signup/**",
+				.antMatchers("/connect/**","/auth/**", "/login", "/signin/**", "/signup/**",
 						"/user/register/**", "/register/**", "/workAreas/**",
 						"/workAreaItems/**", "/users/**", "/cities/**",
 						"/states/**", "/countries/**", "/favicon.ico", "/")

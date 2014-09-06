@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionKey;
-import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +23,6 @@ import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
-import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.security.util.SecurityUtil;
 import org.ucema.sgsp.service.UserService;
@@ -63,7 +60,7 @@ public class RegistrationController {
 		Connection<?> connection = providerSignInUtils
 				.getConnectionFromSession(request);
 
-		RegistrationDTO registration = createRegistrationDTO(connection);
+		RegistrationDTO registration = service.createRegistrationDTO(connection);
 		LOGGER.debug("Rendering registration form with information: {}",
 				registration);
 
@@ -94,44 +91,6 @@ public class RegistrationController {
 		
 		return workAreaMap;
 	}	
-
-	/**
-	 * Creates the form object used in the registration form.
-	 * 
-	 * @param connection
-	 * @return If a user is signing in by using a social provider, this method
-	 *         returns a form object populated by the values given by the
-	 *         provider. Otherwise this method returns an empty form object
-	 *         (normal form registration).
-	 */
-	private RegistrationDTO createRegistrationDTO(Connection<?> connection) {
-		RegistrationDTO dto = new RegistrationDTO();
-
-		if (connection != null) {
-
-			LOGGER.debug("Connection object received with information: "
-					+ connection);
-
-			UserProfile socialMediaProfile = connection.fetchUserProfile();
-
-			LOGGER.debug("UserProfile received with information: "
-					+ socialMediaProfile);
-
-			dto.setEmail(socialMediaProfile.getEmail());
-			dto.setFirstName(socialMediaProfile.getFirstName());
-			dto.setLastName(socialMediaProfile.getLastName());
-
-			ConnectionKey providerKey = connection.getKey();
-
-			LOGGER.debug("ConnectionKey received with information: "
-					+ providerKey);
-
-			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
-					.getProviderId().toUpperCase()));
-		}
-
-		return dto;
-	}
 
 	/**
 	 * Processes the form submissions of the registration form.
