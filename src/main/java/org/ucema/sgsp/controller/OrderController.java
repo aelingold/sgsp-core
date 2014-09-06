@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,11 +30,11 @@ public class OrderController {
 	public @ResponseBody List<OrderDTO> list() {
 		return orderService.list();
 	}
-
-	@RequestMapping(value = "/orders", method = RequestMethod.POST)
-	public @ResponseBody void saveOrUpdate(@RequestBody OrderDTO order) {
-		orderService.saveOrUpdate(order);
-	}
+	
+	@RequestMapping(value = "/orders/user/{userId}", method = RequestMethod.GET)
+	public @ResponseBody List<OrderDTO> list(@PathVariable Long userId) {
+		return orderService.list(userId);
+	}	
 
 	@RequestMapping(value = "/place-order", method = RequestMethod.POST)
 	public @ResponseBody void saveOrUpdate(

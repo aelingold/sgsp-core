@@ -51,16 +51,6 @@ public class OrderTransformation {
 		return result;
 	}
 
-	public List<Order> transformToModel(List<OrderDTO> orders) {
-		List<Order> result = new ArrayList<Order>();
-
-		for (OrderDTO order : orders) {
-			result.add(transformToModel(order));
-		}
-
-		return result;
-	}
-
 	public OrderDTO transformToApi(Order order) {
 		OrderDTO result = new OrderDTO();
 
@@ -69,10 +59,10 @@ public class OrderTransformation {
 		result.setPendingQuotes(order.getPendingQuotes());
 
 		if (order.getUser() != null) {
-			result.setUserId(order.getUser().getId());
+			result.setUsername(order.getUser().getEmail());
 		}
 		if (order.getWorkArea() != null) {
-			result.setWorkAreaId(order.getWorkArea().getId());
+			result.setWorkAreaCode(order.getWorkArea().getCode());
 		}
 		result.setWorkDate(order.getWorkDate());
 		result.setWorkDescription(order.getWorkDescription());
@@ -104,60 +94,6 @@ public class OrderTransformation {
 
 		for (OrderItem orderItem : orderItems) {
 			response.add(orderItem.getId());
-		}
-
-		return response;
-	}
-
-	public Order transformToModel(OrderDTO order) {
-		Order result = new Order();
-
-		result.setId(order.getId());
-		result.setPendingNotify(order.getPendingNotify());
-		result.setPendingQuotes(order.getPendingQuotes());
-
-		if (order.getUserId() != null) {
-			result.setUser(new User(order.getUserId()));
-		}
-		if (order.getWorkAreaId() != null) {
-			result.setWorkArea(new WorkArea(order.getWorkAreaId()));
-		}
-		result.setWorkDate(order.getWorkDate());
-		result.setWorkDescription(order.getWorkDescription());
-
-		if (order.getWorkDateType() != null) {
-			result.setWorkDateType(WorkDateType.valueOf(order.getWorkDateType()));
-		}
-
-		if (order.getOrderItemIds() != null) {
-			result.setOrderItems(getWorkAreaItems(order.getOrderItemIds()));
-		}
-		result.setCreatedAt(new Date());		
-		result.setAirConditionerPower(order.getAirConditionerPower());
-
-		if (order.getSquareMeters() != null
-				&& !order.getSquareMeters().isEmpty()) {
-			result.setSquareMeters(new BigDecimal(order.getSquareMeters()));
-		}
-
-		if (order.getStateCode() != null && !order.getStateCode().isEmpty()) {
-			result.setState(new State(stateService.findByCode(
-					order.getStateCode()).getId()));
-		}
-
-		if (order.getCityCode() != null && !order.getCityCode().isEmpty()) {
-			result.setCity(new City(cityService.findByCode(order.getCityCode())
-					.getId()));
-		}
-
-		return result;
-	}
-
-	private List<OrderItem> getWorkAreaItems(List<Long> orderItemIds) {
-		List<OrderItem> response = new ArrayList<OrderItem>();
-
-		for (Long orderItemId : orderItemIds) {
-			response.add(new OrderItem(orderItemId));
 		}
 
 		return response;

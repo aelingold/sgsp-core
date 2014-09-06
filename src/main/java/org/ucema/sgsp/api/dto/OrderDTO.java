@@ -8,8 +8,8 @@ public class OrderDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Long userId;
-	private Long workAreaId;
+	private String username;
+	private String workAreaCode;
 	private String workDescription;
 	private Date workDate;
 	private String stateCode;
@@ -38,8 +38,8 @@ public class OrderDTO implements Serializable {
 		result.setSquareMeters(squareMeters);
 		result.setCityCode(cityCode);
 		result.setStateCode(stateCode);
-		result.setUserId(userId);
-		result.setWorkAreaId(workAreaId);
+		result.setUsername(username);
+		result.setWorkAreaCode(workAreaCode);
 		result.setWorkDate(workDate);
 		result.setWorkDateType(workDateType);
 		result.setWorkDescription(workDescription);
@@ -79,13 +79,13 @@ public class OrderDTO implements Serializable {
 		return this;
 	}
 	
-	public OrderDTO withUserId(Long userId) {
-		this.userId = userId;
+	public OrderDTO withUsername(String username) {
+		this.username = username;
 		return this;
 	}
 	
-	public OrderDTO withWorkAreaId(Long workAreaId) {
-		this.workAreaId = workAreaId;
+	public OrderDTO withWorkAreaCode(String workAreaCode) {
+		this.workAreaCode = workAreaCode;
 		return this;
 	}
 	
@@ -112,22 +112,6 @@ public class OrderDTO implements Serializable {
 	public OrderDTO withPendingQuotes(Boolean pendingQuotes) {
 		this.pendingQuotes = pendingQuotes;
 		return this;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public Long getWorkAreaId() {
-		return workAreaId;
-	}
-
-	public void setWorkAreaId(Long workAreaId) {
-		this.workAreaId = workAreaId;
 	}
 
 	public Long getId() {
@@ -216,5 +200,21 @@ public class OrderDTO implements Serializable {
 
 	public void setAirConditionerPower(Integer airConditionerPower) {
 		this.airConditionerPower = airConditionerPower;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getWorkAreaCode() {
+		return workAreaCode;
+	}
+
+	public void setWorkAreaCode(String workAreaCode) {
+		this.workAreaCode = workAreaCode;
 	}
 }
