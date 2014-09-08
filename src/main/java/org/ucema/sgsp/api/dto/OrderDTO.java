@@ -10,16 +10,20 @@ public class OrderDTO implements Serializable {
 	private Long id;
 	private String username;
 	private String workAreaCode;
+	private String workAreaDescription;
 	private String workDescription;
 	private Date workDate;
 	private String stateCode;
+	private String stateDescription;
 	private String cityCode;
+	private String cityDescription;
 	private String squareMeters;
 	private Integer airConditionerPower;
 	private Boolean pendingNotify = true;
 	private Boolean pendingQuotes = true;
 	private String workDateType;
 	private List<Long> orderItemIds;
+	private List<String> workAreaItemCodes;
 
 	public OrderDTO() {
 		super();
@@ -216,5 +220,37 @@ public class OrderDTO implements Serializable {
 
 	public void setWorkAreaCode(String workAreaCode) {
 		this.workAreaCode = workAreaCode;
+	}
+
+	public String getWorkAreaDescription() {
+		return workAreaDescription;
+	}
+
+	public void setWorkAreaDescription(String workAreaDescription) {
+		this.workAreaDescription = workAreaDescription;
+	}
+
+	public String getStateDescription() {
+		return stateDescription;
+	}
+
+	public void setStateDescription(String stateDescription) {
+		this.stateDescription = stateDescription;
+	}
+
+	public String getCityDescription() {
+		return cityDescription;
+	}
+
+	public void setCityDescription(String cityDescription) {
+		this.cityDescription = cityDescription;
+	}
+
+	public List<String> getWorkAreaItemCodes() {
+		return workAreaItemCodes;
+	}
+
+	public void setWorkAreaItemCodes(List<String> workAreaItemCodes) {
+		this.workAreaItemCodes = workAreaItemCodes;
 	}
 }

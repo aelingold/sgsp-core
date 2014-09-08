@@ -29,7 +29,11 @@ public abstract class BaseEntity<ID> {
         return modificationTime;
     }
 
-    public long getVersion() {
+    public void setCreationTime(DateTime creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public long getVersion() {
         return version;
     }
 

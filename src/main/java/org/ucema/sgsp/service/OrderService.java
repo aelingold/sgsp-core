@@ -37,6 +37,17 @@ public class OrderService {
 
 		return orderTransformation.transformToApi(filteredOrders);
 	}
+	
+	@Transactional
+	public List<OrderDTO> list(String username) {
+
+		List<Order> orders = orderDAO.findAll();
+		List<Order> filteredOrders = orders.stream()
+				.filter(o -> o.getUser().getEmail().equals(username))
+				.collect(Collectors.toList());
+
+		return orderTransformation.transformToApi(filteredOrders);
+	}	
 
 	@Transactional
 	public OrderDTO saveOrUpdate(PlaceOrderDTO order) {

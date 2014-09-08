@@ -12,6 +12,7 @@ import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
@@ -42,7 +43,7 @@ public class RepositoryUserService implements UserService {
 		this.passwordEncoder = passwordEncoder;
 		this.repository = repository;
 	}
-	
+
 	/**
 	 * Creates the form object used in the registration form.
 	 * 
@@ -79,13 +80,16 @@ public class RepositoryUserService implements UserService {
 		}
 
 		return dto;
-	}	
-	
-	
+	}
+
 	@Transactional
 	public UserDTO findByEmail(String email) {
-		return userTransformation.transformToApi(repository.findByEmail(email));
-	}	
+		return userTransformation.transformToApi(find(email));
+	}
+
+	private User find(String email) {
+		return repository.findByEmail(email);
+	}
 
 	@Transactional
 	public List<UserDTO> list() {
@@ -93,16 +97,21 @@ public class RepositoryUserService implements UserService {
 	}
 
 	@Transactional
-	public UserDTO saveOrUpdate(UserDTO user) {
-		User response = repository.save(userTransformation
-				.transformToModel(user));
-		user.setId(response.getId());
-		return user;
+	public UserDTO saveOrUpdate(UserDTO userDTO) {
+
+		User user = find(userDTO.getEmail());
+		User response = repository.save(userTransformation.updateFields(user,
+				userDTO));
+		userDTO.setId(response.getId());
+		return userDTO;
 	}
 
 	@Transactional
-	public void delete(UserDTO user) {
-		repository.delete(userTransformation.transformToModel(user));
+	public void update(DashBoardUserDTO dashBoardUserDTO) {
+
+		User user = find(dashBoardUserDTO.getEmail());
+		repository
+				.save(userTransformation.updateFields(user, dashBoardUserDTO));
 	}
 
 	@Transactional

@@ -18,27 +18,62 @@ public class UserDTO implements Serializable {
 	private List<UserWorkRateDTO> userWorkRates;
 	private Boolean isProfessional;
 	private Role role;
-
-	public UserDTO() {
-		super();
+	
+	public static UserDTO newInstance() {
+		return new UserDTO();
 	}
 
-	public UserDTO(Long id, String firstName, String lastName, String email,
-			String telephone, String password, List<WorkAreaDTO> workAreas,
-			List<UserWorkRateDTO> userWorkRates, Boolean isProfessional,
-			Role role) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.telephone = telephone;
-		this.password = password;
-		this.workAreas = workAreas;
-		this.userWorkRates = userWorkRates;
-		this.isProfessional = isProfessional;
+	public UserDTO build() {
+		UserDTO result = new UserDTO();
+
+		result.setId(id);
+		result.setEmail(email);
+		result.setFirstName(firstName);
+		result.setIsProfessional(isProfessional);
+		result.setLastName(lastName);
+		result.setPassword(password);
+		result.setRole(role);
+		result.setTelephone(telephone);
+		result.setUserWorkRates(userWorkRates);
+		result.setWorkAreas(workAreas);
+
+		return result;
+	}
+	
+	public UserDTO withRole(Role role) {
 		this.role = role;
+		return this;
 	}
+	
+	public UserDTO withTelephone(String telephone) {
+		this.telephone = telephone;
+		return this;
+	}	
+	
+	public UserDTO withFirstName(String firstName) {
+		this.firstName = firstName;
+		return this;
+	}
+	
+	public UserDTO withLastName(String lastName) {
+		this.lastName = lastName;
+		return this;
+	}	
+	
+	public UserDTO withEmail(String email) {
+		this.email = email;
+		return this;
+	}	
+	
+	public UserDTO withIsProfessionl(Boolean isProfessional) {
+		this.isProfessional = isProfessional;
+		return this;
+	}	
+	
+	public UserDTO withId(Long id) {
+		this.id = id;
+		return this;
+	}	
 
 	public String getFirstName() {
 		return firstName;
@@ -118,32 +153,5 @@ public class UserDTO implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserDTO [id=");
-		builder.append(id);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", telephone=");
-		builder.append(telephone);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", workAreas=");
-		builder.append(workAreas);
-		builder.append(", userWorkRates=");
-		builder.append(userWorkRates);
-		builder.append(", isProfessional=");
-		builder.append(isProfessional);
-		builder.append(", role=");
-		builder.append(role);
-		builder.append("]");
-		return builder.toString();
 	}
 }

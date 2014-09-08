@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.security.model.User;
 
@@ -82,5 +83,25 @@ public class UserTransformation {
 		result.setRole(user.getRole());
 
 		return result;
+	}
+	
+	public User updateFields(User user,UserDTO userDTO){
+		
+		user.setEmail(userDTO.getEmail());
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setTelephone(userDTO.getTelephone());
+		
+		return user;
+	}
+
+	public User updateFields(User user, DashBoardUserDTO dashBoardUserDTO) {
+
+		user.setEmail(dashBoardUserDTO.getEmail());
+		user.setFirstName(dashBoardUserDTO.getFirstName());
+		user.setLastName(dashBoardUserDTO.getLastName());
+		user.setTelephone(dashBoardUserDTO.getTelephone());
+		
+		return user;
 	}
 }

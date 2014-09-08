@@ -86,77 +86,109 @@
 							  </div>
 							</div>
 						</div>
-						
-						<#-- ejemplo de un presupuesto pedido -->
-						<div class="row">	
-							<div class="panel panel-default">
-						  		<div class="panel-heading">
-							    	<h3 class="panel-title">
-							    		Necesito un gasista
-							    		<span class="pull-right urgente">Es urgente</span>							    	
-							    	</h3>
-							  	</div>
-							  	<div class="panel-body">
-							  		<div class="row">
-				                        <div class="form-group col-md-6">
-				                        	<label>Tipo de inmueble:</label> Casa
-				                        </div>
-				                        <div class="form-group col-md-6">
-				                        	<label>Tarea:</label> Revisar una perdida de gas
-				                        </div>
-			                       </div>
-			                       <div class="row">
-				                        <div class="form-group col-md-6">
-				                        	<label>Artefactos relacionados:</label> Calefon, Termotanque
-				                        </div>
-				                        <div class="form-group col-md-6">
-				                        	<label>Trabajo a realizar en:</label> Ciudad de Buenos Aires, Palermo
-				                        </div>
-			                       </div>
-			                       <div class="row">
-				                        <div class="form-group col-md-12">
-				                        	<label>Detalle del trabajo:</label> Hay que venir y revisar todos los artefactos
-				                        </div>
-			                       </div>
-							  	</div>
+												
+						<#list orders as order>
+							<#-- ejemplo de un presupuesto pedido -->
+							<div class="row">
+								<div class="panel panel-default">
+							  		<div class="panel-heading">
+								    	<h3 class="panel-title">
+								    		Necesito un ${order.workAreaDescription}
+								    		<#if order.workDateType='URGENT'>
+								    			<span class="pull-right urgente">Es urgente</span>
+								    		</#if>
+								    	</h3>
+								  	</div>
+								  	<div class="panel-body">
+								  		<div class="row">
+								  			<#list order.workAreaItemCodes as workAreaItemCode>
+								  				<#list workAreaItems as workAreaItem>
+													<#if workAreaItem.code=workAreaItemCode>
+														<#list workAreaQuestions as workAreaQuestion>
+															<#if workAreaQuestion.workAreaCode=workAreaItem.workAreaCode && workAreaQuestion.groupType=workAreaItem.groupType>
+						                        				<div class="form-group col-md-6">
+						                        					<label>${workAreaQuestion.description}</label> ${workAreaItem.description}
+						                        				</div>
+								    						</#if>
+								    					</#list>
+								    				</#if>								  					
+								  				</#list>
+					                   		</#list>						                        
+					                   </div>
+					                   <#if order.squareMeters??>
+					                       <div class="row">
+						                        <div class="form-group col-md-12">
+						                        	<label>¿Que tamaño tiene la superficie?</label> ${order.squareMeters} m2
+						                        </div>
+					                       </div>
+									   </#if>
+					                   <#if order.airConditionerPower??>
+					                       <div class="row">
+						                        <div class="form-group col-md-12">
+						                        	<label>¿Cuantas frigorias tiene el aire?</label> ${order.airConditionerPower} frigorias
+						                        </div>
+					                       </div>
+									   </#if>									   					                       					                   
+				                       <div class="row">
+					                        <div class="form-group col-md-12">
+					                        	<label>Trabajo a realizar en:</label> ${order.stateDescription}, ${(order.cityDescription)!""}
+					                        </div>
+				                       </div>				                       
+				                       <div class="row">
+					                        <div class="form-group col-md-12">
+					                        	<label>Detalle del trabajo:</label> ${order.workDescription}
+					                        </div>
+				                       </div>
+								  	</div>
+								</div>
 							</div>
-						</div>
-						<#-- fin de ejemplo de un presupuesto pedido -->
+							<#-- fin de ejemplo de un presupuesto pedido -->						
+						</#list>						
 						
 					</div>
 					
 					<div id="perfil-panel" class="col-md-12 dashboard-panel" style="display:block;">
-						<div class="row">
-	                        <div class="form-group col-md-6">
-	                        	<label>Nombre</label>
-	                        	<input type="text" class="form-control" value="Kevin">
-	                        </div>
-	                        <div class="form-group col-md-6">
-	                            <label>Apellido</label>
-	                            <input type="text" class="form-control" value="Furman">
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="form-group col-md-6">
-	                            <label>Email</label>	                        	
-	                        	<input type="text" class="form-control" value="asdasd@hotmail.com" disabled>
-	                        </div>
-	                        <div class="form-group col-md-6">
-	                            <label>Contraseña actual</label>
-	                            <input type="password" class="form-control" value="xxxxxx" disabled>
-	                        </div>
-	                    </div>	                    
-	                    <div class="row">
-	                        <div class="form-group col-md-6">
-	                            <label>Contraseña nueva</label>
-	                            <input type="password" class="form-control">
-	                        </div>
-	                        <div class="form-group col-md-6">
-	                            <label>Repetir contraseña nueva</label>
-	                            <input type="password" class="form-control">
-	                        </div>
-	                    </div>
-	                    <button type="submit" class="btn btn-default pull-right">Guardar</button>
+						<form action="/dashboard/change-user-data" method="POST" enctype="utf8">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<@spring.bind "user" />
+							<div class="row">
+		                        <div class="form-group col-md-6">	                        
+		                        	<label>Nombre</label>
+									<@spring.formInput "user.firstName", 'class="form-control"'/>
+		                        	<@spring.showErrors "<br>" />	                        	
+		                        </div>
+		                        <div class="form-group col-md-6">
+		                            <label>Apellido</label>
+									<@spring.formInput "user.lastName", 'class="form-control"'/>
+		                        	<@spring.showErrors "<br>" />
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="form-group col-md-6">
+		                            <label>Email</label>
+		                        	<@spring.formInput "user.email", 'class="form-control" readonly'/>
+		                        	<@spring.showErrors "<br>" />	                                           	
+		                        </div>
+		                        <div class="form-group col-md-6">
+		                            <label>Contraseña actual</label>
+	                                <@spring.formPasswordInput "user.password", 'class="form-control"'/>
+	                                <@spring.showErrors "<br>" />
+		                        </div>
+		                    </div>	                    
+		                    <div class="row">
+		                        <div class="form-group col-md-6">
+		                            <label>Contraseña nueva</label>
+	                                <@spring.formPasswordInput "user.newPassword", 'class="form-control"'/>
+	                                <@spring.showErrors "<br>" />	                            
+		                        </div>
+		                        <div class="form-group col-md-6">
+		                            <label>Repetir contraseña nueva</label>
+	                                <@spring.formPasswordInput "user.newPasswordVerification", 'class="form-control"'/>
+	                                <@spring.showErrors "<br>" />	                            
+		                        </div>
+		                    </div>
+		                    <button type="submit" class="btn btn-default pull-right">Guardar</button>
+	                    </form>
                    	</div>
 					
 					

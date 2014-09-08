@@ -3,6 +3,7 @@ package org.ucema.sgsp.service;
 import java.util.List;
 
 import org.springframework.social.connect.Connection;
+import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
@@ -18,7 +19,7 @@ public interface UserService {
     
     UserDTO saveOrUpdate(UserDTO user);
     
-    void delete(UserDTO user);
+    void update(DashBoardUserDTO dashBoardUserDTO);
     
     void delete(Long id);
     

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -63,6 +64,7 @@ public class OrderTransformation {
 		}
 		if (order.getWorkArea() != null) {
 			result.setWorkAreaCode(order.getWorkArea().getCode());
+			result.setWorkAreaDescription(order.getWorkArea().getDescription());
 		}
 		result.setWorkDate(order.getWorkDate());
 		result.setWorkDescription(order.getWorkDescription());
@@ -70,6 +72,9 @@ public class OrderTransformation {
 
 		if (order.getOrderItems() != null) {
 			result.setOrderItemIds(getOrderItemIds(order.getOrderItems()));
+			result.setWorkAreaItemCodes(order.getOrderItems().stream()
+					.map(o -> o.getWorkAreaItem().getCode())
+					.collect(Collectors.toList()));
 		}
 
 		if (order.getSquareMeters() != null) {
@@ -80,10 +85,12 @@ public class OrderTransformation {
 
 		if (order.getState() != null) {
 			result.setStateCode(order.getState().getCode());
+			result.setStateDescription(order.getState().getDescription());
 		}
 
 		if (order.getCity() != null) {
 			result.setCityCode(order.getCity().getCode());
+			result.setCityDescription(order.getCity().getDescription());
 		}
 
 		return result;

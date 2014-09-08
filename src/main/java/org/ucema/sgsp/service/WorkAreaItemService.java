@@ -1,6 +1,7 @@
 package org.ucema.sgsp.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -16,14 +17,22 @@ public class WorkAreaItemService {
 
 	@Autowired
 	private WorkAreaItemTransformation workAreaItemTransformation;
-	
+
 	@Autowired
 	private WorkAreaItemDAO workAreaItemDAO;
 
 	@Transactional
 	public List<WorkAreaItemDTO> list() {
-		return workAreaItemTransformation
-				.transformToApi(workAreaItemDAO.findAll());
+		return workAreaItemTransformation.transformToApi(workAreaItemDAO
+				.findAll());
+	}
+
+	@Transactional
+	public List<WorkAreaItemDTO> list(String workAreaCode) {
+		return workAreaItemTransformation.transformToApi(workAreaItemDAO
+				.findAll().stream()
+				.filter(w -> w.getWorkArea().getCode().equals(workAreaCode))
+				.collect(Collectors.toList()));
 	}
 
 	@Transactional
@@ -57,13 +66,13 @@ public class WorkAreaItemService {
 		}
 		return workAreaItemTransformation.transformToApi(workAreaItem);
 	}
-	
+
 	@Transactional
-	public WorkAreaItemDTO findByCode(String code){
+	public WorkAreaItemDTO findByCode(String code) {
 		WorkAreaItem workAreaItem = workAreaItemDAO.findByCode(code);
 		if (workAreaItem == null) {
 			throw new RuntimeException("workAreaItem not found");
-		}		
-		return workAreaItemTransformation.transformToApi(workAreaItem);		
-	}	
+		}
+		return workAreaItemTransformation.transformToApi(workAreaItem);
+	}
 }

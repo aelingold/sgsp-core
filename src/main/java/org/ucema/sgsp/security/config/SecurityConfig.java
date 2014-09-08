@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/connect/**","/auth/**", "/login", "/signin/**", "/signup/**",
 						"/user/register/**", "/register/**", "/workAreas/**",
 						"/workAreaItems/**", "/users/**", "/cities/**",
-						"/states/**", "/countries/**", "/favicon.ico", "/", "/dashboard")
+						"/states/**", "/countries/**", "/favicon.ico", "/")
 				.permitAll()
 				// The rest of the our application is protected.
 				.antMatchers("/**").hasRole("USER")

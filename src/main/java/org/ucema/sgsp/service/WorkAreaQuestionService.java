@@ -1,6 +1,7 @@
 package org.ucema.sgsp.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -16,9 +17,20 @@ public class WorkAreaQuestionService {
 
 	@Autowired
 	private WorkAreaQuestionTransformation workAreaQuestionTransformation;
-	
+
 	@Autowired
 	private WorkAreaQuestionDAO workAreaQuestionDAO;
+
+	@Transactional
+	public List<WorkAreaQuestionDTO> list(String workAreaCode) {
+		return workAreaQuestionTransformation
+				.transformToApi(workAreaQuestionDAO
+						.findAll()
+						.stream()
+						.filter(w -> w.getWorkArea().getCode()
+								.equals(workAreaCode))
+						.collect(Collectors.toList()));
+	}
 
 	@Transactional
 	public List<WorkAreaQuestionDTO> list() {
@@ -28,8 +40,9 @@ public class WorkAreaQuestionService {
 
 	@Transactional
 	public WorkAreaQuestionDTO saveOrUpdate(WorkAreaQuestionDTO workAreaQuestion) {
-		WorkAreaQuestion response = workAreaQuestionDAO.save(workAreaQuestionTransformation
-				.transformToModel(workAreaQuestion));
+		WorkAreaQuestion response = workAreaQuestionDAO
+				.save(workAreaQuestionTransformation
+						.transformToModel(workAreaQuestion));
 		workAreaQuestion.setId(response.getId());
 		return workAreaQuestion;
 	}
@@ -42,7 +55,7 @@ public class WorkAreaQuestionService {
 
 	@Transactional
 	public void delete(Long id) {
-		WorkAreaQuestion workAreaQuestion= workAreaQuestionDAO.getOne(id);
+		WorkAreaQuestion workAreaQuestion = workAreaQuestionDAO.getOne(id);
 		if (workAreaQuestion == null) {
 			throw new RuntimeException("workAreaQuestion not found");
 		}
