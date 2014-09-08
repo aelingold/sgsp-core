@@ -26,7 +26,7 @@ public class UserWorkRate {
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_user"))
 	private User user;
 	private String comment;
-	private Integer rate;
+	private String rate;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -63,11 +63,11 @@ public class UserWorkRate {
 		this.comment = comment;
 	}
 
-	public Integer getRate() {
+	public String getRate() {
 		return rate;
 	}
 
-	public void setRate(Integer rate) {
+	public void setRate(String rate) {
 		this.rate = rate;
 	}
 }

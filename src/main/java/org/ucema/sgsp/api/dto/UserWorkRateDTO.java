@@ -8,7 +8,7 @@ public class UserWorkRateDTO implements Serializable {
 	private Long id;
 	private UserDTO user;
 	private String comment;
-	private Integer rate;
+	private String rate;
 
 	public Long getId() {
 		return id;
@@ -34,11 +34,11 @@ public class UserWorkRateDTO implements Serializable {
 		this.comment = comment;
 	}
 
-	public Integer getRate() {
+	public String getRate() {
 		return rate;
 	}
 
-	public void setRate(Integer rate) {
+	public void setRate(String rate) {
 		this.rate = rate;
 	}
 

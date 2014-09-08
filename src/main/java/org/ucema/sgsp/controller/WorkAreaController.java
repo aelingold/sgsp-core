@@ -18,22 +18,22 @@ public class WorkAreaController {
 	@Autowired
 	private WorkAreaService workAreaService;
 
-	@RequestMapping(value = "/workAreas/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/work-areas/{id}", method = RequestMethod.GET)
 	public @ResponseBody WorkAreaDTO get(@PathVariable Long id) {
 		return workAreaService.get(id);
 	}
 	
-	@RequestMapping(value = "/workAreas", method = RequestMethod.GET)
+	@RequestMapping(value = "/work-areas", method = RequestMethod.GET)
 	public @ResponseBody List<WorkAreaDTO> list() {
 		return workAreaService.list();
 	}
 
-	@RequestMapping(value = "/workAreas", method = RequestMethod.POST)
+	@RequestMapping(value = "/work-areas", method = RequestMethod.POST)
 	public @ResponseBody void saveOrUpdate(@RequestBody WorkAreaDTO workArea) {
 		workAreaService.saveOrUpdate(workArea);
 	}
 
-	@RequestMapping(value = "/workAreas/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/work-areas/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {
 		workAreaService.delete(id);
 	}

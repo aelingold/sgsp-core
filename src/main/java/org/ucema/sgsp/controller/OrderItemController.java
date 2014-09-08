@@ -18,22 +18,22 @@ public class OrderItemController {
 	@Autowired
 	private OrderItemService orderItemService;
 
-	@RequestMapping(value = "/orderItems/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/order-items/{id}", method = RequestMethod.GET)
 	public @ResponseBody OrderItemDTO get(@PathVariable Long id) {
 		return orderItemService.get(id);
 	}
 	
-	@RequestMapping(value = "/orderItems", method = RequestMethod.GET)
+	@RequestMapping(value = "/order-items", method = RequestMethod.GET)
 	public @ResponseBody List<OrderItemDTO> list() {
 		return orderItemService.list();
 	}
 
-	@RequestMapping(value = "/orderItems", method = RequestMethod.POST)
+	@RequestMapping(value = "/order-items", method = RequestMethod.POST)
 	public @ResponseBody void saveOrUpdate(@RequestBody OrderItemDTO orderItem) {
 		orderItemService.saveOrUpdate(orderItem);
 	}
 
-	@RequestMapping(value = "/orderItems/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/order-items/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {
 		orderItemService.delete(id);
 	}

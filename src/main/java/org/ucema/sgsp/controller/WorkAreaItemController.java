@@ -18,22 +18,22 @@ public class WorkAreaItemController {
 	@Autowired
 	private WorkAreaItemService workAreaItemService;
 
-	@RequestMapping(value = "/workAreaItems/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/work-area-items/{id}", method = RequestMethod.GET)
 	public @ResponseBody WorkAreaItemDTO get(@PathVariable Long id) {
 		return workAreaItemService.get(id);
 	}
 	
-	@RequestMapping(value = "/workAreaItems", method = RequestMethod.GET)
+	@RequestMapping(value = "/work-area-items", method = RequestMethod.GET)
 	public @ResponseBody List<WorkAreaItemDTO> list() {
 		return workAreaItemService.list();
 	}
 
-	@RequestMapping(value = "/workAreaItems", method = RequestMethod.POST)
+	@RequestMapping(value = "/work-area-items", method = RequestMethod.POST)
 	public @ResponseBody void saveOrUpdate(@RequestBody WorkAreaItemDTO workAreaItem) {
 		workAreaItemService.saveOrUpdate(workAreaItem);
 	}
 
-	@RequestMapping(value = "/workAreaItems/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/work-area-items/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {
 		workAreaItemService.delete(id);
 	}

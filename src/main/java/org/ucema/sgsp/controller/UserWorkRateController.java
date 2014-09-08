@@ -18,22 +18,22 @@ public class UserWorkRateController {
 	@Autowired
 	private UserWorkRateService userWorkRateService;
 
-	@RequestMapping(value = "/userWorkRates/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user-work-rates/{id}", method = RequestMethod.GET)
 	public @ResponseBody UserWorkRateDTO get(@PathVariable Long id) {
 		return userWorkRateService.get(id);
 	}
 	
-	@RequestMapping(value = "/userWorkRates", method = RequestMethod.GET)
+	@RequestMapping(value = "/user-work-rates", method = RequestMethod.GET)
 	public @ResponseBody List<UserWorkRateDTO> list() {
 		return userWorkRateService.list();
 	}
 
-	@RequestMapping(value = "/userWorkRates", method = RequestMethod.POST)
+	@RequestMapping(value = "/user-work-rates", method = RequestMethod.POST)
 	public @ResponseBody void saveOrUpdate(@RequestBody UserWorkRateDTO userWorkRate) {
 		userWorkRateService.saveOrUpdate(userWorkRate);
 	}
 
-	@RequestMapping(value = "/userWorkRates/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/user-work-rates/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {
 		userWorkRateService.delete(id);
 	}
