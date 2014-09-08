@@ -1,19 +1,22 @@
 package org.ucema.sgsp.persistence.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.security.model.User;
 
 @Entity
@@ -30,7 +33,14 @@ public class Quote {
 	@JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "fk_quote_order"))
 	private Order order;	
 	private String description;
-	private BigDecimal amount;
+	@Embedded
+	private Amount amount;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "valid_date_until")
+	private Date validDateUntil;
+	@OneToMany(mappedBy = "quote",orphanRemoval=true)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private List<QuoteQuestion> quoteQuestions;	
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -84,11 +94,27 @@ public class Quote {
 		this.description = description;
 	}
 
-	public BigDecimal getAmount() {
+	public Amount getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Amount amount) {
 		this.amount = amount;
+	}
+
+	public Date getValidDateUntil() {
+		return validDateUntil;
+	}
+
+	public void setValidDateUntil(Date validDateUntil) {
+		this.validDateUntil = validDateUntil;
+	}
+
+	public List<QuoteQuestion> getQuoteQuestions() {
+		return quoteQuestions;
+	}
+
+	public void setQuoteQuestions(List<QuoteQuestion> quoteQuestions) {
+		this.quoteQuestions = quoteQuestions;
 	}
 }

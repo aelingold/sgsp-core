@@ -1,7 +1,8 @@
 package org.ucema.sgsp.api.dto;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 public class QuoteDTO implements Serializable {
 
@@ -10,21 +11,63 @@ public class QuoteDTO implements Serializable {
 	private Long userId;
 	private Long orderId;
 	private String description;
-	private BigDecimal amount;
+	private AmountDTO amount;
+	private Date validDateUntil;
+	private List<QuoteQuestionDTO> quoteQuestions;
+	private List<Long> quoteQuestionIds;
 
 	public QuoteDTO() {
 		super();
 	}
 
-	public QuoteDTO(Long id, Long userId, Long orderId, String description,
-			BigDecimal amount) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.orderId = orderId;
-		this.description = description;
-		this.amount = amount;
+	public static QuoteDTO newInstance() {
+		return new QuoteDTO();
 	}
+
+	public QuoteDTO build() {
+		QuoteDTO result = new QuoteDTO();
+
+		result.setId(id);
+		result.setOrderId(orderId);
+		result.setUserId(userId);
+		result.setDescription(description);
+		result.setAmount(amount);
+		result.setValidDateUntil(validDateUntil);
+		result.setQuoteQuestions(quoteQuestions);
+		result.setQuoteQuestionIds(quoteQuestionIds);
+
+		return result;
+	}
+	
+	public QuoteDTO withAmount(AmountDTO amount) {
+		this.amount	 = amount;
+		return this;
+	}	
+	
+	public QuoteDTO withValidDateUntil(Date validDateUntil) {
+		this.validDateUntil = validDateUntil;
+		return this;
+	}	
+	
+	public QuoteDTO withDescription(String description) {
+		this.description = description;
+		return this;
+	}	
+	
+	public QuoteDTO withUserId(Long userId) {
+		this.userId = userId;
+		return this;
+	}	
+	
+	public QuoteDTO withId(Long id) {
+		this.id = id;
+		return this;
+	}
+	
+	public QuoteDTO withOrderId(Long orderId) {
+		this.orderId = orderId;
+		return this;
+	}	
 
 	public Long getUserId() {
 		return userId;
@@ -58,28 +101,35 @@ public class QuoteDTO implements Serializable {
 		this.description = description;
 	}
 
-	public BigDecimal getAmount() {
+	public AmountDTO getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(AmountDTO amount) {
 		this.amount = amount;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("QuoteDTO [id=");
-		builder.append(id);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", orderId=");
-		builder.append(orderId);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", amount=");
-		builder.append(amount);
-		builder.append("]");
-		return builder.toString();
+	public Date getValidDateUntil() {
+		return validDateUntil;
+	}
+
+	public void setValidDateUntil(Date validDateUntil) {
+		this.validDateUntil = validDateUntil;
+	}
+
+	public List<QuoteQuestionDTO> getQuoteQuestions() {
+		return quoteQuestions;
+	}
+
+	public void setQuoteQuestions(List<QuoteQuestionDTO> quoteQuestions) {
+		this.quoteQuestions = quoteQuestions;
+	}
+
+	public List<Long> getQuoteQuestionIds() {
+		return quoteQuestionIds;
+	}
+
+	public void setQuoteQuestionIds(List<Long> quoteQuestionIds) {
+		this.quoteQuestionIds = quoteQuestionIds;
 	}
 }

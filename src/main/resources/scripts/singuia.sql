@@ -1964,3 +1964,7 @@ INSERT INTO `cities` (`id`,`code`,`description`,`state_id`,`is_enabled`) VALUES 
 INSERT INTO `cities` (`id`,`code`,`description`,`state_id`,`is_enabled`) VALUES (998,'LCEJL','Todd',1,1);
 INSERT INTO `cities` (`id`,`code`,`description`,`state_id`,`is_enabled`) VALUES (999,'TRRZM','Tolosa',1,1);
 INSERT INTO `cities` (`id`,`code`,`description`,`state_id`,`is_enabled`) VALUES (1000,'PWBPP','Tomas Jofre',1,1);
+
+INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`) VALUES (1, 'USD', 1, 'Dólar', 'U$S');
+INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`) VALUES (2, 'ARS', 1, 'Peso Argentino', '$');
+INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`) VALUES (3, 'BRL', 0, 'Real', 'R$');
