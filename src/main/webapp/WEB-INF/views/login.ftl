@@ -49,7 +49,7 @@
         <div class="container no-top-border-radius">
             <div class="row">
                 <div class="col-lg-6" style="border-right: 1px solid #ddd;">     
-			      <form action="/login/authenticate" method="POST" enctype="utf8" class="form-signin">
+			      <form action="<@c.url value='/login/authenticate'/>" method="POST" enctype="utf8" class="form-signin">
 			      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<#if RequestParameters.error?? && RequestParameters.error == 'bad_credentials'>
 					<@spring.message "text.login.page.login.failed.error"/>

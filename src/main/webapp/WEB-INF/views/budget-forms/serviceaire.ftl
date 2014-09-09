@@ -1,6 +1,6 @@
 <div id="SAA-budget-form" class="col-md-5 form-home col-centered" style="display:none;">
 	<div class="form-home-content">
-		<form name="SAAorderForm" id="SAAorderForm" action="/place-order" method="POST" enctype="utf8">
+		<form name="SAAorderForm" id="SAAorderForm" action="<@c.url value='/place-order' />" method="POST" enctype="utf8">
 			<input type="hidden" name="workAreaCode" value="SAA">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="row">

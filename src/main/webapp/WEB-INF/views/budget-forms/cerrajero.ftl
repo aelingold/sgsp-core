@@ -1,6 +1,6 @@
 <div id="CER-budget-form" class="col-md-5 form-home col-centered" style="display:none;">
 	<div class="form-home-content">
-		<form name="CERorderForm" id="CERorderForm" action="/place-order" method="POST" enctype="utf8">
+		<form name="CERorderForm" id="CERorderForm" action="<@c.url value='/place-order' />" method="POST" enctype="utf8">
 			<input type="hidden" name="workAreaCode" value="CER">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="row">

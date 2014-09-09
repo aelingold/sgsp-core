@@ -1,6 +1,6 @@
 <div id="GAS-budget-form" class="col-md-5 form-home col-centered" style="display:none;">
 	<div class="form-home-content">
-		<form name="GASorderForm" id="GASorderForm" action="/place-order" method="POST" enctype="utf8">
+		<form name="GASorderForm" id="GASorderForm" action="<@c.url value='/place-order' />" method="POST" enctype="utf8">
 			<input type="hidden" name="workAreaCode" value="GAS">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="row">

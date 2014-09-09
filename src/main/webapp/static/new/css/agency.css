@@ -1018,3 +1018,7 @@ ul{
 	padding: 0px;
 	list-style: none;
 }
+
+.login-name form{
+	display: inline-block;
+}

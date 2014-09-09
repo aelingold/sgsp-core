@@ -51,7 +51,7 @@
                     <h2 class="section-heading">Registración</h2>                    
                 </div>
                 <div class="col-lg-12">                	
-                	<form action="/register" method="POST" enctype="utf8">
+                	<form action="<@c.url value='/register'/>" method="POST" enctype="utf8">
                 		<@spring.bind "user" />      		
                 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 		<input type="hidden" name="signInProvider" value='${(user.signInProvider)!""}'/>
