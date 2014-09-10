@@ -3,6 +3,7 @@ package org.ucema.sgsp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class OrderController {
 
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public @ResponseBody List<OrderDTO> list() {
-		return orderService.list();
+		return orderService.list(new Sort(Sort.Direction.DESC, "createdAt"));
 	}
 	
 	@RequestMapping(value = "/orders/user/{userId}", method = RequestMethod.GET)
@@ -37,7 +38,7 @@ public class OrderController {
 	}	
 
 	@RequestMapping(value = "/place-order", method = RequestMethod.POST)
-	public @ResponseBody void saveOrUpdate(
+	public String saveOrUpdate(
 			@ModelAttribute("order") PlaceOrderDTO order) {
 
 		Authentication auth = SecurityContextHolder.getContext()
@@ -46,6 +47,8 @@ public class OrderController {
 		order.setUsername(username);
 		
 		orderService.saveOrUpdate(order);
+		
+		return "redirect:/dashboard/requests";
 	}
 
 	@RequestMapping(value = "/orders/{id}", method = RequestMethod.DELETE)

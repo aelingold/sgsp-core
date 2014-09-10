@@ -148,7 +148,7 @@
 					</div>
 					
 					<div id="perfil-panel" class="col-md-12 dashboard-panel">
-						<form action="/dashboard/change-user-data" method="POST" enctype="utf8">
+						<form action="/dashboard/profile" method="POST" enctype="utf8">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<@spring.bind "user" />
 							<div class="row">
