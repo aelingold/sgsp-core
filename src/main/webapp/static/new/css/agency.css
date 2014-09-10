@@ -1001,7 +1001,9 @@ body {
 }
 .selected-work-area{
 	font-size: 20px;
-	text-decoration: underline;
+	text-transform: uppercase;
+	display: inline-block;
+	font-weight: bold;
 }
 
 .col-centered{
@@ -1010,7 +1012,18 @@ body {
 }
 
 .changeServiceType{
+	color: #fff;
+	font-size: 13px;
+	margin-top: 6px;
 	cursor: pointer;
+	position: absolute;
+	left: -64px;
+	background: #d9534f;
+	padding: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 ul{

@@ -28,7 +28,7 @@
 	                <a class="page-scroll" href="<@c.url value='/dashboard'/>">Panel de control</a>
 	            </li>
 	            <li>
-            		<span class="login-name">Hola <@security.authentication property="principal.firstName"/>! <form action="/logout" method="POST" name="logout"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>(<a href="javascript:logout.submit()" style="text-transform: none;">Salir</a>)</form></span>
+            		<span class="login-name">Hola <@security.authentication property="principal.firstName"/>! <form action="<@c.url value='/logout'/>" method="POST" name="logout"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>(<a href="javascript:logout.submit()" style="text-transform: none;">Salir</a>)</form></span>
             	</li>
             </@security.authorize>
 			<@security.authorize access="isAnonymous()">

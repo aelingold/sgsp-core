@@ -5,8 +5,10 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="row">
 				<div class="col-md-12">
-					<span class="selected-work-area">Necesita un Plomero</span>
-					<a class="changeServiceType" title="Cambiar"><img class="edit-icon" src="<@c.url value='/static/new/img/icons/edit.png'/>" alt=""></a>
+					<div style="text-align: center;position:relative;">
+						<span class="changeServiceType" title="Volver">Volver</span>
+						<span class="selected-work-area">Necesito un Plomero</span>						
+					</div>					
 				</div>
 			</div>
 			<div class="row">
