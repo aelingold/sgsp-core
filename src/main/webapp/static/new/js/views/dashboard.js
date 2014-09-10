@@ -3,7 +3,18 @@ function showPanel(selector){
 	$(selector).show();
 }
 
-$(".nav-pills li").on("click", function(){
-	$(".nav-pills li").removeClass("active");
-	$(this).addClass("active");
-});
+$("#dash-menu li").removeClass("active");
+switch(tabToShow){
+	case "profile":
+		showPanel("#perfil-panel");
+		$("#perfil-option").addClass("active");
+		break;
+	case "requests":
+		showPanel("#pedidos-panel");
+		$("#pedidos-option").addClass("active");
+		break;
+	case "ratings":
+		showPanel("#calificaciones-panel");
+		$("#calificaciones-option").addClass("active");
+		break;
+}

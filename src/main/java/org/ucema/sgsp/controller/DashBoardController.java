@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
@@ -40,9 +41,17 @@ public class DashBoardController {
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
-
+		return dashboard(request, model, "profile");
+	}
+	
+	@RequestMapping(value = "/dashboard/{tabToShow}", method = RequestMethod.GET)
+	public String dashboard(WebRequest request, Model model, @PathVariable String tabToShow) {
+		
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
+		
+		model.addAttribute("tabToShow", tabToShow); //requests, profile, ratings
+		
 		String username = auth.getName(); // get logged in username
 
 		DashBoardUserDTO user = dashBoardUserService.getDashBoardUser(username);

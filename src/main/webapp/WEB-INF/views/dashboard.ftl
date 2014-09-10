@@ -52,10 +52,10 @@
             </div>
             <div class="row">
             	<div class="col-md-3">            	
-            		<ul class="nav nav-pills nav-stacked">
-				      <li class="active"><a href="javascript:showPanel('#perfil-panel')">Mi perfil</a></li>
-				      <li><a href="javascript:showPanel('#pedidos-panel')">Presupuestos pedidos</a></li>
-				      <li><a href="javascript:showPanel('#calificaciones-panel')">Calificaciones</a></li>
+            		<ul id="dash-menu" class="nav nav-pills nav-stacked">
+				      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
+				      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
+				      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
 				    </ul>
             	</div>
             	
@@ -147,7 +147,7 @@
 						
 					</div>
 					
-					<div id="perfil-panel" class="col-md-12 dashboard-panel" style="display:block;">
+					<div id="perfil-panel" class="col-md-12 dashboard-panel">
 						<form action="/dashboard/change-user-data" method="POST" enctype="utf8">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<@spring.bind "user" />
@@ -214,6 +214,9 @@
     <!-- Contact Form JavaScript -->
     <script src="<@c.url value='/static/new/js/jqBootstrapValidation.js'/>"></script>
     
+    <script>
+    	var tabToShow = "${tabToShow!""}";
+    </script>
     <script src="<@c.url value='/static/new/js/views/dashboard.js'/>"></script>
 
 </body>
