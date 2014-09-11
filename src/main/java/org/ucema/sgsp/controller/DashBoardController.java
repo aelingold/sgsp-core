@@ -50,7 +50,7 @@ public class DashBoardController {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		
-		model.addAttribute("tabToShow", tabToShow); //requests, profile, ratings
+		model.addAttribute("tabToShow", tabToShow); //requests, profile, ratings, budgets
 		
 		String username = auth.getName(); // get logged in username
 

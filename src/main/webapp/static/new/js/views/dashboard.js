@@ -17,4 +17,8 @@ switch(tabToShow){
 		showPanel("#calificaciones-panel");
 		$("#calificaciones-option").addClass("active");
 		break;
+	case "budgets":
+		showPanel("#presupuestos-panel");
+		$("#presupuestos-option").addClass("active");
+		break;
 }
