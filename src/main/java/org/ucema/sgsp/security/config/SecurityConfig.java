@@ -1,10 +1,15 @@
 package org.ucema.sgsp.security.config;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -13,8 +18,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.PortResolverImpl;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
+import org.springframework.web.accept.ContentNegotiationStrategy;
+import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 import org.ucema.sgsp.security.service.RepositoryUserDetailsService;
 import org.ucema.sgsp.security.service.SimpleSocialUserDetailsService;
 import org.ucema.sgsp.security.service.UserRepository;
@@ -56,7 +74,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.deleteCookies("JSESSIONID")
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/login")
-				// Configures url based authorization
+				// Configures url based uthorization
+				.and()
+				.requestCache()
+				.requestCache(customRequestCache())
+				.and()
+				.rememberMe()
+				.key("your_key")
+				.rememberMeServices(rememberMeServices())
 				.and()
 				.authorizeRequests()
 				// Anyone can access the urls
@@ -93,5 +118,52 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new RepositoryUserDetailsService(userRepository);
+	}
+
+	@Bean
+	public RememberMeServices rememberMeServices() {
+		// Key must be equal to rememberMe().key()
+		TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices(
+				"your_key", userDetailsService());
+		rememberMeServices.setCookieName("remember_me_cookie");
+		rememberMeServices.setParameter("remember_me_checkbox");
+		rememberMeServices.setTokenValiditySeconds(2678400); // 1month
+		return rememberMeServices;
+	}
+
+	@Bean
+	public RequestCache customRequestCache() {
+		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+		requestCache.setCreateSessionAllowed(true);
+		requestCache.setPortResolver(new PortResolverImpl());
+		requestCache.setRequestMatcher(createDefaultSavedRequestMatcher());
+
+		return requestCache;
+	}
+
+	private RequestMatcher createDefaultSavedRequestMatcher() {
+		ContentNegotiationStrategy contentNegotiationStrategy = new HeaderContentNegotiationStrategy();
+
+		RequestMatcher notFavIcon = new NegatedRequestMatcher(
+				new AntPathRequestMatcher("/**/favicon.ico"));
+
+		MediaTypeRequestMatcher jsonRequest = new MediaTypeRequestMatcher(
+				contentNegotiationStrategy, MediaType.APPLICATION_JSON);
+		jsonRequest.setIgnoredMediaTypes(Collections.singleton(MediaType.ALL));
+		RequestMatcher notJson = new NegatedRequestMatcher(jsonRequest);
+
+		RequestMatcher notXRequestedWith = new NegatedRequestMatcher(
+				new RequestHeaderRequestMatcher("X-Requested-With",
+						"XMLHttpRequest"));
+
+		List<RequestMatcher> matchers = new ArrayList<RequestMatcher>();
+		RequestMatcher getRequests = new AntPathRequestMatcher("/**", "POST");
+		matchers.add(0, getRequests);
+
+		matchers.add(notFavIcon);
+		matchers.add(notJson);
+		matchers.add(notXRequestedWith);
+
+		return new AndRequestMatcher(matchers);
 	}
 }
