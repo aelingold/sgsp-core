@@ -29,6 +29,18 @@ public class MailService {
 		}
 	}
 
+	public void sendEmail(String to, String subject, String message) {
+		SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
+		msg.setTo(to);
+		msg.setSubject(subject);
+		msg.setText(message);
+		try {
+			this.mailSender.send(msg);
+		} catch (MailException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+	}
+
 	public void sendEmail(String to, String from, String subject, String message) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(to);

@@ -90,7 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/workAreas/**", "/workAreaItems/**", "/users/**",
 						"/cities/**", "/states/**", "/countries/**",
 						"/currencies/**", "/quotes/**", "/quote-questions/**",
-						"/user-work-zones/**", "/favicon.ico", "/").permitAll()
+						"/user-work-zones/**", "/user-notifies/**",
+						"/favicon.ico", "/").permitAll()
 				// The rest of the our application is protected.
 				.antMatchers("/**").hasRole("USER")
 				// Adds the SocialAuthenticationFilter to Spring Security's

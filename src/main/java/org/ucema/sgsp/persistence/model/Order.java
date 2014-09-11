@@ -47,8 +47,6 @@ public class Order {
 	private WorkDateType workDateType;
 	@Column(name = "pending_notify")
 	private Boolean pendingNotify;
-	@Column(name = "pending_quotes")
-	private Boolean pendingQuotes;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -152,14 +150,6 @@ public class Order {
 
 	public void setPendingNotify(Boolean pendingNotify) {
 		this.pendingNotify = pendingNotify;
-	}
-
-	public Boolean getPendingQuotes() {
-		return pendingQuotes;
-	}
-
-	public void setPendingQuotes(Boolean pendingQuotes) {
-		this.pendingQuotes = pendingQuotes;
 	}
 
 	public WorkDateType getWorkDateType() {

@@ -8,13 +8,15 @@ public class QuoteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Long userId;
+	private String username;
 	private Long orderId;
+	private OrderDTO order;
 	private String description;
 	private AmountDTO amount;
 	private Date validDateUntil;
 	private List<QuoteQuestionDTO> quoteQuestions;
 	private List<Long> quoteQuestionIds;
+	private String statusType;
 
 	public QuoteDTO() {
 		super();
@@ -29,15 +31,22 @@ public class QuoteDTO implements Serializable {
 
 		result.setId(id);
 		result.setOrderId(orderId);
-		result.setUserId(userId);
+		result.setUsername(username);
 		result.setDescription(description);
 		result.setAmount(amount);
 		result.setValidDateUntil(validDateUntil);
 		result.setQuoteQuestions(quoteQuestions);
 		result.setQuoteQuestionIds(quoteQuestionIds);
+		result.setStatusType(statusType);
+		result.setOrder(order);
 
 		return result;
 	}
+	
+	public QuoteDTO withStatusType(String statusType) {
+		this.statusType = statusType;
+		return this;
+	}	
 	
 	public QuoteDTO withAmount(AmountDTO amount) {
 		this.amount	 = amount;
@@ -54,8 +63,8 @@ public class QuoteDTO implements Serializable {
 		return this;
 	}	
 	
-	public QuoteDTO withUserId(Long userId) {
-		this.userId = userId;
+	public QuoteDTO withUsername(String username) {
+		this.username = username;
 		return this;
 	}	
 	
@@ -68,14 +77,6 @@ public class QuoteDTO implements Serializable {
 		this.orderId = orderId;
 		return this;
 	}	
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
 	public Long getOrderId() {
 		return orderId;
@@ -131,5 +132,29 @@ public class QuoteDTO implements Serializable {
 
 	public void setQuoteQuestionIds(List<Long> quoteQuestionIds) {
 		this.quoteQuestionIds = quoteQuestionIds;
+	}
+
+	public String getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public OrderDTO getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderDTO order) {
+		this.order = order;
 	}
 }

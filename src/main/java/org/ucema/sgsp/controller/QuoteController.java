@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.ucema.sgsp.api.dto.QuoteDTO;
+import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.service.QuoteService;
 
 @Controller
@@ -22,7 +23,13 @@ public class QuoteController {
 	public @ResponseBody QuoteDTO get(@PathVariable Long id) {
 		return quoteService.get(id);
 	}
-	
+
+	@RequestMapping(value = "/quotes/{userId}/{statusType}", method = RequestMethod.GET)
+	public @ResponseBody List<QuoteDTO> list(@PathVariable Long userId,
+			@PathVariable String statusType) {
+		return quoteService.list(userId, QuoteStatusType.valueOf(statusType));
+	}
+
 	@RequestMapping(value = "/quotes", method = RequestMethod.GET)
 	public @ResponseBody List<QuoteDTO> list() {
 		return quoteService.list();

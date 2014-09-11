@@ -20,7 +20,6 @@ public class OrderDTO implements Serializable {
 	private String squareMeters;
 	private Integer airConditionerPower;
 	private Boolean pendingNotify = true;
-	private Boolean pendingQuotes = true;
 	private String workDateType;
 	private List<Long> orderItemIds;
 	private List<String> workAreaItemCodes;
@@ -38,7 +37,6 @@ public class OrderDTO implements Serializable {
 
 		result.setId(id);
 		result.setPendingNotify(pendingNotify);
-		result.setPendingQuotes(pendingQuotes);
 		result.setSquareMeters(squareMeters);
 		result.setCityCode(cityCode);
 		result.setStateCode(stateCode);
@@ -112,11 +110,6 @@ public class OrderDTO implements Serializable {
 		this.pendingNotify = pendingNotify;
 		return this;
 	}
-	
-	public OrderDTO withPendingQuotes(Boolean pendingQuotes) {
-		this.pendingQuotes = pendingQuotes;
-		return this;
-	}
 
 	public Long getId() {
 		return id;
@@ -148,14 +141,6 @@ public class OrderDTO implements Serializable {
 
 	public void setPendingNotify(Boolean pendingNotify) {
 		this.pendingNotify = pendingNotify;
-	}
-
-	public Boolean getPendingQuotes() {
-		return pendingQuotes;
-	}
-
-	public void setPendingQuotes(Boolean pendingQuotes) {
-		this.pendingQuotes = pendingQuotes;
 	}
 
 	public String getWorkDateType() {

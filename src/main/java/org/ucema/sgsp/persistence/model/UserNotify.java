@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,9 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.ucema.sgsp.security.model.User;
+
 @Entity
-@Table(name = "notifies")
-public class Notify {
+@Table(name = "user_notifies")
+public class UserNotify {
 
 	@Id
 	@GeneratedValue
@@ -24,16 +28,20 @@ public class Notify {
 	@ManyToOne
 	@JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "fk_notify_order"))
 	private Order order;
-	private String type;
+	@Enumerated(EnumType.STRING)
+	private UserNotifyType type;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+	@ManyToOne
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_notify_user"))
+	private User user;	
 
-	public Notify() {
+	public UserNotify() {
 		super();
 	}
 
-	public Notify(Long id) {
+	public UserNotify(Long id) {
 		super();
 		this.id = id;
 	}
@@ -68,11 +76,19 @@ public class Notify {
 		this.order = order;
 	}
 
-	public String getType() {
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public UserNotifyType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(UserNotifyType type) {
 		this.type = type;
 	}
 }

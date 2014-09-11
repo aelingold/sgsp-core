@@ -13,8 +13,10 @@ import org.ucema.sgsp.persistence.model.Amount;
 import org.ucema.sgsp.persistence.model.Currency;
 import org.ucema.sgsp.persistence.model.Order;
 import org.ucema.sgsp.persistence.model.Quote;
+import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.service.CurrencyService;
+import org.ucema.sgsp.service.UserService;
 
 @Component
 public class QuoteTransformation {
@@ -27,6 +29,8 @@ public class QuoteTransformation {
 	private CurrencyService currencyService;
 	@Autowired
 	private QuoteQuestionTransformation quoteQuestionTransformation;
+	@Autowired
+	private UserService userService;
 
 	public List<QuoteDTO> transformToApi(List<Quote> quotes) {
 		List<QuoteDTO> result = new ArrayList<QuoteDTO>();
@@ -52,13 +56,20 @@ public class QuoteTransformation {
 		QuoteDTO result = new QuoteDTO();
 
 		result.setId(quote.getId());
-		result.setAmount(buildAmount(quote.getAmount()));
+		result.setStatusType(quote.getStatusType().name());
+		result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
+
+		if (quote.getAmount() != null) {
+			result.setAmount(buildAmount(quote.getAmount()));
+		}
+
 		result.setDescription(quote.getDescription());
 		if (quote.getOrder() != null) {
 			result.setOrderId(quote.getOrder().getId());
 		}
+
 		if (quote.getUser() != null) {
-			result.setUserId(quote.getUser().getId());
+			result.setUsername(quote.getUser().getEmail());
 		}
 
 		if (quote.getQuoteQuestions() != null) {
@@ -86,17 +97,25 @@ public class QuoteTransformation {
 		Quote result = new Quote();
 
 		result.setId(quote.getId());
-		result.setAmount(buildAmount(quote.getAmount()));
+		result.setStatusType(QuoteStatusType.valueOf(quote.getStatusType()));
+
+		if (quote.getAmount() != null) {
+			result.setAmount(buildAmount(quote.getAmount()));
+		}
+
 		result.setDescription(quote.getDescription());
 		if (quote.getOrderId() != null) {
 			result.setOrder(new Order(quote.getOrderId()));
 		}
-		if (quote.getUserId() != null) {
-			result.setUser(new User(quote.getUserId()));
-		}
+
 		if (quote.getQuoteQuestions() != null) {
 			result.setQuoteQuestions(quoteQuestionTransformation
 					.transformToModel(quote.getQuoteQuestions()));
+		}
+
+		if (quote.getUsername() != null) {
+			result.setUser(new User(userService
+					.findByEmail(quote.getUsername()).getId()));
 		}
 
 		return result;

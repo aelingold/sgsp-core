@@ -204,21 +204,21 @@
 							</div>
 						</div>
 												
-						<#list orders as order>
+						<#list pendingQuotes as pendingQuote>
 							<#-- ejemplo de un presupuesto pedido -->
 							<div class="row">
 								<div class="panel panel-default">
 							  		<div class="panel-heading">
 								    	<h3 class="panel-title">
-								    		Necesito un ${order.workAreaDescription}
-								    		<#if order.workDateType='URGENT'>
+								    		Necesito un ${pendingQuote.order.workAreaDescription}
+								    		<#if pendingQuote.order.workDateType='URGENT'>
 								    			<span class="pull-right urgente">Es urgente</span>
 								    		</#if>
 								    	</h3>
 								  	</div>
 								  	<div class="panel-body">
 								  		<div class="row">
-								  			<#list order.workAreaItemCodes as workAreaItemCode>
+								  			<#list pendingQuote.order.workAreaItemCodes as workAreaItemCode>
 								  				<#list workAreaItems as workAreaItem>
 													<#if workAreaItem.code=workAreaItemCode>
 														<#list workAreaQuestions as workAreaQuestion>
@@ -232,28 +232,28 @@
 								  				</#list>
 					                   		</#list>						                        
 					                   </div>
-					                   <#if order.squareMeters??>
+					                   <#if pendingQuote.order.squareMeters??>
 					                       <div class="row">
 						                        <div class="form-group col-md-12">
-						                        	<label>¿Que tamaño tiene la superficie?</label> ${order.squareMeters} m2
+						                        	<label>¿Que tamaño tiene la superficie?</label> ${pendingQuote.order.squareMeters} m2
 						                        </div>
 					                       </div>
 									   </#if>
-					                   <#if order.airConditionerPower??>
+					                   <#if pendingQuote.order.airConditionerPower??>
 					                       <div class="row">
 						                        <div class="form-group col-md-12">
-						                        	<label>¿Cuantas frigorias tiene el aire?</label> ${order.airConditionerPower} frigorias
+						                        	<label>¿Cuantas frigorias tiene el aire?</label> ${pendingQuote.order.airConditionerPower} frigorias
 						                        </div>
 					                       </div>
 									   </#if>									   					                       					                   
 				                       <div class="row">
 					                        <div class="form-group col-md-12">
-					                        	<label>Trabajo a realizar en:</label> ${order.stateDescription}, ${(order.cityDescription)!""}
+					                        	<label>Trabajo a realizar en:</label> ${pendingQuote.order.stateDescription}, ${(pendingQuote.order.cityDescription)!""}
 					                        </div>
 				                       </div>				                       
 				                       <div class="row">
 					                        <div class="form-group col-md-12">
-					                        	<label>Detalle del trabajo:</label> ${order.workDescription}
+					                        	<label>Detalle del trabajo:</label> ${pendingQuote.order.workDescription}
 					                        </div>
 				                       </div>
 								  	</div>

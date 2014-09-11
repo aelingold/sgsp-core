@@ -56,7 +56,6 @@ public class OrderTransformation {
 
 		result.setId(order.getId());
 		result.setPendingNotify(order.getPendingNotify());
-		result.setPendingQuotes(order.getPendingQuotes());
 
 		if (order.getUser() != null) {
 			result.setUsername(order.getUser().getEmail());
@@ -109,7 +108,6 @@ public class OrderTransformation {
 		Order result = new Order();
 
 		result.setPendingNotify(true);
-		result.setPendingQuotes(true);
 
 		if (order.getUsername() != null) {
 			result.setUser(new User(userService
