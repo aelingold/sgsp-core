@@ -17,6 +17,8 @@ public interface UserService {
     
     List<UserDTO> list();
     
+    List<UserDTO> findByWorkAreas_CodeAndIsEnabled(List<String> codes, Boolean isEnabled);
+    
     UserDTO saveOrUpdate(UserDTO user);
     
     void update(DashBoardUserDTO dashBoardUserDTO);

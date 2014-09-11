@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,13 +33,16 @@ public class Notify {
 		super();
 	}
 
-	public Notify(Long id, Order order, String type, Date createdAt) {
+	public Notify(Long id) {
 		super();
 		this.id = id;
-		this.order = order;
-		this.type = type;
-		this.createdAt = createdAt;
 	}
+	
+    @PrePersist
+    public void prePersist() {
+    	Date now = new Date();
+        this.createdAt = now;
+    }
 
 	public Long getId() {
 		return id;

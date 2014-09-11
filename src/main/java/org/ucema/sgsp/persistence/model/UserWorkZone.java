@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,6 +42,21 @@ public class UserWorkZone {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+
+	public UserWorkZone() {
+		super();
+	}
+
+	public UserWorkZone(Long id) {
+		super();
+		this.id = id;
+	}
+	
+    @PrePersist
+    public void prePersist() {
+    	Date now = new Date();
+        this.createdAt = now;
+    }
 
 	public Long getId() {
 		return id;

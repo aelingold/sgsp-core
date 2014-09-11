@@ -22,86 +22,85 @@ import org.ucema.sgsp.persistence.model.WorkArea;
 @Table(name = "user_accounts")
 public class User extends BaseEntity<Long> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(name = "email", length = 100, nullable = false, unique = true)
-    private String email;
+	@Column(name = "email", length = 100, nullable = false, unique = true)
+	private String email;
 
-    @Column(name = "first_name", length = 100,nullable = false)
-    private String firstName;
+	@Column(name = "first_name", length = 100, nullable = false)
+	private String firstName;
 
-    @Column(name = "last_name", length = 100, nullable = false)
-    private String lastName;
+	@Column(name = "last_name", length = 100, nullable = false)
+	private String lastName;
 
-    @Column(name = "password", length = 255)
-    private String password;
+	@Column(name = "password", length = 255)
+	private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", length = 20, nullable = false)
-    private Role role;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", length = 20, nullable = false)
+	private Role role;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "sign_in_provider", length = 20)
-    private SocialMediaService signInProvider;
-    
+	@Enumerated(EnumType.STRING)
+	@Column(name = "sign_in_provider", length = 20)
+	private SocialMediaService signInProvider;
+
 	private String telephone;
-	
+
+	@Column(name = "is_enabled")
+	private Boolean isEnabled;
+
 	@OneToMany
-    @JoinTable(
-            name="user_work_areas",
-            joinColumns = @JoinColumn( name="user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user_id")),
-            inverseJoinColumns = @JoinColumn( name="work_area_id", foreignKey = @ForeignKey(name = "fk_user_work_area_work_area_id"))
-    )	
+	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user_id")), inverseJoinColumns = @JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_user_work_area_work_area_id")))
 	private List<WorkArea> workAreas;
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
 	@Column(name = "is_professional")
-	private boolean isProfessional;	
+	private boolean isProfessional;
 
-    public User() {
-    }
+	public User() {
+	}
 
-    public User(Long id) {
+	public User(Long id) {
 		super();
 		this.id = id;
 	}
 
 	public static Builder getBuilder() {
-        return new Builder();
-    }
+		return new Builder();
+	}
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public Role getRole() {
+		return role;
+	}
 
-    public SocialMediaService getSignInProvider() {
-        return signInProvider;
-    }
+	public SocialMediaService getSignInProvider() {
+		return signInProvider;
+	}
 
-    public String getTelephone() {
+	public String getTelephone() {
 		return telephone;
 	}
 
@@ -115,6 +114,10 @@ public class User extends BaseEntity<Long> {
 
 	public Boolean getIsProfessional() {
 		return isProfessional;
+	}
+
+	public Boolean getIsEnabled() {
+		return isEnabled;
 	}
 
 	public void setId(Long id) {
@@ -161,91 +164,71 @@ public class User extends BaseEntity<Long> {
 		this.isProfessional = isProfessional;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", role=");
-		builder.append(role);
-		builder.append(", signInProvider=");
-		builder.append(signInProvider);
-		builder.append(", telephone=");
-		builder.append(telephone);
-		builder.append(", workAreas=");
-		builder.append(workAreas);
-		builder.append(", userWorkRates=");
-		builder.append(userWorkRates);
-		builder.append(", isProfessional=");
-		builder.append(isProfessional);
-		builder.append("]");
-		return builder.toString();
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
-    public static class Builder {
+	public static class Builder {
 
-        private User user;
+		private User user;
 
-        public Builder() {
-            user = new User();
-            user.role = Role.ROLE_USER;
-        }
+		public Builder() {
+			user = new User();
+			user.role = Role.ROLE_USER;
+		}
 
-        public Builder email(String email) {
-            user.email = email;
-            return this;
-        }
+		public Builder email(String email) {
+			user.email = email;
+			return this;
+		}
 
-        public Builder firstName(String firstName) {
-            user.firstName = firstName;
-            return this;
-        }
+		public Builder firstName(String firstName) {
+			user.firstName = firstName;
+			return this;
+		}
 
-        public Builder lastName(String lastName) {
-            user.lastName = lastName;
-            return this;
-        }
+		public Builder lastName(String lastName) {
+			user.lastName = lastName;
+			return this;
+		}
 
-        public Builder password(String password) {
-            user.password = password;
-            return this;
-        }
+		public Builder password(String password) {
+			user.password = password;
+			return this;
+		}
 
-        public Builder signInProvider(SocialMediaService signInProvider) {
-            user.signInProvider = signInProvider;
-            return this;
-        }
-        
-        public Builder telephone(String telephone) {
-            user.telephone = telephone;
-            return this;
-        } 
-        
-        public Builder professional(boolean isProfessional) {
-            user.isProfessional = isProfessional;
-            return this;
-        }        
-        
-        public Builder workAreas(List<WorkArea> workAreas) {
-            user.workAreas = workAreas;
-            return this;
-        }
-        
-        public Builder userWorkRates(List<UserWorkRate> userWorkRates) {
-            user.userWorkRates = userWorkRates;
-            return this;
-        }             
+		public Builder signInProvider(SocialMediaService signInProvider) {
+			user.signInProvider = signInProvider;
+			return this;
+		}
 
-        public User build() {
-            return user;
-        }
-    }
+		public Builder telephone(String telephone) {
+			user.telephone = telephone;
+			return this;
+		}
+
+		public Builder professional(boolean isProfessional) {
+			user.isProfessional = isProfessional;
+			return this;
+		}
+
+		public Builder enabled(boolean isEnabled) {
+			user.isEnabled = isEnabled;
+			return this;
+		}
+
+		public Builder workAreas(List<WorkArea> workAreas) {
+			user.workAreas = workAreas;
+			return this;
+		}
+
+		public Builder userWorkRates(List<UserWorkRate> userWorkRates) {
+			user.userWorkRates = userWorkRates;
+			return this;
+		}
+
+		public User build() {
+			return user;
+		}
+	}
 }

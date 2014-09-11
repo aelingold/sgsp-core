@@ -2,6 +2,7 @@ package org.ucema.sgsp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,16 +85,40 @@ public class RepositoryUserService implements UserService {
 
 	@Transactional
 	public UserDTO findByEmail(String email) {
-		return userTransformation.transformToApi(find(email));
+
+		User user = find(email);
+		if (user.getIsEnabled()) {
+			return userTransformation.transformToApi(user);
+		} else {
+			return null;
+		}
 	}
 
 	private User find(String email) {
-		return repository.findByEmail(email);
+		User user = repository.findByEmail(email);
+		if (user.getIsEnabled()) {
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	@Transactional
+	public List<UserDTO> findByWorkAreas_CodeAndIsEnabled(List<String> codes,
+			Boolean isEnabled) {
+		List<User> users = repository.findByWorkAreas_CodeAndIsEnabled(codes,
+				isEnabled);
+		return userTransformation.transformToApi(users);
 	}
 
 	@Transactional
 	public List<UserDTO> list() {
-		return userTransformation.transformToApi(repository.findAll());
+
+		List<User> users = repository.findAll().stream()
+				.filter(u -> u.getIsEnabled().equals(true))
+				.collect(Collectors.toList());
+
+		return userTransformation.transformToApi(users);
 	}
 
 	@Transactional
@@ -129,7 +154,12 @@ public class RepositoryUserService implements UserService {
 		if (user == null) {
 			throw new RuntimeException("user not found");
 		}
-		return userTransformation.transformToApi(user);
+
+		if (user.getIsEnabled()) {
+			return userTransformation.transformToApi(user);
+		} else {
+			return null;
+		}
 	}
 
 	@Transactional
@@ -159,7 +189,7 @@ public class RepositoryUserService implements UserService {
 				.telephone(userAccountData.getTelephone())
 				.professional(
 						userAccountData.getUserType().equals(
-								UserTypeDTO.professional));
+								UserTypeDTO.professional)).enabled(true);
 
 		if (userAccountData.getWorkAreaCodes() != null
 				&& userAccountData.getWorkAreaCodes().size() > 0) {

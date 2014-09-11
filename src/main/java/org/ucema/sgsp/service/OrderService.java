@@ -1,5 +1,6 @@
 package org.ucema.sgsp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,10 +25,16 @@ public class OrderService {
 	private OrderDAO orderDAO;
 
 	@Transactional
-	public List<OrderDTO> list(Sort sort){
+	public List<OrderDTO> list(Boolean pendingNotify) {
+		return orderTransformation.transformToApi(orderDAO
+				.findByPendingNotify(pendingNotify));
+	}
+
+	@Transactional
+	public List<OrderDTO> list(Sort sort) {
 		return orderTransformation.transformToApi(orderDAO.findAll(sort));
 	}
-	
+
 	@Transactional
 	public List<OrderDTO> list() {
 		return list(new Sort(Sort.Direction.DESC, "createdAt"));
@@ -36,24 +43,51 @@ public class OrderService {
 	@Transactional
 	public List<OrderDTO> list(Long userId) {
 
-		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC, "createdAt"));
+		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC,
+				"createdAt"));
 		List<Order> filteredOrders = orders.stream()
 				.filter(o -> o.getUser().getId().equals(userId))
 				.collect(Collectors.toList());
 
 		return orderTransformation.transformToApi(filteredOrders);
 	}
-	
+
 	@Transactional
 	public List<OrderDTO> list(String username) {
 
-		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC, "createdAt"));
+		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC,
+				"createdAt"));
 		List<Order> filteredOrders = orders.stream()
 				.filter(o -> o.getUser().getEmail().equals(username))
 				.collect(Collectors.toList());
 
 		return orderTransformation.transformToApi(filteredOrders);
-	}	
+	}
+
+	@Transactional
+	public List<OrderDTO> update(List<OrderDTO> ordersDTO) {
+		
+		List<OrderDTO> response = new ArrayList<OrderDTO>();
+		
+		ordersDTO.forEach(o -> {
+			response.add(update(o));
+		});
+		
+		return response;
+	}
+
+	@Transactional
+	public OrderDTO update(OrderDTO orderDTO) {
+
+		Order order = orderDAO.getOne(orderDTO.getId());
+		if (order == null) {
+			throw new RuntimeException("order not found");
+		}
+
+		Order response = orderDAO.save(orderTransformation.updateFields(order,
+				orderDTO));
+		return orderTransformation.transformToApi(response);
+	}
 
 	@Transactional
 	public OrderDTO saveOrUpdate(PlaceOrderDTO order) {

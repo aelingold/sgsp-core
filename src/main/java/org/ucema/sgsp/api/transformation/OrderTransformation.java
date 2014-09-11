@@ -2,7 +2,6 @@ package org.ucema.sgsp.api.transformation;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -132,7 +131,7 @@ public class OrderTransformation {
 			result.setOrderItems(buildOrderItems(result,
 					order.getWorkAreaItemCodes()));
 		}
-		result.setCreatedAt(new Date());
+
 		result.setAirConditionerPower(order.getAirConditionerPower());
 
 		if (order.getSquareMeters() != null) {
@@ -175,5 +174,12 @@ public class OrderTransformation {
 				workAreaItemCode).getId()));
 
 		return result;
+	}
+
+	public Order updateFields(Order order, OrderDTO orderDTO) {
+
+		order.setPendingNotify(orderDTO.getPendingNotify());
+		
+		return order;
 	}
 }
