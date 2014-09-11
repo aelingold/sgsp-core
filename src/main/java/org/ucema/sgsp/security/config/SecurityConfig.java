@@ -158,7 +158,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		List<RequestMatcher> matchers = new ArrayList<RequestMatcher>();
 		RequestMatcher getRequests = new AntPathRequestMatcher("/**", "POST");
+		RequestMatcher getRequests2 = new AntPathRequestMatcher("/**", "GET");
 		matchers.add(0, getRequests);
+		matchers.add(1, getRequests2);
 
 		matchers.add(notFavIcon);
 		matchers.add(notJson);
