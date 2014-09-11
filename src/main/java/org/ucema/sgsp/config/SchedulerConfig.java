@@ -2,6 +2,8 @@ package org.ucema.sgsp.config;
 
 import java.util.concurrent.Executor;
 
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -45,6 +47,11 @@ public class SchedulerConfig implements AsyncConfigurer, SchedulingConfigurer {
 		executor.setMaxPoolSize(10);
 		executor.setQueueCapacity(25);
 		return executor;
+	}
+
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		return new SimpleAsyncUncaughtExceptionHandler() ;
 	}
 
 }

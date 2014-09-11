@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.PlaceOrderDTO;
@@ -23,14 +24,19 @@ public class OrderService {
 	private OrderDAO orderDAO;
 
 	@Transactional
+	public List<OrderDTO> list(Sort sort){
+		return orderTransformation.transformToApi(orderDAO.findAll(sort));
+	}
+	
+	@Transactional
 	public List<OrderDTO> list() {
-		return orderTransformation.transformToApi(orderDAO.findAll());
+		return list(new Sort(Sort.Direction.DESC, "createdAt"));
 	}
 
 	@Transactional
 	public List<OrderDTO> list(Long userId) {
 
-		List<Order> orders = orderDAO.findAll();
+		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC, "createdAt"));
 		List<Order> filteredOrders = orders.stream()
 				.filter(o -> o.getUser().getId().equals(userId))
 				.collect(Collectors.toList());
@@ -41,7 +47,7 @@ public class OrderService {
 	@Transactional
 	public List<OrderDTO> list(String username) {
 
-		List<Order> orders = orderDAO.findAll();
+		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC, "createdAt"));
 		List<Order> filteredOrders = orders.stream()
 				.filter(o -> o.getUser().getEmail().equals(username))
 				.collect(Collectors.toList());

@@ -49,9 +49,7 @@ public class DashBoardController {
 		
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		
-		model.addAttribute("tabToShow", tabToShow); //requests, profile, ratings, budgets
-		
+				
 		String username = auth.getName(); // get logged in username
 
 		DashBoardUserDTO user = dashBoardUserService.getDashBoardUser(username);
@@ -63,17 +61,21 @@ public class DashBoardController {
 		model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
 		
 		model.addAttribute("workAreaItems", workAreaItemService.list());
+		
+		model.addAttribute("tabToShow", tabToShow); //requests, profile, ratings
 
 		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
-	@RequestMapping(value = "/dashboard/change-user-data", method = RequestMethod.POST)
+	@RequestMapping(value = "/dashboard/profile", method = RequestMethod.POST)
 	public String changeUserDate(
 			@Valid @ModelAttribute("user") DashBoardUserDTO dashBoardUser,
 			BindingResult result, WebRequest request, Model model) {
 		
 		LOGGER.debug("Changing user data with information: {}",
 				dashBoardUser);
+		
+		model.addAttribute("tabToShow", "profile"); //requests, profile, ratings
 		
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
@@ -82,8 +84,8 @@ public class DashBoardController {
 		
 		LOGGER.debug("No validation errors found. Continuing changing user data process.");
 		
-		userService.update(dashBoardUser);
+		userService.update(dashBoardUser);		
 		
-		return VIEW_NAME_DASHBOARD_PAGE;
+		return "redirect:/dashboard/profile";
 	}
 }
