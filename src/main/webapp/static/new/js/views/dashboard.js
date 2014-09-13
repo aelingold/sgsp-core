@@ -21,4 +21,18 @@ switch(tabToShow){
 		showPanel("#presupuestos-panel");
 		$("#presupuestos-option").addClass("active");
 		break;
+	case "config":
+		showPanel("#configuracion-panel");
+		$("#configuracion-option").addClass("active");		
+		break;
 }
+
+$(".need-visit").change(function() {
+	if ($(this).is(":checked")){
+		$(this).parents(".row").find(".visit-form").show();
+		$(this).parents(".panel-body").find(".budget-common-form").hide();
+	}else {
+		$(this).parents(".row").find(".visit-form").hide();
+		$(this).parents(".panel-body").find(".budget-common-form").show();
+	}
+});

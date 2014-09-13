@@ -13,3 +13,9 @@
 .panel{
 	margin-top: 15px;
 }
+
+.budget-form-border{
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 15px;
+}

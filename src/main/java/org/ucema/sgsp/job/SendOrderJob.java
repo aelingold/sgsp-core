@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
@@ -43,7 +44,7 @@ public class SendOrderJob {
 	@Resource
 	private Environment env;
 
-	//@Scheduled(fixedRate = 6000)
+	@Scheduled(fixedRate = 6000)
 	public void sendOrders() {
 		LOGGER.info("Sending orders for quotation");
 

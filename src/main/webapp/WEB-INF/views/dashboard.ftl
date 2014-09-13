@@ -57,10 +57,45 @@
 				      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
 				      <li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
 				      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
+				      <li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 				    </ul>
             	</div>
             	
             	<div class="col-md-9">
+            		
+            		<div id="configuracion-panel" class="col-md-12 dashboard-panel">
+	            		<div class="row">
+							<div class="panel panel-default">
+						  		<div class="panel-heading">
+							    	<h3 class="panel-title">
+							    		Recibir pedidos de...
+							    	</h3>
+							  	</div>
+							  	<div class="panel-body">
+							  		<div class="col-md-6 form-group">
+										<span>Provincia</span>
+										<select name="stateCode" class="form-control">
+											<option value="">Buenos Aires</option>
+										</select>
+									</div>
+									<div class="col-md-6 form-group">
+										<span>Localidad</span>
+										<select name="cityCode" class="form-control">
+											<option value="">Ciudad de Buenos Aires</option>
+										</select>
+									</div>
+									<div class="col-md-12">
+										<a href="#" class="button btn btn-default pull-right">Agregar otro</a>
+									</div>
+							  	</div>							  	
+						  	</div>
+					  	</div>
+					  	<div class="row">
+	                        <div class="col-md-12" style="text-align: center;">
+	                        	<a href="#" class="button btn btn-warning">Guardar</a>
+	                        </div>
+                       </div>
+					</div>
             	            	
             		<div id="calificaciones-panel" class="col-md-12 dashboard-panel">
 	            		<div class="btn-group btn-group-justified">
@@ -196,10 +231,10 @@
             			<div class="row">
 		            		<div class="btn-group btn-group-justified">
 							  <div class="btn-group">
-							    <button type="button" class="btn btn-default active">En curso</button>
+							    <button type="button" class="btn btn-default active">Presupuestos pendientes</button>
 							  </div>
 							  <div class="btn-group">
-							    <button type="button" class="btn btn-default">Finalizados</button>
+							    <button type="button" class="btn btn-default">Presupuestos realizados</button>
 							  </div>
 							</div>
 						</div>
@@ -256,6 +291,46 @@
 					                        	<label>Detalle del trabajo:</label> ${pendingQuote.order.workDescription}
 					                        </div>
 				                       </div>
+				                       
+				                       <div class="row">
+			                       			<div class="col-md-12">
+			                       				<div class="budget-form-border">
+						                       		<div class="row budget-common-form">
+								                        <div class="form-group col-md-4">
+								                        	<label>Costo del trabajo</label> 
+								                        	<div class="input-group">
+														      <span class="input-group-addon">$</span>
+														      <input type="text" class="form-control">
+														    </div>
+								                        </div>
+								                        <div class="form-group col-md-8">
+								                        	<label>Comentario</label> 
+								                        	<textarea class="form-control"></textarea>
+								                        </div>
+							                       </div>
+							                       <div class="row">
+								                        <div class="form-group col-md-12">
+								                        	<label style="font-weight: initial;">
+								                        		<input type="checkbox" class="need-visit"> Se necesita una visita para presupuestar
+								                        	</label>
+								                        </div>
+								                        <div class="form-group col-md-4 visit-form" style="display:none;">
+								                        	<label>Costo de la visita</label> 
+								                        	<div class="input-group">
+														      <span class="input-group-addon">$</span>
+														      <input type="text" class="form-control">
+														    </div>
+								                        </div>
+							                       </div>
+							                       <div class="row">
+								                        <div class="col-md-12">
+								                        	<a href="#" class="button btn btn-warning pull-right">Presupuestar</a>
+								                        </div>
+							                       </div>
+						                      	</div>
+					                      	</div>
+					                    </div>
+					                    
 								  	</div>
 								</div>
 							</div>
