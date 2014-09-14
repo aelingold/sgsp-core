@@ -13,6 +13,22 @@ public class Amount {
 	@ManyToOne
 	@JoinColumn(name = "currency_id")	
 	private Currency currency;
+	
+	public Amount() {
+		super();
+	}
+
+	public Amount(BigDecimal amount, Long currencyId) {
+		super();
+		this.amount = amount;
+		this.currency = new Currency(currencyId);
+	}	
+	
+	public Amount(BigDecimal amount, Currency currency) {
+		super();
+		this.amount = amount;
+		this.currency = currency;
+	}
 
 	public BigDecimal getAmount() {
 		return amount;

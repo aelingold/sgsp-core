@@ -2,6 +2,7 @@ package org.ucema.sgsp.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.ucema.sgsp.api.dto.CountryDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.security.util.SecurityUtil;
+import org.ucema.sgsp.service.CountryService;
 import org.ucema.sgsp.service.UserService;
 import org.ucema.sgsp.service.WorkAreaService;
 
@@ -41,17 +44,14 @@ public class RegistrationController {
 	protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
 	protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
 
+	@Autowired
 	private UserService service;
+	@Autowired
 	private WorkAreaService workAreaService;
+	@Autowired
+	private CountryService countryService;
 
 	private final ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
-
-	@Autowired
-	public RegistrationController(UserService service,
-			WorkAreaService workAreaService) {
-		this.service = service;
-		this.workAreaService = workAreaService;
-	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showUserRegistrationDTO(WebRequest request, Model model) {
@@ -60,37 +60,48 @@ public class RegistrationController {
 		Connection<?> connection = providerSignInUtils
 				.getConnectionFromSession(request);
 
-		RegistrationDTO registration = service.createRegistrationDTO(connection);
+		RegistrationDTO registration = service
+				.createRegistrationDTO(connection);
 		LOGGER.debug("Rendering registration form with information: {}",
 				registration);
 
 		model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
-		model.addAttribute("workAreas", workAreaService.list());		
-		model.addAttribute("userTypeMap",getUserTypeMap());
-		model.addAttribute("workAreaMap",getWorkAreaCodesMap());
+		model.addAttribute("workAreas", workAreaService.list());
+		model.addAttribute("userTypeMap", getUserTypeMap());
+		model.addAttribute("workAreaMap", getWorkAreaCodesMap());
+		model.addAttribute("countriesMap", getCountries());
 
 		return VIEW_NAME_REGISTRATION_PAGE;
 	}
-	
-	private Map<String,String> getUserTypeMap(){
-		
-		Map<String,String> userTypeMap = new LinkedHashMap<String,String>();
+
+	private Map<String, String> getCountries() {
+		return countryService
+				.list()
+				.stream()
+				.collect(
+						Collectors.toMap(CountryDTO::getCode,
+								CountryDTO::getDescription));
+	}
+
+	private Map<String, String> getUserTypeMap() {
+
+		Map<String, String> userTypeMap = new LinkedHashMap<String, String>();
 		userTypeMap.put("user", "Usuario");
 		userTypeMap.put("professional", "Profesional");
-		
+
 		return userTypeMap;
 	}
-	
-	private Map<String,String> getWorkAreaCodesMap(){
-		
-		Map<String,String> workAreaMap = new LinkedHashMap<String,String>();
-				
+
+	private Map<String, String> getWorkAreaCodesMap() {
+
+		Map<String, String> workAreaMap = new LinkedHashMap<String, String>();
+
 		for (WorkAreaDTO workArea : workAreaService.list()) {
 			workAreaMap.put(workArea.getCode(), workArea.getDescription());
 		}
-		
+
 		return workAreaMap;
-	}	
+	}
 
 	/**
 	 * Processes the form submissions of the registration form.
@@ -104,8 +115,9 @@ public class RegistrationController {
 				userAccountData);
 
 		model.addAttribute("workAreas", workAreaService.list());
-		model.addAttribute("userTypeMap",getUserTypeMap());
-		model.addAttribute("workAreaMap",getWorkAreaCodesMap());
+		model.addAttribute("userTypeMap", getUserTypeMap());
+		model.addAttribute("workAreaMap", getWorkAreaCodesMap());
+		model.addAttribute("countriesMap", getCountries());
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
@@ -115,24 +127,24 @@ public class RegistrationController {
 		if (userAccountData.getUserType().equals(UserTypeDTO.professional)
 				&& (userAccountData.getWorkAreaCodes() == null || userAccountData
 						.getWorkAreaCodes().isEmpty())) {
-			
+
 			LOGGER.debug("WorkAreaCodes can not be empty for professional users");
 			addFieldError(MODEL_NAME_REGISTRATION_DTO,
-					RegistrationDTO.FIELD_NAME_WORK_AREAS,
-					null, ERROR_CODE_EMPTY_WORK_AREAS, result);		
+					RegistrationDTO.FIELD_NAME_WORK_AREAS, null,
+					ERROR_CODE_EMPTY_WORK_AREAS, result);
 			return VIEW_NAME_REGISTRATION_PAGE;
 		}
-		
+
 		if (userAccountData.getUserType().equals(UserTypeDTO.professional)
 				&& (userAccountData.getTelephone() == null || userAccountData
 						.getTelephone().isEmpty())) {
-			
+
 			LOGGER.debug("Telephone can not be empty for professional users");
 			addFieldError(MODEL_NAME_REGISTRATION_DTO,
-					RegistrationDTO.FIELD_NAME_TELEPHONE,
-					null, ERROR_CODE_EMPTY_TELEPHONE, result);		
+					RegistrationDTO.FIELD_NAME_TELEPHONE, null,
+					ERROR_CODE_EMPTY_TELEPHONE, result);
 			return VIEW_NAME_REGISTRATION_PAGE;
-		}		
+		}
 
 		LOGGER.debug("No validation errors found. Continuing registration process.");
 

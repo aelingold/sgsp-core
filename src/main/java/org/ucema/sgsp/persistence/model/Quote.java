@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,9 +48,14 @@ public class Quote {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;	
     @Enumerated(EnumType.STRING)
     @Column(name = "status_type")
-	private QuoteStatusType statusType;	
+	private QuoteStatusType statusType;
+    @Column
+    private Boolean requireVisit;
 
 	public Quote(Long id) {
 		super();
@@ -64,6 +70,12 @@ public class Quote {
     public void prePersist() {
     	Date now = new Date();
         this.createdAt = now;
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date();
     }
 
 	public Long getId() {
@@ -136,5 +148,21 @@ public class Quote {
 
 	public void setStatusType(QuoteStatusType statusType) {
 		this.statusType = statusType;
+	}
+
+	public Boolean getRequireVisit() {
+		return requireVisit;
+	}
+
+	public void setRequireVisit(Boolean requireVisit) {
+		this.requireVisit = requireVisit;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

@@ -18,6 +18,7 @@ public class UserDTO implements Serializable {
 	private List<UserWorkRateDTO> userWorkRates;
 	private Boolean isProfessional;
 	private Role role;
+	private String countryCode;
 	
 	public static UserDTO newInstance() {
 		return new UserDTO();
@@ -36,6 +37,7 @@ public class UserDTO implements Serializable {
 		result.setTelephone(telephone);
 		result.setUserWorkRates(userWorkRates);
 		result.setWorkAreas(workAreas);
+		result.setCountryCode(countryCode);
 
 		return result;
 	}
@@ -44,6 +46,11 @@ public class UserDTO implements Serializable {
 		this.role = role;
 		return this;
 	}
+
+	public UserDTO withCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+		return this;
+	}	
 	
 	public UserDTO withTelephone(String telephone) {
 		this.telephone = telephone;
@@ -153,5 +160,13 @@ public class UserDTO implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 }

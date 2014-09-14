@@ -40,7 +40,7 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 				.username(user.getEmail()).telephone(user.getTelephone())
 				.isProfessional(user.getIsProfessional())
 				.workAreasCodes(buildWorkAreaCodes(user.getWorkAreas()))
-				.build();
+				.country(user.getCountry().getCode()).build();
 
 		return principal;
 	}

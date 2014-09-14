@@ -2013,6 +2013,6 @@ INSERT INTO `cities` (`code`,`description`,`state_id`,`is_enabled`) VALUES ('CAB
 INSERT INTO `cities` (`code`,`description`,`state_id`,`is_enabled`) VALUES ('CABF2','Villa Soldati',5,1);
 INSERT INTO `cities` (`code`,`description`,`state_id`,`is_enabled`) VALUES ('CABF3','Villa Urquiza',5,1);
 
-INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`) VALUES (1, 'USD', 1, 'Dólar', 'U$S');
-INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`) VALUES (2, 'ARS', 1, 'Peso Argentino', '$');
-INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`) VALUES (3, 'BRL', 0, 'Real', 'R$');
+INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (1, 'USD', 1, 'Dólar', 'U$S',62);
+INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (2, 'ARS', 1, 'Peso Argentino', '$',11);
+INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (3, 'BRL', 0, 'Real', 'R$',28);

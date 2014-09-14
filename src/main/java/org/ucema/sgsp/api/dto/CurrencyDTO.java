@@ -6,6 +6,7 @@ public class CurrencyDTO {
 	private String code;
 	private String symbol;
 	private String name;
+	private String countryCode;
 
 	public static CurrencyDTO newInstance() {
 		return new CurrencyDTO();
@@ -18,6 +19,7 @@ public class CurrencyDTO {
 		result.setCode(code);
 		result.setSymbol(symbol);
 		result.setId(id);
+		result.setCountryCode(countryCode);
 
 		return result;
 	}		
@@ -72,5 +74,13 @@ public class CurrencyDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 }

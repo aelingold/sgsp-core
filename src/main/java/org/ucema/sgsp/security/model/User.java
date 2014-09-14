@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
 import org.ucema.sgsp.persistence.model.WorkArea;
 
@@ -50,6 +52,10 @@ public class User extends BaseEntity<Long> {
 
 	@Column(name = "is_enabled")
 	private Boolean isEnabled;
+	
+	@OneToOne
+	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_country_user"))
+	private Country country;
 
 	@OneToMany
 	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user_id")), inverseJoinColumns = @JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_user_work_area_work_area_id")))
@@ -168,6 +174,14 @@ public class User extends BaseEntity<Long> {
 		this.isEnabled = isEnabled;
 	}
 
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
 	public static class Builder {
 
 		private User user;
@@ -202,6 +216,11 @@ public class User extends BaseEntity<Long> {
 			return this;
 		}
 
+		public Builder country(Country country) {
+			user.country = country;
+			return this;
+		}		
+		
 		public Builder telephone(String telephone) {
 			user.telephone = telephone;
 			return this;

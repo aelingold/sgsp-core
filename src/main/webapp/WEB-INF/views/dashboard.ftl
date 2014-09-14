@@ -238,111 +238,119 @@
 							  </div>
 							</div>
 						</div>
-												
+																		
 						<#list pendingQuotes as pendingQuote>
-							<#-- ejemplo de un presupuesto pedido -->
-							<div class="row">
-								<div class="panel panel-default">
-							  		<div class="panel-heading">
-								    	<h3 class="panel-title">
-								    		Necesito un ${pendingQuote.order.workAreaDescription}
-								    		<#if pendingQuote.order.workDateType='URGENT'>
-								    			<span class="pull-right urgente">Es urgente</span>
-								    		</#if>
-								    	</h3>
-								  	</div>
-								  	<div class="panel-body">
-								  		<div class="row">
-								  			<#list pendingQuote.order.workAreaItemCodes as workAreaItemCode>
-								  				<#list workAreaItems as workAreaItem>
-													<#if workAreaItem.code=workAreaItemCode>
-														<#list workAreaQuestions as workAreaQuestion>
-															<#if workAreaQuestion.workAreaCode=workAreaItem.workAreaCode && workAreaQuestion.groupType=workAreaItem.groupType>
-						                        				<div class="form-group col-md-6">
-						                        					<label>${workAreaQuestion.description}</label> ${workAreaItem.description}
-						                        				</div>
-								    						</#if>
-								    					</#list>
-								    				</#if>								  					
-								  				</#list>
-					                   		</#list>						                        
-					                   </div>
-					                   <#if pendingQuote.order.squareMeters??>
+							<form name="budgetsForm${pendingQuote_index}" action="/dashboard/budgets" method="POST" enctype="utf8">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<@spring.bind "quote" />							
+								<input type="hidden" name="id" value="${pendingQuote.id}">								
+								<#-- ejemplo de un presupuesto pedido -->
+								<div class="row">
+									<div class="panel panel-default">
+								  		<div class="panel-heading">
+									    	<h3 class="panel-title">
+									    		Necesito un ${pendingQuote.order.workAreaDescription}
+									    		<#if pendingQuote.order.workDateType='URGENT'>
+									    			<span class="pull-right urgente">Es urgente</span>
+									    		</#if>
+									    	</h3>
+									  	</div>
+									  	<div class="panel-body">
+									  		<div class="row">
+									  			<#list pendingQuote.order.workAreaItemCodes as workAreaItemCode>
+									  				<#list workAreaItems as workAreaItem>
+														<#if workAreaItem.code=workAreaItemCode>
+															<#list workAreaQuestions as workAreaQuestion>
+																<#if workAreaQuestion.workAreaCode=workAreaItem.workAreaCode && workAreaQuestion.groupType=workAreaItem.groupType>
+							                        				<div class="form-group col-md-6">
+							                        					<label>${workAreaQuestion.description}</label> ${workAreaItem.description}
+							                        				</div>
+									    						</#if>
+									    					</#list>
+									    				</#if>								  					
+									  				</#list>
+						                   		</#list>						                        
+						                   </div>
+						                   <#if pendingQuote.order.squareMeters??>
+						                       <div class="row">
+							                        <div class="form-group col-md-12">
+							                        	<label>¿Que tamaño tiene la superficie?</label> ${pendingQuote.order.squareMeters} m2
+							                        </div>
+						                       </div>
+										   </#if>
+						                   <#if pendingQuote.order.airConditionerPower??>
+						                       <div class="row">
+							                        <div class="form-group col-md-12">
+							                        	<label>¿Cuantas frigorias tiene el aire?</label> ${pendingQuote.order.airConditionerPower} frigorias
+							                        </div>
+						                       </div>
+										   </#if>									   					                       					                   
 					                       <div class="row">
 						                        <div class="form-group col-md-12">
-						                        	<label>¿Que tamaño tiene la superficie?</label> ${pendingQuote.order.squareMeters} m2
+						                        	<label>Trabajo a realizar en:</label> ${pendingQuote.order.stateDescription}, ${(pendingQuote.order.cityDescription)!""}
 						                        </div>
-					                       </div>
-									   </#if>
-					                   <#if pendingQuote.order.airConditionerPower??>
+					                       </div>				                       
 					                       <div class="row">
 						                        <div class="form-group col-md-12">
-						                        	<label>¿Cuantas frigorias tiene el aire?</label> ${pendingQuote.order.airConditionerPower} frigorias
+						                        	<label>Detalle del trabajo:</label> ${pendingQuote.order.workDescription}
 						                        </div>
 					                       </div>
-									   </#if>									   					                       					                   
-				                       <div class="row">
-					                        <div class="form-group col-md-12">
-					                        	<label>Trabajo a realizar en:</label> ${pendingQuote.order.stateDescription}, ${(pendingQuote.order.cityDescription)!""}
-					                        </div>
-				                       </div>				                       
-				                       <div class="row">
-					                        <div class="form-group col-md-12">
-					                        	<label>Detalle del trabajo:</label> ${pendingQuote.order.workDescription}
-					                        </div>
-				                       </div>
-				                       
-				                       <div class="row">
-			                       			<div class="col-md-12">
-			                       				<div class="budget-form-border">
-						                       		<div class="row budget-common-form">
-								                        <div class="form-group col-md-4">
-								                        	<label>Costo del trabajo</label> 
-								                        	<div class="input-group">
-														      <span class="input-group-addon">$</span>
-														      <input type="text" class="form-control">
-														    </div>
-								                        </div>
-								                        <div class="form-group col-md-8">
-								                        	<label>Comentario</label> 
-								                        	<textarea class="form-control"></textarea>
-								                        </div>
-							                       </div>
-							                       <div class="row">
-								                        <div class="form-group col-md-12">
-								                        	<label style="font-weight: initial;">
-								                        		<input type="checkbox" class="need-visit"> Se necesita una visita para presupuestar
-								                        	</label>
-								                        </div>
-								                        <div class="form-group col-md-4 visit-form" style="display:none;">
-								                        	<label>Costo de la visita</label> 
-								                        	<div class="input-group">
-														      <span class="input-group-addon">$</span>
-														      <input type="text" class="form-control">
-														    </div>
-								                        </div>
-							                       </div>
-							                       <div class="row">
-								                        <div class="col-md-12">
-								                        	<a href="#" class="button btn btn-warning pull-right">Presupuestar</a>
-								                        </div>
-							                       </div>
+					                       
+					                       <div class="row">
+				                       			<div class="col-md-12">
+				                       				<div class="budget-form-border">
+							                       		<div class="row budget-common-form">
+									                        <div class="form-group col-md-4">
+									                        	<label>Costo del trabajo</label> 
+									                        	<div class="input-group">
+															      <span class="input-group-addon">${currency.symbol}</span>
+															      <@spring.formInput "quote.amount.amount", 'class="form-control"'/>
+															    </div>
+									                        </div>
+									                        <div class="form-group col-md-8">
+									                        	<label>Comentarios sobre el trabajo</label> 
+									                        	<@spring.formTextarea "quote.description", 'class="form-control"'/>
+									                        </div>
+								                       </div>
+								                       <div class="row budget-common-form">
+									                        <div class="form-group col-md-12">
+									                        	<label>Valido hasta</label>
+									                        	<div class="input-group">
+									                        		<@spring.formInput "quote.validDateUntil", 'class="form-control"'/>
+									                        	</div>
+									                        </div>
+									                   </div>
+								                       <div class="row">
+									                        <div class="form-group col-md-12">
+									                        	<label style="font-weight: initial;">
+									                        		<@spring.formCheckbox "quote.requireVisit",'class="need-visit"'/>
+									                        		Se necesita una visita para presupuestar
+									                        	</label>
+									                        </div>
+									                        <div class="form-group col-md-4 visit-form" style="display:none;">
+									                        	<label>Costo de la visita</label> 
+									                        	<div class="input-group">
+															      <span class="input-group-addon">$</span>
+															      <@spring.formInput "quote.visitAmount.amount", 'class="form-control"'/>
+															    </div>
+									                        </div>
+								                       </div>
+								                       <div class="row">
+									                        <div class="col-md-12">
+									                        	<a href="javascript:document.budgetsForm${pendingQuote_index}.submit()" class="button btn btn-warning pull-right">Presupuestar</a>
+									                        </div>
+								                       </div>
+							                      	</div>
 						                      	</div>
-					                      	</div>
-					                    </div>
-					                    
-								  	</div>
+						                    </div>						                    
+									  	</div>
+									</div>
 								</div>
-							</div>
-							<#-- fin de ejemplo de un presupuesto pedido -->						
-						</#list>						
-						
-					</div>
-					
-					
-            	</div>
-            	
-            	
+								<#-- fin de ejemplo de un presupuesto pedido -->												
+							</form>	
+						</#list>
+					</div>										
+            	</div>            	
            </div>
         </div>
     </section>

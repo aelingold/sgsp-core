@@ -19,6 +19,7 @@ import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
 import org.ucema.sgsp.exception.DuplicateEmailException;
+import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
@@ -34,6 +35,8 @@ public class RepositoryUserService implements UserService {
 	@Autowired
 	private WorkAreaService workAreaService;
 	private UserRepository repository;
+	@Autowired
+	private CountryService countryService;
 
 	@Autowired
 	private UserTransformation userTransformation;
@@ -189,7 +192,11 @@ public class RepositoryUserService implements UserService {
 				.telephone(userAccountData.getTelephone())
 				.professional(
 						userAccountData.getUserType().equals(
-								UserTypeDTO.professional)).enabled(true);
+								UserTypeDTO.professional))
+				.enabled(true)
+				.country(
+						new Country(countryService.findByCode(
+								userAccountData.getCountryCode()).getId()));
 
 		if (userAccountData.getWorkAreaCodes() != null
 				&& userAccountData.getWorkAreaCodes().size() > 0) {

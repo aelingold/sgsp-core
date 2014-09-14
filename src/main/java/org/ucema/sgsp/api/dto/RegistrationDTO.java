@@ -56,6 +56,8 @@ public class RegistrationDTO {
     private String passwordVerification;
 
     private SocialMediaService signInProvider;
+    
+    private String countryCode;
 
     public RegistrationDTO() {
     }
@@ -138,5 +140,13 @@ public class RegistrationDTO {
 
 	public void setWorkAreaCodes(List<String> workAreaCodes) {
 		this.workAreaCodes = workAreaCodes;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 }

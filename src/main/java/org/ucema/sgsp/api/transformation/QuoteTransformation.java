@@ -56,6 +56,7 @@ public class QuoteTransformation {
 		QuoteDTO result = new QuoteDTO();
 
 		result.setId(quote.getId());
+		result.setRequireVisit(quote.getRequireVisit());
 		result.setStatusType(quote.getStatusType().name());
 		result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
 
@@ -97,10 +98,15 @@ public class QuoteTransformation {
 		Quote result = new Quote();
 
 		result.setId(quote.getId());
+		result.setRequireVisit(quote.getRequireVisit());
 		result.setStatusType(QuoteStatusType.valueOf(quote.getStatusType()));
 
 		if (quote.getAmount() != null) {
-			result.setAmount(buildAmount(quote.getAmount()));
+			if (quote.getRequireVisit() != null && quote.getRequireVisit()) {
+				result.setAmount(buildAmount(quote.getVisitAmount()));
+			} else {
+				result.setAmount(buildAmount(quote.getAmount()));
+			}
 		}
 
 		result.setDescription(quote.getDescription());
@@ -130,5 +136,25 @@ public class QuoteTransformation {
 				amount.getCurrency().getCode()).getId()));
 
 		return result;
+	}
+
+	public Quote updateFields(Quote quote, QuoteDTO quoteDTO) {
+
+		quote.setValidDateUntil(quoteDTO.getValidDateUntil());
+		quote.setDescription(quoteDTO.getDescription());
+		quote.setStatusType(QuoteStatusType.DONE);
+		quote.setRequireVisit(quoteDTO.getRequireVisit());
+		if (quoteDTO.getRequireVisit() != null && quoteDTO.getRequireVisit()) {
+			quote.setAmount(new Amount(quoteDTO.getVisitAmount().getAmount(),
+					currencyService.findByCode(
+							quoteDTO.getVisitAmount().getCurrency().getCode())
+							.getId()));
+		} else {
+			quote.setAmount(new Amount(quoteDTO.getAmount().getAmount(),
+					currencyService.findByCode(
+							quoteDTO.getAmount().getCurrency().getCode())
+							.getId()));
+		}
+		return quote;
 	}
 }

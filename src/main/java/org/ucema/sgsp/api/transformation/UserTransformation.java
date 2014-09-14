@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
+import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.service.CountryService;
 
 @Component
 public class UserTransformation {
@@ -16,6 +18,8 @@ public class UserTransformation {
 	private UserWorkRateTransformation userWorkRateTransformation;
 	@Autowired
 	private WorkAreaTransformation workAreaTransformation;
+	@Autowired
+	private CountryService countryService;
 
 	public List<UserDTO> transformToApi(List<User> users) {
 		List<UserDTO> result = new ArrayList<UserDTO>();
@@ -55,7 +59,11 @@ public class UserTransformation {
 			result.setWorkAreas(workAreaTransformation.transformToApi(user
 					.getWorkAreas()));
 		}
-		
+
+		if (user.getCountry() != null) {
+			result.setCountryCode(user.getCountry().getCode());
+		}
+
 		result.setRole(user.getRole());
 
 		return result;
@@ -79,19 +87,24 @@ public class UserTransformation {
 			result.setWorkAreas(workAreaTransformation.transformToModel(user
 					.getWorkAreas()));
 		}
-		
+
+		if (user.getCountryCode() != null) {
+			result.setCountry(new Country(countryService.findByCode(user
+					.getCountryCode()).getId()));
+		}
+
 		result.setRole(user.getRole());
 
 		return result;
 	}
-	
-	public User updateFields(User user,UserDTO userDTO){
-		
+
+	public User updateFields(User user, UserDTO userDTO) {
+
 		user.setEmail(userDTO.getEmail());
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
 		user.setTelephone(userDTO.getTelephone());
-		
+
 		return user;
 	}
 
@@ -101,7 +114,7 @@ public class UserTransformation {
 		user.setFirstName(dashBoardUserDTO.getFirstName());
 		user.setLastName(dashBoardUserDTO.getLastName());
 		user.setTelephone(dashBoardUserDTO.getTelephone());
-		
+
 		return user;
 	}
 }

@@ -94,6 +94,13 @@
 	                        	<@spring.showErrors "<br>" />
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                <label>Pais</label>
+                                <@spring.formSingleSelect "user.countryCode", countriesMap,""/>
+                                <@spring.showErrors "<br>" />	                        	
+                            </div>
+                        </div>
                         
                         <div class="row pro-field">
                             <div class="form-group col-lg-4">

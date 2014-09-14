@@ -37,6 +37,7 @@ public class CountryTransformation {
 	public Country transformToModel(CountryDTO country) {
 		Country result = new Country();
 
+		result.setId(country.getId());
 		result.setCode(country.getCode());
 		result.setDescription(country.getDescription());
 
@@ -46,6 +47,7 @@ public class CountryTransformation {
 	public CountryDTO transformToApi(Country country, Boolean withStates) {
 		CountryDTO result = new CountryDTO();
 
+		result.setId(country.getId());
 		result.setCode(country.getCode());
 		result.setDescription(country.getDescription());
 		

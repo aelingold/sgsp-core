@@ -47,6 +47,12 @@ public class QuoteService {
 	}
 
 	@Transactional
+	public void update(QuoteDTO quoteDTO) {
+		Quote quote = quoteDAO.getOne(quoteDTO.getId());
+		quoteDAO.save(quoteTransformation.updateFields(quote, quoteDTO));
+	}
+
+	@Transactional
 	public void delete(QuoteDTO quote) {
 		quoteDAO.delete(quoteTransformation.transformToModel(quote));
 	}

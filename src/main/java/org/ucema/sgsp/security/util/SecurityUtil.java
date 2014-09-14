@@ -10,25 +10,25 @@ import org.ucema.sgsp.security.model.User;
 
 public class SecurityUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtil.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(SecurityUtil.class);
 
-    public static void logInUser(User user) {
-        LOGGER.info("Logging in user: {}", user);
+	public static void logInUser(User user) {
+		LOGGER.info("Logging in user: {}", user);
 
-        CustomUserDetails userDetails = CustomUserDetails.getBuilder()
-                .firstName(user.getFirstName())
-                .id(user.getId())
-                .lastName(user.getLastName())
-                .password(user.getPassword())
-                .role(user.getRole())
-                .socialSignInProvider(user.getSignInProvider())
-                .username(user.getEmail())
-                .build();
-        LOGGER.debug("Logging in principal: {}", userDetails);
+		CustomUserDetails userDetails = CustomUserDetails.getBuilder()
+				.firstName(user.getFirstName()).id(user.getId())
+				.lastName(user.getLastName()).password(user.getPassword())
+				.role(user.getRole())
+				.socialSignInProvider(user.getSignInProvider())
+				.username(user.getEmail()).country(user.getCountry().getCode())
+				.build();
+		LOGGER.debug("Logging in principal: {}", userDetails);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(
+				userDetails, null, userDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LOGGER.info("User: {} has been logged in.", userDetails);
-    }
+		LOGGER.info("User: {} has been logged in.", userDetails);
+	}
 }

@@ -25,9 +25,13 @@ public class CurrencyTransformation {
 
 		result.setCode(currency.getCode());
 		result.setName(currency.getName());
-		
+
 		result.setSymbol(currency.getSymbol());
 		result.setId(currency.getId());
+
+		if (currency.getCountry() != null) {
+			result.setCountryCode(currency.getCountry().getCode());
+		}
 
 		return result;
 	}

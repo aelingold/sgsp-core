@@ -18,14 +18,19 @@ public class CurrencyController {
 	private CurrencyService currencyService;
 
 	@RequestMapping(value = "/currencies/{id}", method = RequestMethod.GET)
-	public @ResponseBody CurrencyDTO get(@PathVariable Long id) {
+	public @ResponseBody CurrencyDTO id(@PathVariable Long id) {
 		return currencyService.get(id);
 	}
-	
+
 	@RequestMapping(value = "/currencies/code/{code}", method = RequestMethod.GET)
-	public @ResponseBody CurrencyDTO get(@PathVariable String code) {
+	public @ResponseBody CurrencyDTO code(@PathVariable String code) {
 		return currencyService.findByCode(code);
-	}	
+	}
+
+	@RequestMapping(value = "/currencies/country-code/{code}", method = RequestMethod.GET)
+	public @ResponseBody CurrencyDTO country(@PathVariable String code) {
+		return currencyService.findByCountryCode(code);
+	}
 
 	@RequestMapping(value = "/currencies", method = RequestMethod.GET)
 	public @ResponseBody List<CurrencyDTO> list() {

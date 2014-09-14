@@ -2,8 +2,11 @@ package org.ucema.sgsp.persistence.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,9 @@ public class Currency {
 	private String name;
 	@Column(name = "is_enabled")
 	private Boolean isEnabled;
+	@OneToOne
+	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_country_currency"))
+	private Country country;
 	
 	public Currency(Long id) {
 		super();
@@ -66,5 +72,13 @@ public class Currency {
 
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 }

@@ -17,6 +17,8 @@ public class QuoteDTO implements Serializable {
 	private List<QuoteQuestionDTO> quoteQuestions;
 	private List<Long> quoteQuestionIds;
 	private String statusType;
+	private Boolean requireVisit;
+	private AmountDTO visitAmount;
 
 	public QuoteDTO() {
 		super();
@@ -39,12 +41,24 @@ public class QuoteDTO implements Serializable {
 		result.setQuoteQuestionIds(quoteQuestionIds);
 		result.setStatusType(statusType);
 		result.setOrder(order);
+		result.setRequireVisit(requireVisit);
+		result.setVisitAmount(visitAmount);
 
 		return result;
 	}
+
+	public QuoteDTO withVisit(Boolean requireVisit) {
+		this.requireVisit = requireVisit;
+		return this;
+	}	
 	
 	public QuoteDTO withStatusType(String statusType) {
 		this.statusType = statusType;
+		return this;
+	}	
+
+	public QuoteDTO withVisitAmount(AmountDTO amount) {
+		this.visitAmount = amount;
 		return this;
 	}	
 	
@@ -156,5 +170,21 @@ public class QuoteDTO implements Serializable {
 
 	public void setOrder(OrderDTO order) {
 		this.order = order;
+	}
+
+	public Boolean getRequireVisit() {
+		return requireVisit;
+	}
+
+	public void setRequireVisit(Boolean requireVisit) {
+		this.requireVisit = requireVisit;
+	}
+
+	public AmountDTO getVisitAmount() {
+		return visitAmount;
+	}
+
+	public void setVisitAmount(AmountDTO visitAmount) {
+		this.visitAmount = visitAmount;
 	}
 }

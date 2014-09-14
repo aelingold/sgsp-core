@@ -51,6 +51,20 @@ public class CurrencyService {
 	}
 
 	@Transactional
+	public CurrencyDTO findByCountryCode(String code) {
+		Currency currency = currencyDAO.findByCountry_Code(code);
+		if (currency == null) {
+			throw new RuntimeException("currency not found");
+		}
+
+		if (currency.getIsEnabled()) {
+			return currencyTransformation.transformToApi(currency);
+		} else {
+			return null;
+		}
+	}	
+	
+	@Transactional
 	public CurrencyDTO findByCode(String code) {
 		Currency currency = currencyDAO.findByCode(code);
 		if (currency == null) {
