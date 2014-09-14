@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.ucema.sgsp.security.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
- 
-    User findByEmail(String email);
-    
-    List<User> findByWorkAreas_CodeAndIsEnabled(List<String> codes, Boolean isEnabled);
+
+	User findByEmail(String email);
+
+	List<User> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
+			List<String> codes, Boolean isEnabled, Boolean isProfessional);
 }

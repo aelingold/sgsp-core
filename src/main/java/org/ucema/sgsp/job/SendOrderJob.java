@@ -64,8 +64,9 @@ public class SendOrderJob {
 		List<String> workAreaCodes = new ArrayList<String>();
 		workAreaCodes.add(order.getWorkAreaCode());
 
-		List<UserDTO> users = userService.findByWorkAreas_CodeAndIsEnabled(
-				workAreaCodes, true);
+		List<UserDTO> users = userService
+				.findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
+						workAreaCodes, true, true);
 
 		users = users.stream()
 				.filter(u -> !u.getEmail().equals(order.getUsername()))

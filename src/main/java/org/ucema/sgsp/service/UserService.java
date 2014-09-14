@@ -17,7 +17,7 @@ public interface UserService {
     
     List<UserDTO> list();
     
-    List<UserDTO> findByWorkAreas_CodeAndIsEnabled(List<String> codes, Boolean isEnabled);
+    List<UserDTO> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(List<String> codes, Boolean isEnabled, Boolean isProfessional);
     
     UserDTO saveOrUpdate(UserDTO user);
     
