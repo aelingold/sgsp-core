@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -57,8 +58,8 @@ public class User extends BaseEntity<Long> {
 	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_country_user"))
 	private Country country;
 
-	@OneToMany
-	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user_id")), inverseJoinColumns = @JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_user_work_area_work_area_id")))
+	@ManyToMany
+	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "work_area_id"))
 	private List<WorkArea> workAreas;
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
