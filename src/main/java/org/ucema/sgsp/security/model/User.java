@@ -17,8 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
+import org.ucema.sgsp.persistence.model.UserWorkZone;
 import org.ucema.sgsp.persistence.model.WorkArea;
 
 @Entity
@@ -61,10 +63,17 @@ public class User extends BaseEntity<Long> {
 	@ManyToMany
 	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "work_area_id"))
 	private List<WorkArea> workAreas;
+	
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
+	
 	@Column(name = "is_professional")
 	private boolean isProfessional;
+	
+	@OneToMany
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
+	private List<UserWorkZone> userWorkZones;	
 
 	public User() {
 	}
@@ -183,6 +192,14 @@ public class User extends BaseEntity<Long> {
 		this.country = country;
 	}
 
+	public List<UserWorkZone> getUserWorkZones() {
+		return userWorkZones;
+	}
+
+	public void setUserWorkZones(List<UserWorkZone> userWorkZones) {
+		this.userWorkZones = userWorkZones;
+	}
+
 	public static class Builder {
 
 		private User user;
@@ -246,6 +263,11 @@ public class User extends BaseEntity<Long> {
 			user.userWorkRates = userWorkRates;
 			return this;
 		}
+		
+		public Builder userWorkZones(List<UserWorkZone> userWorkZones) {
+			user.userWorkZones = userWorkZones;
+			return this;
+		}		
 
 		public User build() {
 			return user;

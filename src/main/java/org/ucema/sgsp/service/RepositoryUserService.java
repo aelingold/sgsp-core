@@ -115,6 +115,16 @@ public class RepositoryUserService implements UserService {
 	}
 
 	@Transactional
+	public List<UserDTO> findByWorkAreas_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
+			List<String> codes, Boolean isEnabled, Boolean isProfessional,
+			List<String> cityCodes) {
+		List<User> users = repository
+				.findByWorkAreas_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
+						codes, isEnabled, isProfessional, cityCodes);
+		return userTransformation.transformToApi(users);
+	}
+
+	@Transactional
 	public List<UserDTO> list() {
 
 		List<User> users = repository.findAll().stream()

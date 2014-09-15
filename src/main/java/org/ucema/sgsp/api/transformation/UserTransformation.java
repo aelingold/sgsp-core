@@ -2,6 +2,7 @@ package org.ucema.sgsp.api.transformation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -64,6 +65,12 @@ public class UserTransformation {
 			result.setCountryCode(user.getCountry().getCode());
 		}
 
+		if (user.getUserWorkZones() != null) {
+			result.setCityCodes(user.getUserWorkZones().stream()
+					.map(uwz -> uwz.getCity().getCode())
+					.collect(Collectors.toList()));
+		}
+
 		result.setRole(user.getRole());
 
 		return result;
@@ -89,8 +96,8 @@ public class UserTransformation {
 		}
 
 		if (user.getCountryCode() != null) {
-			result.setCountry(new Country(countryService.findByCode(user
-					.getCountryCode()).getId()));
+			result.setCountry(new Country(countryService.findByCode(
+					user.getCountryCode()).getId()));
 		}
 
 		result.setRole(user.getRole());

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.ucema.sgsp.persistence.model.UserWorkZone;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.security.model.User;
@@ -40,9 +41,23 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 				.username(user.getEmail()).telephone(user.getTelephone())
 				.isProfessional(user.getIsProfessional())
 				.workAreasCodes(buildWorkAreaCodes(user.getWorkAreas()))
-				.country(user.getCountry().getCode()).build();
+				.country(user.getCountry().getCode())
+				.cityCodes(buildCityCodes(user.getUserWorkZones())).build();
 
 		return principal;
+	}
+
+	private List<String> buildCityCodes(List<UserWorkZone> userWorkZones) {
+
+		List<String> result = new ArrayList<String>();
+
+		if (userWorkZones != null) {
+			for (UserWorkZone userWorkZone : userWorkZones) {
+				result.add(userWorkZone.getCity().getCode());
+			}
+		}
+
+		return result;
 	}
 
 	private List<String> buildWorkAreaCodes(List<WorkArea> workAreas) {

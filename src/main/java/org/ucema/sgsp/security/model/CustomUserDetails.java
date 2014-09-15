@@ -21,6 +21,7 @@ public class CustomUserDetails extends SocialUser {
 	private boolean isProfessional;
 	private List<String> workAreasCodes;
 	private String countryCode;
+	private List<String> cityCodes;
     
     public static Builder getBuilder() {
         return new Builder();
@@ -102,6 +103,14 @@ public class CustomUserDetails extends SocialUser {
 		return countryCode;
 	}
 
+	public List<String> getCityCodes() {
+		return cityCodes;
+	}
+
+	public void setCityCodes(List<String> cityCodes) {
+		this.cityCodes = cityCodes;
+	}
+
 	public static class Builder {
  
         private Long id;
@@ -116,6 +125,7 @@ public class CustomUserDetails extends SocialUser {
     	private boolean isProfessional;
     	private List<String> workAreasCodes;
     	private String countryCode;
+    	private List<String> cityCodes;
  
 		public Builder() {
             this.authorities = new HashSet<GrantedAuthority>();
@@ -130,6 +140,11 @@ public class CustomUserDetails extends SocialUser {
             this.telephone = telephone;
             return this;
         }
+        
+        public Builder cityCodes(List<String> cityCodes) {
+            this.cityCodes = cityCodes;
+            return this;
+        }        
         
         public Builder workAreasCodes(List<String> workAreasCodes) {
             this.workAreasCodes = workAreasCodes;
@@ -196,6 +211,7 @@ public class CustomUserDetails extends SocialUser {
             user.isProfessional = isProfessional;
             user.workAreasCodes = workAreasCodes;
             user.countryCode = countryCode;
+            user.cityCodes = cityCodes;
  
             return user;
         }

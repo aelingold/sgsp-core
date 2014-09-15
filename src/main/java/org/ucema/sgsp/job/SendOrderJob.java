@@ -25,6 +25,8 @@ import org.ucema.sgsp.service.QuoteService;
 import org.ucema.sgsp.service.UserNotifyService;
 import org.ucema.sgsp.service.UserService;
 
+import com.google.common.collect.Lists;
+
 @Component
 public class SendOrderJob {
 
@@ -44,7 +46,7 @@ public class SendOrderJob {
 	@Resource
 	private Environment env;
 
-	@Scheduled(fixedRate = 6000)
+	@Scheduled(fixedRate = 10000)
 	public void sendOrders() {
 		LOGGER.info("Sending orders for quotation");
 
@@ -64,9 +66,14 @@ public class SendOrderJob {
 		List<String> workAreaCodes = new ArrayList<String>();
 		workAreaCodes.add(order.getWorkAreaCode());
 
+		// List<UserDTO> users = userService
+		// .findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
+		// workAreaCodes, true, true);
+
 		List<UserDTO> users = userService
-				.findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
-						workAreaCodes, true, true);
+				.findByWorkAreas_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
+						workAreaCodes, true, true,
+						Lists.newArrayList(order.getCityCode()));
 
 		users = users.stream()
 				.filter(u -> !u.getEmail().equals(order.getUsername()))
@@ -92,8 +99,10 @@ public class SendOrderJob {
 		LOGGER.info("Users returned[" + users.size() + "] with workAreaCodes["
 				+ workAreaCodes + "]");
 
-		order.setPendingNotify(false);
-		orderService.update(order);
+		if (users.size() > 0) {
+			order.setPendingNotify(false);
+			orderService.update(order);
+		}
 	}
 
 	private String buildMessage(UserDTO user, OrderDTO order) {

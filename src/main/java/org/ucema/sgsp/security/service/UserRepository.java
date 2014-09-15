@@ -11,4 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
 			List<String> codes, Boolean isEnabled, Boolean isProfessional);
+
+	List<User> findByWorkAreas_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
+			List<String> codes, Boolean isEnabled, Boolean isProfessional,
+			List<String> cityCodes);
 }
