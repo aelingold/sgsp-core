@@ -180,8 +180,47 @@
 					                        	<label>Detalle del trabajo:</label> ${order.workDescription}
 					                        </div>
 				                       </div>
-								  	</div>
+								  	</div>								  	
 								</div>
+								<div class="response-list-section col-md-12">
+									<div class="col-md-12 response-list-panel">
+										<div class="col-md-12">
+											<h5>Presupuestos</h5>
+										</div>
+										<ul class="response-list">
+									  		<li class="col-md-12">
+									  			<div class="col-md-3">
+									  				Alexis E. (10)
+									  			</div>
+									  			<div class="col-md-2">
+									  				Total $1000
+									  			</div>
+									  			<div class="col-md-3" style="color: #bbb;">
+									  				Válido hasta 02/10/2014
+									  			</div>
+									  			<div class="col-md-4">
+									  				<a href="#" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
+									  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
+									  			</div>
+									  		</li>
+									  		<li class="col-md-12">
+									  			<div class="col-md-3">
+									  				Carlos A. (5)
+									  			</div>
+									  			<div class="col-md-2">
+									  				Visita $50
+									  			</div>
+									  			<div class="col-md-3" style="color: #bbb;">
+									  				Válido hasta 02/10/2014
+									  			</div>
+									  			<div class="col-md-4">
+									  				<a href="#" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
+									  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
+									  			</div>
+									  		</li>
+							  			</ul>
+							  		</div>
+						  		</div>
 							</div>
 							<#-- fin de ejemplo de un presupuesto pedido -->						
 						</#list>						
