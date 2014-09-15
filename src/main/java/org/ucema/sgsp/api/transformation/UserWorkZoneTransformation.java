@@ -2,13 +2,11 @@ package org.ucema.sgsp.api.transformation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.UserWorkZoneDTO;
 import org.ucema.sgsp.persistence.model.City;
-import org.ucema.sgsp.persistence.model.State;
 import org.ucema.sgsp.persistence.model.UserWorkZone;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.service.CityService;
@@ -50,12 +48,7 @@ public class UserWorkZoneTransformation {
 		UserWorkZoneDTO result = new UserWorkZoneDTO();
 
 		result.setId(userWorkZone.getId());
-		result.setAllCities(userWorkZone.getAllCities());
-		result.setStateCode(userWorkZone.getState().getCode());
-		if (userWorkZone.getCities() != null) {
-			result.setCityCodes(userWorkZone.getCities().stream()
-					.map(c -> c.getCode()).collect(Collectors.toList()));
-		}
+		result.setCityCode(userWorkZone.getCity().getCode());
 
 		if (userWorkZone.getUser() != null) {
 			result.setUsername(userWorkZone.getUser().getEmail());
@@ -68,15 +61,8 @@ public class UserWorkZoneTransformation {
 		UserWorkZone result = new UserWorkZone();
 
 		result.setId(userWorkZone.getId());
-		result.setAllCities(userWorkZone.getAllCities());
-		result.setState(new State(stateService.findByCode(
-				userWorkZone.getStateCode()).getId()));
-
-		if (userWorkZone.getCityCodes() != null) {
-			result.setCities(userWorkZone.getCityCodes().stream()
-					.map(c -> new City(cityService.findByCode(c).getId()))
-					.collect(Collectors.toList()));
-		}
+		result.setCity(new City(cityService.findByCode(
+				userWorkZone.getCityCode()).getId()));
 
 		if (userWorkZone.getUsername() != null) {
 			result.setUser(new User(userService.findByEmail(

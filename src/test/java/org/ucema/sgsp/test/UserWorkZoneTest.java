@@ -15,18 +15,15 @@ public class UserWorkZoneTest extends BaseTest {
 	@Test
 	public void insertAndVerifyUser() {
 
-		Boolean allCities = false;
-		String stateCode = "AR-C";
+		String cityCode = "RHZOG";
 
 		UserWorkZoneDTO request = UserWorkZoneDTO.newInstance()
-				.withAllCities(allCities).withStateCode(stateCode).build();
+				.withCityCode(cityCode).build();
 
 		UserWorkZoneDTO response = userWorkZoneService.saveOrUpdate(request);
 
 		UserWorkZoneDTO responseRetrieved = userWorkZoneService.get(response
 				.getId());
 		Assert.assertNotNull(responseRetrieved);
-
-		Assert.assertEquals(allCities, responseRetrieved.getAllCities());
 	}
 }

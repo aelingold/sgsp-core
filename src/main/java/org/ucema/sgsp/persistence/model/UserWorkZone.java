@@ -1,7 +1,6 @@
 package org.ucema.sgsp.persistence.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,15 +8,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.security.model.User;
 
 @Entity
@@ -31,14 +27,8 @@ public class UserWorkZone {
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
 	private User user;
 	@ManyToOne
-	@JoinColumn(name = "state_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_state"))
-	private State state;
-	@OneToMany(orphanRemoval = true)
-	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	@JoinTable(name = "user_work_zone_cities", joinColumns = @JoinColumn(name = "user_work_zone_id"), inverseJoinColumns = @JoinColumn(name = "city_id"))
-	private List<City> cities;
-	@Column(name = "all_cities")
-	private Boolean allCities;
+	@JoinColumn(name = "city_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_city"))
+	private City city;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -82,27 +72,11 @@ public class UserWorkZone {
 		this.createdAt = createdAt;
 	}
 
-	public State getState() {
-		return state;
+	public City getCity() {
+		return city;
 	}
 
-	public void setState(State state) {
-		this.state = state;
-	}
-
-	public List<City> getCities() {
-		return cities;
-	}
-
-	public void setCities(List<City> cities) {
-		this.cities = cities;
-	}
-
-	public Boolean getAllCities() {
-		return allCities;
-	}
-
-	public void setAllCities(Boolean allCities) {
-		this.allCities = allCities;
+	public void setCity(City city) {
+		this.city = city;
 	}
 }

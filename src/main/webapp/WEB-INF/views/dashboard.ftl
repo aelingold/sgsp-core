@@ -64,99 +64,42 @@
             	<div class="col-md-9">
             		
             		<div id="configuracion-panel" class="col-md-12 dashboard-panel">
-	            		<div class="row">
-							<div class="panel panel-default">
-						  		<div class="panel-heading">
-							    	<h3 class="panel-title">
-							    		Recibir pedidos de...
-							    	</h3>
+						<form name="configForm" action="/dashboard/config" method="POST" enctype="utf8">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<@spring.bind "config" />            		
+		            		<div class="row">
+								<div class="panel panel-default">
+							  		<div class="panel-heading">
+								    	<h3 class="panel-title">
+								    		Configurar zona de trabajo
+								    	</h3>
+								  	</div>
+								  	<div class="panel-body">
+								  		<#list states as state>
+									  		<div class="row">
+										  		<div class="col-md-12 form-group">
+													<h4>${state.description}</h4>
+												</div>
+												<div class="col-md-12 form-group">
+													<label>Localidades:</label>
+													<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
+												</div>
+												<div class="col-md-12 form-group">											
+															
+																<@spring.formCheckboxes "config.cityCodes", configMap[state.code],''/>
+																																										
+												</div>
+											</div>									
+										</#list>
+								  	</div>							  	
 							  	</div>
-							  	<div class="panel-body">
-							  		<div class="row">
-								  		<div class="col-md-12 form-group">
-											<h4>Ciudad de Buenos Aires</h4>
-										</div>
-										<div class="col-md-12 form-group">
-											<label>Localidades:</label>
-											<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
-										</div>
-										<div class="col-md-12 form-group">
-											<div class="col-md-3">
-												<input type="checkbox"> Palermo
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Almagro
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Villa del parque
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Villa crespo
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Microcentro
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Once
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Villa devoto
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> La paternal
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Recoleta
-											</div>
-										</div>
-									</div>
-									
-									<div class="row">
-								  		<div class="col-md-12 form-group">
-											<h4>Buenos Aires</h4>
-										</div>
-										<div class="col-md-12 form-group">
-											<label>Localidades:</label>
-											<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
-										</div>
-										<div class="col-md-12 form-group">
-											<div class="col-md-3">
-												<input type="checkbox"> Palermo
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Almagro
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Villa del parque
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Villa crespo
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Microcentro
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Once
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Villa devoto
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> La paternal
-											</div>
-											<div class="col-md-3">
-												<input type="checkbox"> Recoleta
-											</div>
-										</div>
-									</div>
-							  	</div>							  	
 						  	</div>
-					  	</div>
-					  	<div class="row">
-	                        <div class="col-md-12" style="text-align: center;">
-	                        	<a href="#" class="button btn btn-warning">Guardar</a>
-	                        </div>
-                       </div>
+						  	<div class="row">
+		                        <div class="col-md-12" style="text-align: center;">
+		                        	<a href="javascript:document.configForm.submit()" class="button btn btn-warning">Guardar</a>
+		                        </div>
+	                       	</div>
+	                	</form>
 					</div>
             	            	
             		<div id="calificaciones-panel" class="col-md-12 dashboard-panel">

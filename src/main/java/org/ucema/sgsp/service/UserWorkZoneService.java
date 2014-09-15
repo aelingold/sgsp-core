@@ -27,11 +27,30 @@ public class UserWorkZoneService {
 	}
 
 	@Transactional
+	public List<UserWorkZoneDTO> list(String username) {
+		return userWorkZoneTransformation.transformToApi(userWorkZoneDAO
+				.findByUser_Email(username));
+	}
+
+	@Transactional
 	public UserWorkZoneDTO saveOrUpdate(UserWorkZoneDTO userWorkZone) {
 		UserWorkZone response = userWorkZoneDAO.save(userWorkZoneTransformation
 				.transformToModel(userWorkZone));
 		userWorkZone.setId(response.getId());
 		return userWorkZone;
+	}
+
+	@Transactional
+	public List<UserWorkZoneDTO> saveOrUpdate(
+			List<UserWorkZoneDTO> userWorkZonesDTO) {
+
+		List<UserWorkZone> userWorkZones = userWorkZoneTransformation
+				.transformToModel(userWorkZonesDTO);
+
+		List<UserWorkZone> userWorkZonesSaved = userWorkZoneDAO
+				.save(userWorkZones);
+
+		return userWorkZoneTransformation.transformToApi(userWorkZonesSaved);
 	}
 
 	@Transactional
@@ -47,6 +66,11 @@ public class UserWorkZoneService {
 			throw new RuntimeException("userWorkZone not found");
 		}
 		userWorkZoneDAO.delete(userWorkZone);
+	}
+
+	@Transactional
+	public void deleteAll() {
+		userWorkZoneDAO.deleteAll();
 	}
 
 	@Transactional
