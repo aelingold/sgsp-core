@@ -97,7 +97,7 @@
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label>Pais</label>
-                                <@spring.formSingleSelect "user.countryCode", countriesMap,""/>
+                                <@spring.formSingleSelect "user.countryCode", countriesMap, 'class="form-control"'/>
                                 <@spring.showErrors "<br>" />	                        	
                             </div>
                         </div>

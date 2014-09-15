@@ -72,20 +72,82 @@
 							    	</h3>
 							  	</div>
 							  	<div class="panel-body">
-							  		<div class="col-md-6 form-group">
-										<span>Provincia</span>
-										<select name="stateCode" class="form-control">
-											<option value="">Buenos Aires</option>
-										</select>
+							  		<div class="row">
+								  		<div class="col-md-12 form-group">
+											<h4>Ciudad de Buenos Aires</h4>
+										</div>
+										<div class="col-md-12 form-group">
+											<label>Localidades:</label>
+											<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
+										</div>
+										<div class="col-md-12 form-group">
+											<div class="col-md-3">
+												<input type="checkbox"> Palermo
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Almagro
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Villa del parque
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Villa crespo
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Microcentro
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Once
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Villa devoto
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> La paternal
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Recoleta
+											</div>
+										</div>
 									</div>
-									<div class="col-md-6 form-group">
-										<span>Localidad</span>
-										<select name="cityCode" class="form-control">
-											<option value="">Ciudad de Buenos Aires</option>
-										</select>
-									</div>
-									<div class="col-md-12">
-										<a href="#" class="button btn btn-default pull-right">Agregar otro</a>
+									
+									<div class="row">
+								  		<div class="col-md-12 form-group">
+											<h4>Buenos Aires</h4>
+										</div>
+										<div class="col-md-12 form-group">
+											<label>Localidades:</label>
+											<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
+										</div>
+										<div class="col-md-12 form-group">
+											<div class="col-md-3">
+												<input type="checkbox"> Palermo
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Almagro
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Villa del parque
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Villa crespo
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Microcentro
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Once
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Villa devoto
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> La paternal
+											</div>
+											<div class="col-md-3">
+												<input type="checkbox"> Recoleta
+											</div>
+										</div>
 									</div>
 							  	</div>							  	
 						  	</div>
@@ -223,7 +285,7 @@
 	                                <@spring.showErrors "<br>" />	                            
 		                        </div>
 		                    </div>
-		                    <button type="submit" class="btn btn-default pull-right">Guardar</button>
+		                    <button type="submit" class="btn btn-warning pull-right">Guardar</button>
 	                    </form>
                    	</div>
                    	

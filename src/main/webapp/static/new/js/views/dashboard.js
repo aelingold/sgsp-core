@@ -36,3 +36,8 @@ $(".need-visit").change(function() {
 		$(this).parents(".panel-body").find(".budget-common-form").show();
 	}
 });
+
+$(".select-all-cities").on("click", function(){
+	var cities = $($(this).parents(".row")[0]).find("input[type='checkbox']");
+	$(cities).attr("checked",true);	
+});
