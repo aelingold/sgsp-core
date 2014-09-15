@@ -19,7 +19,6 @@ import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
 import org.ucema.sgsp.exception.DuplicateEmailException;
-import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
@@ -107,10 +106,11 @@ public class RepositoryUserService implements UserService {
 	}
 
 	@Transactional
-	public List<UserDTO> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(List<String> codes,
-			Boolean isEnabled, Boolean isProfessional) {
-		List<User> users = repository.findByWorkAreas_CodeAndIsEnabledAndIsProfessional(codes,
-				isEnabled,isProfessional);
+	public List<UserDTO> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
+			List<String> codes, Boolean isEnabled, Boolean isProfessional) {
+		List<User> users = repository
+				.findByWorkAreas_CodeAndIsEnabledAndIsProfessional(codes,
+						isEnabled, isProfessional);
 		return userTransformation.transformToApi(users);
 	}
 
@@ -192,11 +192,8 @@ public class RepositoryUserService implements UserService {
 				.telephone(userAccountData.getTelephone())
 				.professional(
 						userAccountData.getUserType().equals(
-								UserTypeDTO.professional))
-				.enabled(true)
-				.country(
-						new Country(countryService.findByCode(
-								userAccountData.getCountryCode()).getId()));
+								UserTypeDTO.professional)).enabled(true)
+				.country(countryService.find(userAccountData.getCountryCode()));
 
 		if (userAccountData.getWorkAreaCodes() != null
 				&& userAccountData.getWorkAreaCodes().size() > 0) {

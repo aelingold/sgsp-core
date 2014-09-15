@@ -60,6 +60,20 @@ public class CountryService {
 			return null;
 		}
 	}
+	
+	@Transactional
+	public Country find(String code) {
+		Country country = countryDAO.findByCode(code);
+		if (country == null) {
+			throw new RuntimeException("country not found");
+		}
+
+		if (country.getIsEnabled()) {
+			return country;
+		} else {
+			return null;
+		}
+	}	
 
 	@Transactional
 	public CountryDTO findByCode(String code) {
