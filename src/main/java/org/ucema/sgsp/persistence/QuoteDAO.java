@@ -10,4 +10,6 @@ public interface QuoteDAO extends JpaRepository<Quote, Long> {
 
 	List<Quote> findByStatusTypeAndUser_Email(QuoteStatusType statusType,
 			String username);
+
+	List<Quote> findByUser_Email(String username);
 }

@@ -23,6 +23,7 @@ public class OrderDTO implements Serializable {
 	private String workDateType;
 	private List<Long> orderItemIds;
 	private List<String> workAreaItemCodes;
+	private List<Long> quoteIds;
 
 	public OrderDTO() {
 		super();
@@ -237,5 +238,13 @@ public class OrderDTO implements Serializable {
 
 	public void setWorkAreaItemCodes(List<String> workAreaItemCodes) {
 		this.workAreaItemCodes = workAreaItemCodes;
+	}
+
+	public List<Long> getQuoteIds() {
+		return quoteIds;
+	}
+
+	public void setQuoteIds(List<Long> quoteIds) {
+		this.quoteIds = quoteIds;
 	}
 }

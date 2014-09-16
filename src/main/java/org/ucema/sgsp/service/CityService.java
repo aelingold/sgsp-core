@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.CityDTO;
 import org.ucema.sgsp.api.transformation.CityTransformation;
@@ -23,8 +24,13 @@ public class CityService {
 
 	@Transactional
 	public List<CityDTO> list() {
+		return list(new Sort(Sort.Direction.ASC, "description"));
+	}	
+	
+	@Transactional
+	public List<CityDTO> list(Sort sort) {
 
-		List<City> cities = cityDAO.findAll();
+		List<City> cities = cityDAO.findAll(sort);
 
 		List<City> citiesFiltered = new ArrayList<City>();
 		for (City city : cities) {

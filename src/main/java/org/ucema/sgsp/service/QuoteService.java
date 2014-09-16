@@ -34,6 +34,18 @@ public class QuoteService {
 	}
 
 	@Transactional
+	public List<QuoteDTO> list(String username) {
+		return quoteTransformation.transformToApi(quoteDAO
+				.findByUser_Email(username));
+	}
+	
+	@Transactional
+	public List<QuoteDTO> list(List<Long> ids) {
+		return quoteTransformation.transformToApi(quoteDAO
+				.findAll(ids));
+	}	
+
+	@Transactional
 	public List<QuoteDTO> list() {
 		return quoteTransformation.transformToApi(quoteDAO.findAll());
 	}

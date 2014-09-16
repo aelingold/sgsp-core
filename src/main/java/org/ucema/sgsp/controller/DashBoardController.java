@@ -3,7 +3,7 @@ package org.ucema.sgsp.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +30,7 @@ import org.ucema.sgsp.api.dto.CityDTO;
 import org.ucema.sgsp.api.dto.CurrencyDTO;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
+import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkZoneDTO;
@@ -96,7 +97,22 @@ public class DashBoardController {
 
 		model.addAttribute("user", user);
 
-		model.addAttribute("orders", orderService.list(username));
+		List<OrderDTO> orders = orderService.list(username);
+		model.addAttribute("orders", orders);
+
+		List<Long> quoteIds = new ArrayList<>();
+		orders.forEach(o -> {
+			quoteIds.addAll(o.getQuoteIds());
+		});
+
+		model.addAttribute(
+				"doneQuotes",
+				quoteService
+						.list(quoteIds)
+						.stream()
+						.filter(q -> q.getStatusType().equals(
+								QuoteStatusType.DONE.name()))
+						.collect(Collectors.toList()));
 
 		model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
 
@@ -123,8 +139,8 @@ public class DashBoardController {
 		userWorkZoneService.list(username).forEach(uwz -> {
 			dashBoardConfig.getCityCodes().add(uwz.getCityCode());
 		});
-		
-		model.addAttribute("config", dashBoardConfig);	
+
+		model.addAttribute("config", dashBoardConfig);
 		model.addAttribute("configMap", getConfigMap(states, cities));
 
 		return VIEW_NAME_DASHBOARD_PAGE;
@@ -132,18 +148,18 @@ public class DashBoardController {
 
 	private Map<String, Map<String, String>> getConfigMap(
 			List<StateDTO> states, List<CityDTO> cities) {
-		Map<String, Map<String, String>> configMap = new HashMap<String, Map<String, String>>();
+		Map<String, Map<String, String>> configMap = new LinkedHashMap<String, Map<String, String>>();
 		states.forEach(s -> {
-			Map<String, String> citiesMap = new HashMap<String, String>();
-			
+			Map<String, String> citiesMap = new LinkedHashMap<String, String>();
+
 			List<CityDTO> citiesFiltered = cities.stream()
 					.filter(c -> c.getStateCode().equals(s.getCode()))
 					.collect(Collectors.toList());
-			
+
 			citiesFiltered.forEach(cf -> {
 				citiesMap.put(cf.getCode(), cf.getDescription());
 			});
-			
+
 			configMap.put(s.getCode(), citiesMap);
 		});
 

@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.CountryDTO;
 import org.ucema.sgsp.api.transformation.CountryTransformation;
@@ -26,11 +27,16 @@ public class CountryService {
 
 	@Autowired
 	private CountryDAO countryDAO;
-
+	
 	@Transactional
 	public List<CountryDTO> list() {
+		return list(new Sort(Sort.Direction.ASC, "description"));
+	}	
 
-		List<Country> countries = countryDAO.findAll();
+	@Transactional
+	public List<CountryDTO> list(Sort sort) {
+
+		List<Country> countries = countryDAO.findAll(sort);
 
 		List<Country> countriesFiltered = new ArrayList<Country>();
 		for (Country country : countries) {

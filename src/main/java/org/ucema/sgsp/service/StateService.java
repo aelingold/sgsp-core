@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.transformation.StateTransformation;
@@ -22,9 +23,9 @@ public class StateService {
 	private StateDAO stateDAO;
 
 	@Transactional
-	public List<StateDTO> list() {
+	public List<StateDTO> list(Sort sort) {
 		
-		List<State> states = stateDAO.findAll();
+		List<State> states = stateDAO.findAll(sort);
 
 		List<State> statesFiltered = new ArrayList<State>();
 		for (State state : states) {
@@ -34,7 +35,12 @@ public class StateService {
 		}
 	
 		return stateTransformation.transformToApi(statesFiltered,false);
-	}	
+	}
+	
+	@Transactional
+	public List<StateDTO> list() {
+		return list(new Sort(Sort.Direction.ASC, "description"));
+	}
 	
 	@Transactional
 	public StateDTO get(Long id){

@@ -40,6 +40,8 @@ public class OrderTransformation {
 	private StateService stateService;
 	@Autowired
 	private CityService cityService;
+	@Autowired
+	private QuoteTransformation quoteTransformation;
 
 	public List<OrderDTO> transformToApi(List<Order> orders) {
 		List<OrderDTO> result = new ArrayList<OrderDTO>();
@@ -89,6 +91,10 @@ public class OrderTransformation {
 		if (order.getCity() != null) {
 			result.setCityCode(order.getCity().getCode());
 			result.setCityDescription(order.getCity().getDescription());
+		}
+		
+		if (order.getQuotes() != null){
+			result.setQuoteIds(order.getQuotes().stream().map(q-> q.getId()).collect(Collectors.toList()));
 		}
 
 		return result;

@@ -9,6 +9,8 @@ public class QuoteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String username;
+	private String firstName;
+	private String lastName;
 	private Long orderId;
 	private OrderDTO order;
 	private String description;
@@ -186,5 +188,21 @@ public class QuoteDTO implements Serializable {
 
 	public void setVisitAmount(AmountDTO visitAmount) {
 		this.visitAmount = visitAmount;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

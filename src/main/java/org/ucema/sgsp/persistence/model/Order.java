@@ -66,6 +66,9 @@ public class Order {
 	private BigDecimal squareMeters;
 	@Column(name = "air_conditioner_power")
 	private Integer airConditionerPower;
+	@OneToMany
+	@JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "fk_order_quotes"))
+	private List<Quote> quotes;
 
 	public Order(Long id) {
 		super();
@@ -198,5 +201,13 @@ public class Order {
 
 	public void setAirConditionerPower(Integer airConditionerPower) {
 		this.airConditionerPower = airConditionerPower;
+	}
+
+	public List<Quote> getQuotes() {
+		return quotes;
+	}
+
+	public void setQuotes(List<Quote> quotes) {
+		this.quotes = quotes;
 	}
 }

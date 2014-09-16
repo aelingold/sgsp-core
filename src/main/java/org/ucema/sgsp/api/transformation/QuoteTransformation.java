@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.AmountDTO;
-import org.ucema.sgsp.api.dto.CurrencyDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.persistence.model.Amount;
 import org.ucema.sgsp.persistence.model.Currency;
@@ -31,6 +30,8 @@ public class QuoteTransformation {
 	private QuoteQuestionTransformation quoteQuestionTransformation;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CurrencyTransformation currencyTransformation;
 
 	public List<QuoteDTO> transformToApi(List<Quote> quotes) {
 		List<QuoteDTO> result = new ArrayList<QuoteDTO>();
@@ -71,6 +72,8 @@ public class QuoteTransformation {
 
 		if (quote.getUser() != null) {
 			result.setUsername(quote.getUser().getEmail());
+			result.setFirstName(quote.getUser().getFirstName());
+			result.setLastName(quote.getUser().getLastName());
 		}
 
 		if (quote.getQuoteQuestions() != null) {
@@ -79,6 +82,7 @@ public class QuoteTransformation {
 			result.setQuoteQuestionIds(quote.getQuoteQuestions().stream()
 					.map(qq -> qq.getId()).collect(Collectors.toList()));
 		}
+		result.setValidDateUntil(quote.getValidDateUntil());
 
 		return result;
 	}
@@ -88,8 +92,7 @@ public class QuoteTransformation {
 		AmountDTO result = new AmountDTO();
 
 		result.setAmount(amount.getAmount());
-		result.setCurrency(CurrencyDTO.newInstance()
-				.withCode(amount.getCurrency().getCode()).build());
+		result.setCurrency(currencyTransformation.transformToApi(amount.getCurrency()));
 
 		return result;
 	}
