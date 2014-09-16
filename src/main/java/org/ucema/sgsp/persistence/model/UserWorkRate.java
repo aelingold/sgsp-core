@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,6 +32,9 @@ public class UserWorkRate {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+	@OneToOne
+	@JoinColumn(name = "quote_id", foreignKey = @ForeignKey(name = "fk_user_work_rates_quote"))
+	private Quote quote;
 
 	public UserWorkRate() {
 		super();
@@ -85,5 +89,13 @@ public class UserWorkRate {
 
 	public void setRate(String rate) {
 		this.rate = rate;
+	}
+
+	public Quote getQuote() {
+		return quote;
+	}
+
+	public void setQuote(Quote quote) {
+		this.quote = quote;
 	}
 }

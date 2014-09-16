@@ -188,20 +188,33 @@
 											<h5>Presupuestos</h5>
 										</div>
 										<ul class="response-list">
-											<#list doneQuotes as doneQuote>
-												<#if doneQuote.orderId==order.id && doneQuote.requireVisit == false>				
+											<#list repliedQuotes as repliedQuote>
+												<#if repliedQuote.orderId==order.id>				
 											  		<li class="col-md-12">
 											  			<div class="col-md-3">
-											  				${doneQuote.firstName} ${doneQuote.lastName}
+											  				${repliedQuote.firstName} ${repliedQuote.lastName} (${userWorkRates[repliedQuote.username]})
 											  			</div>
 											  			<div class="col-md-2">
-											  				Total ${doneQuote.amount.currency.symbol}${doneQuote.amount.amount}
+											  				<#if repliedQuote.requireVisit == false>
+											  					Total ${repliedQuote.amount.currency.symbol}${repliedQuote.amount.amount}
+											  				<#else>
+											  					Visita ${repliedQuote.visitAmount.currency.symbol}${repliedQuote.visitAmount.amount}
+											  				</#if>
 											  			</div>
 											  			<div class="col-md-3" style="color: #bbb;">
-											  				Válido hasta ${doneQuote.validDateUntil}
+											  				<#if repliedQuote.requireVisit == false>
+											  					Válido hasta ${repliedQuote.validDateUntil?string("dd/MM/yy")}
+											  				</#if>
 											  			</div>
 											  			<div class="col-md-4">
-											  				<a href="#" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
+											  				<#if repliedQuote.statusType="REPLIED">
+												  				<form name="budgetsFormAccepted${repliedQuote_index}" action="/dashboard/requests/accepted/${repliedQuote.id}" method="POST" enctype="utf8">
+												  					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+												  					<a href="javascript:document.budgetsFormAccepted${repliedQuote_index}.submit()" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
+												  				</form>
+												  			<#else>
+												  				Aceptado
+												  			</#if>
 											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
 											  			</div>
 											  		</li>
@@ -274,7 +287,7 @@
 																		
 						<#list pendingQuotes as pendingQuote>
 							<#if pendingQuote.statusType="PENDING">
-								<form name="budgetsForm${pendingQuote_index}" action="/dashboard/budgets" method="POST" enctype="utf8">
+								<form name="budgetsForm${pendingQuote_index}" action="/dashboard/budgets/replied" method="POST" enctype="utf8">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<@spring.bind "quote" />							
 									<input type="hidden" name="id" value="${pendingQuote.id}">								

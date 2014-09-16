@@ -60,9 +60,14 @@ public class QuoteTransformation {
 		result.setRequireVisit(quote.getRequireVisit());
 		result.setStatusType(quote.getStatusType().name());
 		result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
+		result.setCreatedAt(quote.getCreatedAt());
 
 		if (quote.getAmount() != null) {
-			result.setAmount(buildAmount(quote.getAmount()));
+			if (quote.getRequireVisit() != null && quote.getRequireVisit()){
+				result.setVisitAmount(buildAmount(quote.getAmount()));	
+			}else{
+				result.setAmount(buildAmount(quote.getAmount()));
+			}			
 		}
 
 		result.setDescription(quote.getDescription());
@@ -103,13 +108,15 @@ public class QuoteTransformation {
 		result.setId(quote.getId());
 		result.setRequireVisit(quote.getRequireVisit());
 		result.setStatusType(QuoteStatusType.valueOf(quote.getStatusType()));
+		result.setValidDateUntil(quote.getValidDateUntil());
+		result.setCreatedAt(quote.getCreatedAt());
 
 		if (quote.getAmount() != null) {
-			if (quote.getRequireVisit() != null && quote.getRequireVisit()) {
-				result.setAmount(buildAmount(quote.getVisitAmount()));
-			} else {
-				result.setAmount(buildAmount(quote.getAmount()));
-			}
+			result.setAmount(buildAmount(quote.getAmount()));
+		}
+		
+		if (quote.getVisitAmount() != null){
+			result.setAmount(buildAmount(quote.getVisitAmount()));
 		}
 
 		result.setDescription(quote.getDescription());
@@ -145,7 +152,7 @@ public class QuoteTransformation {
 
 		quote.setValidDateUntil(quoteDTO.getValidDateUntil());
 		quote.setDescription(quoteDTO.getDescription());
-		quote.setStatusType(QuoteStatusType.DONE);
+		quote.setStatusType(QuoteStatusType.valueOf(quoteDTO.getStatusType()));
 		quote.setRequireVisit(quoteDTO.getRequireVisit());
 		if (quoteDTO.getRequireVisit() != null && quoteDTO.getRequireVisit()) {
 			quote.setAmount(new Amount(quoteDTO.getVisitAmount().getAmount(),

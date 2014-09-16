@@ -52,10 +52,7 @@ public class UserTransformation {
 		result.setPassword(user.getPassword());
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
-		if (user.getUserWorkRates() != null) {
-			result.setUserWorkRates(userWorkRateTransformation
-					.transformToApi(user.getUserWorkRates()));
-		}
+
 		if (user.getWorkAreas() != null) {
 			result.setWorkAreas(workAreaTransformation.transformToApi(user
 					.getWorkAreas()));
@@ -86,10 +83,7 @@ public class UserTransformation {
 		result.setPassword(user.getPassword());
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
-		if (user.getUserWorkRates() != null) {
-			result.setUserWorkRates(userWorkRateTransformation
-					.transformToModel(user.getUserWorkRates()));
-		}
+
 		if (user.getWorkAreas() != null) {
 			result.setWorkAreas(workAreaTransformation.transformToModel(user
 					.getWorkAreas()));

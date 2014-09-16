@@ -15,7 +15,6 @@ public class UserDTO implements Serializable {
 	private String telephone;
 	private String password;
 	private List<WorkAreaDTO> workAreas;
-	private List<UserWorkRateDTO> userWorkRates;
 	private Boolean isProfessional;
 	private Role role;
 	private String countryCode;
@@ -36,7 +35,6 @@ public class UserDTO implements Serializable {
 		result.setPassword(password);
 		result.setRole(role);
 		result.setTelephone(telephone);
-		result.setUserWorkRates(userWorkRates);
 		result.setWorkAreas(workAreas);
 		result.setCountryCode(countryCode);
 
@@ -150,14 +148,6 @@ public class UserDTO implements Serializable {
 
 	public void setWorkAreas(List<WorkAreaDTO> workAreas) {
 		this.workAreas = workAreas;
-	}
-
-	public List<UserWorkRateDTO> getUserWorkRates() {
-		return userWorkRates;
-	}
-
-	public void setUserWorkRates(List<UserWorkRateDTO> userWorkRates) {
-		this.userWorkRates = userWorkRates;
 	}
 
 	public Role getRole() {

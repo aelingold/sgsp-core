@@ -21,6 +21,7 @@ public class QuoteDTO implements Serializable {
 	private String statusType;
 	private Boolean requireVisit;
 	private AmountDTO visitAmount;
+	private Date createdAt;
 
 	public QuoteDTO() {
 		super();
@@ -204,5 +205,13 @@ public class QuoteDTO implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

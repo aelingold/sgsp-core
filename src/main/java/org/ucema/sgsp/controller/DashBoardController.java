@@ -3,9 +3,11 @@ package org.ucema.sgsp.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -33,6 +35,7 @@ import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
+import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.api.dto.UserWorkZoneDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
@@ -44,6 +47,7 @@ import org.ucema.sgsp.service.OrderService;
 import org.ucema.sgsp.service.QuoteService;
 import org.ucema.sgsp.service.StateService;
 import org.ucema.sgsp.service.UserService;
+import org.ucema.sgsp.service.UserWorkRateService;
 import org.ucema.sgsp.service.UserWorkZoneService;
 import org.ucema.sgsp.service.WorkAreaItemService;
 import org.ucema.sgsp.service.WorkAreaQuestionService;
@@ -76,6 +80,8 @@ public class DashBoardController {
 	private CityService cityService;
 	@Autowired
 	private UserWorkZoneService userWorkZoneService;
+	@Autowired
+	private UserWorkRateService userWorkRateService;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
@@ -105,14 +111,43 @@ public class DashBoardController {
 			quoteIds.addAll(o.getQuoteIds());
 		});
 
+		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
 		model.addAttribute(
-				"doneQuotes",
-				quoteService
-						.list(quoteIds)
+				"repliedQuotes",
+				allQuotes
 						.stream()
 						.filter(q -> q.getStatusType().equals(
-								QuoteStatusType.DONE.name()))
+								QuoteStatusType.REPLIED.name())
+								|| q.getStatusType().equals(
+										QuoteStatusType.ACCEPTED.name()))
 						.collect(Collectors.toList()));
+
+		Set<String> allQuotesUsernames = allQuotes.stream()
+				.map(aq -> aq.getUsername()).collect(Collectors.toSet());
+
+		List<UserWorkRateDTO> userWorkRates = new ArrayList<UserWorkRateDTO>();
+		if (allQuotesUsernames.size() > 0) {
+			userWorkRates = userWorkRateService
+					.findByUser_Email(allQuotesUsernames);
+		}
+
+		Map<String, Long> userWorkRatesMap = new HashMap<String, Long>();
+		allQuotesUsernames.forEach(u -> {
+			userWorkRatesMap.put(u, 0L);
+		});
+
+		for (String userWorkRatesMapKey : userWorkRatesMap.keySet()) {
+
+			Long userCount = userWorkRates
+					.stream()
+					.filter(uwr -> uwr.getUser().getEmail()
+							.equals(userWorkRatesMapKey))
+					.collect(Collectors.counting());
+
+			userWorkRatesMap.put(userWorkRatesMapKey, userCount);
+		}
+
+		model.addAttribute("userWorkRates", userWorkRatesMap);
 
 		model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
 
@@ -187,8 +222,9 @@ public class DashBoardController {
 		return "redirect:/dashboard/profile";
 	}
 
-	@RequestMapping(value = "/dashboard/budgets", method = RequestMethod.POST)
-	public String budgets(@Valid @ModelAttribute("quote") QuoteDTO quote,
+	@RequestMapping(value = "/dashboard/budgets/replied", method = RequestMethod.POST)
+	public String budgetsReplied(
+			@Valid @ModelAttribute("quote") QuoteDTO quote,
 			BindingResult result, WebRequest request, Model model) {
 
 		model.addAttribute("tabToShow", "budgets");
@@ -215,10 +251,24 @@ public class DashBoardController {
 			quote.getVisitAmount().setCurrency(currency);
 		}
 		;
+		quote.setStatusType(QuoteStatusType.REPLIED.name());
 
 		quoteService.update(quote);
 
 		return "redirect:/dashboard/budgets";
+	}
+
+	@RequestMapping(value = "/dashboard/requests/accepted/{quoteId}", method = RequestMethod.POST)
+	public String budgetsAccepted(@PathVariable Long quoteId, Model model) {
+
+		model.addAttribute("tabToShow", "requests");
+
+		QuoteDTO quote = quoteService.get(quoteId);
+		quote.setStatusType(QuoteStatusType.ACCEPTED.name());
+
+		quoteService.saveOrUpdate(quote);
+
+		return "redirect:/dashboard/requests";
 	}
 
 	@RequestMapping(value = "/dashboard/config", method = RequestMethod.POST)

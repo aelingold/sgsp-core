@@ -46,7 +46,7 @@ public class SendOrderJob {
 	@Resource
 	private Environment env;
 
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 30000)
 	public void sendOrders() {
 		LOGGER.info("Sending orders for quotation");
 
