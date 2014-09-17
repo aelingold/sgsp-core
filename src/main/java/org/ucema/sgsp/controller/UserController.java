@@ -1,7 +1,9 @@
 package org.ucema.sgsp.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.ucema.sgsp.api.dto.ReportUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.service.UserService;
 
@@ -22,7 +25,7 @@ public class UserController {
 	public @ResponseBody UserDTO get(@PathVariable Long id) {
 		return userService.get(id);
 	}
-	
+
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public @ResponseBody List<UserDTO> list() {
 		return userService.list();
@@ -36,5 +39,15 @@ public class UserController {
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {
 		userService.delete(id);
+	}
+
+	@RequestMapping(value = "/users/count/{isProfessional}", method = RequestMethod.GET)
+	public @ResponseBody Long count(@PathVariable Boolean isProfessional) {
+		return userService.countByIsProfessional(isProfessional);
+	}
+
+	@RequestMapping(value = "/users/countusers", method = RequestMethod.GET)
+	public @ResponseBody Map<YearMonth, ReportUserDTO> countUsers() {
+		return userService.countUsers();
 	}
 }

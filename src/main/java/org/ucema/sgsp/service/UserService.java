@@ -1,10 +1,13 @@
 package org.ucema.sgsp.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.joda.time.YearMonth;
 import org.springframework.social.connect.Connection;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
+import org.ucema.sgsp.api.dto.ReportUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.security.model.User;
@@ -12,6 +15,10 @@ import org.ucema.sgsp.security.model.User;
 public interface UserService {
 
 	RegistrationDTO createRegistrationDTO(Connection<?> connection);
+	
+	Map<YearMonth, ReportUserDTO> countUsers();
+	
+	Long countByIsProfessional(Boolean isProfessional);
 
 	User registerNewUserAccount(RegistrationDTO userAccountData)
 			throws DuplicateEmailException;

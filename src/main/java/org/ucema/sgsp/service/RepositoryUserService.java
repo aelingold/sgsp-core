@@ -1,9 +1,13 @@
 package org.ucema.sgsp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.joda.time.DateTime;
+import org.joda.time.YearMonth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
+import org.ucema.sgsp.api.dto.ReportUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
@@ -83,6 +88,57 @@ public class RepositoryUserService implements UserService {
 		}
 
 		return dto;
+	}
+
+	@Transactional
+	public Map<YearMonth, ReportUserDTO> countUsers() {
+		List<Object> items = repository.countUsers();
+
+		Map<YearMonth, ReportUserDTO> itemsMap = new HashMap<YearMonth, ReportUserDTO>();
+		for (Object item : items) {
+			Object[] tuple = (Object[]) item;
+			DateTime creationTime = (DateTime) tuple[0];
+			Boolean professional = (Boolean) tuple[1];
+
+			YearMonth yearMonth = new YearMonth(creationTime.getYear(),
+					creationTime.getMonthOfYear());
+
+			if (itemsMap.get(yearMonth) == null) {
+
+				ReportUserDTO reportUserDTO = new ReportUserDTO();
+
+				if (professional) {
+					reportUserDTO.setIsProfessionalCount(reportUserDTO
+							.getIsProfessionalCount() + 1);
+				} else {
+					reportUserDTO
+							.setUserCount(reportUserDTO.getUserCount() + 1);
+				}
+
+				itemsMap.put(yearMonth, reportUserDTO);
+
+			} else {
+
+				ReportUserDTO reportUserDTO = itemsMap.get(yearMonth);
+
+				if (professional) {
+					reportUserDTO.setIsProfessionalCount(reportUserDTO
+							.getIsProfessionalCount() + 1);
+				} else {
+					reportUserDTO
+							.setUserCount(reportUserDTO.getUserCount() + 1);
+				}
+
+				itemsMap.put(yearMonth, reportUserDTO);
+			}
+		}
+
+		return itemsMap;
+	}
+
+	@Transactional
+	public Long countByIsProfessional(Boolean isProfessional) {
+		return repository.countByIsProfessional(isProfessional);
 	}
 
 	@Transactional
