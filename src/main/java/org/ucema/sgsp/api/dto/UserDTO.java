@@ -173,4 +173,33 @@ public class UserDTO implements Serializable {
 	public void setCityCodes(List<String> cityCodes) {
 		this.cityCodes = cityCodes;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserDTO [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", telephone=");
+		builder.append(telephone);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", workAreas=");
+		builder.append(workAreas);
+		builder.append(", isProfessional=");
+		builder.append(isProfessional);
+		builder.append(", role=");
+		builder.append(role);
+		builder.append(", countryCode=");
+		builder.append(countryCode);
+		builder.append(", cityCodes=");
+		builder.append(cityCodes);
+		builder.append("]");
+		return builder.toString();
+	}
 }

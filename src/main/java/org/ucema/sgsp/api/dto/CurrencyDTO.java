@@ -83,4 +83,21 @@ public class CurrencyDTO {
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CurrencyDTO [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", symbol=");
+		builder.append(symbol);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", countryCode=");
+		builder.append(countryCode);
+		builder.append("]");
+		return builder.toString();
+	}
 }

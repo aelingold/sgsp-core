@@ -1,11 +1,13 @@
 package org.ucema.sgsp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.UserWorkZoneDTO;
 import org.ucema.sgsp.api.transformation.UserWorkZoneTransformation;
 import org.ucema.sgsp.persistence.UserWorkZoneDAO;
@@ -38,6 +40,21 @@ public class UserWorkZoneService {
 				.transformToModel(userWorkZone));
 		userWorkZone.setId(response.getId());
 		return userWorkZone;
+	}
+	
+	@Transactional
+	public void save(DashBoardConfigDTO config, String username){
+		deleteAll();
+
+		List<UserWorkZoneDTO> userWorkZonesNew = new ArrayList<UserWorkZoneDTO>();
+
+		config.getCityCodes().forEach(cc -> {
+			UserWorkZoneDTO uwz = new UserWorkZoneDTO();
+			uwz.setCityCode(cc);
+			uwz.setUsername(username);
+			userWorkZonesNew.add(uwz);
+		});
+		saveOrUpdate(userWorkZonesNew);		
 	}
 
 	@Transactional

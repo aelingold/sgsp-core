@@ -96,4 +96,21 @@ public class StateDTO implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("StateDTO [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", cities=");
+		builder.append(cities);
+		builder.append(", countryCode=");
+		builder.append(countryCode);
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -65,4 +65,17 @@ public class QuoteQuestionReplyDTO implements Serializable {
 	public void setQuoteQuestionId(Long quoteQuestionId) {
 		this.quoteQuestionId = quoteQuestionId;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QuoteQuestionReplyDTO [id=");
+		builder.append(id);
+		builder.append(", quoteQuestionId=");
+		builder.append(quoteQuestionId);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append("]");
+		return builder.toString();
+	}
 }

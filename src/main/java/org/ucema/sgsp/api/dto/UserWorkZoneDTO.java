@@ -65,4 +65,17 @@ public class UserWorkZoneDTO implements Serializable {
 	public void setCityCode(String cityCode) {
 		this.cityCode = cityCode;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserWorkZoneDTO [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", cityCode=");
+		builder.append(cityCode);
+		builder.append("]");
+		return builder.toString();
+	}
 }

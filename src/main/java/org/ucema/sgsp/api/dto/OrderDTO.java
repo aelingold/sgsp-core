@@ -247,4 +247,45 @@ public class OrderDTO implements Serializable {
 	public void setQuoteIds(List<Long> quoteIds) {
 		this.quoteIds = quoteIds;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("OrderDTO [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", workAreaCode=");
+		builder.append(workAreaCode);
+		builder.append(", workAreaDescription=");
+		builder.append(workAreaDescription);
+		builder.append(", workDescription=");
+		builder.append(workDescription);
+		builder.append(", workDate=");
+		builder.append(workDate);
+		builder.append(", stateCode=");
+		builder.append(stateCode);
+		builder.append(", stateDescription=");
+		builder.append(stateDescription);
+		builder.append(", cityCode=");
+		builder.append(cityCode);
+		builder.append(", cityDescription=");
+		builder.append(cityDescription);
+		builder.append(", squareMeters=");
+		builder.append(squareMeters);
+		builder.append(", airConditionerPower=");
+		builder.append(airConditionerPower);
+		builder.append(", pendingNotify=");
+		builder.append(pendingNotify);
+		builder.append(", workDateType=");
+		builder.append(workDateType);
+		builder.append(", orderItemIds=");
+		builder.append(orderItemIds);
+		builder.append(", workAreaItemCodes=");
+		builder.append(workAreaItemCodes);
+		builder.append(", quoteIds=");
+		builder.append(quoteIds);
+		builder.append("]");
+		return builder.toString();
+	}
 }

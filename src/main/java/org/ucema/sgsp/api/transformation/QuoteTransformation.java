@@ -111,11 +111,11 @@ public class QuoteTransformation {
 		result.setValidDateUntil(quote.getValidDateUntil());
 		result.setCreatedAt(quote.getCreatedAt());
 
-		if (quote.getAmount() != null) {
+		if (quote.getAmount() != null && quote.getAmount().getAmount() != null) {
 			result.setAmount(buildAmount(quote.getAmount()));
 		}
 		
-		if (quote.getVisitAmount() != null){
+		if (quote.getVisitAmount() != null && quote.getVisitAmount().getAmount() != null){
 			result.setAmount(buildAmount(quote.getVisitAmount()));
 		}
 

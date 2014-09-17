@@ -14,4 +14,13 @@ public class DashBoardConfigDTO {
 	public void setCityCodes(List<String> cityCodes) {
 		this.cityCodes = cityCodes;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DashBoardConfigDTO [cityCodes=");
+		builder.append(cityCodes);
+		builder.append("]");
+		return builder.toString();
+	}
 }

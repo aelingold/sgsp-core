@@ -3,11 +3,7 @@ package org.ucema.sgsp.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -29,15 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.api.dto.CityDTO;
-import org.ucema.sgsp.api.dto.CurrencyDTO;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
-import org.ucema.sgsp.api.dto.UserWorkZoneDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
+import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.service.CityService;
 import org.ucema.sgsp.service.CountryService;
@@ -112,42 +107,15 @@ public class DashBoardController {
 		});
 
 		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
-		model.addAttribute(
-				"repliedQuotes",
-				allQuotes
-						.stream()
-						.filter(q -> q.getStatusType().equals(
-								QuoteStatusType.REPLIED.name())
-								|| q.getStatusType().equals(
-										QuoteStatusType.ACCEPTED.name()))
-						.collect(Collectors.toList()));
 
-		Set<String> allQuotesUsernames = allQuotes.stream()
-				.map(aq -> aq.getUsername()).collect(Collectors.toSet());
+		model.addAttribute("repliedQuotes", repliedQuotes(allQuotes));
 
-		List<UserWorkRateDTO> userWorkRates = new ArrayList<UserWorkRateDTO>();
-		if (allQuotesUsernames.size() > 0) {
-			userWorkRates = userWorkRateService
-					.findByUser_Email(allQuotesUsernames);
-		}
+		model.addAttribute("userWorkRates",
+				userWorkRateService.userWorkRatesMap(allQuotes));
 
-		Map<String, Long> userWorkRatesMap = new HashMap<String, Long>();
-		allQuotesUsernames.forEach(u -> {
-			userWorkRatesMap.put(u, 0L);
-		});
-
-		for (String userWorkRatesMapKey : userWorkRatesMap.keySet()) {
-
-			Long userCount = userWorkRates
-					.stream()
-					.filter(uwr -> uwr.getUser().getEmail()
-							.equals(userWorkRatesMapKey))
-					.collect(Collectors.counting());
-
-			userWorkRatesMap.put(userWorkRatesMapKey, userCount);
-		}
-
-		model.addAttribute("userWorkRates", userWorkRatesMap);
+		model.addAttribute("pendingUserWorkRates", userWorkRateService
+				.findByUser_EmailAndStatusType(username,
+						UserWorkRateStatusType.PENDING));
 
 		model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
 
@@ -158,7 +126,6 @@ public class DashBoardController {
 		model.addAttribute("pendingQuotes",
 				quoteService.list(username, QuoteStatusType.PENDING));
 
-		// model.addAttribute("placeQuotes", new PlaceQuoteDTO());
 		model.addAttribute("quote", new QuoteDTO());
 
 		model.addAttribute("currency",
@@ -176,29 +143,20 @@ public class DashBoardController {
 		});
 
 		model.addAttribute("config", dashBoardConfig);
-		model.addAttribute("configMap", getConfigMap(states, cities));
+		model.addAttribute("configMap",
+				stateService.getConfigMap(states, cities));
 
 		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
-	private Map<String, Map<String, String>> getConfigMap(
-			List<StateDTO> states, List<CityDTO> cities) {
-		Map<String, Map<String, String>> configMap = new LinkedHashMap<String, Map<String, String>>();
-		states.forEach(s -> {
-			Map<String, String> citiesMap = new LinkedHashMap<String, String>();
-
-			List<CityDTO> citiesFiltered = cities.stream()
-					.filter(c -> c.getStateCode().equals(s.getCode()))
-					.collect(Collectors.toList());
-
-			citiesFiltered.forEach(cf -> {
-				citiesMap.put(cf.getCode(), cf.getDescription());
-			});
-
-			configMap.put(s.getCode(), citiesMap);
-		});
-
-		return configMap;
+	public List<QuoteDTO> repliedQuotes(List<QuoteDTO> allQuotes) {
+		return allQuotes
+				.stream()
+				.filter(q -> q.getStatusType().equals(
+						QuoteStatusType.REPLIED.name())
+						|| q.getStatusType().equals(
+								QuoteStatusType.ACCEPTED.name()))
+				.collect(Collectors.toList());
 	}
 
 	@RequestMapping(value = "/dashboard/profile", method = RequestMethod.POST)
@@ -234,25 +192,6 @@ public class DashBoardController {
 			return VIEW_NAME_DASHBOARD_PAGE;
 		}
 
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-
-		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-
-		CurrencyDTO currency = currencyService.findByCountryCode(userDetails
-				.getCountryCode());
-
-		if (quote.getAmount() != null) {
-			quote.getAmount().setCurrency(currency);
-
-		}
-		;
-		if (quote.getVisitAmount() != null) {
-			quote.getVisitAmount().setCurrency(currency);
-		}
-		;
-		quote.setStatusType(QuoteStatusType.REPLIED.name());
-
 		quoteService.update(quote);
 
 		return "redirect:/dashboard/budgets";
@@ -263,10 +202,18 @@ public class DashBoardController {
 
 		model.addAttribute("tabToShow", "requests");
 
-		QuoteDTO quote = quoteService.get(quoteId);
-		quote.setStatusType(QuoteStatusType.ACCEPTED.name());
+		quoteService.save(quoteId);
 
-		quoteService.saveOrUpdate(quote);
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		String username = auth.getName();
+
+		UserWorkRateDTO userWorkRate = new UserWorkRateDTO();
+		userWorkRate.setQuoteId(quoteId);
+		userWorkRate.setUsername(username);
+		userWorkRate.setStatusType(UserWorkRateStatusType.PENDING.name());
+		userWorkRateService.saveOrUpdate(userWorkRate);
 
 		return "redirect:/dashboard/requests";
 	}
@@ -288,17 +235,7 @@ public class DashBoardController {
 
 		String username = auth.getName();
 
-		userWorkZoneService.deleteAll();
-
-		List<UserWorkZoneDTO> userWorkZonesNew = new ArrayList<UserWorkZoneDTO>();
-
-		config.getCityCodes().forEach(cc -> {
-			UserWorkZoneDTO uwz = new UserWorkZoneDTO();
-			uwz.setCityCode(cc);
-			uwz.setUsername(username);
-			userWorkZonesNew.add(uwz);
-		});
-		userWorkZoneService.saveOrUpdate(userWorkZonesNew);
+		userWorkZoneService.save(config, username);
 
 		return "redirect:/dashboard/config";
 	}

@@ -156,4 +156,29 @@ public class PlaceOrderDTO implements Serializable {
 	public void setAirConditionerPower(Integer airConditionerPower) {
 		this.airConditionerPower = airConditionerPower;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PlaceOrderDTO [username=");
+		builder.append(username);
+		builder.append(", workAreaCode=");
+		builder.append(workAreaCode);
+		builder.append(", workDescription=");
+		builder.append(workDescription);
+		builder.append(", workDateType=");
+		builder.append(workDateType);
+		builder.append(", stateCode=");
+		builder.append(stateCode);
+		builder.append(", cityCode=");
+		builder.append(cityCode);
+		builder.append(", squareMeters=");
+		builder.append(squareMeters);
+		builder.append(", airConditionerPower=");
+		builder.append(airConditionerPower);
+		builder.append(", workAreaItemCodes=");
+		builder.append(workAreaItemCodes);
+		builder.append("]");
+		return builder.toString();
+	}
 }

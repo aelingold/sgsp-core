@@ -81,4 +81,19 @@ public class CountryDTO implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CountryDTO [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", states=");
+		builder.append(states);
+		builder.append("]");
+		return builder.toString();
+	}
 }

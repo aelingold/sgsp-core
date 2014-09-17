@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +38,13 @@ public class UserWorkRate {
 	@OneToOne
 	@JoinColumn(name = "quote_id", foreignKey = @ForeignKey(name = "fk_user_work_rates_quote"))
 	private Quote quote;
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_type")
+	private UserWorkRateStatusType statusType;
+    private Boolean recommended;
 
 	public UserWorkRate() {
 		super();
@@ -49,7 +59,13 @@ public class UserWorkRate {
     public void prePersist() {
     	Date now = new Date();
         this.createdAt = now;
-    }	
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date();
+    }
 
 	public Long getId() {
 		return id;
@@ -97,5 +113,29 @@ public class UserWorkRate {
 
 	public void setQuote(Quote quote) {
 		this.quote = quote;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public UserWorkRateStatusType getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(UserWorkRateStatusType statusType) {
+		this.statusType = statusType;
+	}
+
+	public Boolean getRecommended() {
+		return recommended;
+	}
+
+	public void setRecommended(Boolean recommended) {
+		this.recommended = recommended;
 	}
 }

@@ -80,4 +80,19 @@ public class UserNotifyDTO implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserNotifyDTO [id=");
+		builder.append(id);
+		builder.append(", orderId=");
+		builder.append(orderId);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append("]");
+		return builder.toString();
+	}
 }

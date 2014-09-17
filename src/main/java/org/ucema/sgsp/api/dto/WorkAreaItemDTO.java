@@ -95,4 +95,21 @@ public class WorkAreaItemDTO implements Serializable {
 	public void setWorkAreaCode(String workAreaCode) {
 		this.workAreaCode = workAreaCode;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("WorkAreaItemDTO [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", groupType=");
+		builder.append(groupType);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", workAreaCode=");
+		builder.append(workAreaCode);
+		builder.append("]");
+		return builder.toString();
+	}
 }

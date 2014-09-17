@@ -1,16 +1,22 @@
 package org.ucema.sgsp.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.api.transformation.UserWorkRateTransformation;
 import org.ucema.sgsp.persistence.UserWorkRateDAO;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
+import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 
 @Service
 public class UserWorkRateService {
@@ -22,9 +28,54 @@ public class UserWorkRateService {
 	private UserWorkRateDAO userWorkRateDAO;
 
 	@Transactional
-	public List<UserWorkRateDTO> findByUser_Email(Set<String> usernames) {
+	public List<UserWorkRateDTO> findByUser_EmailAndStatusType(String username,
+			UserWorkRateStatusType statusType) {
 		return userWorkRateTransformation.transformToApi(userWorkRateDAO
-				.findByUser_Email(usernames));
+				.findByUser_EmailAndStatusType(username, statusType));
+	}
+
+	@Transactional
+	public List<UserWorkRateDTO> findByUser_Email(String username) {
+		return userWorkRateTransformation.transformToApi(userWorkRateDAO
+				.findByUser_Email(username));
+	}
+
+	@Transactional
+	public Map<String, Long> userWorkRatesMap(List<QuoteDTO> allQuotes) {
+
+		Set<String> allQuotesUsernames = allQuotes.stream()
+				.map(aq -> aq.getUsername()).collect(Collectors.toSet());
+
+		List<UserWorkRateDTO> userWorkRates = new ArrayList<UserWorkRateDTO>();
+		if (allQuotesUsernames.size() > 0) {
+			userWorkRates = findByStatusTypeAndQuoteUser_Email(
+					allQuotesUsernames, UserWorkRateStatusType.DONE);
+		}
+
+		Map<String, Long> userWorkRatesMap = new HashMap<String, Long>();
+		allQuotesUsernames.forEach(u -> {
+			userWorkRatesMap.put(u, 0L);
+		});
+
+		for (String userWorkRatesMapKey : userWorkRatesMap.keySet()) {
+
+			Long userCount = userWorkRates
+					.stream()
+					.filter(uwr -> uwr.getQuoteUsername()
+							.equals(userWorkRatesMapKey))
+					.collect(Collectors.counting());
+
+			userWorkRatesMap.put(userWorkRatesMapKey, userCount);
+		}
+
+		return userWorkRatesMap;
+	}
+
+	@Transactional
+	public List<UserWorkRateDTO> findByStatusTypeAndQuoteUser_Email(
+			Set<String> usernames, UserWorkRateStatusType statusType) {
+		return userWorkRateTransformation.transformToApi(userWorkRateDAO
+				.findByStatusTypeAndQuoteUser_Email(usernames, statusType));
 	}
 
 	@Transactional

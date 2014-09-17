@@ -96,4 +96,21 @@ public class WorkAreaDTO implements Serializable {
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("WorkAreaDTO [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", workAreaItemCodes=");
+		builder.append(workAreaItemCodes);
+		builder.append(", isEnabled=");
+		builder.append(isEnabled);
+		builder.append("]");
+		return builder.toString();
+	}
 }

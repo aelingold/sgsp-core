@@ -79,5 +79,20 @@ public class OrderItemDTO implements Serializable {
 
 	public void setValue(String value) {
 		this.value = value;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("OrderItemDTO [id=");
+		builder.append(id);
+		builder.append(", orderId=");
+		builder.append(orderId);
+		builder.append(", workAreaItemId=");
+		builder.append(workAreaItemId);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append("]");
+		return builder.toString();
+	}
 }

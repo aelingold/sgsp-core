@@ -149,4 +149,31 @@ public class RegistrationDTO {
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RegistrationDTO [email=");
+		builder.append(email);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", telephone=");
+		builder.append(telephone);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", workAreaCodes=");
+		builder.append(workAreaCodes);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", passwordVerification=");
+		builder.append(passwordVerification);
+		builder.append(", signInProvider=");
+		builder.append(signInProvider);
+		builder.append(", countryCode=");
+		builder.append(countryCode);
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -49,5 +49,16 @@ public class AmountDTO {
 	public AmountDTO withAmount(BigDecimal amount) {
 		this.amount	 = amount;
 		return this;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AmountDTO [amount=");
+		builder.append(amount);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append("]");
+		return builder.toString();
+	}
 }

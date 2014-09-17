@@ -214,4 +214,41 @@ public class QuoteDTO implements Serializable {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("QuoteDTO [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", orderId=");
+		builder.append(orderId);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", amount=");
+		builder.append(amount);
+		builder.append(", validDateUntil=");
+		builder.append(validDateUntil);
+		builder.append(", quoteQuestions=");
+		builder.append(quoteQuestions);
+		builder.append(", quoteQuestionIds=");
+		builder.append(quoteQuestionIds);
+		builder.append(", statusType=");
+		builder.append(statusType);
+		builder.append(", requireVisit=");
+		builder.append(requireVisit);
+		builder.append(", visitAmount=");
+		builder.append(visitAmount);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append("]");
+		return builder.toString();
+	}
 }

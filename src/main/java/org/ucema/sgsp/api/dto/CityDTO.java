@@ -80,4 +80,19 @@ public class CityDTO implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CityDTO [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", stateCode=");
+		builder.append(stateCode);
+		builder.append("]");
+		return builder.toString();
+	}
 }

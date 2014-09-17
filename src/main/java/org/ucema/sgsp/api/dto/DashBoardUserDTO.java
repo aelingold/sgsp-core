@@ -99,4 +99,25 @@ public class DashBoardUserDTO {
 	public void setNewPasswordVerification(String newPasswordVerification) {
 		this.newPasswordVerification = newPasswordVerification;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DashBoardUserDTO [email=");
+		builder.append(email);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", telephone=");
+		builder.append(telephone);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", newPassword=");
+		builder.append(newPassword);
+		builder.append(", newPasswordVerification=");
+		builder.append(newPasswordVerification);
+		builder.append("]");
+		return builder.toString();
+	}
 }

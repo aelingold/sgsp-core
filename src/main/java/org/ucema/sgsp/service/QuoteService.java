@@ -49,6 +49,14 @@ public class QuoteService {
 	public List<QuoteDTO> list() {
 		return quoteTransformation.transformToApi(quoteDAO.findAll());
 	}
+	
+	@Transactional
+	public void save(Long quoteId) {
+		QuoteDTO quote = get(quoteId);
+		quote.setStatusType(QuoteStatusType.ACCEPTED.name());
+
+		saveOrUpdate(quote);		
+	}
 
 	@Transactional
 	public QuoteDTO saveOrUpdate(QuoteDTO quote) {

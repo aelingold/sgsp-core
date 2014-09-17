@@ -289,8 +289,9 @@
 							<#if pendingQuote.statusType="PENDING">
 								<form name="budgetsForm${pendingQuote_index}" action="/dashboard/budgets/replied" method="POST" enctype="utf8">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-									<@spring.bind "quote" />							
-									<input type="hidden" name="id" value="${pendingQuote.id}">								
+									<input type="hidden" name="statusType" value="REPLIED">
+									<input type="hidden" name="id" value="${pendingQuote.id}">
+									<@spring.bind "quote" />																						
 									<#-- ejemplo de un presupuesto pedido -->
 									<div class="row">
 										<div class="panel panel-default">
@@ -352,6 +353,7 @@
 										                        	<div class="input-group">
 																      <span class="input-group-addon">${currency.symbol}</span>
 																      <@spring.formInput "quote.amount.amount", 'class="form-control"'/>
+																      <input type="hidden" name="amount.currency.code" value="${currency.code}">
 																    </div>
 										                        </div>
 										                        <div class="form-group col-md-8">
@@ -379,6 +381,7 @@
 										                        	<div class="input-group">
 																      <span class="input-group-addon">$</span>
 																      <@spring.formInput "quote.visitAmount.amount", 'class="form-control"'/>
+																      <input type="hidden" name="visitAmount.currency.code" value="${currency.code}">
 																    </div>
 										                        </div>
 									                       </div>
