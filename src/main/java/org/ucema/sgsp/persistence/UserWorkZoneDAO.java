@@ -8,4 +8,6 @@ import org.ucema.sgsp.persistence.model.UserWorkZone;
 public interface UserWorkZoneDAO extends JpaRepository<UserWorkZone, Long> {
 
 	List<UserWorkZone> findByUser_Email(String username);
+	
+	Long deleteByUser_Email(String username);
 }

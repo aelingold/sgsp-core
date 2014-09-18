@@ -44,7 +44,7 @@ public class UserWorkZoneService {
 	
 	@Transactional
 	public void save(DashBoardConfigDTO config, String username){
-		deleteAll();
+		deleteByUser_Email(username);
 
 		List<UserWorkZoneDTO> userWorkZonesNew = new ArrayList<UserWorkZoneDTO>();
 
@@ -55,6 +55,10 @@ public class UserWorkZoneService {
 			userWorkZonesNew.add(uwz);
 		});
 		saveOrUpdate(userWorkZonesNew);		
+	}
+	
+	public Long deleteByUser_Email(String username){
+		return userWorkZoneDAO.deleteByUser_Email(username);
 	}
 
 	@Transactional
@@ -83,11 +87,6 @@ public class UserWorkZoneService {
 			throw new RuntimeException("userWorkZone not found");
 		}
 		userWorkZoneDAO.delete(userWorkZone);
-	}
-
-	@Transactional
-	public void deleteAll() {
-		userWorkZoneDAO.deleteAll();
 	}
 
 	@Transactional

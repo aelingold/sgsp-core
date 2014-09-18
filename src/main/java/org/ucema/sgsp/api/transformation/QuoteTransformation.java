@@ -61,6 +61,7 @@ public class QuoteTransformation {
 		result.setStatusType(quote.getStatusType().name());
 		result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
 		result.setCreatedAt(quote.getCreatedAt());
+		result.setUpdatedAt(quote.getUpdatedAt());
 
 		if (quote.getAmount() != null) {
 			if (quote.getRequireVisit() != null && quote.getRequireVisit()){
@@ -110,6 +111,7 @@ public class QuoteTransformation {
 		result.setStatusType(QuoteStatusType.valueOf(quote.getStatusType()));
 		result.setValidDateUntil(quote.getValidDateUntil());
 		result.setCreatedAt(quote.getCreatedAt());
+		result.setUpdatedAt(quote.getUpdatedAt());
 
 		if (quote.getAmount() != null && quote.getAmount().getAmount() != null) {
 			result.setAmount(buildAmount(quote.getAmount()));
