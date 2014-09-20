@@ -1035,3 +1035,14 @@ ul{
 .login-name form{
 	display: inline-block;
 }
+
+.panel-heading a span.fa{
+	float: right; 
+}
+.panel-heading a span.fa:before{
+    content: "\f078";
+    color: grey; 
+}
+.panel-heading a.collapsed span.fa:before{
+    content: "\f077";
+}
