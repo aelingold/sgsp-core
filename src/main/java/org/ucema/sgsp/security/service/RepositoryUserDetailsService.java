@@ -32,6 +32,11 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("No user found with username: "
 					+ username);
 		}
+		
+		if (!user.getIsEnabled()) {
+			throw new UsernameNotFoundException("No user found with username: "
+					+ username);			
+		}
 
 		CustomUserDetails principal = CustomUserDetails.getBuilder()
 				.firstName(user.getFirstName()).id(user.getId())

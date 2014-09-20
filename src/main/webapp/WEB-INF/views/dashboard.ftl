@@ -118,7 +118,7 @@
 						</div>
 						<div class="row">
 							<div class="panel-group" id="accordion">
-							  	<div class="panel panel-default" id="panel1">
+						  	<div class="panel panel-default" id="panel1">
 							    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse1" style="cursor:pointer;">
 							      	<h4 class="panel-title">
 							        	<a  href="#collapse1">
@@ -169,6 +169,7 @@
 					        			</div>						        	
 							      	</div>
 						    	</div>
+						  	</div>
 						  	</div>
 						  	
 						  	<div class="panel panel-default" id="panel2">

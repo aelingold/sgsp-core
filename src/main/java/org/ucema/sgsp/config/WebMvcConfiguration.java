@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -36,28 +35,26 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
     
-    @Bean
-    public SimpleMappingExceptionResolver exceptionResolver() {
-        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
- 
-        Properties exceptionMappings = new Properties();
- 
-        exceptionMappings.put("java.lang.Exception", "error/error");
-        exceptionMappings.put("java.lang.RuntimeException", "error/error");
-        exceptionMappings.put("org.springframework.security.access.AccessDeniedException", "error/403");
- 
-        exceptionResolver.setExceptionMappings(exceptionMappings);
- 
-        Properties statusCodes = new Properties();
- 
-        statusCodes.put("error/403", "403");
-        statusCodes.put("error/404", "404");
-        statusCodes.put("error/error", "500");
- 
-        exceptionResolver.setStatusCodes(statusCodes);
- 
-        return exceptionResolver;
-    }    
+//    @Bean
+//    public SimpleMappingExceptionResolver exceptionResolver() {
+//        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+// 
+//        Properties exceptionMappings = new Properties();
+// 
+//        exceptionMappings.put("java.lang.Exception", "error/error");
+//        exceptionMappings.put("java.lang.RuntimeException", "error/error");
+// 
+//        exceptionResolver.setExceptionMappings(exceptionMappings);
+// 
+//        Properties statusCodes = new Properties();
+// 
+//        statusCodes.put("error/404", "404");
+//        statusCodes.put("error/error", "500");
+// 
+//        exceptionResolver.setStatusCodes(statusCodes);
+// 
+//        return exceptionResolver;
+//    }    
     
     @Bean
     public ViewResolver viewResolver() {

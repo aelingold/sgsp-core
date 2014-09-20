@@ -1,10 +1,16 @@
 package org.ucema.sgsp.security.config;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +21,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.PortResolverImpl;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -73,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMeServices(rememberMeServices())
 				.and()
 				.authorizeRequests()
-				//.accessDecisionManager(accessDecisionManager())
+				.accessDecisionManager(defaultAccessDecisionManager(roleHierarchy()))
 				// Anyone can access the urls
 				.antMatchers("/connect/**", "/auth/**", "/login", "/signin/**",
 						"/signup/**", "/user/register/**", "/register/**",
@@ -81,14 +89,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/cities/**", "/states/**", "/countries/**",
 						"/currencies/**", "/quotes/**", "/quote-questions/**",
 						"/user-work-zones/**", "/user-notifies/**",
-						"/favicon.ico", "/").permitAll()
+						"/favicon.ico", "/")
+				.permitAll()
 				// The rest of the our application is protected.
-				// .antMatchers("/**").authenticated()
-					//	.antMatchers("/admin/**").hasRole("ADMIN")
-						//.anyRequest().authenticated()
+				.antMatchers("/**").hasRole("USER")
+				// .antMatchers("/admin/**").hasRole("ADMIN")
+				// .anyRequest().authenticated()
 				// Adds the SocialAuthenticationFilter to Spring Security's
 				// filter chain.
-				.and().apply(new SpringSocialConfigurer());
+				.and().exceptionHandling().accessDeniedPage("/403").and()
+				.apply(new SpringSocialConfigurer());
 	}
 
 	@Override
@@ -111,6 +121,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //		return affirmativeBased;
 //	}
+	
+	@SuppressWarnings("rawtypes")
+	@Bean
+	public AffirmativeBased defaultAccessDecisionManager(RoleHierarchy roleHierarchy){
+	    WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
+	    DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
+	    expressionHandler.setRoleHierarchy(roleHierarchy);
+	    webExpressionVoter.setExpressionHandler(expressionHandler);
+	    return new AffirmativeBased(Arrays.asList((AccessDecisionVoter) webExpressionVoter));
+	}	
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -147,15 +167,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return requestCache;
 	}
 
-//	@Bean
-//	public RoleHierarchyImpl roleHierarchy() {
-//		RoleHierarchyImpl roleHierarchyImpl = new RoleHierarchyImpl();
-//
-//		roleHierarchyImpl.setHierarchy("ROLE_ADMIN > ROLE_USER");
-//
-//		return roleHierarchyImpl;
-//	}
-//
+	@Bean
+	public RoleHierarchyImpl roleHierarchy() {
+		RoleHierarchyImpl roleHierarchyImpl = new RoleHierarchyImpl();
+
+		roleHierarchyImpl.setHierarchy("ROLE_ADMIN > ROLE_USER");
+
+		return roleHierarchyImpl;
+	}
+
 //	@Bean
 //	public RoleHierarchyVoter roleVoter() {
 //		return new RoleHierarchyVoter(roleHierarchy());
