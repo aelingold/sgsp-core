@@ -11,19 +11,22 @@ public class PaymentTest extends BaseTest {
 
 	@Autowired
 	private PaymentService paymentService;
-	
+
 	@Test
 	public void insertAndVerifyPayment() {
-		
+
 		Long id = null;
 		String type = "DEPOSIT";
 		Long quoteId = null;
-		
-		PaymentDTO response = paymentService.saveOrUpdate(new PaymentDTO(id, quoteId, type));
-		
+
+		PaymentDTO paymentDTO = PaymentDTO.newInstance().withId(id)
+				.withType(type).withQuoteId(quoteId).build();
+
+		PaymentDTO response = paymentService.saveOrUpdate(paymentDTO);
+
 		PaymentDTO paymentRetrieved = paymentService.get(response.getId());
 		Assert.assertNotNull(paymentRetrieved);
-		
-		Assert.assertEquals(type, paymentRetrieved.getType());		
+
+		Assert.assertEquals(type, paymentRetrieved.getType());
 	}
 }

@@ -324,4 +324,44 @@ public class RepositoryUserService implements UserService {
 
 		return encodedPassword;
 	}
+
+	@Transactional
+	public void disable(Long id) {
+		User user = repository.getOne(id);
+		if (user == null) {
+			throw new RuntimeException("user not found");
+		}
+		user.setIsEnabled(false);
+		repository.save(user);
+	}
+
+	@Transactional
+	public void enable(Long id) {
+		User user = repository.getOne(id);
+		if (user == null) {
+			throw new RuntimeException("user not found");
+		}
+		user.setIsEnabled(true);
+		repository.save(user);
+	}
+
+	@Transactional
+	public void disable(String username) {
+		User user = repository.findByEmail(username);
+		if (user == null) {
+			throw new RuntimeException("user not found");
+		}
+		user.setIsEnabled(false);
+		repository.save(user);	
+	}
+
+	@Transactional
+	public void enable(String username) {
+		User user = repository.findByEmail(username);
+		if (user == null) {
+			throw new RuntimeException("user not found");
+		}
+		user.setIsEnabled(true);
+		repository.save(user);
+	}
 }

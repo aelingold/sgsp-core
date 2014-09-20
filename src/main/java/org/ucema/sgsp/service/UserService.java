@@ -37,6 +37,14 @@ public interface UserService {
 	void update(DashBoardUserDTO dashBoardUserDTO);
 
 	void delete(Long id);
+	
+	void disable(Long id);
+	
+	void enable(Long id);
+	
+	void disable(String username);
+	
+	void enable(String username);	
 
 	UserDTO get(Long id);
 

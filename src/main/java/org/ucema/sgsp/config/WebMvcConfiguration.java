@@ -44,11 +44,13 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
  
         exceptionMappings.put("java.lang.Exception", "error/error");
         exceptionMappings.put("java.lang.RuntimeException", "error/error");
+        exceptionMappings.put("org.springframework.security.access.AccessDeniedException", "error/403");
  
         exceptionResolver.setExceptionMappings(exceptionMappings);
  
         Properties statusCodes = new Properties();
  
+        statusCodes.put("error/403", "403");
         statusCodes.put("error/404", "404");
         statusCodes.put("error/error", "500");
  

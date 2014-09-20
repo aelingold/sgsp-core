@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,6 +29,9 @@ public class Payment {
     @Column(name="created_at")
     @Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+	@Column(name = "updated_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;	    
 
 	public Payment(Long id) {
 		super();
@@ -42,7 +46,13 @@ public class Payment {
     public void prePersist() {
     	Date now = new Date();
         this.createdAt = now;
-    }	
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date();
+    }
 
 	public Long getId() {
 		return id;

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +27,7 @@ import org.ucema.sgsp.security.service.UserRepository;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -71,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMeServices(rememberMeServices())
 				.and()
 				.authorizeRequests()
+				//.accessDecisionManager(accessDecisionManager())
 				// Anyone can access the urls
 				.antMatchers("/connect/**", "/auth/**", "/login", "/signin/**",
 						"/signup/**", "/user/register/**", "/register/**",
@@ -80,7 +83,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/user-work-zones/**", "/user-notifies/**",
 						"/favicon.ico", "/").permitAll()
 				// The rest of the our application is protected.
-				.antMatchers("/**").hasRole("USER")
+				// .antMatchers("/**").authenticated()
+					//	.antMatchers("/admin/**").hasRole("ADMIN")
+						//.anyRequest().authenticated()
 				// Adds the SocialAuthenticationFilter to Spring Security's
 				// filter chain.
 				.and().apply(new SpringSocialConfigurer());
@@ -92,6 +97,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService()).passwordEncoder(
 				passwordEncoder());
 	}
+
+//	@SuppressWarnings("rawtypes")
+//	@Bean
+//	public AffirmativeBased accessDecisionManager() {
+//
+//		List<AccessDecisionVoter> decisionVoters = new ArrayList<AccessDecisionVoter>();
+//		WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
+//		decisionVoters.add(roleVoter());
+//		decisionVoters.add(webExpressionVoter);
+//
+//		AffirmativeBased affirmativeBased = new AffirmativeBased(decisionVoters);
+//
+//		return affirmativeBased;
+//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -128,30 +147,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return requestCache;
 	}
 
-//	private RequestMatcher createDefaultSavedRequestMatcher() {
-//		ContentNegotiationStrategy contentNegotiationStrategy = new HeaderContentNegotiationStrategy();
+//	@Bean
+//	public RoleHierarchyImpl roleHierarchy() {
+//		RoleHierarchyImpl roleHierarchyImpl = new RoleHierarchyImpl();
 //
-//		RequestMatcher notFavIcon = new NegatedRequestMatcher(
-//				new AntPathRequestMatcher("/**/favicon.ico"));
+//		roleHierarchyImpl.setHierarchy("ROLE_ADMIN > ROLE_USER");
 //
-//		MediaTypeRequestMatcher jsonRequest = new MediaTypeRequestMatcher(
-//				contentNegotiationStrategy, MediaType.APPLICATION_JSON);
-//		jsonRequest.setIgnoredMediaTypes(Collections.singleton(MediaType.ALL));
-//		RequestMatcher notJson = new NegatedRequestMatcher(jsonRequest);
-//
-//		RequestMatcher notXRequestedWith = new NegatedRequestMatcher(
-//				new RequestHeaderRequestMatcher("X-Requested-With",
-//						"XMLHttpRequest"));
-//
-//		List<RequestMatcher> matchers = new ArrayList<RequestMatcher>();
-//		RequestMatcher getRequests = new AntPathRequestMatcher("/**", "POST");
-//		matchers.add(0, getRequests);
-//		matchers.add(notFavIcon);
-//		matchers.add(notJson);
-//		matchers.add(notXRequestedWith);	
-//
-//		org.springframework.security.web.util.matcher.AndRequestMatcher andRequestMatcher = new AndRequestMatcher(matchers);
-//		
-//		return andRequestMatcher;
+//		return roleHierarchyImpl;
 //	}
+//
+//	@Bean
+//	public RoleHierarchyVoter roleVoter() {
+//		return new RoleHierarchyVoter(roleHierarchy());
+//	}
+
+	// private RequestMatcher createDefaultSavedRequestMatcher() {
+	// ContentNegotiationStrategy contentNegotiationStrategy = new
+	// HeaderContentNegotiationStrategy();
+	//
+	// RequestMatcher notFavIcon = new NegatedRequestMatcher(
+	// new AntPathRequestMatcher("/**/favicon.ico"));
+	//
+	// MediaTypeRequestMatcher jsonRequest = new MediaTypeRequestMatcher(
+	// contentNegotiationStrategy, MediaType.APPLICATION_JSON);
+	// jsonRequest.setIgnoredMediaTypes(Collections.singleton(MediaType.ALL));
+	// RequestMatcher notJson = new NegatedRequestMatcher(jsonRequest);
+	//
+	// RequestMatcher notXRequestedWith = new NegatedRequestMatcher(
+	// new RequestHeaderRequestMatcher("X-Requested-With",
+	// "XMLHttpRequest"));
+	//
+	// List<RequestMatcher> matchers = new ArrayList<RequestMatcher>();
+	// RequestMatcher getRequests = new AntPathRequestMatcher("/**", "POST");
+	// matchers.add(0, getRequests);
+	// matchers.add(notFavIcon);
+	// matchers.add(notJson);
+	// matchers.add(notXRequestedWith);
+	//
+	// org.springframework.security.web.util.matcher.AndRequestMatcher
+	// andRequestMatcher = new AndRequestMatcher(matchers);
+	//
+	// return andRequestMatcher;
+	// }
 }
