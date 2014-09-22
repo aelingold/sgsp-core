@@ -119,9 +119,10 @@
 						<div class="row">
 							<div class="panel-group" id="accordion">
 								<#list pendingUserWorkRates as pendingUserWorkRate>
-									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="/dashboard/config" method="POST" enctype="utf8">
+									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="/dashboard/ratings" method="POST" enctype="utf8">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-										<@spring.bind "config" />								
+										<@spring.bind "userWorkRate" />
+										<input type="hidden" name="id" value="${pendingUserWorkRate.id}">
 									  	<div class="panel panel-default" id="panel${pendingUserWorkRate_index}">
 									    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${pendingUserWorkRate_index}" style="cursor:pointer;">
 										      	<h4 class="panel-title">
@@ -167,7 +168,7 @@
 									        			</div>
 									        			<div class="row form-group">
 								        					<div class="col-md-12">
-									        					<a href="#" class="button btn btn-warning pull-right">Calificar</a>
+									        					<a href="javascript:document.userWorkRatesForm${pendingUserWorkRate_index}.submit()" class="button btn btn-warning pull-right">Calificar</a>
 									        				</div>		
 									        			</div>
 								        			</div>						        	

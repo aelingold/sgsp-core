@@ -47,7 +47,11 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
-		result.setRatingType(userWorkRate.getRatingType().name());
+		
+		if (userWorkRate.getRatingType() != null){
+			result.setRatingType(userWorkRate.getRatingType().name());	
+		}
+		
 		if (userWorkRate.getUser() != null) {
 			result.setUsername(userWorkRate.getUser().getEmail());
 		}
@@ -67,7 +71,11 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
-		result.setRatingType(UserWorkRateRatingType.valueOf(userWorkRate.getRatingType()));
+				
+		if (userWorkRate.getRatingType() != null){
+			result.setRatingType(UserWorkRateRatingType.valueOf(userWorkRate.getRatingType()));	
+		}
+		
 		if (userWorkRate.getUsername() != null) {
 			result.setUser(new User(userService.findByEmail(
 					userWorkRate.getUsername()).getId()));
@@ -77,5 +85,15 @@ public class UserWorkRateTransformation {
 		result.setWorkCompleted(userWorkRate.getWorkCompleted());
 
 		return result;
+	}
+
+	public UserWorkRate updateFields(UserWorkRate userWorkRate,
+			UserWorkRateDTO userWorkRateDTO) {
+
+		userWorkRate.setComment(userWorkRateDTO.getComment());
+		userWorkRate.setStatusType(UserWorkRateStatusType.DONE);
+		userWorkRate.setRatingType(UserWorkRateRatingType.valueOf(userWorkRateDTO.getRatingType()));
+		userWorkRate.setWorkCompleted(userWorkRateDTO.getWorkCompleted());
+		return userWorkRate;
 	}
 }

@@ -172,7 +172,7 @@ public class DashBoardController {
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
-			return VIEW_NAME_DASHBOARD_PAGE;
+			return "redirect:/dashboard/profile";
 		}
 
 		LOGGER.debug("No validation errors found. Continuing changing user data process.");
@@ -191,7 +191,7 @@ public class DashBoardController {
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
-			return VIEW_NAME_DASHBOARD_PAGE;
+			return "redirect:/dashboard/budgets";
 		}
 
 		quoteService.update(quote);
@@ -207,12 +207,12 @@ public class DashBoardController {
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
-			return VIEW_NAME_DASHBOARD_PAGE;
+			return "redirect:/dashboard/ratings";
 		}
 
-		userWorkRateService.saveOrUpdate(userWorkRate);
+		userWorkRateService.update(userWorkRate);
 
-		return "redirect:/dashboard/budgets";
+		return "redirect:/dashboard/ratings";
 	}
 
 	@RequestMapping(value = "/dashboard/requests/accepted/{quoteId}", method = RequestMethod.POST)
@@ -245,7 +245,7 @@ public class DashBoardController {
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
-			return VIEW_NAME_DASHBOARD_PAGE;
+			return "redirect:/dashboard/config";
 		}
 
 		Authentication auth = SecurityContextHolder.getContext()

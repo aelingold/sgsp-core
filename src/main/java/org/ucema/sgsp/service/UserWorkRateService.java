@@ -85,6 +85,18 @@ public class UserWorkRateService {
 	}
 
 	@Transactional
+	public void update(UserWorkRateDTO userWorkRateDTO) {
+		
+		UserWorkRate userWorkRate = userWorkRateDAO.getOne(userWorkRateDTO.getId());
+		if (userWorkRate == null) {
+			throw new RuntimeException("userWorkRate not found");
+		}		
+		
+		userWorkRateDAO.save(userWorkRateTransformation
+				.updateFields(userWorkRate,userWorkRateDTO));
+	}	
+	
+	@Transactional
 	public void saveOrUpdate(UserWorkRateDTO userWorkRate) {
 		userWorkRateDAO.save(userWorkRateTransformation
 				.transformToModel(userWorkRate));
