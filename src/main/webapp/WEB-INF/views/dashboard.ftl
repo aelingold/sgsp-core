@@ -118,112 +118,65 @@
 						</div>
 						<div class="row">
 							<div class="panel-group" id="accordion">
-						  	<div class="panel panel-default" id="panel1">
-							    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse1" style="cursor:pointer;">
-							      	<h4 class="panel-title">
-							        	<a  href="#collapse1">
-							          		Jose Marmol (Gasista) - 05/10/2014
-							          		<span class="fa"></span>							          		
-							        	</a>							        	
-							      	</h4>
-							    </div>
-							    <div id="collapse1" class="panel-collapse collapse in">
-							      	<div class="panel-body">
-							      		<div class="col-md-12">
-					        				<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<label>¿El trabajo fue realizado?</label>
-						        				</div>
-						        				<div class="col-md-2">
-						        					<input type="radio" name="workdone" value="YES"> Si
-						        				</div>
-							        			<div class="col-md-2">
-							        				<input type="radio" name="workdone" value="NO"> No
-							        			</div>	
-						        			</div>
-						        			<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<label>¿Cómo calificarias a Jose Marmol?</label>
-						        				</div>
-						        				<div class="col-md-2">
-						        					<input type="radio" name="rating" value="POSITIVE"> Positivo
-						        				</div>
-							        			<div class="col-md-2">
-							        				<input type="radio" name="rating" value="NEUTRAL"> Neutral
-							        			</div>
-							        			<div class="col-md-2">
-							        				<input type="radio" name="rating" value="NEGATIVE"> Negativo
-							        			</div>		
-						        			</div>
-						        			<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<label>¿Tienes algún comentario?</label>
-						        					<textarea class="form-control"></textarea>
-						        				</div>		
-						        			</div>
-						        			<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<a href="#" class="button btn btn-warning pull-right">Calificar</a>
-						        				</div>		
-						        			</div>
-					        			</div>						        	
-							      	</div>
-						    	</div>
-						  	</div>
-						  	</div>
-						  	
-						  	<div class="panel panel-default" id="panel2">
-							    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse2" style="cursor:pointer;">
-							      	<h4 class="panel-title">
-							        	<a  href="#collapse2">
-							          		Jose Marmol (Gasista) - 05/10/2014
-							          		<span class="fa"></span>							          		
-							        	</a>							        	
-							      	</h4>
-							    </div>
-							    <div id="collapse2" class="panel-collapse collapse in">
-							      	<div class="panel-body">
-							      		<div class="col-md-12">
-					        				<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<label>¿El trabajo fue realizado?</label>
-						        				</div>
-						        				<div class="col-md-2">
-						        					<input type="radio" name="workdone" value="YES"> Si
-						        				</div>
-							        			<div class="col-md-2">
-							        				<input type="radio" name="workdone" value="NO"> No
-							        			</div>	
-						        			</div>
-						        			<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<label>¿Cómo calificarias a Jose Marmol?</label>
-						        				</div>
-						        				<div class="col-md-2">
-						        					<input type="radio" name="rating" value="POSITIVE"> Positivo
-						        				</div>
-							        			<div class="col-md-2">
-							        				<input type="radio" name="rating" value="NEUTRAL"> Neutral
-							        			</div>
-							        			<div class="col-md-2">
-							        				<input type="radio" name="rating" value="NEGATIVE"> Negativo
-							        			</div>		
-						        			</div>
-						        			<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<label>¿Tienes algún comentario?</label>
-						        					<textarea class="form-control"></textarea>
-						        				</div>		
-						        			</div>
-						        			<div class="row form-group">
-					        					<div class="col-md-12">
-						        					<a href="#" class="button btn btn-warning pull-right">Calificar</a>
-						        				</div>		
-						        			</div>
-					        			</div>						        	
-							      	</div>
-						    	</div>
-						  	</div>
+								<#list pendingUserWorkRates as pendingUserWorkRate>
+									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="/dashboard/config" method="POST" enctype="utf8">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<@spring.bind "config" />								
+									  	<div class="panel panel-default" id="panel${pendingUserWorkRate_index}">
+									    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${pendingUserWorkRate_index}" style="cursor:pointer;">
+										      	<h4 class="panel-title">
+										        	<a  href="#collapse${pendingUserWorkRate_index}">
+										          		${pendingUserWorkRate.quoteUserFirstName} ${pendingUserWorkRate.quoteUserLastName} (${pendingUserWorkRate.quoteUserWorkAreaDescription})
+										          		<span class="fa"></span>							          		
+										        	</a>							        	
+										      	</h4>
+									    	</div>
+										    <div id="collapse${pendingUserWorkRate_index}" class="panel-collapse collapse in">
+										      	<div class="panel-body">
+										      		<div class="col-md-12">
+								        				<div class="row form-group">
+								        					<div class="col-md-12">
+									        					<label>¿El trabajo fue realizado?</label>
+									        				</div>
+									        				<div class="col-md-2">
+									        					<input type="radio" name="workCompleted" value="YES"> Si
+									        				</div>
+										        			<div class="col-md-2">
+										        				<input type="radio" name="workCompleted" value="NO"> No
+										        			</div>	
+									        			</div>
+									        			<div class="row form-group">
+								        					<div class="col-md-12">
+									        					<label>¿Cómo calificarias a Jose Marmol?</label>
+									        				</div>
+									        				<div class="col-md-2">
+									        					<input type="radio" name="ratingType" value="POSITIVE"> Positivo
+									        				</div>
+										        			<div class="col-md-2">
+										        				<input type="radio" name="ratingType" value="NEUTRAL"> Neutral
+										        			</div>
+										        			<div class="col-md-2">
+										        				<input type="radio" name="ratingType" value="NEGATIVE"> Negativo
+										        			</div>		
+									        			</div>
+									        			<div class="row form-group">
+								        					<div class="col-md-12">
+									        					<label>¿Tienes algún comentario?</label>
+									        					<textarea name="comment" class="form-control"></textarea>
+									        				</div>		
+									        			</div>
+									        			<div class="row form-group">
+								        					<div class="col-md-12">
+									        					<a href="#" class="button btn btn-warning pull-right">Calificar</a>
+									        				</div>		
+									        			</div>
+								        			</div>						        	
+										      	</div>
+									    	</div>
+									  	</div>
+									</form>
+							  	</#list>
+							</div>
 						</div>
 					</div>
             	

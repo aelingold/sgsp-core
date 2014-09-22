@@ -31,7 +31,9 @@ public class UserWorkRate {
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_user"))
 	private User user;
 	private String comment;
-	private String rate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rating_type")	
+	private UserWorkRateRatingType ratingType;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -44,7 +46,8 @@ public class UserWorkRate {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_type")
 	private UserWorkRateStatusType statusType;
-    private Boolean recommended;
+    @Column(name = "work_completed")
+    private Boolean workCompleted;
 
 	public UserWorkRate() {
 		super();
@@ -99,14 +102,6 @@ public class UserWorkRate {
 		this.comment = comment;
 	}
 
-	public String getRate() {
-		return rate;
-	}
-
-	public void setRate(String rate) {
-		this.rate = rate;
-	}
-
 	public Quote getQuote() {
 		return quote;
 	}
@@ -131,11 +126,19 @@ public class UserWorkRate {
 		this.statusType = statusType;
 	}
 
-	public Boolean getRecommended() {
-		return recommended;
+	public Boolean getWorkCompleted() {
+		return workCompleted;
 	}
 
-	public void setRecommended(Boolean recommended) {
-		this.recommended = recommended;
+	public void setWorkCompleted(Boolean workCompleted) {
+		this.workCompleted = workCompleted;
+	}
+
+	public UserWorkRateRatingType getRatingType() {
+		return ratingType;
+	}
+
+	public void setRatingType(UserWorkRateRatingType ratingType) {
+		this.ratingType = ratingType;
 	}
 }

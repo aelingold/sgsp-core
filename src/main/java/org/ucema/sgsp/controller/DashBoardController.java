@@ -113,6 +113,8 @@ public class DashBoardController {
 		model.addAttribute("userWorkRates",
 				userWorkRateService.userWorkRatesMap(allQuotes));
 
+		model.addAttribute("userWorkRate", new UserWorkRateDTO());
+
 		model.addAttribute("pendingUserWorkRates", userWorkRateService
 				.findByUser_EmailAndStatusType(username,
 						UserWorkRateStatusType.PENDING));
@@ -193,6 +195,22 @@ public class DashBoardController {
 		}
 
 		quoteService.update(quote);
+
+		return "redirect:/dashboard/budgets";
+	}
+
+	@RequestMapping(value = "/dashboard/ratings", method = RequestMethod.POST)
+	public String ratings(@Valid @ModelAttribute("userWorkRate") UserWorkRateDTO userWorkRate,
+			BindingResult result, WebRequest request, Model model) {
+
+		model.addAttribute("tabToShow", "ratings");
+
+		if (result.hasErrors()) {
+			LOGGER.debug("Validation errors found. Rendering form view.");
+			return VIEW_NAME_DASHBOARD_PAGE;
+		}
+
+		userWorkRateService.saveOrUpdate(userWorkRate);
 
 		return "redirect:/dashboard/budgets";
 	}

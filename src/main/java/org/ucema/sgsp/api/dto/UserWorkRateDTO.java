@@ -8,11 +8,14 @@ public class UserWorkRateDTO implements Serializable {
 	private Long id;
 	private String username;
 	private String comment;
-	private String rate;
+	private String ratingType;
 	private Long quoteId;
 	private String quoteUsername;
+	private String quoteUserFirstName;
+	private String quoteUserLastName;
+	private String quoteUserWorkAreaDescription;
 	private String statusType;
-	private Boolean recommended;
+	private Boolean workCompleted;
 
 	public Long getId() {
 		return id;
@@ -28,14 +31,6 @@ public class UserWorkRateDTO implements Serializable {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-	public String getRate() {
-		return rate;
-	}
-
-	public void setRate(String rate) {
-		this.rate = rate;
 	}
 
 	public Long getQuoteId() {
@@ -62,20 +57,52 @@ public class UserWorkRateDTO implements Serializable {
 		this.statusType = statusType;
 	}
 
-	public Boolean getRecommended() {
-		return recommended;
-	}
-
-	public void setRecommended(Boolean recommended) {
-		this.recommended = recommended;
-	}
-
 	public String getQuoteUsername() {
 		return quoteUsername;
 	}
 
 	public void setQuoteUsername(String quoteUsername) {
 		this.quoteUsername = quoteUsername;
+	}
+
+	public String getRatingType() {
+		return ratingType;
+	}
+
+	public void setRatingType(String ratingType) {
+		this.ratingType = ratingType;
+	}
+
+	public Boolean getWorkCompleted() {
+		return workCompleted;
+	}
+
+	public void setWorkCompleted(Boolean workCompleted) {
+		this.workCompleted = workCompleted;
+	}
+
+	public String getQuoteUserWorkAreaDescription() {
+		return quoteUserWorkAreaDescription;
+	}
+
+	public void setQuoteUserWorkAreaDescription(String quoteUserWorkAreaDescription) {
+		this.quoteUserWorkAreaDescription = quoteUserWorkAreaDescription;
+	}
+
+	public String getQuoteUserFirstName() {
+		return quoteUserFirstName;
+	}
+
+	public void setQuoteUserFirstName(String quoteUserFirstName) {
+		this.quoteUserFirstName = quoteUserFirstName;
+	}
+
+	public String getQuoteUserLastName() {
+		return quoteUserLastName;
+	}
+
+	public void setQuoteUserLastName(String quoteUserLastName) {
+		this.quoteUserLastName = quoteUserLastName;
 	}
 
 	@Override
@@ -87,16 +114,22 @@ public class UserWorkRateDTO implements Serializable {
 		builder.append(username);
 		builder.append(", comment=");
 		builder.append(comment);
-		builder.append(", rate=");
-		builder.append(rate);
+		builder.append(", ratingType=");
+		builder.append(ratingType);
 		builder.append(", quoteId=");
 		builder.append(quoteId);
 		builder.append(", quoteUsername=");
 		builder.append(quoteUsername);
+		builder.append(", quoteUserFirstName=");
+		builder.append(quoteUserFirstName);
+		builder.append(", quoteUserLastName=");
+		builder.append(quoteUserLastName);
+		builder.append(", quoteUserWorkAreaDescription=");
+		builder.append(quoteUserWorkAreaDescription);
 		builder.append(", statusType=");
 		builder.append(statusType);
-		builder.append(", recommended=");
-		builder.append(recommended);
+		builder.append(", workCompleted=");
+		builder.append(workCompleted);
 		builder.append("]");
 		return builder.toString();
 	}

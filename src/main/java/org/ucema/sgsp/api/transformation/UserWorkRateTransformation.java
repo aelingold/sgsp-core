@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.Quote;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
+import org.ucema.sgsp.persistence.model.UserWorkRateRatingType;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.service.UserService;
@@ -46,14 +47,17 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
-		result.setRate(userWorkRate.getRate());
+		result.setRatingType(userWorkRate.getRatingType().name());
 		if (userWorkRate.getUser() != null) {
 			result.setUsername(userWorkRate.getUser().getEmail());
 		}
 		result.setQuoteId(userWorkRate.getQuote().getId());
 		result.setQuoteUsername(userWorkRate.getQuote().getUser().getEmail());
+		result.setQuoteUserFirstName(userWorkRate.getQuote().getUser().getFirstName());
+		result.setQuoteUserLastName(userWorkRate.getQuote().getUser().getLastName());
+		result.setQuoteUserWorkAreaDescription(userWorkRate.getQuote().getOrder().getWorkArea().getDescription());
 		result.setStatusType(userWorkRate.getStatusType().name());
-		result.setRecommended(userWorkRate.getRecommended());
+		result.setWorkCompleted(userWorkRate.getWorkCompleted());
 
 		return result;
 	}
@@ -63,14 +67,14 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
-		result.setRate(userWorkRate.getRate());
+		result.setRatingType(UserWorkRateRatingType.valueOf(userWorkRate.getRatingType()));
 		if (userWorkRate.getUsername() != null) {
 			result.setUser(new User(userService.findByEmail(
 					userWorkRate.getUsername()).getId()));
 		}
 		result.setQuote(new Quote(userWorkRate.getQuoteId()));
 		result.setStatusType(UserWorkRateStatusType.valueOf(userWorkRate.getStatusType()));
-		result.setRecommended(userWorkRate.getRecommended());
+		result.setWorkCompleted(userWorkRate.getWorkCompleted());
 
 		return result;
 	}
