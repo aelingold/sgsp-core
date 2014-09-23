@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,13 +27,18 @@ public class Payment {
 	@ManyToOne
 	@JoinColumn(name = "quote_id", foreignKey = @ForeignKey(name = "fk_payment_quote"))
 	private Quote quote;
-	private String type;	
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_type")	
+	private PaymentType paymentType;	
     @Column(name="created_at")
     @Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;	    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_type")
+	private PaymentStatusType statusType;	
 
 	public Payment(Long id) {
 		super();
@@ -70,19 +77,35 @@ public class Payment {
 		this.createdAt = createdAt;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public Quote getQuote() {
 		return quote;
 	}
 
 	public void setQuote(Quote quote) {
 		this.quote = quote;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public PaymentStatusType getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(PaymentStatusType statusType) {
+		this.statusType = statusType;
+	}
+
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
 	}
 }

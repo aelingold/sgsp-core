@@ -28,9 +28,11 @@ import org.ucema.sgsp.api.dto.CityDTO;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.OrderDTO;
+import org.ucema.sgsp.api.dto.PaymentDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
+import org.ucema.sgsp.persistence.model.PaymentStatusType;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
@@ -39,6 +41,7 @@ import org.ucema.sgsp.service.CountryService;
 import org.ucema.sgsp.service.CurrencyService;
 import org.ucema.sgsp.service.DashBoardUserService;
 import org.ucema.sgsp.service.OrderService;
+import org.ucema.sgsp.service.PaymentService;
 import org.ucema.sgsp.service.QuoteService;
 import org.ucema.sgsp.service.StateService;
 import org.ucema.sgsp.service.UserService;
@@ -77,6 +80,8 @@ public class DashBoardController {
 	private UserWorkZoneService userWorkZoneService;
 	@Autowired
 	private UserWorkRateService userWorkRateService;
+	@Autowired
+	private PaymentService paymentService;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
@@ -118,6 +123,10 @@ public class DashBoardController {
 		model.addAttribute("pendingUserWorkRates", userWorkRateService
 				.findByUser_EmailAndStatusType(username,
 						UserWorkRateStatusType.PENDING));
+		
+		model.addAttribute("doneUserWorkRates", userWorkRateService
+				.findByQuote_User_EmailAndStatusType(username,
+						UserWorkRateStatusType.DONE));		
 
 		model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
 
@@ -211,6 +220,11 @@ public class DashBoardController {
 		}
 
 		userWorkRateService.update(userWorkRate);
+		
+		PaymentDTO payment = new PaymentDTO();
+		payment.setStatusType(PaymentStatusType.PENDING.name());
+		payment.setQuoteId(userWorkRate.getQuoteId());
+		paymentService.saveOrUpdate(payment);
 
 		return "redirect:/dashboard/ratings";
 	}

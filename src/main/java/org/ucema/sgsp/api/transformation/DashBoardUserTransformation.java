@@ -15,6 +15,7 @@ public class DashBoardUserTransformation {
 		result.setPassword(user.getPassword());
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
+		result.setIsProfessional(user.getIsProfessional());
 
 		return result;
 	}

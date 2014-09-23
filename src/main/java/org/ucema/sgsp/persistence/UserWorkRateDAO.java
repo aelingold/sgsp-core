@@ -24,4 +24,7 @@ public interface UserWorkRateDAO extends JpaRepository<UserWorkRate, Long> {
 
 	List<UserWorkRate> findByUser_EmailAndStatusType(String username,
 			UserWorkRateStatusType statusType);
+	
+	List<UserWorkRate> findByQuote_User_EmailAndStatusType(String username,
+			UserWorkRateStatusType statusType);	
 }

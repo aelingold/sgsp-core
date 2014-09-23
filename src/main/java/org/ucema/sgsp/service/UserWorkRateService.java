@@ -28,6 +28,13 @@ public class UserWorkRateService {
 	private UserWorkRateDAO userWorkRateDAO;
 
 	@Transactional
+	public List<UserWorkRateDTO> findByQuote_User_EmailAndStatusType(String username,
+			UserWorkRateStatusType statusType) {
+		return userWorkRateTransformation.transformToApi(userWorkRateDAO
+				.findByQuote_User_EmailAndStatusType(username, statusType));
+	}	
+	
+	@Transactional
 	public List<UserWorkRateDTO> findByUser_EmailAndStatusType(String username,
 			UserWorkRateStatusType statusType) {
 		return userWorkRateTransformation.transformToApi(userWorkRateDAO

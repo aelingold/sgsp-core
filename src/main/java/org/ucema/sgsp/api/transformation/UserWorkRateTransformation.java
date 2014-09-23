@@ -54,6 +54,8 @@ public class UserWorkRateTransformation {
 		
 		if (userWorkRate.getUser() != null) {
 			result.setUsername(userWorkRate.getUser().getEmail());
+			result.setUserFirstName(userWorkRate.getUser().getFirstName());
+			result.setUserLastName(userWorkRate.getUser().getLastName());
 		}
 		result.setQuoteId(userWorkRate.getQuote().getId());
 		result.setQuoteUsername(userWorkRate.getQuote().getUser().getEmail());

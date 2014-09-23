@@ -7,6 +7,8 @@ public class UserWorkRateDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String username;
+	private String userFirstName;
+	private String userLastName;
 	private String comment;
 	private String ratingType;
 	private Long quoteId;
@@ -105,6 +107,22 @@ public class UserWorkRateDTO implements Serializable {
 		this.quoteUserLastName = quoteUserLastName;
 	}
 
+	public String getUserFirstName() {
+		return userFirstName;
+	}
+
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
+
+	public String getUserLastName() {
+		return userLastName;
+	}
+
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -112,6 +130,10 @@ public class UserWorkRateDTO implements Serializable {
 		builder.append(id);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", userFirstName=");
+		builder.append(userFirstName);
+		builder.append(", userLastName=");
+		builder.append(userLastName);
 		builder.append(", comment=");
 		builder.append(comment);
 		builder.append(", ratingType=");

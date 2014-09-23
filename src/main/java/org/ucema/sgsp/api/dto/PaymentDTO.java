@@ -8,9 +8,10 @@ public class PaymentDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long quoteId;
-	private String type;
+	private String paymentType;
 	private Date createdAt;
-	private Date updatedAt;	
+	private Date updatedAt;
+	private String statusType;
 
 	public PaymentDTO() {
 		super();
@@ -26,14 +27,20 @@ public class PaymentDTO implements Serializable {
 		result.setCreatedAt(createdAt);
 		result.setUpdatedAt(updatedAt);
 		result.setQuoteId(quoteId);
-		result.setType(type);
+		result.setPaymentType(paymentType);
 		result.setId(id);
+		result.setStatusType(statusType);
 		
 		return result;
 	}
+
+	public PaymentDTO withStatusType(String statusType) {
+		this.statusType = statusType;
+		return this;
+	}	
 	
-	public PaymentDTO withType(String type) {
-		this.type = type;
+	public PaymentDTO withPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 		return this;
 	}	
 	
@@ -55,12 +62,12 @@ public class PaymentDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public String getPaymentType() {
+		return paymentType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 
 	public Long getQuoteId() {
@@ -85,5 +92,32 @@ public class PaymentDTO implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PaymentDTO [id=");
+		builder.append(id);
+		builder.append(", quoteId=");
+		builder.append(quoteId);
+		builder.append(", paymentType=");
+		builder.append(paymentType);
+		builder.append(", createdAt=");
+		builder.append(createdAt);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
+		builder.append(", statusType=");
+		builder.append(statusType);
+		builder.append("]");
+		return builder.toString();
 	}
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.PaymentDTO;
 import org.ucema.sgsp.persistence.model.Payment;
+import org.ucema.sgsp.persistence.model.PaymentStatusType;
+import org.ucema.sgsp.persistence.model.PaymentType;
 import org.ucema.sgsp.persistence.model.Quote;
 
 @Component
@@ -42,7 +44,11 @@ public class PaymentTransformation {
 		if (payment.getQuote() != null) {
 			result.setQuoteId(payment.getQuote().getId());
 		}
-		result.setType(payment.getType());
+		
+		if (payment.getPaymentType() != null){
+			result.setPaymentType(payment.getPaymentType().name());	
+		}
+		result.setStatusType(payment.getStatusType().name());
 
 		return result;
 	}
@@ -54,7 +60,11 @@ public class PaymentTransformation {
 		if (payment.getQuoteId() != null) {
 			result.setQuote(new Quote(payment.getQuoteId()));
 		}
-		result.setType(payment.getType());
+		
+		if (payment.getPaymentType() != null){
+			result.setPaymentType(PaymentType.valueOf(payment.getPaymentType()));	
+		}
+		result.setStatusType(PaymentStatusType.valueOf(payment.getStatusType()));
 
 		return result;
 	}

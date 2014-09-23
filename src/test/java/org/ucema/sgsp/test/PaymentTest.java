@@ -16,17 +16,17 @@ public class PaymentTest extends BaseTest {
 	public void insertAndVerifyPayment() {
 
 		Long id = null;
-		String type = "DEPOSIT";
+		String paymentType = "DEPOSIT";
 		Long quoteId = null;
 
 		PaymentDTO paymentDTO = PaymentDTO.newInstance().withId(id)
-				.withType(type).withQuoteId(quoteId).build();
+				.withPaymentType(paymentType).withQuoteId(quoteId).build();
 
 		PaymentDTO response = paymentService.saveOrUpdate(paymentDTO);
 
 		PaymentDTO paymentRetrieved = paymentService.get(response.getId());
 		Assert.assertNotNull(paymentRetrieved);
 
-		Assert.assertEquals(type, paymentRetrieved.getType());
+		Assert.assertEquals(paymentType, paymentRetrieved.getPaymentType());
 	}
 }

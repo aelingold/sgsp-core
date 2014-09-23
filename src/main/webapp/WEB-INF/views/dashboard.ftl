@@ -57,7 +57,9 @@
 				      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
 				      <li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
 				      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
-				      <li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
+				      <#if user.isProfessional> 
+				      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
+				      </#if>
 				    </ul>
             	</div>
             	
@@ -118,11 +120,52 @@
 						</div>
 						<div class="row">
 							<div class="panel-group" id="accordion">
+								<#list doneUserWorkRates as doneUserWorkRate>
+								  	<div class="panel panel-default" id="panel${doneUserWorkRate_index}">
+								    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${doneUserWorkRate_index}" style="cursor:pointer;">
+									      	<h4 class="panel-title">
+									        	<a  href="#collapse${doneUserWorkRate_index}">
+									          		${doneUserWorkRate.userFirstName} ${doneUserWorkRate.userLastName}
+									          		<span class="fa"></span>							          		
+									        	</a>							        	
+									      	</h4>
+								    	</div>
+									    <div id="collapse${doneUserWorkRate_index}" class="panel-collapse collapse in">
+									      	<div class="panel-body">
+									      		<div class="col-md-12">
+							        				<div class="row form-group">
+							        					<div class="col-md-12">
+								        					<label>Trabajo realizado: </label> ${doneUserWorkRate.workCompleted?string('Si', 'No')}
+								        				</div>
+								        			</div>
+								        			<div class="row form-group">
+							        					<div class="col-md-12">
+								        					<label>Calificacion: </label> 
+								        					<#if doneUserWorkRate.ratingType="POSITIVE">
+								        						POSITIVA	
+								        					<#elseif doneUserWorkRate.ratingType="NEUTRAL">
+								        						NEUTRAL
+								        					<#else>
+								        						NEGATIVA		
+								        					</#if>
+								        				</div>		
+								        			</div>
+								        			<div class="row form-group">
+							        					<div class="col-md-12">
+								        					<label>Comentario: </label> ${doneUserWorkRate.comment}
+								        				</div>		
+								        			</div>
+							        			</div>						        	
+									      	</div>
+								    	</div>
+								  	</div>								
+								</#list>
 								<#list pendingUserWorkRates as pendingUserWorkRate>
 									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="/dashboard/ratings" method="POST" enctype="utf8">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<@spring.bind "userWorkRate" />
 										<input type="hidden" name="id" value="${pendingUserWorkRate.id}">
+										<input type="hidden" name="quoteId" value="${pendingUserWorkRate.quoteId}">
 									  	<div class="panel panel-default" id="panel${pendingUserWorkRate_index}">
 									    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${pendingUserWorkRate_index}" style="cursor:pointer;">
 										      	<h4 class="panel-title">
@@ -317,11 +360,18 @@
 		                        	<@spring.showErrors "<br>" />	                                           	
 		                        </div>
 		                        <div class="form-group col-md-6">
+		                            <label>Telefono</label>
+	                                <@spring.formInput "user.telephone", 'class="form-control"'/>
+	                                <@spring.showErrors "<br>" />
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="form-group col-md-6">
 		                            <label>Contraseña actual</label>
 	                                <@spring.formPasswordInput "user.password", 'class="form-control"'/>
 	                                <@spring.showErrors "<br>" />
 		                        </div>
-		                    </div>	                    
+		                    </div>		                    	                    
 		                    <div class="row">
 		                        <div class="form-group col-md-6">
 		                            <label>Contraseña nueva</label>
@@ -333,7 +383,7 @@
 	                                <@spring.formPasswordInput "user.newPasswordVerification", 'class="form-control"'/>
 	                                <@spring.showErrors "<br>" />	                            
 		                        </div>
-		                    </div>
+		                    </div>		                    
 		                    <button type="submit" class="btn btn-warning pull-right">Guardar</button>
 	                    </form>
                    	</div>

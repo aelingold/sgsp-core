@@ -43,6 +43,8 @@ public class DashBoardUserDTO {
     private String newPassword;
 
     private String newPasswordVerification;
+    
+    private Boolean isProfessional;
 
 	public String getEmail() {
 		return email;
@@ -100,6 +102,14 @@ public class DashBoardUserDTO {
 		this.newPasswordVerification = newPasswordVerification;
 	}
 
+	public Boolean getIsProfessional() {
+		return isProfessional;
+	}
+
+	public void setIsProfessional(Boolean isProfessional) {
+		this.isProfessional = isProfessional;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -117,6 +127,8 @@ public class DashBoardUserDTO {
 		builder.append(newPassword);
 		builder.append(", newPasswordVerification=");
 		builder.append(newPasswordVerification);
+		builder.append(", isProfessional=");
+		builder.append(isProfessional);
 		builder.append("]");
 		return builder.toString();
 	}
