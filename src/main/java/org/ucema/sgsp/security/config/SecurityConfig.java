@@ -81,7 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMeServices(rememberMeServices())
 				.and()
 				.authorizeRequests()
-				.accessDecisionManager(defaultAccessDecisionManager(roleHierarchy()))
+				.accessDecisionManager(
+						defaultAccessDecisionManager(roleHierarchy()))
 				// Anyone can access the urls
 				.antMatchers("/connect/**", "/auth/**", "/login", "/signin/**",
 						"/signup/**", "/user/register/**", "/register/**",
@@ -89,10 +90,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/cities/**", "/states/**", "/countries/**",
 						"/currencies/**", "/quotes/**", "/quote-questions/**",
 						"/user-work-zones/**", "/user-notifies/**",
-						"/favicon.ico", "/")
+						"/rate-plans/**", "/favicon.ico", "/")
 				.permitAll()
 				// The rest of the our application is protected.
-				.antMatchers("/**").hasRole("USER")
+				.antMatchers("/**")
+				.hasRole("USER")
 				// .antMatchers("/admin/**").hasRole("ADMIN")
 				// .anyRequest().authenticated()
 				// Adds the SocialAuthenticationFilter to Spring Security's
@@ -108,29 +110,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				passwordEncoder());
 	}
 
-//	@SuppressWarnings("rawtypes")
-//	@Bean
-//	public AffirmativeBased accessDecisionManager() {
-//
-//		List<AccessDecisionVoter> decisionVoters = new ArrayList<AccessDecisionVoter>();
-//		WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
-//		decisionVoters.add(roleVoter());
-//		decisionVoters.add(webExpressionVoter);
-//
-//		AffirmativeBased affirmativeBased = new AffirmativeBased(decisionVoters);
-//
-//		return affirmativeBased;
-//	}
-	
+	// @SuppressWarnings("rawtypes")
+	// @Bean
+	// public AffirmativeBased accessDecisionManager() {
+	//
+	// List<AccessDecisionVoter> decisionVoters = new
+	// ArrayList<AccessDecisionVoter>();
+	// WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
+	// decisionVoters.add(roleVoter());
+	// decisionVoters.add(webExpressionVoter);
+	//
+	// AffirmativeBased affirmativeBased = new AffirmativeBased(decisionVoters);
+	//
+	// return affirmativeBased;
+	// }
+
 	@SuppressWarnings("rawtypes")
 	@Bean
-	public AffirmativeBased defaultAccessDecisionManager(RoleHierarchy roleHierarchy){
-	    WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
-	    DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
-	    expressionHandler.setRoleHierarchy(roleHierarchy);
-	    webExpressionVoter.setExpressionHandler(expressionHandler);
-	    return new AffirmativeBased(Arrays.asList((AccessDecisionVoter) webExpressionVoter));
-	}	
+	public AffirmativeBased defaultAccessDecisionManager(
+			RoleHierarchy roleHierarchy) {
+		WebExpressionVoter webExpressionVoter = new WebExpressionVoter();
+		DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
+		expressionHandler.setRoleHierarchy(roleHierarchy);
+		webExpressionVoter.setExpressionHandler(expressionHandler);
+		return new AffirmativeBased(
+				Arrays.asList((AccessDecisionVoter) webExpressionVoter));
+	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -176,10 +181,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return roleHierarchyImpl;
 	}
 
-//	@Bean
-//	public RoleHierarchyVoter roleVoter() {
-//		return new RoleHierarchyVoter(roleHierarchy());
-//	}
+	// @Bean
+	// public RoleHierarchyVoter roleVoter() {
+	// return new RoleHierarchyVoter(roleHierarchy());
+	// }
 
 	// private RequestMatcher createDefaultSavedRequestMatcher() {
 	// ContentNegotiationStrategy contentNegotiationStrategy = new

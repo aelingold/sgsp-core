@@ -12,6 +12,7 @@ public class PaymentDTO implements Serializable {
 	private Date createdAt;
 	private Date updatedAt;
 	private String statusType;
+	private AmountDTO amount;	
 
 	public PaymentDTO() {
 		super();
@@ -30,9 +31,15 @@ public class PaymentDTO implements Serializable {
 		result.setPaymentType(paymentType);
 		result.setId(id);
 		result.setStatusType(statusType);
+		result.setAmount(amount);
 		
 		return result;
 	}
+	
+	public PaymentDTO withAmount(AmountDTO amount) {
+		this.amount	 = amount;
+		return this;
+	}	
 
 	public PaymentDTO withStatusType(String statusType) {
 		this.statusType = statusType;
@@ -102,22 +109,19 @@ public class PaymentDTO implements Serializable {
 		this.statusType = statusType;
 	}
 
+	public AmountDTO getAmount() {
+		return amount;
+	}
+
+	public void setAmount(AmountDTO amount) {
+		this.amount = amount;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("PaymentDTO [id=");
-		builder.append(id);
-		builder.append(", quoteId=");
-		builder.append(quoteId);
-		builder.append(", paymentType=");
-		builder.append(paymentType);
-		builder.append(", createdAt=");
-		builder.append(createdAt);
-		builder.append(", updatedAt=");
-		builder.append(updatedAt);
-		builder.append(", statusType=");
-		builder.append(statusType);
-		builder.append("]");
-		return builder.toString();
+		return "PaymentDTO [id=" + id + ", quoteId=" + quoteId
+				+ ", paymentType=" + paymentType + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + ", statusType=" + statusType
+				+ ", amount=" + amount + "]";
 	}
 }

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.persistence.model.Country;
+import org.ucema.sgsp.persistence.model.UserRatePlan;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
 import org.ucema.sgsp.persistence.model.UserWorkZone;
 import org.ucema.sgsp.persistence.model.WorkArea;
@@ -73,7 +74,11 @@ public class User extends BaseEntity<Long> {
 	@OneToMany
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
-	private List<UserWorkZone> userWorkZones;	
+	private List<UserWorkZone> userWorkZones;
+	
+	@OneToMany(mappedBy = "user",orphanRemoval=true)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private List<UserRatePlan> userRatePlans;
 
 	public User() {
 	}
@@ -176,10 +181,6 @@ public class User extends BaseEntity<Long> {
 		this.userWorkRates = userWorkRates;
 	}
 
-	public void setIsProfessional(boolean isProfessional) {
-		this.isProfessional = isProfessional;
-	}
-
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
@@ -198,6 +199,18 @@ public class User extends BaseEntity<Long> {
 
 	public void setUserWorkZones(List<UserWorkZone> userWorkZones) {
 		this.userWorkZones = userWorkZones;
+	}
+
+	public List<UserRatePlan> getUserRatePlans() {
+		return userRatePlans;
+	}
+
+	public void setUserRatePlans(List<UserRatePlan> userRatePlans) {
+		this.userRatePlans = userRatePlans;
+	}
+
+	public void setProfessional(boolean isProfessional) {
+		this.isProfessional = isProfessional;
 	}
 
 	public static class Builder {
@@ -267,9 +280,19 @@ public class User extends BaseEntity<Long> {
 		public Builder userWorkZones(List<UserWorkZone> userWorkZones) {
 			user.userWorkZones = userWorkZones;
 			return this;
+		}
+		
+		public Builder userRatePlans(List<UserRatePlan> userRatePlans) {
+			user.userRatePlans = userRatePlans;
+			return this;
 		}		
 
 		public User build() {
+			if (user.userRatePlans != null){
+				user.userRatePlans.forEach(urp ->{
+					urp.setUser(user);
+				});
+			}
 			return user;
 		}
 	}

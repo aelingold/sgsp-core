@@ -3,6 +3,7 @@ package org.ucema.sgsp.persistence.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,7 +39,9 @@ public class Payment {
 	private Date updatedAt;	    
     @Enumerated(EnumType.STRING)
     @Column(name = "status_type")
-	private PaymentStatusType statusType;	
+	private PaymentStatusType statusType;
+	@Embedded
+	private Amount amount;    
 
 	public Payment(Long id) {
 		super();
@@ -107,5 +110,13 @@ public class Payment {
 
 	public void setPaymentType(PaymentType paymentType) {
 		this.paymentType = paymentType;
+	}
+
+	public Amount getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Amount amount) {
+		this.amount = amount;
 	}
 }

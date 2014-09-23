@@ -16,6 +16,8 @@ public class PaymentTransformation {
 
 	@Autowired
 	private QuoteTransformation quoteTransformation;
+	@Autowired
+	private AmountTransformation amountTransformation;	
 
 	public List<PaymentDTO> transformToApi(List<Payment> payments) {
 		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
@@ -49,6 +51,10 @@ public class PaymentTransformation {
 			result.setPaymentType(payment.getPaymentType().name());	
 		}
 		result.setStatusType(payment.getStatusType().name());
+		
+		if (payment.getAmount() != null && payment.getAmount().getAmount() != null){
+			result.setAmount(amountTransformation.buildAmount(payment.getAmount()));	
+		}
 
 		return result;
 	}
@@ -65,6 +71,10 @@ public class PaymentTransformation {
 			result.setPaymentType(PaymentType.valueOf(payment.getPaymentType()));	
 		}
 		result.setStatusType(PaymentStatusType.valueOf(payment.getStatusType()));
+		
+		if (payment.getAmount() != null && payment.getAmount().getAmount() != null){
+			result.setAmount(amountTransformation.buildAmount(payment.getAmount()));	
+		}		
 
 		return result;
 	}

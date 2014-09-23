@@ -2016,3 +2016,7 @@ INSERT INTO `cities` (`code`,`description`,`state_id`,`is_enabled`) VALUES ('CAB
 INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (1, 'USD', 1, 'Dólar', 'U$S',62);
 INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (2, 'ARS', 1, 'Peso Argentino', '$',11);
 INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (3, 'BRL', 0, 'Real', 'R$',28);
+
+INSERT INTO `rate_plans` (`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`service_quantity`,`currency_id`) VALUES (0.00,"PLAN1",curdate(),true,"FIXED",null,"MONTH",null,2);
+INSERT INTO `rate_plans` (`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`service_quantity`,`currency_id`) VALUES (0.00,"PLAN2",curdate(),true,"SERVICE",null,null,1,2);
+INSERT INTO `rate_plans` (`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`service_quantity`,`currency_id`) VALUES (null,"PLAN3",curdate(),true,"PERCENTAGE",0.00,null,1,null);

@@ -24,9 +24,12 @@ import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
 import org.ucema.sgsp.exception.DuplicateEmailException;
+import org.ucema.sgsp.persistence.model.RatePlan;
+import org.ucema.sgsp.persistence.model.UserRatePlan;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.security.model.User.Builder;
 import org.ucema.sgsp.security.service.UserRepository;
 
 @Service
@@ -41,6 +44,8 @@ public class RepositoryUserService implements UserService {
 	private UserRepository repository;
 	@Autowired
 	private CountryService countryService;
+	@Autowired
+	private RatePlanService ratePlanService;
 
 	@Autowired
 	private UserTransformation userTransformation;
@@ -270,12 +275,34 @@ public class RepositoryUserService implements UserService {
 		if (userAccountData.isSocialSignIn()) {
 			user.signInProvider(userAccountData.getSignInProvider());
 		}
+		
+		user.userRatePlans(buildUserRatePlans(userAccountData,user));
 
 		User registered = user.build();
 
 		LOGGER.debug("Persisting new user with information: {}", registered);
 
 		return repository.save(registered);
+	}
+
+	private List<UserRatePlan> buildUserRatePlans(
+			RegistrationDTO userAccountData, Builder user) {
+
+		List<UserRatePlan> ratePlans = new ArrayList<UserRatePlan>();
+		
+		ratePlans.add(buildRatePlan(userAccountData));
+		
+		return ratePlans;
+	}
+
+	private UserRatePlan buildRatePlan(RegistrationDTO userAccountData) {
+
+		UserRatePlan userRatePlan = new UserRatePlan();
+		
+		userRatePlan.setIsEnabled(true);
+		userRatePlan.setRatePlan(new RatePlan(ratePlanService.findByCode("PLAN1").getId()));
+		
+		return userRatePlan;
 	}
 
 	private List<WorkArea> buildWorkAreaCodes(List<String> workAreaCodes) {

@@ -78,7 +78,7 @@ public class UserTransformation {
 
 		result.setId(user.getId());
 		result.setEmail(user.getEmail());
-		result.setIsProfessional(user.getIsProfessional());
+		result.setProfessional(user.getIsProfessional());
 		result.setFirstName(user.getFirstName());
 		result.setPassword(user.getPassword());
 		result.setLastName(user.getLastName());

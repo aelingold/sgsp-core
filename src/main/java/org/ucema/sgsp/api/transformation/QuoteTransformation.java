@@ -6,15 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.ucema.sgsp.api.dto.AmountDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
-import org.ucema.sgsp.persistence.model.Amount;
-import org.ucema.sgsp.persistence.model.Currency;
 import org.ucema.sgsp.persistence.model.Order;
 import org.ucema.sgsp.persistence.model.Quote;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.security.model.User;
-import org.ucema.sgsp.service.CurrencyService;
 import org.ucema.sgsp.service.UserService;
 
 @Component
@@ -25,13 +21,11 @@ public class QuoteTransformation {
 	@Autowired
 	private UserTransformation userTransformation;
 	@Autowired
-	private CurrencyService currencyService;
-	@Autowired
 	private QuoteQuestionTransformation quoteQuestionTransformation;
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private CurrencyTransformation currencyTransformation;
+	private AmountTransformation amountTransformation;
 
 	public List<QuoteDTO> transformToApi(List<Quote> quotes) {
 		List<QuoteDTO> result = new ArrayList<QuoteDTO>();
@@ -64,11 +58,13 @@ public class QuoteTransformation {
 		result.setUpdatedAt(quote.getUpdatedAt());
 
 		if (quote.getAmount() != null) {
-			if (quote.getRequireVisit() != null && quote.getRequireVisit()){
-				result.setVisitAmount(buildAmount(quote.getAmount()));	
-			}else{
-				result.setAmount(buildAmount(quote.getAmount()));
-			}			
+			if (quote.getRequireVisit() != null && quote.getRequireVisit()) {
+				result.setVisitAmount(amountTransformation.buildAmount(quote
+						.getAmount()));
+			} else {
+				result.setAmount(amountTransformation.buildAmount(quote
+						.getAmount()));
+			}
 		}
 
 		result.setDescription(quote.getDescription());
@@ -93,16 +89,6 @@ public class QuoteTransformation {
 		return result;
 	}
 
-	private AmountDTO buildAmount(Amount amount) {
-
-		AmountDTO result = new AmountDTO();
-
-		result.setAmount(amount.getAmount());
-		result.setCurrency(currencyTransformation.transformToApi(amount.getCurrency()));
-
-		return result;
-	}
-
 	public Quote transformToModel(QuoteDTO quote) {
 		Quote result = new Quote();
 
@@ -114,11 +100,13 @@ public class QuoteTransformation {
 		result.setUpdatedAt(quote.getUpdatedAt());
 
 		if (quote.getAmount() != null && quote.getAmount().getAmount() != null) {
-			result.setAmount(buildAmount(quote.getAmount()));
+			result.setAmount(amountTransformation.buildAmount(quote.getAmount()));
 		}
-		
-		if (quote.getVisitAmount() != null && quote.getVisitAmount().getAmount() != null){
-			result.setAmount(buildAmount(quote.getVisitAmount()));
+
+		if (quote.getVisitAmount() != null
+				&& quote.getVisitAmount().getAmount() != null) {
+			result.setAmount(amountTransformation.buildAmount(quote
+					.getVisitAmount()));
 		}
 
 		result.setDescription(quote.getDescription());
@@ -139,17 +127,6 @@ public class QuoteTransformation {
 		return result;
 	}
 
-	private Amount buildAmount(AmountDTO amount) {
-
-		Amount result = new Amount();
-
-		result.setAmount(amount.getAmount());
-		result.setCurrency(new Currency(currencyService.findByCode(
-				amount.getCurrency().getCode()).getId()));
-
-		return result;
-	}
-
 	public Quote updateFields(Quote quote, QuoteDTO quoteDTO) {
 
 		quote.setValidDateUntil(quoteDTO.getValidDateUntil());
@@ -157,15 +134,13 @@ public class QuoteTransformation {
 		quote.setStatusType(QuoteStatusType.valueOf(quoteDTO.getStatusType()));
 		quote.setRequireVisit(quoteDTO.getRequireVisit());
 		if (quoteDTO.getRequireVisit() != null && quoteDTO.getRequireVisit()) {
-			quote.setAmount(new Amount(quoteDTO.getVisitAmount().getAmount(),
-					currencyService.findByCode(
-							quoteDTO.getVisitAmount().getCurrency().getCode())
-							.getId()));
+			quote.setAmount(amountTransformation.buildAmount(quoteDTO
+					.getVisitAmount().getAmount(), quoteDTO.getVisitAmount()
+					.getCurrency().getCode()));
 		} else {
-			quote.setAmount(new Amount(quoteDTO.getAmount().getAmount(),
-					currencyService.findByCode(
-							quoteDTO.getAmount().getCurrency().getCode())
-							.getId()));
+			quote.setAmount(amountTransformation.buildAmount(quoteDTO
+					.getAmount().getAmount(), quoteDTO.getAmount()
+					.getCurrency().getCode()));
 		}
 		return quote;
 	}
