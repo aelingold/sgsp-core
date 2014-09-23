@@ -35,7 +35,6 @@ public class RatePlanTransformation {
 		result.setPackageType(ratePlan.getPackageType().name());
 		result.setPercentageQuantity(ratePlan.getPercentageQuantity());
 		result.setPeriodType(ratePlan.getPeriodType().name());
-		result.setServiceQuantity(ratePlan.getServiceQuantity());
 
 		return result;
 	}

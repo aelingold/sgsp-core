@@ -27,7 +27,6 @@ public class RatePlan {
     @Enumerated(EnumType.STRING)
     @Column(name = "package_type")
 	private RatePlanPackageType packageType;	
-    private Integer serviceQuantity;
     private BigDecimal percentageQuantity;
     @Enumerated(EnumType.STRING)
     @Column(name = "period_type")
@@ -69,14 +68,6 @@ public class RatePlan {
 
 	public void setPackageType(RatePlanPackageType packageType) {
 		this.packageType = packageType;
-	}
-
-	public Integer getServiceQuantity() {
-		return serviceQuantity;
-	}
-
-	public void setServiceQuantity(Integer serviceQuantity) {
-		this.serviceQuantity = serviceQuantity;
 	}
 
 	public BigDecimal getPercentageQuantity() {

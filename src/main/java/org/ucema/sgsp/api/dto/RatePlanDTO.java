@@ -6,12 +6,15 @@ import java.util.Date;
 
 public class RatePlanDTO implements Serializable {
 
+	public static final String PLAN1 = "PLAN1";
+	public static final String PLAN2 = "PLAN2";
+	public static final String PLAN3 = "PLAN3";
+	
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String code;
 	private AmountDTO amount;
 	private String packageType;	
-    private Integer serviceQuantity;
     private BigDecimal percentageQuantity;
 	private String periodType;
 	private Boolean isEnabled;
@@ -32,7 +35,6 @@ public class RatePlanDTO implements Serializable {
 		result.setPackageType(packageType);
 		result.setPercentageQuantity(percentageQuantity);
 		result.setPeriodType(periodType);
-		result.setServiceQuantity(serviceQuantity);
 
 		return result;
 	}	
@@ -83,14 +85,6 @@ public class RatePlanDTO implements Serializable {
 		this.packageType = packageType;
 	}
 
-	public Integer getServiceQuantity() {
-		return serviceQuantity;
-	}
-
-	public void setServiceQuantity(Integer serviceQuantity) {
-		this.serviceQuantity = serviceQuantity;
-	}
-
 	public BigDecimal getPercentageQuantity() {
 		return percentageQuantity;
 	}
@@ -127,7 +121,6 @@ public class RatePlanDTO implements Serializable {
 	public String toString() {
 		return "RatePlanDTO [id=" + id + ", code=" + code + ", amount="
 				+ amount + ", packageType=" + packageType
-				+ ", serviceQuantity=" + serviceQuantity
 				+ ", percentageQuantity=" + percentageQuantity
 				+ ", periodType=" + periodType + ", isEnabled=" + isEnabled
 				+ ", createdAt=" + createdAt + "]";

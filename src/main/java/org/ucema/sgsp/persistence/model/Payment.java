@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.ucema.sgsp.security.model.User;
+
 @Entity
 @Table(name = "payments")
 public class Payment {
@@ -41,7 +43,10 @@ public class Payment {
     @Column(name = "status_type")
 	private PaymentStatusType statusType;
 	@Embedded
-	private Amount amount;    
+	private Amount amount;
+	@ManyToOne
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_payment_user"))
+	private User user;	
 
 	public Payment(Long id) {
 		super();
@@ -118,5 +123,13 @@ public class Payment {
 
 	public void setAmount(Amount amount) {
 		this.amount = amount;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

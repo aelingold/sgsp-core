@@ -18,6 +18,7 @@ import org.springframework.social.connect.UserProfile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
+import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.ReportUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
@@ -25,11 +26,11 @@ import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.persistence.model.RatePlan;
+import org.ucema.sgsp.persistence.model.RatePlanPackageType;
 import org.ucema.sgsp.persistence.model.UserRatePlan;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
-import org.ucema.sgsp.security.model.User.Builder;
 import org.ucema.sgsp.security.service.UserRepository;
 
 @Service
@@ -186,6 +187,15 @@ public class RepositoryUserService implements UserService {
 	}
 
 	@Transactional
+	public List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(
+			RatePlanPackageType packageType, Boolean isProfessional) {
+		List<User> users = repository
+				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(
+						packageType, isProfessional);
+		return userTransformation.transformToApi(users);
+	}
+
+	@Transactional
 	public List<UserDTO> list() {
 
 		List<User> users = repository.findAll().stream()
@@ -275,8 +285,10 @@ public class RepositoryUserService implements UserService {
 		if (userAccountData.isSocialSignIn()) {
 			user.signInProvider(userAccountData.getSignInProvider());
 		}
-		
-		user.userRatePlans(buildUserRatePlans(userAccountData,user));
+
+		if (userAccountData.getUserType().equals(UserTypeDTO.professional)) {
+			user.userRatePlan(buildUserRatePlan(userAccountData));
+		}
 
 		User registered = user.build();
 
@@ -285,23 +297,14 @@ public class RepositoryUserService implements UserService {
 		return repository.save(registered);
 	}
 
-	private List<UserRatePlan> buildUserRatePlans(
-			RegistrationDTO userAccountData, Builder user) {
-
-		List<UserRatePlan> ratePlans = new ArrayList<UserRatePlan>();
-		
-		ratePlans.add(buildRatePlan(userAccountData));
-		
-		return ratePlans;
-	}
-
-	private UserRatePlan buildRatePlan(RegistrationDTO userAccountData) {
+	private UserRatePlan buildUserRatePlan(RegistrationDTO userAccountData) {
 
 		UserRatePlan userRatePlan = new UserRatePlan();
-		
+
 		userRatePlan.setIsEnabled(true);
-		userRatePlan.setRatePlan(new RatePlan(ratePlanService.findByCode("PLAN1").getId()));
-		
+		userRatePlan.setRatePlan(new RatePlan(ratePlanService.findByCode(
+				RatePlanDTO.PLAN1).getId()));
+
 		return userRatePlan;
 	}
 
@@ -379,7 +382,7 @@ public class RepositoryUserService implements UserService {
 			throw new RuntimeException("user not found");
 		}
 		user.setIsEnabled(false);
-		repository.save(user);	
+		repository.save(user);
 	}
 
 	@Transactional

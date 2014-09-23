@@ -24,14 +24,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
+import org.ucema.sgsp.api.dto.AmountDTO;
 import org.ucema.sgsp.api.dto.CityDTO;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.PaymentDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
+import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
+import org.ucema.sgsp.api.transformation.AmountTransformation;
 import org.ucema.sgsp.persistence.model.PaymentStatusType;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
@@ -43,6 +46,7 @@ import org.ucema.sgsp.service.DashBoardUserService;
 import org.ucema.sgsp.service.OrderService;
 import org.ucema.sgsp.service.PaymentService;
 import org.ucema.sgsp.service.QuoteService;
+import org.ucema.sgsp.service.RatePlanService;
 import org.ucema.sgsp.service.StateService;
 import org.ucema.sgsp.service.UserService;
 import org.ucema.sgsp.service.UserWorkRateService;
@@ -82,6 +86,10 @@ public class DashBoardController {
 	private UserWorkRateService userWorkRateService;
 	@Autowired
 	private PaymentService paymentService;
+	@Autowired
+	private RatePlanService ratePlanService;
+	@Autowired
+	private AmountTransformation amountTransformation;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
@@ -123,10 +131,10 @@ public class DashBoardController {
 		model.addAttribute("pendingUserWorkRates", userWorkRateService
 				.findByUser_EmailAndStatusType(username,
 						UserWorkRateStatusType.PENDING));
-		
+
 		model.addAttribute("doneUserWorkRates", userWorkRateService
 				.findByQuote_User_EmailAndStatusType(username,
-						UserWorkRateStatusType.DONE));		
+						UserWorkRateStatusType.DONE));
 
 		model.addAttribute("workAreaQuestions", workAreaQuestionService.list());
 
@@ -209,7 +217,8 @@ public class DashBoardController {
 	}
 
 	@RequestMapping(value = "/dashboard/ratings", method = RequestMethod.POST)
-	public String ratings(@Valid @ModelAttribute("userWorkRate") UserWorkRateDTO userWorkRate,
+	public String ratings(
+			@Valid @ModelAttribute("userWorkRate") UserWorkRateDTO userWorkRate,
 			BindingResult result, WebRequest request, Model model) {
 
 		model.addAttribute("tabToShow", "ratings");
@@ -220,11 +229,46 @@ public class DashBoardController {
 		}
 
 		userWorkRateService.update(userWorkRate);
-		
-		PaymentDTO payment = new PaymentDTO();
-		payment.setStatusType(PaymentStatusType.PENDING.name());
-		payment.setQuoteId(userWorkRate.getQuoteId());
-		paymentService.saveOrUpdate(payment);
+
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		CustomUserDetails customUserDetails = (CustomUserDetails) auth
+				.getPrincipal();
+
+		String ratePlanCode = customUserDetails.getRatePlanCode();
+
+		QuoteDTO quoteDTO = quoteService.get(userWorkRate.getQuoteId());
+
+		RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
+
+		if (ratePlanCode.equals(RatePlanDTO.PLAN2)) {
+
+			PaymentDTO payment = new PaymentDTO();
+			payment.setStatusType(PaymentStatusType.DONE.name());
+			payment.setQuoteId(userWorkRate.getQuoteId());
+			payment.setUsername(quoteDTO.getUsername());
+			payment.setAmount(ratePlan.getAmount());
+			paymentService.saveOrUpdate(payment);
+
+		} else if (ratePlanCode.equals(RatePlanDTO.PLAN3)) {
+
+			PaymentDTO payment = new PaymentDTO();
+			payment.setStatusType(PaymentStatusType.DONE.name());
+			payment.setQuoteId(userWorkRate.getQuoteId());
+			payment.setUsername(quoteDTO.getUsername());
+
+			AmountDTO amount = AmountDTO
+					.newInstance()
+					.withAmount(
+							quoteDTO.getAmount().getAmount()
+									.multiply(ratePlan.getPercentageQuantity()))
+					.withCurrencyCode(
+							quoteDTO.getAmount().getCurrency().getCode());
+
+			payment.setAmount(amount);
+			paymentService.saveOrUpdate(payment);
+		}
 
 		return "redirect:/dashboard/ratings";
 	}

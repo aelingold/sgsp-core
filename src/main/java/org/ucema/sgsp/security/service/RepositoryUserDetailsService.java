@@ -1,16 +1,11 @@
 package org.ucema.sgsp.security.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.ucema.sgsp.persistence.model.UserWorkZone;
-import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.security.model.User;
 
@@ -32,49 +27,30 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("No user found with username: "
 					+ username);
 		}
-		
+
 		if (!user.getIsEnabled()) {
 			throw new UsernameNotFoundException("No user found with username: "
-					+ username);			
+					+ username);
 		}
 
-		CustomUserDetails principal = CustomUserDetails.getBuilder()
-				.firstName(user.getFirstName()).id(user.getId())
-				.lastName(user.getLastName()).password(user.getPassword())
+		CustomUserDetails principal = CustomUserDetails
+				.getBuilder()
+				.firstName(user.getFirstName())
+				.id(user.getId())
+				.lastName(user.getLastName())
+				.password(user.getPassword())
 				.role(user.getRole())
 				.socialSignInProvider(user.getSignInProvider())
-				.username(user.getEmail()).telephone(user.getTelephone())
+				.username(user.getEmail())
+				.telephone(user.getTelephone())
 				.isProfessional(user.getIsProfessional())
-				.workAreasCodes(buildWorkAreaCodes(user.getWorkAreas()))
+				.workAreasCodes(user.getWorkAreas())
 				.country(user.getCountry().getCode())
-				.cityCodes(buildCityCodes(user.getUserWorkZones())).build();
+				.cityCodes(user.getUserWorkZones())
+				.ratePlanCode(
+						user.getUserRatePlan() != null ? user.getUserRatePlan()
+								.getRatePlan().getCode() : null).build();
 
 		return principal;
-	}
-
-	private List<String> buildCityCodes(List<UserWorkZone> userWorkZones) {
-
-		List<String> result = new ArrayList<String>();
-
-		if (userWorkZones != null) {
-			for (UserWorkZone userWorkZone : userWorkZones) {
-				result.add(userWorkZone.getCity().getCode());
-			}
-		}
-
-		return result;
-	}
-
-	private List<String> buildWorkAreaCodes(List<WorkArea> workAreas) {
-
-		List<String> result = new ArrayList<String>();
-
-		if (workAreas != null) {
-			for (WorkArea workArea : workAreas) {
-				result.add(workArea.getCode());
-			}
-		}
-
-		return result;
 	}
 }

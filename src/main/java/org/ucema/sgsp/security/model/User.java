@@ -76,9 +76,9 @@ public class User extends BaseEntity<Long> {
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
 	private List<UserWorkZone> userWorkZones;
 	
-	@OneToMany(mappedBy = "user",orphanRemoval=true)
+	@OneToOne(mappedBy = "user",orphanRemoval=true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private List<UserRatePlan> userRatePlans;
+	private UserRatePlan userRatePlan;
 
 	public User() {
 	}
@@ -201,12 +201,12 @@ public class User extends BaseEntity<Long> {
 		this.userWorkZones = userWorkZones;
 	}
 
-	public List<UserRatePlan> getUserRatePlans() {
-		return userRatePlans;
+	public UserRatePlan getUserRatePlan() {
+		return userRatePlan;
 	}
 
-	public void setUserRatePlans(List<UserRatePlan> userRatePlans) {
-		this.userRatePlans = userRatePlans;
+	public void setUserRatePlan(UserRatePlan userRatePlan) {
+		this.userRatePlan = userRatePlan;
 	}
 
 	public void setProfessional(boolean isProfessional) {
@@ -282,16 +282,14 @@ public class User extends BaseEntity<Long> {
 			return this;
 		}
 		
-		public Builder userRatePlans(List<UserRatePlan> userRatePlans) {
-			user.userRatePlans = userRatePlans;
+		public Builder userRatePlan(UserRatePlan userRatePlan) {
+			user.userRatePlan = userRatePlan;
 			return this;
 		}		
 
 		public User build() {
-			if (user.userRatePlans != null){
-				user.userRatePlans.forEach(urp ->{
-					urp.setUser(user);
-				});
+			if (user.userRatePlan != null){
+				user.userRatePlan.setUser(user);
 			}
 			return user;
 		}

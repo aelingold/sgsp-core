@@ -1,5 +1,6 @@
 package org.ucema.sgsp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,7 +17,7 @@ public class PaymentService {
 
 	@Autowired
 	private PaymentTransformation paymentTransformation;
-	
+
 	@Autowired
 	private PaymentDAO paymentDAO;
 
@@ -27,7 +28,8 @@ public class PaymentService {
 
 	@Transactional
 	public PaymentDTO saveOrUpdate(PaymentDTO payment) {
-		Payment response = paymentDAO.save(paymentTransformation.transformToModel(payment));
+		Payment response = paymentDAO.save(paymentTransformation
+				.transformToModel(payment));
 		payment.setId(response.getId());
 		return payment;
 	}
@@ -36,22 +38,55 @@ public class PaymentService {
 	public void delete(PaymentDTO payment) {
 		paymentDAO.delete(paymentTransformation.transformToModel(payment));
 	}
-	
+
 	@Transactional
 	public void delete(Long id) {
 		Payment payment = paymentDAO.getOne(id);
-		if (payment == null){
+		if (payment == null) {
 			throw new RuntimeException("payment not found");
-		}		
+		}
 		paymentDAO.delete(payment);
-	}		
+	}
+
+	@Transactional
+	public PaymentDTO get(Long id) {
+		Payment payment = paymentDAO.getOne(id);
+		if (payment == null) {
+			throw new RuntimeException("payment not found");
+		}
+		return paymentTransformation.transformToApi(payment);
+	}
+
+	@Transactional
+	public List<PaymentDTO> findByQuote_User_Email(String username) {
+		List<Payment> payments = paymentDAO.findByQuote_User_Email(username);
+
+		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
+		payments.forEach(payment -> {
+			result.add(paymentTransformation.transformToApi(payment));
+		});
+		return result;
+	}
 	
 	@Transactional
-	public PaymentDTO get(Long id){
-		Payment payment = paymentDAO.getOne(id);
-		if (payment == null){
-			throw new RuntimeException("payment not found");
-		}		
-		return paymentTransformation.transformToApi(payment);
+	public List<PaymentDTO> findByUser_Email(String username) {
+		List<Payment> payments = paymentDAO.findByUser_Email(username);
+
+		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
+		payments.forEach(payment -> {
+			result.add(paymentTransformation.transformToApi(payment));
+		});
+		return result;
+	}	
+
+	@Transactional
+	public List<PaymentDTO> findByUser_EmailOrderByCreatedAtDesc(String username) {
+		List<Payment> payments = paymentDAO.findByUser_EmailOrderByCreatedAtDesc(username);
+
+		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
+		payments.forEach(payment -> {
+			result.add(paymentTransformation.transformToApi(payment));
+		});
+		return result;
 	}	
 }

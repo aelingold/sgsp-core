@@ -10,14 +10,15 @@ import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.ReportUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
+import org.ucema.sgsp.persistence.model.RatePlanPackageType;
 import org.ucema.sgsp.security.model.User;
 
 public interface UserService {
 
 	RegistrationDTO createRegistrationDTO(Connection<?> connection);
-	
+
 	Map<YearMonth, ReportUserDTO> countUsers();
-	
+
 	Long countByIsProfessional(Boolean isProfessional);
 
 	User registerNewUserAccount(RegistrationDTO userAccountData)
@@ -37,16 +38,18 @@ public interface UserService {
 	void update(DashBoardUserDTO dashBoardUserDTO);
 
 	void delete(Long id);
-	
+
 	void disable(Long id);
-	
+
 	void enable(Long id);
-	
+
 	void disable(String username);
-	
-	void enable(String username);	
+
+	void enable(String username);
 
 	UserDTO get(Long id);
 
 	UserDTO findByEmail(String email);
+
+	List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(RatePlanPackageType packageType, Boolean isProfessional);
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
-import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.service.CountryService;
 
@@ -27,16 +26,6 @@ public class UserTransformation {
 
 		for (User user : users) {
 			result.add(transformToApi(user));
-		}
-
-		return result;
-	}
-
-	public List<User> transformToModel(List<UserDTO> users) {
-		List<User> result = new ArrayList<User>();
-
-		for (UserDTO user : users) {
-			result.add(transformToModel(user));
 		}
 
 		return result;
@@ -68,30 +57,8 @@ public class UserTransformation {
 					.collect(Collectors.toList()));
 		}
 
-		result.setRole(user.getRole());
-
-		return result;
-	}
-
-	public User transformToModel(UserDTO user) {
-		User result = new User();
-
-		result.setId(user.getId());
-		result.setEmail(user.getEmail());
-		result.setProfessional(user.getIsProfessional());
-		result.setFirstName(user.getFirstName());
-		result.setPassword(user.getPassword());
-		result.setLastName(user.getLastName());
-		result.setTelephone(user.getTelephone());
-
-		if (user.getWorkAreas() != null) {
-			result.setWorkAreas(workAreaTransformation.transformToModel(user
-					.getWorkAreas()));
-		}
-
-		if (user.getCountryCode() != null) {
-			result.setCountry(new Country(countryService.findByCode(
-					user.getCountryCode()).getId()));
+		if (user.getUserRatePlan() != null) {
+			result.setRatePlanCode(user.getUserRatePlan().getRatePlan().getCode());
 		}
 
 		result.setRole(user.getRole());

@@ -10,6 +10,8 @@ import org.ucema.sgsp.persistence.model.Payment;
 import org.ucema.sgsp.persistence.model.PaymentStatusType;
 import org.ucema.sgsp.persistence.model.PaymentType;
 import org.ucema.sgsp.persistence.model.Quote;
+import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.service.UserService;
 
 @Component
 public class PaymentTransformation {
@@ -17,7 +19,9 @@ public class PaymentTransformation {
 	@Autowired
 	private QuoteTransformation quoteTransformation;
 	@Autowired
-	private AmountTransformation amountTransformation;	
+	private AmountTransformation amountTransformation;
+	@Autowired
+	private UserService userService;
 
 	public List<PaymentDTO> transformToApi(List<Payment> payments) {
 		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
@@ -43,6 +47,8 @@ public class PaymentTransformation {
 		PaymentDTO result = new PaymentDTO();
 
 		result.setId(payment.getId());
+		result.setCreatedAt(payment.getCreatedAt());
+		result.setUpdatedAt(payment.getUpdatedAt());
 		if (payment.getQuote() != null) {
 			result.setQuoteId(payment.getQuote().getId());
 		}
@@ -54,6 +60,11 @@ public class PaymentTransformation {
 		
 		if (payment.getAmount() != null && payment.getAmount().getAmount() != null){
 			result.setAmount(amountTransformation.buildAmount(payment.getAmount()));	
+		}
+		
+		if (payment.getUser() != null){
+			result.setUserId(payment.getUser().getId());
+			result.setUsername(payment.getUser().getEmail());
 		}
 
 		return result;
@@ -74,6 +85,14 @@ public class PaymentTransformation {
 		
 		if (payment.getAmount() != null && payment.getAmount().getAmount() != null){
 			result.setAmount(amountTransformation.buildAmount(payment.getAmount()));	
+		}
+		
+		if (payment.getUserId() != null){
+			result.setUser(new User(payment.getUserId()));
+		}
+		
+		if (payment.getUsername() != null){
+			result.setUser(new User(userService.findByEmail(payment.getUsername()).getId()));
 		}		
 
 		return result;

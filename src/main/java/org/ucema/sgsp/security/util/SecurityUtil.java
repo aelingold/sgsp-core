@@ -16,13 +16,24 @@ public class SecurityUtil {
 	public static void logInUser(User user) {
 		LOGGER.info("Logging in user: {}", user);
 
-		CustomUserDetails userDetails = CustomUserDetails.getBuilder()
-				.firstName(user.getFirstName()).id(user.getId())
-				.lastName(user.getLastName()).password(user.getPassword())
+		CustomUserDetails userDetails = CustomUserDetails
+				.getBuilder()
+				.firstName(user.getFirstName())
+				.id(user.getId())
+				.lastName(user.getLastName())
+				.password(user.getPassword())
 				.role(user.getRole())
 				.socialSignInProvider(user.getSignInProvider())
-				.username(user.getEmail()).country(user.getCountry().getCode())
-				.build();
+				.username(user.getEmail())
+				.telephone(user.getTelephone())
+				.isProfessional(user.getIsProfessional())
+				.workAreasCodes(user.getWorkAreas())
+				.country(user.getCountry().getCode())
+				.cityCodes(user.getUserWorkZones())
+				.ratePlanCode(
+						user.getUserRatePlan() != null ? user.getUserRatePlan()
+								.getRatePlan().getCode() : null).build();
+
 		LOGGER.debug("Logging in principal: {}", userDetails);
 
 		Authentication authentication = new UsernamePasswordAuthenticationToken(

@@ -1,5 +1,6 @@
 package org.ucema.sgsp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -52,4 +53,17 @@ public class RatePlanService {
 			return null;
 		}
 	}
+	
+	@Transactional
+	public List<RatePlanDTO> findByCode(List<String> codes) {
+		List<RatePlan> ratePlans = ratePlanDAO.findByCode(codes);
+
+		List<RatePlanDTO> result = new ArrayList<RatePlanDTO>();
+		ratePlans.forEach(ratePlan -> {
+			if (ratePlan.getIsEnabled()) {
+				result.add(ratePlanTransformation.transformToApi(ratePlan));
+			}
+		});
+		return result;
+	}	
 }

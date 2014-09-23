@@ -12,7 +12,9 @@ public class PaymentDTO implements Serializable {
 	private Date createdAt;
 	private Date updatedAt;
 	private String statusType;
-	private AmountDTO amount;	
+	private AmountDTO amount;
+	private Long userId;
+	private String username;
 
 	public PaymentDTO() {
 		super();
@@ -117,11 +119,28 @@ public class PaymentDTO implements Serializable {
 		this.amount = amount;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 		return "PaymentDTO [id=" + id + ", quoteId=" + quoteId
 				+ ", paymentType=" + paymentType + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + ", statusType=" + statusType
-				+ ", amount=" + amount + "]";
+				+ ", amount=" + amount + ", userId=" + userId + ", username="
+				+ username + "]";
 	}
 }
