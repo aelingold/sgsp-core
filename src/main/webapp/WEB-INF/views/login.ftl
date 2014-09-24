@@ -69,6 +69,14 @@
 				      		</div>
 				      	</a>
 		      		</div>
+           	 		<div class="social-column">
+						<!-- FACEBOOK SIGNIN -->
+						<form name="fb_signin" id="fb_signin" action="<@c.url value='/signin/facebook'/>" method="POST">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        					<input type="hidden" name="scope" value="public_profile,email,offline_access,user_friends" />
+							<button type="submit"><img src="<@c.url value='/static/new/img/social/facebook-login.jpg'/>" /></button>
+						</form>
+		      		</div>		      		
            		</div>               
             </div>
         </div>

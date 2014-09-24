@@ -14,6 +14,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebInitializer implements WebApplicationInitializer {
@@ -31,6 +32,10 @@ public class WebInitializer implements WebApplicationInitializer {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
+        
+        HiddenHttpMethodFilter httpMethodFilter = new HiddenHttpMethodFilter();
+        FilterRegistration.Dynamic httpMethod = servletContext.addFilter("httpMethodFilter", httpMethodFilter);
+        httpMethod.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
  
         FilterRegistration.Dynamic characterEncoding = servletContext.addFilter("characterEncoding", characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
