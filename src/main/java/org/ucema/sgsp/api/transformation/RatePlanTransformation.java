@@ -29,12 +29,20 @@ public class RatePlanTransformation {
 
 		result.setCode(ratePlan.getCode());
 		result.setId(ratePlan.getId());
-		result.setAmount(amountTransformation.buildAmount(ratePlan.getAmount()));
+
+		if (ratePlan.getAmount() != null) {
+			result.setAmount(amountTransformation.buildAmount(ratePlan
+					.getAmount()));
+		}
+
 		result.setCreatedAt(ratePlan.getCreatedAt());
 		result.setIsEnabled(ratePlan.getIsEnabled());
 		result.setPackageType(ratePlan.getPackageType().name());
 		result.setPercentageQuantity(ratePlan.getPercentageQuantity());
-		result.setPeriodType(ratePlan.getPeriodType().name());
+
+		if (ratePlan.getPeriodType() != null) {
+			result.setPeriodType(ratePlan.getPeriodType().name());
+		}
 
 		return result;
 	}
