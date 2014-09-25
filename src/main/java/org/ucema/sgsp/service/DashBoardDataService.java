@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.stereotype.Service;
@@ -49,6 +51,8 @@ public class DashBoardDataService {
 	private UserWorkZoneService userWorkZoneService;
 	@Autowired
 	private ConnectionRepository connectionRepository;
+	@Resource
+	private Environment env;
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
@@ -70,7 +74,20 @@ public class DashBoardDataService {
 
 		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
 
-		map.put("repliedQuotes", repliedQuotes(allQuotes));
+		List<QuoteDTO> repliedQuotes = repliedQuotes(allQuotes);
+		Map<Long, List<QuoteDTO>> repliedQuotesGrouped = repliedQuotes.stream()
+				.collect(Collectors.groupingBy(QuoteDTO::getOrderId));
+
+		List<QuoteDTO> repliedQuotesFiltered = new ArrayList<QuoteDTO>();
+
+		repliedQuotesGrouped.forEach((k, v) -> {
+			if (repliedQuotesGrouped.get(k).size() >= Integer.valueOf(env
+					.getProperty("minimum.replied.quotes", "5"))) {
+				repliedQuotesFiltered.addAll(repliedQuotesGrouped.get(k));
+			}
+		});
+
+		map.put("repliedQuotes", repliedQuotesFiltered);
 
 		map.put("userWorkRates",
 				userWorkRateService.userWorkRatesMap(allQuotes));
@@ -111,8 +128,9 @@ public class DashBoardDataService {
 
 		map.put("config", dashBoardConfig);
 		map.put("configMap", stateService.getConfigMap(states, cities));
-		
-		List<Connection<?>> connections = connectionRepository.findConnections("facebook");
+
+		List<Connection<?>> connections = connectionRepository
+				.findConnections("facebook");
 		if (!connections.isEmpty()) {
 			map.put("connections", connections);
 		}

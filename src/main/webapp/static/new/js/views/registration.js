@@ -1,3 +1,7 @@
+function selectAllWorkAreas(){
+	$('.workAreaCheks').attr('checked',true);
+}
+
 function verifyUserTypeChecked(){
 	
 	console.log($("input[name='userType']").val() );

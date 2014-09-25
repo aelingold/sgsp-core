@@ -32,12 +32,13 @@ public class SecurityUtil {
 				user.getEmail(),
 				user.getTelephone(),
 				user.getIsProfessional(),
-				user.getWorkAreas().stream().map(wa -> wa.getCode())
-						.collect(Collectors.toList()),
+				user.getWorkAreas() != null ? user.getWorkAreas().stream()
+						.map(wa -> wa.getCode()).collect(Collectors.toList())
+						: null,
 				user.getCountry().getCode(),
-				user.getUserWorkZones().stream()
-						.map(uwz -> uwz.getCity().getCode())
-						.collect(Collectors.toList()),
+				user.getUserWorkZones() != null ? user.getUserWorkZones()
+						.stream().map(uwz -> uwz.getCity().getCode())
+						.collect(Collectors.toList()) : null,
 				user.getUserRatePlan() != null ? user.getUserRatePlan()
 						.getRatePlan().getCode() : null);
 
@@ -64,9 +65,10 @@ public class SecurityUtil {
 				user.getEmail(),
 				user.getTelephone(),
 				user.getIsProfessional(),
-				user.getWorkAreas().stream().map(wa -> wa.getCode())
-						.collect(Collectors.toList()), user.getCountryCode(),
-				user.getCityCodes(), user.getRatePlanCode());
+				user.getWorkAreas() != null ? user.getWorkAreas().stream()
+						.map(wa -> wa.getCode()).collect(Collectors.toList())
+						: null, user.getCountryCode(), user.getCityCodes(),
+				user.getRatePlanCode());
 
 		LOGGER.debug("Logging in principal: {}", userDetails);
 

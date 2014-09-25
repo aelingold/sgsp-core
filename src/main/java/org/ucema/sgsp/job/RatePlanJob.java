@@ -2,7 +2,6 @@ package org.ucema.sgsp.job;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
@@ -10,7 +9,6 @@ import org.joda.time.Months;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.AmountDTO;
@@ -35,8 +33,6 @@ public class RatePlanJob {
 	private RatePlanService ratePlanService;
 	@Autowired
 	private PaymentService paymentService;
-	@Resource
-	private Environment env;
 
 	@Scheduled(fixedRate = 30000)
 	public void createPayments() {

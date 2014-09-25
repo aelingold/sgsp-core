@@ -46,13 +46,14 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 				user.getEmail(),
 				user.getTelephone(),
 				user.getIsProfessional(),
-				user.getWorkAreas().stream().map(wa -> wa.getCode())
-						.collect(Collectors.toList()),
+				user.getWorkAreas() != null ? user.getWorkAreas().stream()
+						.map(wa -> wa.getCode()).collect(Collectors.toList())
+						: null,
 				user.getCountry().getCode(),
-				user.getUserWorkZones().stream()
-						.map(uwz -> uwz.getCity().getCode())
-						.collect(Collectors.toList()),
-				user.getUserRatePlan() != null ? user.getUserRatePlan()
+				user.getUserWorkZones() != null ? user.getUserWorkZones()
+						.stream().map(uwz -> uwz.getCity().getCode())
+						.collect(Collectors.toList()) : null, user
+						.getUserRatePlan() != null ? user.getUserRatePlan()
 						.getRatePlan().getCode() : null);
 
 		return principal;

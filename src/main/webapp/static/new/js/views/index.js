@@ -54,6 +54,10 @@ $(".home-service-option").on("click", function(){
 		case "SLB":
 			hideSelectService()		
 			showBudgetForm(serviceType);
+			break
+		case "SRP":
+			hideSelectService()		
+			showBudgetForm(serviceType);
 			break			
 		default:
 			break;

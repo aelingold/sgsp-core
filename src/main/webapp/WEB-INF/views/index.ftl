@@ -67,6 +67,7 @@
         	<#include "budget-forms/albanil.ftl">
         	<#include "budget-forms/serviceaire.ftl">
         	<#include "budget-forms/serviceblanca.ftl">
+        	<#include "budget-forms/servicereparacion.ftl">
 			<#-- AGREGAR ACÁ EL RESTO DE LOS FORMULARIOS -->
         </div>
     </header>

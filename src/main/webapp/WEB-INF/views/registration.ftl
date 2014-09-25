@@ -59,6 +59,16 @@
                 	
                 		<h3 class="text-muted">Ingresá estos datos y empezá a resolver tus problemas.</h3>
                 	
+                        <div class="row pro-field">
+                        	<div class="col-lg-12">
+                        		<label>Seleccione los rubros a los que se dedica</label>
+                        		<a href="javascript:selectAllWorkAreas();">Seleccionar todos</a>
+                        	</div>
+                            <div class="col-lg-12">
+                            	<@spring.formCheckboxes "user.workAreaCodes", workAreaMap,"","class='workAreaCheks'"/>                                                        	
+                            </div>
+                            <@spring.showErrors "<br>" />
+                        </div>                	
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                        	<label>Nombre</label>
@@ -73,6 +83,13 @@
 	                        	<@spring.showErrors "<br>" />                        	
 	                        </div>
 	                    </div>
+                        <div class="row pro-field">
+                            <div class="form-group col-lg-4">
+                                <label>Teléfono</label>
+                                <@spring.formInput "user.telephone", 'class="form-control"'/>
+                                <@spring.showErrors "<br>" />
+                            </div>
+                        </div>	                    
 	                    <div class="row">
 	                        <div class="form-group col-lg-4">
 	                            <label>Email</label>	                        	
@@ -93,7 +110,7 @@
                                 <@spring.formPasswordInput "user.passwordVerification", 'class="form-control"'/>
 	                        	<@spring.showErrors "<br>" />
                             </div>
-                        </div>
+                        </div>                        
                         <div class="row">
                             <div class="form-group col-lg-4">
                                 <label>Pais</label>
@@ -101,25 +118,6 @@
                                 <@spring.showErrors "<br>" />	                        	
                             </div>
                         </div>
-                        
-                        <div class="row pro-field">
-                            <div class="form-group col-lg-4">
-                                <label>Teléfono</label>
-                                <@spring.formInput "user.telephone", 'class="form-control"'/>
-                                <@spring.showErrors "<br>" />
-                            </div>
-                        </div>
-                        
-                        <div class="row pro-field">
-                        	<div class="col-lg-12">
-                        		<label>Seleccione los rubros a los que se dedica</label>
-                        	</div>
-                            <div class="col-lg-12">
-                            	<@spring.formCheckboxes "user.workAreaCodes", workAreaMap,""/>                                                        	
-                            </div>
-                            <@spring.showErrors "<br>" />
-                        </div>
-          					                    
 	                    <button type="submit" class="btn btn-default">Registrarme</button>
 	                </form>
                	</div>                
