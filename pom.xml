@@ -52,12 +52,6 @@
 			<artifactId>usertype.core</artifactId>
 			<version>3.2.0.GA</version>
 		</dependency>
-		<!-- Sitemesh -->
-		<dependency>
-			<groupId>org.sitemesh</groupId>
-			<artifactId>sitemesh</artifactId>
-			<version>3.0.0</version>
-		</dependency>
 		<!-- Use Apache HttpClient as HTTP Client -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

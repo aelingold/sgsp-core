@@ -62,21 +62,17 @@
                	</div>  
            	 	<div class="col-lg-6">     
            	 		<div class="social-column">
-           	 			<a href="<@c.url value='/auth/facebook'/>">
-				      		<div class="fb-button">
-				      			<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
-				      			<span>Ingresar con facebook</span>
-				      		</div>
-				      	</a>
-		      		</div>
-           	 		<div class="social-column">
-						<!-- FACEBOOK SIGNIN -->
-						<form name="fb_signin" id="fb_signin" action="<@c.url value='/signin/facebook'/>" method="POST">
+           	 			<form name="fb_signin" id="fb_signin" action="<@c.url value='/signin/facebook'/>" method="POST">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        					<input type="hidden" name="scope" value="public_profile,email,offline_access,user_friends" />
-							<button type="submit"><img src="<@c.url value='/static/new/img/social/facebook-login.jpg'/>" /></button>
-						</form>
-		      		</div>		      		
+        					<input type="hidden" name="scope" value="public_profile,email,offline_access,user_friends"/>           	 			
+           	 				<a href="javascript:document.fb_signin.submit()">
+				      			<div class="fb-button">
+				      				<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
+				      				<span>Ingresar con facebook</span>
+				      			</div>
+				      		</a>
+				      	</form>
+		      		</div>	      		
            		</div>               
             </div>
         </div>

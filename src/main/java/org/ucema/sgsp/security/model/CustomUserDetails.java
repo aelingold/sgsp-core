@@ -154,8 +154,13 @@ public class CustomUserDetails extends SocialUser {
 			this.telephone = telephone;
 			return this;
 		}
+		
+		public Builder cityCodes(List<String> cityCodes) {
+			this.cityCodes = cityCodes;
+			return this;		
+		}
 
-		public Builder cityCodes(List<UserWorkZone> userWorkZones) {
+		public Builder userWorkZones(List<UserWorkZone> userWorkZones) {
 
 			List<String> result = new ArrayList<String>();
 
@@ -173,8 +178,13 @@ public class CustomUserDetails extends SocialUser {
 			this.ratePlanCode = ratePlanCode;
 			return this;
 		}
+		
+		public Builder workAreasCodes(List<String> workAreasCodes) {
+			this.workAreasCodes = workAreasCodes;
+			return this;
+		}
 
-		public Builder workAreasCodes(List<WorkArea> workAreas) {
+		public Builder workAreas(List<WorkArea> workAreas) {
 
 			List<String> result = new ArrayList<String>();
 

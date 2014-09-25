@@ -347,10 +347,10 @@ public class RepositoryUserService implements UserService {
 	private String encodePassword(RegistrationDTO dto) {
 		String encodedPassword = null;
 
-		if (dto.isNormalRegistration()) {
-			LOGGER.debug("Registration is normal registration. Encoding password.");
+	//	if (dto.isNormalRegistration()) {
+		//	LOGGER.debug("Registration is normal registration. Encoding password.");
 			encodedPassword = passwordEncoder.encode(dto.getPassword());
-		}
+	//	}
 
 		return encodedPassword;
 	}

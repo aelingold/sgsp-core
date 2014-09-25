@@ -20,6 +20,7 @@ public class UserDTO implements Serializable {
 	private String countryCode;
 	private List<String> cityCodes;
 	private String ratePlanCode;
+	private String signInProvider;
 	
 	public static UserDTO newInstance() {
 		return new UserDTO();
@@ -39,6 +40,7 @@ public class UserDTO implements Serializable {
 		result.setWorkAreas(workAreas);
 		result.setCountryCode(countryCode);
 		result.setRatePlanCode(ratePlanCode);
+		result.setSignInProvider(signInProvider);
 
 		return result;
 	}
@@ -184,13 +186,44 @@ public class UserDTO implements Serializable {
 		this.ratePlanCode = ratePlanCode;
 	}
 
+	public String getSignInProvider() {
+		return signInProvider;
+	}
+
+	public void setSignInProvider(String signInProvider) {
+		this.signInProvider = signInProvider;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDTO [id=" + id + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", telephone=" + telephone
-				+ ", password=" + password + ", workAreas=" + workAreas
-				+ ", isProfessional=" + isProfessional + ", role=" + role
-				+ ", countryCode=" + countryCode + ", cityCodes=" + cityCodes
-				+ ", ratePlanCode=" + ratePlanCode + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserDTO [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", telephone=");
+		builder.append(telephone);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", workAreas=");
+		builder.append(workAreas);
+		builder.append(", isProfessional=");
+		builder.append(isProfessional);
+		builder.append(", role=");
+		builder.append(role);
+		builder.append(", countryCode=");
+		builder.append(countryCode);
+		builder.append(", cityCodes=");
+		builder.append(cityCodes);
+		builder.append(", ratePlanCode=");
+		builder.append(ratePlanCode);
+		builder.append(", signInProvider=");
+		builder.append(signInProvider);
+		builder.append("]");
+		return builder.toString();
 	}
 }

@@ -20,7 +20,9 @@ import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
+import org.ucema.sgsp.controller.CustomConnectController;
 import org.ucema.sgsp.security.service.SpringSecuritySignInAdapter;
+import org.ucema.sgsp.service.UserService;
 
 @Configuration
 @EnableSocial
@@ -28,6 +30,8 @@ public class SocialContext implements SocialConfigurer {
 
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	private UserService userService;
 
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig,
 			Environment env) {
@@ -58,7 +62,7 @@ public class SocialContext implements SocialConfigurer {
 	public ConnectController connectController(
 			ConnectionFactoryLocator connectionFactoryLocator,
 			ConnectionRepository connectionRepository) {
-		return new ConnectController(connectionFactoryLocator,
+		return new CustomConnectController(connectionFactoryLocator,
 				connectionRepository);
 	}
 
@@ -67,6 +71,6 @@ public class SocialContext implements SocialConfigurer {
 			ConnectionFactoryLocator connectionFactoryLocator,
 			UsersConnectionRepository usersConnectionRepository) {
 		return new ProviderSignInController(connectionFactoryLocator,
-				usersConnectionRepository, new SpringSecuritySignInAdapter());
+				usersConnectionRepository, new SpringSecuritySignInAdapter(userService));
 	}
 }

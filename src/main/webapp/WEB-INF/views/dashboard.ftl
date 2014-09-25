@@ -60,10 +60,49 @@
 				      <#if user.isProfessional> 
 				      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 				      </#if>
+				      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
 				    </ul>
             	</div>
             	
             	<div class="col-md-9">
+            		
+            		<div id="redessociales-panel" class="col-md-12 dashboard-panel">
+						<div class="row">
+							<div class="panel panel-default">
+					  			<div class="panel-heading">
+						    		<h3 class="panel-title">
+						    			Configurar redes sociales
+						    		</h3>
+						  		</div>
+						  		<div class="panel-body">
+						  		<div class="col-lg-6">
+						  		<div class="social-column">
+						  			<#if connections??>
+										<form name="fb_disconnect" action="<@c.url value='/connect/facebook'/>" method="POST">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+											<input type="hidden" name="_method" value="delete" />							  			
+											<a href="javascript:document.fb_disconnect.submit()">
+				      							<div class="fb-button">
+				      								<span>Desconectar de facebook</span>
+				      							</div>
+				      						</a>
+										</form>						  		
+						  			<#else>
+										<form name="fb_connect" action="<@c.url value='/connect/facebook'/>" method="POST">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>							  			
+											<a href="javascript:document.fb_connect.submit()">
+				      							<div class="fb-button">
+				      								<span>Conectar con facebook</span>
+				      							</div>
+				      						</a>
+										</form>
+						  			</#if>
+						  			</div>	
+						  			</div>								  		
+						  		</div>
+						  	</div>
+						</div>   		
+            		</div>
             		
             		<div id="configuracion-panel" class="col-md-12 dashboard-panel">
 						<form name="configForm" action="/dashboard/config" method="POST" enctype="utf8">

@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.CityDTO;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
@@ -45,6 +47,8 @@ public class DashBoardDataService {
 	private CurrencyService currencyService;
 	@Autowired
 	private UserWorkZoneService userWorkZoneService;
+	@Autowired
+	private ConnectionRepository connectionRepository;
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
@@ -107,6 +111,11 @@ public class DashBoardDataService {
 
 		map.put("config", dashBoardConfig);
 		map.put("configMap", stateService.getConfigMap(states, cities));
+		
+		List<Connection<?>> connections = connectionRepository.findConnections("facebook");
+		if (!connections.isEmpty()) {
+			map.put("connections", connections);
+		}
 
 		return map;
 	}

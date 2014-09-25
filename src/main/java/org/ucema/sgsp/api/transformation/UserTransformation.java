@@ -41,6 +41,10 @@ public class UserTransformation {
 		result.setPassword(user.getPassword());
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
+		
+		if (user.getSignInProvider() != null){
+			result.setSignInProvider(user.getSignInProvider().name());
+		}
 
 		if (user.getWorkAreas() != null) {
 			result.setWorkAreas(workAreaTransformation.transformToApi(user

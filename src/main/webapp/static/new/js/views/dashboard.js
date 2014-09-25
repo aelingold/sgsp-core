@@ -25,6 +25,10 @@ switch(tabToShow){
 		showPanel("#configuracion-panel");
 		$("#configuracion-option").addClass("active");		
 		break;
+	case "socialmedia":
+		showPanel("#redessociales-panel");
+		$("#redessociales-option").addClass("active");		
+		break;		
 }
 
 $(".need-visit").change(function() {
