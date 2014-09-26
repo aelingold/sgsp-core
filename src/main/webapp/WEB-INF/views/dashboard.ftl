@@ -105,7 +105,7 @@
             		</div>
             		
             		<div id="configuracion-panel" class="col-md-12 dashboard-panel">
-						<form name="configForm" action="/dashboard/config" method="POST" enctype="utf8">
+						<form name="configForm" action="<@c.url value='/dashboard/config' />" method="POST" enctype="utf8">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<@spring.bind "config" />            		
 		            		<div class="row">
@@ -200,7 +200,7 @@
 								  	</div>								
 								</#list>
 								<#list pendingUserWorkRates as pendingUserWorkRate>
-									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="/dashboard/ratings" method="POST" enctype="utf8">
+									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="<@c.url value='/dashboard/ratings' />" method="POST" enctype="utf8">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<@spring.bind "userWorkRate" />
 										<input type="hidden" name="id" value="${pendingUserWorkRate.id}">
@@ -355,7 +355,7 @@
 											  			</div>
 											  			<div class="col-md-4">
 											  				<#if repliedQuote.statusType="REPLIED">
-												  				<form name="budgetsFormAccepted${repliedQuote_index}" action="/dashboard/requests/accepted/${repliedQuote.id}" method="POST" enctype="utf8">
+												  				<form name="budgetsFormAccepted${repliedQuote_index}" action="<@c.url value='/dashboard/requests/accepted/${repliedQuote.id}' />" method="POST" enctype="utf8">
 												  					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 												  					<a href="javascript:document.budgetsFormAccepted${repliedQuote_index}.submit()" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
 												  				</form>
@@ -377,7 +377,7 @@
 					</div>
 					
 					<div id="perfil-panel" class="col-md-12 dashboard-panel">
-						<form action="/dashboard/profile" method="POST" enctype="utf8">
+						<form action="<@c.url value='/dashboard/profile' />" method="POST" enctype="utf8">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<@spring.bind "user" />
 							<div class="row">
@@ -441,7 +441,7 @@
 																		
 						<#list pendingQuotes as pendingQuote>
 							<#if pendingQuote.statusType="PENDING">
-								<form name="budgetsForm${pendingQuote_index}" action="/dashboard/budgets/replied" method="POST" enctype="utf8">
+								<form name="budgetsForm${pendingQuote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<input type="hidden" name="statusType" value="REPLIED">
 									<input type="hidden" name="id" value="${pendingQuote.id}">
