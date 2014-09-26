@@ -125,10 +125,14 @@
 													<label>Localidades:</label>
 													<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
 												</div>
-												<div class="col-md-12 form-group">											
-															
-																<@spring.formCheckboxes "config.cityCodes", configMap[state.code],''/>
-																																										
+												<div class="col-md-12 form-group">
+													<#list cities as city>
+														<#if city.stateCode=state.code>									
+															<div class="col-md-3">
+																<input ${config.cityCodes?seq_contains(city.code)?string("checked", "")} name="cityCodes" type="checkbox" value="${city.code}"> ${city.description}
+															</div>
+														</#if>
+													</#list>
 												</div>
 											</div>									
 										</#list>
@@ -159,106 +163,107 @@
 						</div>
 						<div class="row">
 							<div class="panel-group" id="accordion">
-								<#list doneUserWorkRates as doneUserWorkRate>
-								  	<div class="panel panel-default" id="panel${doneUserWorkRate_index}">
-								    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${doneUserWorkRate_index}" style="cursor:pointer;">
-									      	<h4 class="panel-title">
-									        	<a  href="#collapse${doneUserWorkRate_index}">
-									          		${doneUserWorkRate.userFirstName} ${doneUserWorkRate.userLastName}
-									          		<span class="fa"></span>							          		
-									        	</a>							        	
-									      	</h4>
-								    	</div>
-									    <div id="collapse${doneUserWorkRate_index}" class="panel-collapse collapse in">
-									      	<div class="panel-body">
-									      		<div class="col-md-12">
-							        				<div class="row form-group">
-							        					<div class="col-md-12">
-								        					<label>Trabajo realizado: </label> ${doneUserWorkRate.workCompleted?string('Si', 'No')}
-								        				</div>
-								        			</div>
-								        			<div class="row form-group">
-							        					<div class="col-md-12">
-								        					<label>Calificacion: </label> 
-								        					<#if doneUserWorkRate.ratingType="POSITIVE">
-								        						POSITIVA	
-								        					<#elseif doneUserWorkRate.ratingType="NEUTRAL">
-								        						NEUTRAL
-								        					<#else>
-								        						NEGATIVA		
-								        					</#if>
-								        				</div>		
-								        			</div>
-								        			<div class="row form-group">
-							        					<div class="col-md-12">
-								        					<label>Comentario: </label> ${doneUserWorkRate.comment}
-								        				</div>		
-								        			</div>
-							        			</div>						        	
-									      	</div>
-								    	</div>
-								  	</div>								
-								</#list>
-								<#list pendingUserWorkRates as pendingUserWorkRate>
-									<form name="userWorkRatesForm${pendingUserWorkRate_index}" action="<@c.url value='/dashboard/ratings' />" method="POST" enctype="utf8">
-										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-										<@spring.bind "userWorkRate" />
-										<input type="hidden" name="id" value="${pendingUserWorkRate.id}">
-										<input type="hidden" name="quoteId" value="${pendingUserWorkRate.quoteId}">
-									  	<div class="panel panel-default" id="panel${pendingUserWorkRate_index}">
-									    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${pendingUserWorkRate_index}" style="cursor:pointer;">
+								<#list userWorkRates as userWorkRate>
+									<#if userWorkRate.statusType='DONE'>
+									  	<div class="panel panel-default user-work-rate-${userWorkRate.statusType}" id="panel${userWorkRate_index}">
+									    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
 										      	<h4 class="panel-title">
-										        	<a  href="#collapse${pendingUserWorkRate_index}">
-										          		${pendingUserWorkRate.quoteUserFirstName} ${pendingUserWorkRate.quoteUserLastName} (${pendingUserWorkRate.quoteUserWorkAreaDescription})
+										        	<a  href="#collapse${userWorkRate_index}">
+										          		${userWorkRate.userFirstName} ${userWorkRate.userLastName}
 										          		<span class="fa"></span>							          		
 										        	</a>							        	
 										      	</h4>
 									    	</div>
-										    <div id="collapse${pendingUserWorkRate_index}" class="panel-collapse collapse in">
+										    <div id="collapse${userWorkRate_index}" class="panel-collapse collapse in">
 										      	<div class="panel-body">
 										      		<div class="col-md-12">
 								        				<div class="row form-group">
 								        					<div class="col-md-12">
-									        					<label>¿El trabajo fue realizado?</label>
+									        					<label>Trabajo realizado: </label> ${userWorkRate.workCompleted?string('Si', 'No')}
 									        				</div>
-									        				<div class="col-md-2">
-									        					<input type="radio" name="workCompleted" value="YES"> Si
-									        				</div>
-										        			<div class="col-md-2">
-										        				<input type="radio" name="workCompleted" value="NO"> No
-										        			</div>	
 									        			</div>
 									        			<div class="row form-group">
 								        					<div class="col-md-12">
-									        					<label>¿Cómo calificarias a Jose Marmol?</label>
-									        				</div>
-									        				<div class="col-md-2">
-									        					<input type="radio" name="ratingType" value="POSITIVE"> Positivo
-									        				</div>
-										        			<div class="col-md-2">
-										        				<input type="radio" name="ratingType" value="NEUTRAL"> Neutral
-										        			</div>
-										        			<div class="col-md-2">
-										        				<input type="radio" name="ratingType" value="NEGATIVE"> Negativo
-										        			</div>		
-									        			</div>
-									        			<div class="row form-group">
-								        					<div class="col-md-12">
-									        					<label>¿Tienes algún comentario?</label>
-									        					<textarea name="comment" class="form-control"></textarea>
+									        					<label>Calificacion: </label> 
+									        					<#if userWorkRate.ratingType="POSITIVE">
+									        						POSITIVA	
+									        					<#elseif userWorkRate.ratingType="NEUTRAL">
+									        						NEUTRAL
+									        					<#else>
+									        						NEGATIVA		
+									        					</#if>
 									        				</div>		
 									        			</div>
 									        			<div class="row form-group">
 								        					<div class="col-md-12">
-									        					<a href="javascript:document.userWorkRatesForm${pendingUserWorkRate_index}.submit()" class="button btn btn-warning pull-right">Calificar</a>
+									        					<label>Comentario: </label> ${userWorkRate.comment}
 									        				</div>		
 									        			</div>
 								        			</div>						        	
 										      	</div>
 									    	</div>
 									  	</div>
-									</form>
-							  	</#list>
+									<#else>
+										<form name="userWorkRatesForm${userWorkRate_index}" action="<@c.url value='/dashboard/ratings' />" method="POST" enctype="utf8">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+											<@spring.bind "userWorkRate" />
+											<input type="hidden" name="id" value="${userWorkRate.id}">
+											<input type="hidden" name="quoteId" value="${userWorkRate.quoteId}">
+										  	<div class="panel panel-default user-work-rate-${userWorkRate.statusType}" id="panel${userWorkRate_index}">
+										    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
+											      	<h4 class="panel-title">
+											        	<a  href="#collapse${userWorkRate_index}">
+											          		${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName} (${userWorkRate.quoteUserWorkAreaDescription})
+											          		<span class="fa"></span>							          		
+											        	</a>							        	
+											      	</h4>
+										    	</div>
+											    <div id="collapse${userWorkRate_index}" class="panel-collapse collapse in">
+											      	<div class="panel-body">
+											      		<div class="col-md-12">
+									        				<div class="row form-group">
+									        					<div class="col-md-12">
+										        					<label>¿El trabajo fue realizado?</label>
+										        				</div>
+										        				<div class="col-md-2">
+										        					<input type="radio" name="workCompleted" value="YES"> Si
+										        				</div>
+											        			<div class="col-md-2">
+											        				<input type="radio" name="workCompleted" value="NO"> No
+											        			</div>	
+										        			</div>
+										        			<div class="row form-group">
+									        					<div class="col-md-12">
+										        					<label>¿Cómo calificarias a Jose Marmol?</label>
+										        				</div>
+										        				<div class="col-md-2">
+										        					<input type="radio" name="ratingType" value="POSITIVE"> Positivo
+										        				</div>
+											        			<div class="col-md-2">
+											        				<input type="radio" name="ratingType" value="NEUTRAL"> Neutral
+											        			</div>
+											        			<div class="col-md-2">
+											        				<input type="radio" name="ratingType" value="NEGATIVE"> Negativo
+											        			</div>		
+										        			</div>
+										        			<div class="row form-group">
+									        					<div class="col-md-12">
+										        					<label>¿Tienes algún comentario?</label>
+										        					<textarea name="comment" class="form-control"></textarea>
+										        				</div>		
+										        			</div>
+										        			<div class="row form-group">
+									        					<div class="col-md-12">
+										        					<a href="javascript:document.userWorkRatesForm${userWorkRate_index}.submit()" class="button btn btn-warning pull-right">Calificar</a>
+										        				</div>		
+										        			</div>
+									        			</div>						        	
+											      	</div>
+										    	</div>
+										  	</div>
+										</form>									
+								  	</#if>							
+								</#list>
 							</div>
 						</div>
 					</div>
@@ -278,7 +283,7 @@
 						<#list orders as order>
 							<#-- ejemplo de un presupuesto pedido -->
 							<div class="row">
-								<div class="panel panel-default">
+								<div class="panel panel-default order-${order.statusType}">
 							  		<div class="panel-heading">
 								    	<h3 class="panel-title">
 								    		Necesito un ${order.workAreaDescription}
@@ -335,32 +340,32 @@
 											<h5>Presupuestos</h5>
 										</div>
 										<ul class="response-list">
-											<#list repliedQuotes as repliedQuote>
-												<#if repliedQuote.orderId==order.id>				
+											<#list quotes as quote>
+												<#if quote.orderId==order.id && (quote.statusType="REPLIED" || quote.statusType="ACCEPTED" || quote.statusType="DONE")>				
 											  		<li class="col-md-12">
 											  			<div class="col-md-3">
-											  				${repliedQuote.firstName} ${repliedQuote.lastName} (${userWorkRates[repliedQuote.username]})
+											  				${quote.firstName} ${quote.lastName} (${userWorkRatesQtyMap[quote.username]})
 											  			</div>
 											  			<div class="col-md-2">
-											  				<#if repliedQuote.requireVisit == false>
-											  					Total ${repliedQuote.amount.currency.symbol}${repliedQuote.amount.amount}
+											  				<#if quote.requireVisit == false>
+											  					Total ${quote.amount.currency.symbol}${quote.amount.amount}
 											  				<#else>
-											  					Visita ${repliedQuote.visitAmount.currency.symbol}${repliedQuote.visitAmount.amount}
+											  					Visita ${quote.visitAmount.currency.symbol}${quote.visitAmount.amount}
 											  				</#if>
 											  			</div>
 											  			<div class="col-md-3" style="color: #bbb;">
-											  				<#if repliedQuote.requireVisit == false>
-											  					Válido hasta ${repliedQuote.validDateUntil?string("dd/MM/yy")}
+											  				<#if quote.requireVisit == false>
+											  					Válido hasta ${quote.validDateUntil?string("dd/MM/yy")}
 											  				</#if>
 											  			</div>
 											  			<div class="col-md-4">
-											  				<#if repliedQuote.statusType="REPLIED">
-												  				<form name="budgetsFormAccepted${repliedQuote_index}" action="<@c.url value='/dashboard/requests/accepted/${repliedQuote.id}' />" method="POST" enctype="utf8">
+											  				<#if quote.statusType="REPLIED">
+												  				<form name="budgetsFormAccepted${quote_index}" action="<@c.url value='/dashboard/requests/accepted/${quote.id}' />" method="POST" enctype="utf8">
 												  					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												  					<a href="javascript:document.budgetsFormAccepted${repliedQuote_index}.submit()" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
+												  					<a href="javascript:document.budgetsFormAccepted${quote_index}.submit()" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
 												  				</form>
-												  			<#else>
-												  				Aceptado
+												  			<#elseif quote.statusType="ACCEPTED">
+												  				Aceptado(Pendiente calificacion)
 												  			</#if>
 											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
 											  			</div>
@@ -439,27 +444,27 @@
 							</div>
 						</div>
 																		
-						<#list pendingQuotes as pendingQuote>
-							<#if pendingQuote.statusType="PENDING">
-								<form name="budgetsForm${pendingQuote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-									<input type="hidden" name="statusType" value="REPLIED">
-									<input type="hidden" name="id" value="${pendingQuote.id}">
-									<@spring.bind "quote" />																						
-									<#-- ejemplo de un presupuesto pedido -->
-									<div class="row">
-										<div class="panel panel-default">
+						<#list quotes as quote>
+							<#if quote.statusType="PENDING">
+								<div class="row">
+									<div class="panel panel-default quote-${quote.statusType}">						
+										<form name="budgetsForm${quote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+											<input type="hidden" name="statusType" value="REPLIED">
+											<input type="hidden" name="id" value="${quote.id}">
+											<@spring.bind "quote" />																						
+											<#-- ejemplo de un presupuesto pedido -->
 									  		<div class="panel-heading">
 										    	<h3 class="panel-title">
-										    		Necesito un ${pendingQuote.order.workAreaDescription}
-										    		<#if pendingQuote.order.workDateType='URGENT'>
+										    		Necesito un ${quote.order.workAreaDescription}
+										    		<#if quote.order.workDateType='URGENT'>
 										    			<span class="pull-right urgente">Es urgente</span>
 										    		</#if>
 										    	</h3>
 										  	</div>
 										  	<div class="panel-body">
 										  		<div class="row">
-										  			<#list pendingQuote.order.workAreaItemCodes as workAreaItemCode>
+										  			<#list quote.order.workAreaItemCodes as workAreaItemCode>
 										  				<#list workAreaItems as workAreaItem>
 															<#if workAreaItem.code=workAreaItemCode>
 																<#list workAreaQuestions as workAreaQuestion>
@@ -473,28 +478,28 @@
 										  				</#list>
 							                   		</#list>						                        
 							                   </div>
-							                   <#if pendingQuote.order.squareMeters??>
+							                   <#if quote.order.squareMeters??>
 							                       <div class="row">
 								                        <div class="form-group col-md-12">
-								                        	<label>¿Que tamaño tiene la superficie?</label> ${pendingQuote.order.squareMeters} m2
+								                        	<label>¿Que tamaño tiene la superficie?</label> ${quote.order.squareMeters} m2
 								                        </div>
 							                       </div>
 											   </#if>
-							                   <#if pendingQuote.order.airConditionerPower??>
+							                   <#if quote.order.airConditionerPower??>
 							                       <div class="row">
 								                        <div class="form-group col-md-12">
-								                        	<label>¿Cuantas frigorias tiene el aire?</label> ${pendingQuote.order.airConditionerPower} frigorias
+								                        	<label>¿Cuantas frigorias tiene el aire?</label> ${quote.order.airConditionerPower} frigorias
 								                        </div>
 							                       </div>
 											   </#if>									   					                       					                   
 						                       <div class="row">
 							                        <div class="form-group col-md-12">
-							                        	<label>Trabajo a realizar en:</label> ${pendingQuote.order.stateDescription}, ${(pendingQuote.order.cityDescription)!""}
+							                        	<label>Trabajo a realizar en:</label> ${quote.order.stateDescription}, ${(quote.order.cityDescription)!""}
 							                        </div>
 						                       </div>				                       
 						                       <div class="row">
 							                        <div class="form-group col-md-12">
-							                        	<label>Detalle del trabajo:</label> ${pendingQuote.order.workDescription}
+							                        	<label>Detalle del trabajo:</label> ${quote.order.workDescription}
 							                        </div>
 						                       </div>
 						                       
@@ -541,18 +546,107 @@
 									                       </div>
 									                       <div class="row">
 										                        <div class="col-md-12">
-										                        	<a href="javascript:document.budgetsForm${pendingQuote_index}.submit()" class="button btn btn-warning pull-right">Presupuestar</a>
+										                        	<a href="javascript:document.budgetsForm${quote_index}.submit()" class="button btn btn-warning pull-right">Presupuestar</a>
 										                        </div>
 									                       </div>
 								                      	</div>
 							                      	</div>
-							                    </div>						                    
-										  	</div>
-										</div>
+									        	</div>						                    
+											</div>
+										</form>										  	
 									</div>
-									<#-- fin de ejemplo de un presupuesto pedido -->												
-								</form>
-							</#if>	
+								</div>
+							<#elseif quote.statusType="REPLIED" || quote.statusType="DONE">
+								<div class="row">
+									<div class="panel panel-default quote-${quote.statusType}">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+										    	Necesito un ${quote.order.workAreaDescription}
+										    	<#if quote.order.workDateType='URGENT'>
+										    		<span class="pull-right urgente">Es urgente</span>
+										    	</#if>
+										    </h3>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+									  			<#list quote.order.workAreaItemCodes as workAreaItemCode>
+									  				<#list workAreaItems as workAreaItem>
+														<#if workAreaItem.code=workAreaItemCode>
+															<#list workAreaQuestions as workAreaQuestion>
+																<#if workAreaQuestion.workAreaCode=workAreaItem.workAreaCode && workAreaQuestion.groupType=workAreaItem.groupType>
+							                        				<div class="form-group col-md-6">
+							                        					<label>${workAreaQuestion.description}</label> ${workAreaItem.description}
+							                        				</div>
+									    						</#if>
+									    					</#list>
+									    				</#if>								  					
+									  				</#list>
+						                   		</#list>						                        
+						                   </div>
+						                   <#if quote.order.squareMeters??>
+						                       <div class="row">
+							                        <div class="form-group col-md-12">
+							                        	<label>¿Que tamaño tiene la superficie?</label> ${quote.order.squareMeters} m2
+							                        </div>
+						                       </div>
+										   </#if>
+						                   <#if quote.order.airConditionerPower??>
+						                       <div class="row">
+							                        <div class="form-group col-md-12">
+							                        	<label>¿Cuantas frigorias tiene el aire?</label> ${quote.order.airConditionerPower} frigorias
+							                        </div>
+						                       </div>
+										   </#if>									   					                       					                   
+					                       <div class="row">
+						                        <div class="form-group col-md-12">
+						                        	<label>Trabajo a realizar en:</label> ${quote.order.stateDescription}, ${(quote.order.cityDescription)!""}
+						                        </div>
+					                       </div>				                       
+					                       <div class="row">
+						                        <div class="form-group col-md-12">
+						                        	<label>Detalle del trabajo:</label> ${quote.order.workDescription}
+						                        </div>
+					                       </div>
+					                       <#if quote.amount??>
+											   <div class="row">
+							                   		<div class="form-group col-md-12">
+							                        	<label>Costo del trabajo:</label> ${(quote.amount.currency.symbol)!""} ${(quote.amount.currency.amount)!""}
+							                        </div>
+						                       </div>
+						                   </#if>
+						                   <#if quote.description?? && quote.description!="">
+											   <div class="row">
+							                   		<div class="form-group col-md-12">
+							                        	<label>Comentarios sobre el trabajo:</label> ${quote.description}
+							                        </div>
+						                       </div>
+						                   </#if>
+					                       <#if quote.validDateUntil??>
+											   <div class="row">
+							                   		<div class="form-group col-md-12">
+							                        	<label>Valido hasta:</label> ${(quote.validDateUntil?string("dd/MM/yy"))!""}
+							                        </div>
+						                       </div>
+						                   </#if>
+						                   <#if quote.requireVisit??>
+											   <div class="row">
+							                   		<div class="form-group col-md-12">
+							                        	<label>Se necesita una visita para presupuestar:</label> ${quote.requireVisit?string('Si', 'No')}
+							                        </div>
+						                       </div>
+						                   </#if>
+						                   <#if quote.visitAmount??>
+											   <div class="row">
+							                   		<div class="form-group col-md-12">
+							                        	<label>Costo de la visita:</label> ${(quote.visitAmount.currency.symbol)!""} ${(quote.visitAmount.amount)!""}
+							                        </div>
+						                       </div>
+						                   </#if>				                       		                       					                       					                       
+					            		</div>
+					            	</div>
+					        	</div>														
+							</#if>
+							<#-- fin de ejemplo de un presupuesto pedido -->
 						</#list>
 					</div>										
             	</div>            	

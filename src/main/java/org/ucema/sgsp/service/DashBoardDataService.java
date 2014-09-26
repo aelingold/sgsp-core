@@ -22,7 +22,6 @@ import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
-import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 
 @Service
 public class DashBoardDataService {
@@ -64,6 +63,8 @@ public class DashBoardDataService {
 
 		map.put("user", user);
 
+		map.put("tabToShow", tabToShow);
+
 		List<OrderDTO> orders = orderService.list(username);
 		map.put("orders", orders);
 
@@ -74,44 +75,20 @@ public class DashBoardDataService {
 
 		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
 
-		List<QuoteDTO> repliedQuotes = repliedQuotes(allQuotes);
-		Map<Long, List<QuoteDTO>> repliedQuotesGrouped = repliedQuotes.stream()
-				.collect(Collectors.groupingBy(QuoteDTO::getOrderId));
+		map.put("quotes", quotes(username,allQuotes));
 
-		List<QuoteDTO> repliedQuotesFiltered = new ArrayList<QuoteDTO>();
+		map.put("quote", new QuoteDTO());
 
-		repliedQuotesGrouped.forEach((k, v) -> {
-			if (repliedQuotesGrouped.get(k).size() >= Integer.valueOf(env
-					.getProperty("minimum.replied.quotes", "5"))) {
-				repliedQuotesFiltered.addAll(repliedQuotesGrouped.get(k));
-			}
-		});
-
-		map.put("repliedQuotes", repliedQuotesFiltered);
-
-		map.put("userWorkRates",
+		map.put("userWorkRatesQtyMap",
 				userWorkRateService.userWorkRatesMap(allQuotes));
 
 		map.put("userWorkRate", new UserWorkRateDTO());
 
-		map.put("pendingUserWorkRates", userWorkRateService
-				.findByUser_EmailAndStatusType(username,
-						UserWorkRateStatusType.PENDING));
-
-		map.put("doneUserWorkRates", userWorkRateService
-				.findByQuote_User_EmailAndStatusType(username,
-						UserWorkRateStatusType.DONE));
+		map.put("userWorkRates", userWorkRateService.findByUser_Email(username));
 
 		map.put("workAreaQuestions", workAreaQuestionService.list());
 
 		map.put("workAreaItems", workAreaItemService.list());
-
-		map.put("tabToShow", tabToShow);
-
-		map.put("pendingQuotes",
-				quoteService.list(username, QuoteStatusType.PENDING));
-
-		map.put("quote", new QuoteDTO());
 
 		map.put("currency", currencyService.findByCountryCode(countryCode));
 
@@ -138,13 +115,39 @@ public class DashBoardDataService {
 		return map;
 	}
 
+	public List<QuoteDTO> quotes(String username, List<QuoteDTO> allQuotes) {
+
+		List<QuoteDTO> repliedQuotes = repliedQuotes(allQuotes);
+		Map<Long, List<QuoteDTO>> repliedQuotesGrouped = repliedQuotes.stream()
+				.collect(Collectors.groupingBy(QuoteDTO::getOrderId));
+
+		List<QuoteDTO> repliedQuotesFiltered = new ArrayList<QuoteDTO>();
+
+		repliedQuotesGrouped.forEach((k, v) -> {
+			if (repliedQuotesGrouped.get(k).size() >= Integer.valueOf(env
+					.getProperty("minimum.replied.quotes", "5"))) {
+				repliedQuotesFiltered.addAll(repliedQuotesGrouped.get(k));
+			}
+		});
+
+		List<QuoteDTO> quotes = new ArrayList<QuoteDTO>();
+
+		quotes.addAll(repliedQuotesFiltered);
+
+		quotes.addAll(quoteService.list(username));
+
+		return quotes;
+	}
+
 	public List<QuoteDTO> repliedQuotes(List<QuoteDTO> allQuotes) {
 		return allQuotes
 				.stream()
 				.filter(q -> q.getStatusType().equals(
 						QuoteStatusType.REPLIED.name())
 						|| q.getStatusType().equals(
-								QuoteStatusType.ACCEPTED.name()))
+								QuoteStatusType.ACCEPTED.name())
+						|| q.getStatusType().equals(
+								QuoteStatusType.INVALID.name()))
 				.collect(Collectors.toList());
 	}
 }

@@ -14,6 +14,7 @@ import org.ucema.sgsp.api.dto.PlaceOrderDTO;
 import org.ucema.sgsp.api.transformation.OrderTransformation;
 import org.ucema.sgsp.persistence.OrderDAO;
 import org.ucema.sgsp.persistence.model.Order;
+import org.ucema.sgsp.persistence.model.OrderStatusType;
 
 @Service
 public class OrderService {
@@ -66,14 +67,28 @@ public class OrderService {
 
 	@Transactional
 	public List<OrderDTO> update(List<OrderDTO> ordersDTO) {
-		
+
 		List<OrderDTO> response = new ArrayList<OrderDTO>();
-		
+
 		ordersDTO.forEach(o -> {
 			response.add(update(o));
 		});
-		
+
 		return response;
+	}
+
+	@Transactional
+	public OrderDTO updateStatus(Long orderId, OrderStatusType statusType) {
+
+		Order order = orderDAO.getOne(orderId);
+		if (order == null) {
+			throw new RuntimeException("order not found");
+		}
+
+		order.setStatusType(statusType);
+
+		Order response = orderDAO.save(order);
+		return orderTransformation.transformToApi(response);
 	}
 
 	@Transactional

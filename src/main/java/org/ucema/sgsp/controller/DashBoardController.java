@@ -176,6 +176,7 @@ public class DashBoardController {
 
 		String username = auth.getName();
 
+		userWorkZoneService.deleteByUser_Email(username);
 		userWorkZoneService.save(config, username);
 
 		return "redirect:/dashboard/config";

@@ -24,6 +24,7 @@ public class OrderDTO implements Serializable {
 	private List<Long> orderItemIds;
 	private List<String> workAreaItemCodes;
 	private List<Long> quoteIds;
+	private String statusType;
 
 	public OrderDTO() {
 		super();
@@ -47,13 +48,19 @@ public class OrderDTO implements Serializable {
 		result.setWorkDateType(workDateType);
 		result.setWorkDescription(workDescription);
 		result.setOrderItemIds(orderItemIds);
-		result.setAirConditionerPower(airConditionerPower);		
+		result.setAirConditionerPower(airConditionerPower);
+		result.setStatusType(statusType);
 
 		return result;
 	}
 	
 	public OrderDTO withAirConditionerPower(Integer airConditionerPower) {
 		this.airConditionerPower = airConditionerPower;
+		return this;
+	}	
+
+	public OrderDTO withStatusType(String statusType) {
+		this.statusType = statusType;
 		return this;
 	}	
 	
@@ -248,6 +255,14 @@ public class OrderDTO implements Serializable {
 		this.quoteIds = quoteIds;
 	}
 
+	public String getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -285,6 +300,8 @@ public class OrderDTO implements Serializable {
 		builder.append(workAreaItemCodes);
 		builder.append(", quoteIds=");
 		builder.append(quoteIds);
+		builder.append(", statusType=");
+		builder.append(statusType);
 		builder.append("]");
 		return builder.toString();
 	}

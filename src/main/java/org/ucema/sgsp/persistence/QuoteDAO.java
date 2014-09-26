@@ -13,5 +13,9 @@ public interface QuoteDAO extends JpaRepository<Quote, Long> {
 
 	List<Quote> findByUser_Email(String username);
 	
+	List<Quote> findByOrder_Id(Long orderId);
+	
+	List<Quote> findByOrder_Id(List<Long> orderIds);
+	
 	List<Quote> findByStatusType(QuoteStatusType statusType);
 }

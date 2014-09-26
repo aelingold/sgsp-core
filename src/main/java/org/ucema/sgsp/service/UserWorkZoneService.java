@@ -41,10 +41,9 @@ public class UserWorkZoneService {
 		userWorkZone.setId(response.getId());
 		return userWorkZone;
 	}
-	
+
 	@Transactional
-	public void save(DashBoardConfigDTO config, String username){
-		deleteByUser_Email(username);
+	public void save(DashBoardConfigDTO config, String username) {
 
 		List<UserWorkZoneDTO> userWorkZonesNew = new ArrayList<UserWorkZoneDTO>();
 
@@ -54,10 +53,11 @@ public class UserWorkZoneService {
 			uwz.setUsername(username);
 			userWorkZonesNew.add(uwz);
 		});
-		saveOrUpdate(userWorkZonesNew);		
+		saveOrUpdate(userWorkZonesNew);
 	}
-	
-	public Long deleteByUser_Email(String username){
+
+	@Transactional
+	public Long deleteByUser_Email(String username) {
 		return userWorkZoneDAO.deleteByUser_Email(username);
 	}
 

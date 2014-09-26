@@ -1,6 +1,8 @@
 package org.ucema.sgsp.service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -12,7 +14,9 @@ import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
+import org.ucema.sgsp.persistence.model.OrderStatusType;
 import org.ucema.sgsp.persistence.model.PaymentStatusType;
+import org.ucema.sgsp.persistence.model.QuoteStatusType;
 
 @Service
 public class DashBoardRatingService {
@@ -27,6 +31,8 @@ public class DashBoardRatingService {
 	private RatePlanService ratePlanService;
 	@Autowired
 	private PaymentService paymentService;
+	@Autowired
+	private OrderService orderService;
 
 	@Transactional
 	public void save(UserWorkRateDTO userWorkRate) {
@@ -42,6 +48,21 @@ public class DashBoardRatingService {
 		RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
 
 		if (userWorkRate.getWorkCompleted()) {
+
+			orderService.updateStatus(quoteDTO.getOrderId(),
+					OrderStatusType.FINISHED);
+
+			List<QuoteDTO> quotes = quoteService.findByOrder_Id(quoteDTO
+					.getOrderId());
+			quotes = quotes.stream()
+					.filter(q -> !q.getId().equals(quoteDTO.getOrderId()))
+					.collect(Collectors.toList());
+
+			quoteService.updateStatus(quoteDTO.getOrderId(),
+					QuoteStatusType.DONE);
+
+			quoteService.updateStatus(quotes.stream().map(q -> q.getId())
+					.collect(Collectors.toList()), QuoteStatusType.CANCELLED);
 
 			if (ratePlanCode.equals(RatePlanDTO.PLAN2)) {
 

@@ -1,5 +1,6 @@
 package org.ucema.sgsp.service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,33 @@ public class QuoteService {
 	private UserService userService;
 
 	@Transactional
+	public void updateStatus(Long quoteId, QuoteStatusType statusType) {
+		updateStatus(Arrays.asList(quoteId), statusType);
+	}	
+	
+	@Transactional
+	public void updateStatus(List<Long> quoteIds, QuoteStatusType statusType) {
+
+		quoteIds.forEach(id -> {
+			Quote quote = quoteDAO.getOne(id);
+			quote.setStatusType(statusType);
+			quoteDAO.save(quote);
+		});
+	}
+
+	@Transactional
+	public List<QuoteDTO> findByOrder_Id(List<Long> orderIds) {
+		return quoteTransformation.transformToApi(quoteDAO
+				.findByOrder_Id(orderIds));
+	}	
+	
+	@Transactional
+	public List<QuoteDTO> findByOrder_Id(Long orderId) {
+		return quoteTransformation.transformToApi(quoteDAO
+				.findByOrder_Id(orderId));
+	}	
+	
+	@Transactional
 	public List<QuoteDTO> list(Long userId, QuoteStatusType statusType) {
 		return list(userService.get(userId).getEmail(), statusType);
 	}
@@ -39,7 +67,8 @@ public class QuoteService {
 	}
 
 	@Transactional
-	public Map<DateTime, ReportWorkAreaDTO> quotesServices(QuoteStatusType quoteStatusType) {
+	public Map<DateTime, ReportWorkAreaDTO> quotesServices(
+			QuoteStatusType quoteStatusType) {
 
 		Map<DateTime, ReportWorkAreaDTO> response = new HashMap<DateTime, ReportWorkAreaDTO>();
 
@@ -53,20 +82,21 @@ public class QuoteService {
 			updatedAtCustom = new DateTime(updatedAtCustom.getYear(),
 					updatedAtCustom.getMonthOfYear(),
 					updatedAtCustom.getDayOfMonth(), 0, 0, 0, 0);
-			
-			if (response.get(updatedAtCustom) == null){
-				
+
+			if (response.get(updatedAtCustom) == null) {
+
 				ReportWorkAreaDTO reportWorkAreaDTO = new ReportWorkAreaDTO();
 				reportWorkAreaDTO.setWorkAreaDescription(workAreaDescription);
-				reportWorkAreaDTO.setCount(reportWorkAreaDTO.getCount()+1);
-				
+				reportWorkAreaDTO.setCount(reportWorkAreaDTO.getCount() + 1);
+
 				response.put(updatedAtCustom, reportWorkAreaDTO);
-				
-			}else{
-				
-				ReportWorkAreaDTO reportWorkAreaDTO = response.get(updatedAtCustom);
-				reportWorkAreaDTO.setCount(reportWorkAreaDTO.getCount()+1);
-			
+
+			} else {
+
+				ReportWorkAreaDTO reportWorkAreaDTO = response
+						.get(updatedAtCustom);
+				reportWorkAreaDTO.setCount(reportWorkAreaDTO.getCount() + 1);
+
 				response.put(updatedAtCustom, reportWorkAreaDTO);
 			}
 		}

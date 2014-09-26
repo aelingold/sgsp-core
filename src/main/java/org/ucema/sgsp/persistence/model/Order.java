@@ -69,6 +69,9 @@ public class Order {
 	@OneToMany
 	@JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "fk_order_quotes"))
 	private List<Quote> quotes;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_type")
+	private OrderStatusType statusType;	
 
 	public Order(Long id) {
 		super();
@@ -209,5 +212,13 @@ public class Order {
 
 	public void setQuotes(List<Quote> quotes) {
 		this.quotes = quotes;
+	}
+
+	public OrderStatusType getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(OrderStatusType statusType) {
+		this.statusType = statusType;
 	}
 }
