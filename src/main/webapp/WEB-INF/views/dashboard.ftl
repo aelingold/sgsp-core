@@ -369,6 +369,24 @@
 												  			</#if>
 											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
 											  			</div>
+											  			<ul class="messages-list">
+											  				<li class="col-md-12">
+											  					<div class="question-message message">
+												  					<div class="user-name-message">Nombre usuario 1</div>
+												  					<div class="message-content">asd asd a asd asd asd asdas ads adas</div>
+												  				</div>
+											  				</li>
+											  				<li class="col-md-12">
+											  					<div class="response-message message">
+												  					<div class="user-name-message">Nombre usuario 2</div>
+												  					<div class="message-content">ads asda sd asd asd asd asd adas</div>
+											  					</div>
+											  				</li>
+											  			</ul>
+											  			<div class="col-md-12" style="margin-top:8px;">
+											  				<textarea class="form-control"></textarea>
+											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-top:5px;">Enviar mensaje</a>
+											  			</div>
 											  		</li>
 											  	</#if>
 											</#list>

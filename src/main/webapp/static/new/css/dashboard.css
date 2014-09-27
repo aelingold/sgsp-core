@@ -25,7 +25,7 @@
 	padding-left: 15px;
 	padding-right: 15px;
 }
-.response-list li{
+.response-list > li{
 	border-bottom: 1px solid #ddd;
 	padding: 5px;
 	margin-bottom: -1px;
@@ -38,4 +38,24 @@
 	border-bottom-right-radius: 5px;
 	border: 1px solid #ddd;	
 	margin-top: -1px;
+}
+
+.user-name-message{
+	color: #aaa;
+}
+.message-content{
+	color: #444;
+}
+.question-message{
+	border-left: 5px solid #ddd;	
+	text-align: left;	
+}
+.response-message{
+	border-right: 5px solid #ddd;	
+	text-align: right;	
+}
+.message{
+	background: #f9f9f9;
+	margin-top: 8px;
+	padding: 0.5em 10px;
 }
