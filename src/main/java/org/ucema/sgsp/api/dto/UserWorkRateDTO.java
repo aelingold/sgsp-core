@@ -18,6 +18,7 @@ public class UserWorkRateDTO implements Serializable {
 	private String quoteUserWorkAreaDescription;
 	private String statusType;
 	private Boolean workCompleted;
+	private Boolean summarized;
 
 	public Long getId() {
 		return id;
@@ -87,7 +88,8 @@ public class UserWorkRateDTO implements Serializable {
 		return quoteUserWorkAreaDescription;
 	}
 
-	public void setQuoteUserWorkAreaDescription(String quoteUserWorkAreaDescription) {
+	public void setQuoteUserWorkAreaDescription(
+			String quoteUserWorkAreaDescription) {
 		this.quoteUserWorkAreaDescription = quoteUserWorkAreaDescription;
 	}
 
@@ -123,6 +125,14 @@ public class UserWorkRateDTO implements Serializable {
 		this.userLastName = userLastName;
 	}
 
+	public Boolean getSummarized() {
+		return summarized;
+	}
+
+	public void setSummarized(Boolean summarized) {
+		this.summarized = summarized;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -152,6 +162,8 @@ public class UserWorkRateDTO implements Serializable {
 		builder.append(statusType);
 		builder.append(", workCompleted=");
 		builder.append(workCompleted);
+		builder.append(", summarized=");
+		builder.append(summarized);
 		builder.append("]");
 		return builder.toString();
 	}

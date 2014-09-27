@@ -48,6 +48,7 @@ public class UserWorkRate {
 	private UserWorkRateStatusType statusType;
     @Column(name = "work_completed")
     private Boolean workCompleted;
+    private Boolean summarized;    
 
 	public UserWorkRate() {
 		super();
@@ -140,5 +141,13 @@ public class UserWorkRate {
 
 	public void setRatingType(UserWorkRateRatingType ratingType) {
 		this.ratingType = ratingType;
+	}
+
+	public Boolean getSummarized() {
+		return summarized;
+	}
+
+	public void setSummarized(Boolean summarized) {
+		this.summarized = summarized;
 	}
 }

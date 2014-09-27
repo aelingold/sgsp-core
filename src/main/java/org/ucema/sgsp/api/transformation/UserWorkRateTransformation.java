@@ -47,11 +47,11 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
-		
-		if (userWorkRate.getRatingType() != null){
-			result.setRatingType(userWorkRate.getRatingType().name());	
+
+		if (userWorkRate.getRatingType() != null) {
+			result.setRatingType(userWorkRate.getRatingType().name());
 		}
-		
+
 		if (userWorkRate.getUser() != null) {
 			result.setUsername(userWorkRate.getUser().getEmail());
 			result.setUserFirstName(userWorkRate.getUser().getFirstName());
@@ -59,11 +59,15 @@ public class UserWorkRateTransformation {
 		}
 		result.setQuoteId(userWorkRate.getQuote().getId());
 		result.setQuoteUsername(userWorkRate.getQuote().getUser().getEmail());
-		result.setQuoteUserFirstName(userWorkRate.getQuote().getUser().getFirstName());
-		result.setQuoteUserLastName(userWorkRate.getQuote().getUser().getLastName());
-		result.setQuoteUserWorkAreaDescription(userWorkRate.getQuote().getOrder().getWorkArea().getDescription());
+		result.setQuoteUserFirstName(userWorkRate.getQuote().getUser()
+				.getFirstName());
+		result.setQuoteUserLastName(userWorkRate.getQuote().getUser()
+				.getLastName());
+		result.setQuoteUserWorkAreaDescription(userWorkRate.getQuote()
+				.getOrder().getWorkArea().getDescription());
 		result.setStatusType(userWorkRate.getStatusType().name());
 		result.setWorkCompleted(userWorkRate.getWorkCompleted());
+		result.setSummarized(userWorkRate.getSummarized());
 
 		return result;
 	}
@@ -73,18 +77,21 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
-				
-		if (userWorkRate.getRatingType() != null){
-			result.setRatingType(UserWorkRateRatingType.valueOf(userWorkRate.getRatingType()));	
+
+		if (userWorkRate.getRatingType() != null) {
+			result.setRatingType(UserWorkRateRatingType.valueOf(userWorkRate
+					.getRatingType()));
 		}
-		
+
 		if (userWorkRate.getUsername() != null) {
 			result.setUser(new User(userService.findByEmail(
 					userWorkRate.getUsername()).getId()));
 		}
 		result.setQuote(new Quote(userWorkRate.getQuoteId()));
-		result.setStatusType(UserWorkRateStatusType.valueOf(userWorkRate.getStatusType()));
+		result.setStatusType(UserWorkRateStatusType.valueOf(userWorkRate
+				.getStatusType()));
 		result.setWorkCompleted(userWorkRate.getWorkCompleted());
+		result.setSummarized(userWorkRate.getSummarized());
 
 		return result;
 	}
@@ -94,7 +101,8 @@ public class UserWorkRateTransformation {
 
 		userWorkRate.setComment(userWorkRateDTO.getComment());
 		userWorkRate.setStatusType(UserWorkRateStatusType.DONE);
-		userWorkRate.setRatingType(UserWorkRateRatingType.valueOf(userWorkRateDTO.getRatingType()));
+		userWorkRate.setRatingType(UserWorkRateRatingType
+				.valueOf(userWorkRateDTO.getRatingType()));
 		userWorkRate.setWorkCompleted(userWorkRateDTO.getWorkCompleted());
 		return userWorkRate;
 	}

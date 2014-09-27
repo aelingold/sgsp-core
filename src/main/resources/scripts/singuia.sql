@@ -2346,4 +2346,4 @@ INSERT INTO `quotes` (`id`,`amount`,`created_at`,`description`,`require_visit`,`
 INSERT INTO `quotes` (`id`,`amount`,`created_at`,`description`,`require_visit`,`status_type`,`updated_at`,`valid_date_until`,`currency_id`,`order_id`,`user_id`) VALUES (8,NULL,'2014-09-26 12:57:58',NULL,NULL,'PENDING','2014-09-26 12:57:58',NULL,NULL,4,4);
 INSERT INTO `quotes` (`id`,`amount`,`created_at`,`description`,`require_visit`,`status_type`,`updated_at`,`valid_date_until`,`currency_id`,`order_id`,`user_id`) VALUES (9,NULL,'2014-09-26 12:57:58',NULL,NULL,'PENDING','2014-09-26 12:57:58',NULL,NULL,4,5);
 
-INSERT INTO `user_work_rates` (`id`,`comment`,`created_at`,`rating_type`,`status_type`,`updated_at`,`work_completed`,`quote_id`,`user_id`) VALUES (1,'noooo','2014-09-26 12:27:50','POSITIVE','DONE','2014-09-26 12:29:00','1',1,6);
+INSERT INTO `user_work_rates` (`id`,`comment`,`created_at`,`rating_type`,`status_type`,`updated_at`,`work_completed`,`quote_id`,`user_id`,`summarized`) VALUES (1,'noooo','2014-09-26 12:27:50','POSITIVE','DONE','2014-09-26 12:29:00','1',1,6,0);
