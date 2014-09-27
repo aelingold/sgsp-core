@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.WorkAreaItemDTO;
 import org.ucema.sgsp.api.transformation.WorkAreaItemTransformation;
@@ -22,6 +23,7 @@ public class WorkAreaItemService {
 	private WorkAreaItemDAO workAreaItemDAO;
 
 	@Transactional
+	@Cacheable("workAreaItems")
 	public List<WorkAreaItemDTO> list() {
 		return workAreaItemTransformation.transformToApi(workAreaItemDAO
 				.findAll());

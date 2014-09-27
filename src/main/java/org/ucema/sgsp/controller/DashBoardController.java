@@ -72,10 +72,9 @@ public class DashBoardController {
 		String username = auth.getName();
 
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-		String countryCode = userDetails.getCountryCode();
 
 		Map<String, Object> dataMap = dashBoardDataService.data(username,
-				tabToShow, countryCode);
+				tabToShow, userDetails);
 		dataMap.forEach((k, v) -> {
 			model.addAttribute(k, v);
 		});

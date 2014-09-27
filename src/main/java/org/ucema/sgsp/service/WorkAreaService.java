@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.api.transformation.WorkAreaTransformation;
@@ -22,6 +23,7 @@ public class WorkAreaService {
 	private WorkAreaDAO workAreaDAO;
 
 	@Transactional
+	@Cacheable("workAreas")
 	public List<WorkAreaDTO> list() {
 		
 		List<WorkArea> workAreas = workAreaDAO.findAll();

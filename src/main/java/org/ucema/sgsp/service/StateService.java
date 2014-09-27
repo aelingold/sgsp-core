@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.CityDTO;
@@ -63,6 +64,7 @@ public class StateService {
 	}
 
 	@Transactional
+	@Cacheable("states")
 	public List<StateDTO> list() {
 		return list(new Sort(Sort.Direction.ASC, "description"));
 	}

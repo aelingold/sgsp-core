@@ -3,6 +3,7 @@ package org.ucema.sgsp.api.transformation;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
+import org.ucema.sgsp.security.model.CustomUserDetails;
 
 @Component
 public class DashBoardUserTransformation {
@@ -19,4 +20,17 @@ public class DashBoardUserTransformation {
 
 		return result;
 	}
+	
+	public DashBoardUserDTO transformToApi(CustomUserDetails user) {
+		DashBoardUserDTO result = new DashBoardUserDTO();
+
+		result.setEmail(user.getUsername());
+		result.setFirstName(user.getFirstName());
+		result.setPassword(user.getPassword());
+		result.setLastName(user.getLastName());
+		result.setTelephone(user.getTelephone());
+		result.setIsProfessional(user.isProfessional());
+
+		return result;
+	}	
 }

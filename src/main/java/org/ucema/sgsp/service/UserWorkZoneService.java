@@ -29,7 +29,7 @@ public class UserWorkZoneService {
 	}
 
 	@Transactional
-	public List<UserWorkZoneDTO> list(String username) {
+	public List<UserWorkZoneDTO> findByUser_Email(String username) {
 		return userWorkZoneTransformation.transformToApi(userWorkZoneDAO
 				.findByUser_Email(username));
 	}

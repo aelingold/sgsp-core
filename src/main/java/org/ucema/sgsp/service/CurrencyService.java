@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.CurrencyDTO;
 import org.ucema.sgsp.api.transformation.CurrencyTransformation;
@@ -51,6 +52,7 @@ public class CurrencyService {
 	}
 
 	@Transactional
+	@Cacheable("currencies")
 	public CurrencyDTO findByCountryCode(String code) {
 		Currency currency = currencyDAO.findByCountry_Code(code);
 		if (currency == null) {

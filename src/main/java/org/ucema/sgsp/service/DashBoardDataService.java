@@ -22,6 +22,7 @@ import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
+import org.ucema.sgsp.security.model.CustomUserDetails;
 
 @Service
 public class DashBoardDataService {
@@ -55,11 +56,12 @@ public class DashBoardDataService {
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
-			String countryCode) {
+			CustomUserDetails userDetails) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		DashBoardUserDTO user = dashBoardUserService.getDashBoardUser(username);
+		DashBoardUserDTO user = dashBoardUserService
+				.getDashBoardUser(userDetails);
 
 		map.put("user", user);
 
@@ -75,7 +77,7 @@ public class DashBoardDataService {
 
 		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
 
-		map.put("quotes", quotes(username,allQuotes));
+		map.put("quotes", quotes(username, allQuotes));
 
 		map.put("quote", new QuoteDTO());
 
@@ -90,6 +92,7 @@ public class DashBoardDataService {
 
 		map.put("workAreaItems", workAreaItemService.list());
 
+		String countryCode = userDetails.getCountryCode();
 		map.put("currency", currencyService.findByCountryCode(countryCode));
 
 		List<CityDTO> cities = cityService.list();
@@ -99,12 +102,10 @@ public class DashBoardDataService {
 		map.put("states", states);
 
 		DashBoardConfigDTO dashBoardConfig = new DashBoardConfigDTO();
-		userWorkZoneService.list(username).forEach(uwz -> {
-			dashBoardConfig.getCityCodes().add(uwz.getCityCode());
-		});
-
+		if (userDetails.getCityCodes() != null) {
+			dashBoardConfig.getCityCodes().addAll(userDetails.getCityCodes());
+		}
 		map.put("config", dashBoardConfig);
-		map.put("configMap", stateService.getConfigMap(states, cities));
 
 		List<Connection<?>> connections = connectionRepository
 				.findConnections("facebook");
