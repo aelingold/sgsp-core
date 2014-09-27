@@ -32,6 +32,8 @@ public class CachingConfig extends CachingConfigurerSupport {
     private CacheConfiguration buildCacheConfiguration(String name) {
     	CacheConfiguration cacheConfiguration = new CacheConfiguration();
         cacheConfiguration.setName(name);
+        cacheConfiguration.setTimeToIdleSeconds(300);
+        cacheConfiguration.setTimeToLiveSeconds(600);
         cacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
         cacheConfiguration.setMaxEntriesLocalHeap(1000);
 		return cacheConfiguration;
