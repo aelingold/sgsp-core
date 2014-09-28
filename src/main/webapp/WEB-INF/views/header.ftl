@@ -21,7 +21,7 @@
                 <a href="#page-top"></a>
             </li>
             <li>
-                <a class="page-scroll" href="#contact">Contacto</a>
+                <a class="page-scroll" href="#" data-toggle="modal" data-target="#contactModal">Contacto</a>
             </li>            
             <@security.authorize access="isAuthenticated()">
             	<li>

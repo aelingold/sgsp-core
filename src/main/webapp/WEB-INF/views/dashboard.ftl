@@ -46,9 +46,12 @@
     <!-- Services Section -->
     <section id="services" style="margin-top: 120px;">
         <div class="container no-top-border-radius">
-            <div class="row">
-            	<div class="col-md-12">
-            		<h1>Panel de control</h1>
+            <div class="row" style="margin-bottom: 15px;">
+            	<div class="col-md-6">
+            		<h1 class="pull-left" style="margin: 0px;">Panel de control</h1>
+            	</div>
+            	<div class="col-md-6">            		
+            		<a href="<@c.url value='/'/>" class="button btn btn-info pull-right" style="margin-top: 3px;">Pedir nuevo presupuesto</a>
             	</div>
             </div>
             <div class="row">
@@ -173,10 +176,10 @@
 	            		<div class="row">
 		            		<div class="btn-group btn-group-justified">
 		            		  <div class="btn-group">
-							    <button type="button" class="btn btn-default active">Pendientes</button>
+							    <button type="button" class="btn btn-default" data-show-class="user-work-rate-PENDING">Pendientes</button>
 							  </div>
 							  <div class="btn-group">
-							    <button type="button" class="btn btn-default">Hechas</button>
+							    <button type="button" class="btn btn-default" data-show-class="user-work-rate-DONE">Hechas</button>
 							  </div>
 							  <div class="btn-group">
 							    <button type="button" class="btn btn-default">Recibidas</button>
@@ -294,10 +297,10 @@
             			<div class="row">
 		            		<div class="btn-group btn-group-justified">
 							  <div class="btn-group">
-							    <button type="button" class="btn btn-default active">En curso</button>
+							    <button type="button" class="btn btn-default active" data-show-class="order-IN_PROGRESS">En curso</button>
 							  </div>
 							  <div class="btn-group">
-							    <button type="button" class="btn btn-default">Finalizados</button>
+							    <button type="button" class="btn btn-default" data-show-class="order-FINISHED">Finalizados</button>
 							  </div>
 							</div>
 						</div>
@@ -362,9 +365,11 @@
 											<h5>Presupuestos</h5>
 										</div>
 										<ul class="response-list">
+											<#assign hasReplies=false />										
 											<#list quotes as quote>
-												<#if quote.orderId==order.id && (quote.statusType="REPLIED" || quote.statusType="ACCEPTED" || quote.statusType="DONE")>				
-											  		<li class="col-md-12">
+												<#if quote.orderId==order.id && (quote.statusType="REPLIED" || quote.statusType="ACCEPTED" || quote.statusType="DONE")>
+													<#assign hasReplies=true />				
+											  		<li class="budget-response col-md-12">
 											  			<div class="col-md-3">
 											  				${quote.firstName} ${quote.lastName} (${userWorkRatesQtyMap[quote.username]})
 											  			</div>
@@ -389,9 +394,9 @@
 												  			<#elseif quote.statusType="ACCEPTED">
 												  				Aceptado(Pendiente calificacion)
 												  			</#if>
-											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
+											  				<a class="button btn btn-xs btn-default pull-right make-question" style="margin-right:10px;cursor:pointer;">Realizar pregunta</a>							  				
 											  			</div>
-											  			<form name="questionsForm${quote_index}" action="<@c.url value='/dashboard/questions' />" method="POST" enctype="utf8">
+											  			<form name="questionsForm${quote_index}" action="<@c.url value='/dashboard/questions' />" method="POST" enctype="utf8" style="display:none;">
 															<@spring.bind "quoteQuestion" />
 											  				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 											  				<input type="hidden" name="quoteId" value="${quote.id}">
@@ -410,9 +415,16 @@
 												  				<a href="javascript:document.questionsForm${quote_index}.submit()" class="button btn btn-xs btn-info pull-right" style="margin-top:5px;">Enviar mensaje</a>
 												  			</div>												  			
 													  	</form>
-											  		</li>
+											  		</li>											  		
 											  	</#if>
 											</#list>
+											<#if hasReplies == false>
+												<li class="budget-response col-md-12">
+										  			<div class="col-md-12">
+										  				Aún no se han recibido presupuestos.
+										  			</div>
+										  		</li>
+											</#if>											
 							  			</ul>
 							  		</div>
 						  		</div>

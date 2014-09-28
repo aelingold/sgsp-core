@@ -654,68 +654,68 @@ aside.clients img {
     margin: 50px auto;
 }
 
-section#contact {
+.container.contact {
     background-color: #222;
     background-image: url(../img/map-image.png);
     background-position: center;
     background-repeat: no-repeat;
 }
 
-section#contact .section-heading {
+.container.contact .section-heading {
     color: #fff;
 }
 
-section#contact .form-group {
+.container.contact .form-group {
     margin-bottom: 25px;
 }
 
-section#contact .form-group input,
-section#contact .form-group textarea {
+.container.contact .form-group input,
+.container.contact .form-group textarea {
     padding: 20px;
 }
 
-section#contact .form-group input.form-control {
+.container.contact .form-group input.form-control {
     height: auto;
 }
 
-section#contact .form-group textarea.form-control {
+.container.contact .form-group textarea.form-control {
     height: 236px;
 }
 
-section#contact .form-control:focus {
+.container.contact .form-control:focus {
     border-color: #fed136;
     box-shadow: none;
 }
 
-section#contact::-webkit-input-placeholder {
+.container.ontact::-webkit-input-placeholder {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     color: #bbb;
 }
 
-section#contact:-moz-placeholder {
+.container.contact:-moz-placeholder {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     color: #bbb;
 }
 
-section#contact::-moz-placeholder {
+.container.contact::-moz-placeholder {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     color: #bbb;
 }
 
-section#contact:-ms-input-placeholder {
+.container.contact:-ms-input-placeholder {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     color: #bbb;
 }
 
-section#contact .text-danger {
+.container.contact .text-danger {
     color: #e74c3c;
 }
 

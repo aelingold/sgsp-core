@@ -49,3 +49,27 @@ $(".select-all-cities").on("click", function(){
 	var cities = $($(this).parents(".row")[0]).find("input[type='checkbox']");
 	$(cities).attr("checked",true);	
 });
+
+$(".btn-group .btn").on("click", function(){
+	$(this).parent().parent().find(".btn").removeClass("active");
+	$(this).addClass("active");	
+});
+
+$("#calificaciones-panel .btn-group .btn").on("click", function(){
+	var showClass = $(this).attr("data-show-class");
+	$("#calificaciones-panel .panel-group .panel").hide();
+	$("#calificaciones-panel .panel-group .panel."+showClass).show();
+});
+$("#calificaciones-panel .btn-group .btn:first").click();
+
+$("#pedidos-panel .btn-group .btn").on("click", function(){
+	var showClass = $(this).attr("data-show-class");
+	$("#pedidos-panel .panel").parent().hide();
+	$("#pedidos-panel .panel."+showClass).parent().show();
+});
+$("#pedidos-panel .btn-group .btn:first").click();
+
+
+$(".make-question").on("click", function(){
+	$(this).parents(".budget-response").find("form").show();
+});
