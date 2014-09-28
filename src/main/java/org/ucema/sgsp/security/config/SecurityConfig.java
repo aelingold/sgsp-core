@@ -90,7 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/cities/**", "/states/**", "/countries/**",
 						"/currencies/**", "/quotes/**", "/quote-questions/**",
 						"/user-work-zones/**", "/user-notifies/**",
-						"/rate-plans/**", "/favicon.ico", "/")
+						"/rate-plans/**", "/favicon.ico", "/",
+						"/contact-messages/**")
 				.permitAll()
 				// The rest of the our application is protected.
 				.antMatchers("/**")

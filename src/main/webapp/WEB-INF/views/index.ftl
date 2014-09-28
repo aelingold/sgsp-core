@@ -112,10 +112,6 @@
     <script src="<@c.url value='/static/new/js/classie.js'/>"></script>
     <script src="<@c.url value='/static/new/js/cbpAnimatedHeader.js'/>"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="<@c.url value='/static/new/js/jqBootstrapValidation.js'/>"></script>
-    <script src="<@c.url value='/static/new/js/contact_me.js'/>"></script>
-
 	<script>
 		basePath="<@c.url value='/' />";
 	</script>
