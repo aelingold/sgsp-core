@@ -20,6 +20,8 @@ import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
+import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
+import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
@@ -56,6 +58,8 @@ public class DashBoardDataService {
 	private Environment env;
 	@Autowired
 	private UserWorkRateSummarizeService userWorkRateSummarizeService;
+	@Autowired
+	private QuoteQuestionReplyService quoteQuestionReplyService;
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
@@ -80,11 +84,17 @@ public class DashBoardDataService {
 
 		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
 		Set<String> usernames = allQuotes.stream().map(aq -> aq.getUsername())
-				.collect(Collectors.toSet());		
+				.collect(Collectors.toSet());
 
 		map.put("quotes", quotes(username, allQuotes));
 
 		map.put("quote", new QuoteDTO());
+
+		map.put("quoteQuestion", new QuoteQuestionDTO());
+
+		List<QuoteQuestionReplyDTO> quoteQuestionReplies = quoteQuestionReplyService
+				.findByQuoteQuestion_Quote_User_Email(username);
+		map.put("quoteQuestionReplies", quoteQuestionReplies);
 
 		map.put("userWorkRatesQtyMap", userWorkRateSummarizeService
 				.userWorkRateSummarizesMap(usernames));

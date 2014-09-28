@@ -1,4 +1,5 @@
 <#assign c=JspTaglibs["http://java.sun.com/jsp/jstl/core"]/>
+<#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,16 +56,37 @@
             		<ul id="dash-menu" class="nav nav-pills nav-stacked">
 				      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
 				      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
-				      <li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
+				      <#if user.isProfessional> 
+				      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
+				      </#if>	
 				      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
 				      <#if user.isProfessional> 
 				      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 				      </#if>
 				      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
+					  <@security.authorize ifAllGranted="ROLE_ADMIN">
+        				<li id="administracion-option"><a href="<@c.url value='/dashboard/admin'/>">Administracion</a></li>
+    				  </@security.authorize>				      
 				    </ul>
             	</div>
             	
             	<div class="col-md-9">
+            		
+            		<div id="administracion-panel" class="col-md-12 dashboard-panel">
+						<div class="row">
+							<div class="panel panel-default">
+					  			<div class="panel-heading">
+						    		<h3 class="panel-title">
+						    			Administrar usuarios
+						    		</h3>
+						  		</div>
+						  		<div class="panel-body">
+						  			<div class="col-lg-6">
+						  			</div>
+						  		</div>
+						  	</div>
+						</div>   		
+            		</div>            		
             		
             		<div id="redessociales-panel" class="col-md-12 dashboard-panel">
 						<div class="row">
@@ -369,24 +391,25 @@
 												  			</#if>
 											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-right:10px;">Realizar pregunta</a>							  				
 											  			</div>
-											  			<ul class="messages-list">
-											  				<li class="col-md-12">
-											  					<div class="question-message message">
-												  					<div class="user-name-message">Nombre usuario 1</div>
-												  					<div class="message-content">asd asd a asd asd asd asdas ads adas</div>
-												  				</div>
-											  				</li>
-											  				<li class="col-md-12">
-											  					<div class="response-message message">
-												  					<div class="user-name-message">Nombre usuario 2</div>
-												  					<div class="message-content">ads asda sd asd asd asd asd adas</div>
-											  					</div>
-											  				</li>
-											  			</ul>
-											  			<div class="col-md-12" style="margin-top:8px;">
-											  				<textarea class="form-control"></textarea>
-											  				<a href="#" class="button btn btn-xs btn-info pull-right" style="margin-top:5px;">Enviar mensaje</a>
-											  			</div>
+											  			<form name="questionsForm${quote_index}" action="<@c.url value='/dashboard/questions' />" method="POST" enctype="utf8">
+															<@spring.bind "quoteQuestion" />
+											  				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+											  				<input type="hidden" name="quoteId" value="${quote.id}">
+												  			<ul class="messages-list">
+													  				<#list quote.quoteQuestions as quoteQuestion>
+														  				<li class="col-md-12">
+														  					<div class="question-message message">
+															  					<div class="user-name-message">${quoteQuestion.description}</div>
+															  					<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""}</div>
+															  				</div>
+														  				</li>
+														  			</#list>
+												  			</ul>
+												  			<div class="col-md-12" style="margin-top:8px;">
+												  				<textarea name="description" class="form-control"></textarea>
+												  				<a href="javascript:document.questionsForm${quote_index}.submit()" class="button btn btn-xs btn-info pull-right" style="margin-top:5px;">Enviar mensaje</a>
+												  			</div>												  			
+													  	</form>
 											  		</li>
 											  	</#if>
 											</#list>
@@ -628,7 +651,7 @@
 					                       <#if quote.amount??>
 											   <div class="row">
 							                   		<div class="form-group col-md-12">
-							                        	<label>Costo del trabajo:</label> ${(quote.amount.currency.symbol)!""} ${(quote.amount.currency.amount)!""}
+							                        	<label>Costo del trabajo:</label> ${(quote.amount.currency.symbol)!""} ${(quote.amount.amount)!""}
 							                        </div>
 						                       </div>
 						                   </#if>

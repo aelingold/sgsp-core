@@ -25,12 +25,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
+import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.service.DashBoardDataService;
 import org.ucema.sgsp.service.DashBoardRatingService;
 import org.ucema.sgsp.service.DashBoardUserService;
+import org.ucema.sgsp.service.QuoteQuestionService;
 import org.ucema.sgsp.service.QuoteService;
 import org.ucema.sgsp.service.UserService;
 import org.ucema.sgsp.service.UserWorkRateService;
@@ -56,6 +58,8 @@ public class DashBoardController {
 	private DashBoardRatingService dashBoardRatingService;
 	@Autowired
 	private DashBoardDataService dashBoardDataService;
+	@Autowired
+	private QuoteQuestionService quoteQuestionService;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
@@ -136,6 +140,23 @@ public class DashBoardController {
 
 		return "redirect:/dashboard/ratings";
 	}
+	
+	@RequestMapping(value = "/dashboard/questions", method = RequestMethod.POST)
+	public String questions(
+			@Valid @ModelAttribute("quoteQuestion") QuoteQuestionDTO quoteQuestion,
+			BindingResult result, WebRequest request, Model model) {
+
+		model.addAttribute("tabToShow", "requests");
+
+		if (result.hasErrors()) {
+			LOGGER.debug("Validation errors found. Rendering form view.");
+			return "redirect:/dashboard/requests";
+		}
+
+		quoteQuestionService.save(quoteQuestion);
+
+		return "redirect:/dashboard/requests";
+	}	
 
 	@RequestMapping(value = "/dashboard/requests/accepted/{quoteId}", method = RequestMethod.POST)
 	public String budgetsAccepted(@PathVariable Long quoteId, Model model) {

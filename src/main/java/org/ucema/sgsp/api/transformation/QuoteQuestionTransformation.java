@@ -2,7 +2,6 @@ package org.ucema.sgsp.api.transformation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,12 +44,11 @@ public class QuoteQuestionTransformation {
 		result.setDescription(quoteQuestion.getDescription());
 		result.setQuoteId(quoteQuestion.getQuote().getId());
 
-		if (quoteQuestion.getQuoteQuestionReplies() != null) {
-			result.setQuoteQuestionReplies(quoteQuestionReplyTransformation
-					.transformToApi(quoteQuestion.getQuoteQuestionReplies()));
-			result.setQuoteQuestionReplyIds(quoteQuestion
-					.getQuoteQuestionReplies().stream().map(qq -> qq.getId())
-					.collect(Collectors.toList()));
+		if (quoteQuestion.getQuoteQuestionReply() != null) {
+			result.setQuoteQuestionReply(quoteQuestionReplyTransformation
+					.transformToApi(quoteQuestion.getQuoteQuestionReply()));
+			result.setQuoteQuestionReplyId(quoteQuestion
+					.getQuoteQuestionReply().getId());
 		}
 
 		return result;
@@ -63,9 +61,9 @@ public class QuoteQuestionTransformation {
 		result.setDescription(quoteQuestion.getDescription());
 		result.setQuote(new Quote(quoteQuestion.getQuoteId()));
 
-		if (quoteQuestion.getQuoteQuestionReplies() != null) {
-			result.setQuoteQuestionReplies(quoteQuestionReplyTransformation
-					.transformToModel(quoteQuestion.getQuoteQuestionReplies()));
+		if (quoteQuestion.getQuoteQuestionReply() != null) {
+			result.setQuoteQuestionReply(quoteQuestionReplyTransformation
+					.transformToModel(quoteQuestion.getQuoteQuestionReply()));
 		}
 
 		return result;

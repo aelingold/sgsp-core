@@ -6,8 +6,11 @@ public class QuoteQuestionReplyDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private Long quoteId;
 	private Long quoteQuestionId;
+	private String quoteQuestionDescription;
 	private String description;
+	private String statusType;
 
 	public QuoteQuestionReplyDTO() {
 		super();
@@ -66,15 +69,45 @@ public class QuoteQuestionReplyDTO implements Serializable {
 		this.quoteQuestionId = quoteQuestionId;
 	}
 
+	public String getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
+
+	public String getQuoteQuestionDescription() {
+		return quoteQuestionDescription;
+	}
+
+	public void setQuoteQuestionDescription(String quoteQuestionDescription) {
+		this.quoteQuestionDescription = quoteQuestionDescription;
+	}
+
+	public Long getQuoteId() {
+		return quoteId;
+	}
+
+	public void setQuoteId(Long quoteId) {
+		this.quoteId = quoteId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("QuoteQuestionReplyDTO [id=");
 		builder.append(id);
+		builder.append(", quoteId=");
+		builder.append(quoteId);
 		builder.append(", quoteQuestionId=");
 		builder.append(quoteQuestionId);
+		builder.append(", quoteQuestionDescription=");
+		builder.append(quoteQuestionDescription);
 		builder.append(", description=");
 		builder.append(description);
+		builder.append(", statusType=");
+		builder.append(statusType);
 		builder.append("]");
 		return builder.toString();
 	}

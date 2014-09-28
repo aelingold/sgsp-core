@@ -29,12 +29,14 @@ public class UserWorkRateSummarizeService {
 
 		Map<String, Long> result = new HashMap<String, Long>();
 
-		List<UserWorkRateSummarizeDTO> userWorkRateSummarizes = findByUser_Email(usernames);
-		userWorkRateSummarizes.forEach(uwrs -> {
-			result.put(uwrs.getUsername(),
-					uwrs.getNegativeQuantity() + uwrs.getNeutralQuantity()
-							+ uwrs.getPositiveQuantity());
-		});
+		if (usernames != null && usernames.size() > 0) {
+			List<UserWorkRateSummarizeDTO> userWorkRateSummarizes = findByUser_Email(usernames);
+			userWorkRateSummarizes.forEach(uwrs -> {
+				result.put(uwrs.getUsername(),
+						uwrs.getNegativeQuantity() + uwrs.getNeutralQuantity()
+								+ uwrs.getPositiveQuantity());
+			});
+		}
 
 		return result;
 	}

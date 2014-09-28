@@ -1,7 +1,6 @@
 package org.ucema.sgsp.persistence.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,9 +31,9 @@ public class QuoteQuestion {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
-	@OneToMany(mappedBy = "quoteQuestion",orphanRemoval=true)
+	@OneToOne(mappedBy = "quoteQuestion",orphanRemoval=true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private List<QuoteQuestionReply> quoteQuestionReplies;		
+	private QuoteQuestionReply quoteQuestionReply;		
 
 	public QuoteQuestion(Long id) {
 		super();
@@ -83,12 +82,11 @@ public class QuoteQuestion {
 		this.createdAt = createdAt;
 	}
 
-	public List<QuoteQuestionReply> getQuoteQuestionReplies() {
-		return quoteQuestionReplies;
+	public QuoteQuestionReply getQuoteQuestionReply() {
+		return quoteQuestionReply;
 	}
 
-	public void setQuoteQuestionReplies(
-			List<QuoteQuestionReply> quoteQuestionReplies) {
-		this.quoteQuestionReplies = quoteQuestionReplies;
+	public void setQuoteQuestionReply(QuoteQuestionReply quoteQuestionReply) {
+		this.quoteQuestionReply = quoteQuestionReply;
 	}
 }

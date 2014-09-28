@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +30,9 @@ public class QuoteQuestionReply {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_type")
+	private QuoteQuestionReplyStatusType statusType;	
 
 	public QuoteQuestionReply(Long id) {
 		super();
@@ -74,5 +79,13 @@ public class QuoteQuestionReply {
 
 	public void setQuoteQuestion(QuoteQuestion quoteQuestion) {
 		this.quoteQuestion = quoteQuestion;
+	}
+
+	public QuoteQuestionReplyStatusType getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(QuoteQuestionReplyStatusType statusType) {
+		this.statusType = statusType;
 	}
 }

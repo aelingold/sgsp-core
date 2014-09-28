@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
 import org.ucema.sgsp.persistence.model.QuoteQuestion;
 import org.ucema.sgsp.persistence.model.QuoteQuestionReply;
+import org.ucema.sgsp.persistence.model.QuoteQuestionReplyStatusType;
 
 @Component
 public class QuoteQuestionReplyTransformation {
@@ -40,6 +41,9 @@ public class QuoteQuestionReplyTransformation {
 		result.setId(quoteQuestionReply.getId());
 		result.setDescription(quoteQuestionReply.getDescription());
 		result.setQuoteQuestionId(quoteQuestionReply.getQuoteQuestion().getId());
+		result.setStatusType(quoteQuestionReply.getStatusType().name());
+		result.setQuoteId(quoteQuestionReply.getQuoteQuestion().getQuote().getId());
+		result.setQuoteQuestionDescription(quoteQuestionReply.getQuoteQuestion().getDescription());
 
 		return result;
 	}
@@ -52,6 +56,8 @@ public class QuoteQuestionReplyTransformation {
 		result.setDescription(quoteQuestionReply.getDescription());
 		result.setQuoteQuestion(new QuoteQuestion(quoteQuestionReply
 				.getQuoteQuestionId()));
+		result.setStatusType(QuoteQuestionReplyStatusType
+				.valueOf(quoteQuestionReply.getStatusType()));
 
 		return result;
 	}

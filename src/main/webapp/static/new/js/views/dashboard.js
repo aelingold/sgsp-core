@@ -28,6 +28,10 @@ switch(tabToShow){
 	case "socialmedia":
 		showPanel("#redessociales-panel");
 		$("#redessociales-option").addClass("active");		
+		break;
+	case "admin":
+		showPanel("#administracion-panel");
+		$("#administracion-option").addClass("active");		
 		break;		
 }
 

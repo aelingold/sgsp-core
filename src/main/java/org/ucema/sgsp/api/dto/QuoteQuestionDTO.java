@@ -1,8 +1,6 @@
 package org.ucema.sgsp.api.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuoteQuestionDTO implements Serializable {
 
@@ -10,8 +8,8 @@ public class QuoteQuestionDTO implements Serializable {
 	private Long id;
 	private Long quoteId;
 	private String description;
-	private List<QuoteQuestionReplyDTO> quoteQuestionReplies = new ArrayList<QuoteQuestionReplyDTO>();
-	private List<Long> quoteQuestionReplyIds = new ArrayList<Long>();
+	private QuoteQuestionReplyDTO quoteQuestionReply;
+	private Long quoteQuestionReplyId;
 
 	public QuoteQuestionDTO() {
 		super();
@@ -70,21 +68,20 @@ public class QuoteQuestionDTO implements Serializable {
 		this.quoteId = quoteId;
 	}
 
-	public List<QuoteQuestionReplyDTO> getQuoteQuestionReplies() {
-		return quoteQuestionReplies;
+	public QuoteQuestionReplyDTO getQuoteQuestionReply() {
+		return quoteQuestionReply;
 	}
 
-	public void setQuoteQuestionReplies(
-			List<QuoteQuestionReplyDTO> quoteQuestionReplies) {
-		this.quoteQuestionReplies = quoteQuestionReplies;
+	public void setQuoteQuestionReply(QuoteQuestionReplyDTO quoteQuestionReply) {
+		this.quoteQuestionReply = quoteQuestionReply;
 	}
 
-	public List<Long> getQuoteQuestionReplyIds() {
-		return quoteQuestionReplyIds;
+	public Long getQuoteQuestionReplyId() {
+		return quoteQuestionReplyId;
 	}
 
-	public void setQuoteQuestionReplyIds(List<Long> quoteQuestionReplyIds) {
-		this.quoteQuestionReplyIds = quoteQuestionReplyIds;
+	public void setQuoteQuestionReplyId(Long quoteQuestionReplyId) {
+		this.quoteQuestionReplyId = quoteQuestionReplyId;
 	}
 
 	@Override
@@ -96,10 +93,10 @@ public class QuoteQuestionDTO implements Serializable {
 		builder.append(quoteId);
 		builder.append(", description=");
 		builder.append(description);
-		builder.append(", quoteQuestionReplies=");
-		builder.append(quoteQuestionReplies);
-		builder.append(", quoteQuestionReplyIds=");
-		builder.append(quoteQuestionReplyIds);
+		builder.append(", quoteQuestionReply=");
+		builder.append(quoteQuestionReply);
+		builder.append(", quoteQuestionReplyId=");
+		builder.append(quoteQuestionReplyId);
 		builder.append("]");
 		return builder.toString();
 	}
