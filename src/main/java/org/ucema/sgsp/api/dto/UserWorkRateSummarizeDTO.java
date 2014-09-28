@@ -6,6 +6,7 @@ public class UserWorkRateSummarizeDTO {
 
 	private Long id;
 	private Long userId;
+	private String username;
 	private Long positiveQuantity;
 	private Long negativeQuantity;
 	private Long neutralQuantity;
@@ -30,6 +31,7 @@ public class UserWorkRateSummarizeDTO {
 		result.setNeutralQuantity(neutralQuantity);
 		result.setCreatedAt(createdAt);
 		result.setUpdatedAt(updatedAt);
+		result.setUsername(username);
 
 		return result;
 	}
@@ -115,6 +117,14 @@ public class UserWorkRateSummarizeDTO {
 		this.negativeQuantity = negativeQuantity;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -122,6 +132,8 @@ public class UserWorkRateSummarizeDTO {
 		builder.append(id);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append(", positiveQuantity=");
 		builder.append(positiveQuantity);
 		builder.append(", negativeQuantity=");

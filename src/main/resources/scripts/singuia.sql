@@ -2031,6 +2031,11 @@ INSERT INTO `user_rate_plans` (`id`,`created_at`,`is_enabled`,`updated_at`,`rate
 INSERT INTO `user_rate_plans` (`id`,`created_at`,`is_enabled`,`updated_at`,`rate_plan_id`,`user_id`) VALUES (2,'2014-09-25 17:25:47',1,'2014-09-25 17:25:47',1,4);
 INSERT INTO `user_rate_plans` (`id`,`created_at`,`is_enabled`,`updated_at`,`rate_plan_id`,`user_id`) VALUES (3,'2014-09-25 17:26:10',1,'2014-09-25 17:26:10',1,5);
 
+INSERT INTO `user_work_rate_summarizes` (`id`,`created_at`,`negative_quantity`,`neutral_quantity`,`positive_quantity`,`updated_at`,`user_id`) VALUES (1,'2014-09-27 15:44:18',0,0,0,'2014-09-27 15:44:18',3);
+INSERT INTO `user_work_rate_summarizes` (`id`,`created_at`,`negative_quantity`,`neutral_quantity`,`positive_quantity`,`updated_at`,`user_id`) VALUES (2,'2014-09-27 15:44:18',0,0,0,'2014-09-27 15:44:18',4);
+INSERT INTO `user_work_rate_summarizes` (`id`,`created_at`,`negative_quantity`,`neutral_quantity`,`positive_quantity`,`updated_at`,`user_id`) VALUES (3,'2014-09-27 15:44:18',0,0,0,'2014-09-27 15:44:18',5);
+
+
 INSERT INTO `user_work_zones` (`id`,`created_at`,`city_id`,`user_id`) VALUES (1,'2014-09-27 14:16:24',28,5);
 INSERT INTO `user_work_zones` (`id`,`created_at`,`city_id`,`user_id`) VALUES (2,'2014-09-27 14:16:24',67,5);
 INSERT INTO `user_work_zones` (`id`,`created_at`,`city_id`,`user_id`) VALUES (3,'2014-09-27 14:16:24',106,5);

@@ -49,6 +49,7 @@ public class UserWorkRateSummarizeTransformation {
 		result.setNeutralQuantity(userWorkRateSummarizes.getNeutralQuantity());
 		result.setPositiveQuantity(userWorkRateSummarizes.getPositiveQuantity());
 		result.setUserId(userWorkRateSummarizes.getUser().getId());
+		result.setUsername(userWorkRateSummarizes.getUser().getEmail());
 
 		return result;
 	}

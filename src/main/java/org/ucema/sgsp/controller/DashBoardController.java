@@ -153,6 +153,7 @@ public class DashBoardController {
 		userWorkRate.setQuoteId(quoteId);
 		userWorkRate.setUsername(username);
 		userWorkRate.setStatusType(UserWorkRateStatusType.PENDING.name());
+		userWorkRate.setSummarized(false);
 		userWorkRateService.saveOrUpdate(userWorkRate);
 
 		return "redirect:/dashboard/requests";

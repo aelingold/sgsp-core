@@ -28,6 +28,7 @@ import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.persistence.model.RatePlan;
 import org.ucema.sgsp.persistence.model.RatePlanPackageType;
 import org.ucema.sgsp.persistence.model.UserRatePlan;
+import org.ucema.sgsp.persistence.model.UserWorkRateSummarize;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
@@ -288,6 +289,7 @@ public class RepositoryUserService implements UserService {
 
 		if (userAccountData.getUserType().equals(UserTypeDTO.professional)) {
 			user.userRatePlan(buildUserRatePlan(userAccountData));
+			user.userWorkRateSummarize(buildUserWorkRateSummarize(userAccountData));
 		}
 
 		User registered = user.build();
@@ -295,6 +297,18 @@ public class RepositoryUserService implements UserService {
 		LOGGER.debug("Persisting new user with information: {}", registered);
 
 		return repository.save(registered);
+	}
+
+	private UserWorkRateSummarize buildUserWorkRateSummarize(
+			RegistrationDTO userAccountData) {
+
+		UserWorkRateSummarize result = new UserWorkRateSummarize();
+		
+		result.setNegativeQuantity(0L);
+		result.setPositiveQuantity(0L);
+		result.setNeutralQuantity(0L);
+		
+		return result;
 	}
 
 	private UserRatePlan buildUserRatePlan(RegistrationDTO userAccountData) {

@@ -21,6 +21,7 @@ import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.persistence.model.UserRatePlan;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
+import org.ucema.sgsp.persistence.model.UserWorkRateSummarize;
 import org.ucema.sgsp.persistence.model.UserWorkZone;
 import org.ucema.sgsp.persistence.model.WorkArea;
 
@@ -56,7 +57,7 @@ public class User extends BaseEntity<Long> {
 
 	@Column(name = "is_enabled")
 	private Boolean isEnabled;
-	
+
 	@OneToOne
 	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_country_user"))
 	private Country country;
@@ -64,21 +65,25 @@ public class User extends BaseEntity<Long> {
 	@ManyToMany
 	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "work_area_id"))
 	private List<WorkArea> workAreas;
-	
+
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
-	
+
 	@Column(name = "is_professional")
 	private boolean isProfessional;
-	
+
 	@OneToMany
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
 	private List<UserWorkZone> userWorkZones;
-	
-	@OneToOne(mappedBy = "user",orphanRemoval=true)
+
+	@OneToOne(mappedBy = "user", orphanRemoval = true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private UserRatePlan userRatePlan;
+
+	@OneToOne(mappedBy = "user", orphanRemoval = true)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private UserWorkRateSummarize userWorkRateSummarize;
 
 	public User() {
 	}
@@ -213,6 +218,15 @@ public class User extends BaseEntity<Long> {
 		this.isProfessional = isProfessional;
 	}
 
+	public UserWorkRateSummarize getUserWorkRateSummarize() {
+		return userWorkRateSummarize;
+	}
+
+	public void setUserWorkRateSummarize(
+			UserWorkRateSummarize userWorkRateSummarize) {
+		this.userWorkRateSummarize = userWorkRateSummarize;
+	}
+
 	public static class Builder {
 
 		private User user;
@@ -250,8 +264,8 @@ public class User extends BaseEntity<Long> {
 		public Builder country(Country country) {
 			user.country = country;
 			return this;
-		}		
-		
+		}
+
 		public Builder telephone(String telephone) {
 			user.telephone = telephone;
 			return this;
@@ -276,21 +290,30 @@ public class User extends BaseEntity<Long> {
 			user.userWorkRates = userWorkRates;
 			return this;
 		}
-		
+
 		public Builder userWorkZones(List<UserWorkZone> userWorkZones) {
 			user.userWorkZones = userWorkZones;
 			return this;
 		}
-		
+
 		public Builder userRatePlan(UserRatePlan userRatePlan) {
 			user.userRatePlan = userRatePlan;
 			return this;
-		}		
+		}
+
+		public Builder userWorkRateSummarize(
+				UserWorkRateSummarize userWorkRateSummarize) {
+			user.userWorkRateSummarize = userWorkRateSummarize;
+			return this;
+		}
 
 		public User build() {
-			if (user.userRatePlan != null){
+			if (user.userRatePlan != null) {
 				user.userRatePlan.setUser(user);
 			}
+			if (user.userWorkRateSummarize != null) {
+				user.userWorkRateSummarize.setUser(user);
+			}			
 			return user;
 		}
 	}

@@ -55,10 +55,10 @@ public class DashBoardRatingService {
 			List<QuoteDTO> quotes = quoteService.findByOrder_Id(quoteDTO
 					.getOrderId());
 			quotes = quotes.stream()
-					.filter(q -> !q.getId().equals(quoteDTO.getOrderId()))
+					.filter(q -> !q.getId().equals(quoteDTO.getId()))
 					.collect(Collectors.toList());
 
-			quoteService.updateStatus(quoteDTO.getOrderId(),
+			quoteService.updateStatus(quoteDTO.getId(),
 					QuoteStatusType.DONE);
 
 			quoteService.updateStatus(quotes.stream().map(q -> q.getId())

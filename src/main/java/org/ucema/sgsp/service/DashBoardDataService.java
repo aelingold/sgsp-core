@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -53,6 +54,8 @@ public class DashBoardDataService {
 	private ConnectionRepository connectionRepository;
 	@Resource
 	private Environment env;
+	@Autowired
+	private UserWorkRateSummarizeService userWorkRateSummarizeService;
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
@@ -76,13 +79,15 @@ public class DashBoardDataService {
 		});
 
 		List<QuoteDTO> allQuotes = quoteService.list(quoteIds);
+		Set<String> usernames = allQuotes.stream().map(aq -> aq.getUsername())
+				.collect(Collectors.toSet());		
 
 		map.put("quotes", quotes(username, allQuotes));
 
 		map.put("quote", new QuoteDTO());
 
-		map.put("userWorkRatesQtyMap",
-				userWorkRateService.userWorkRatesMap(allQuotes));
+		map.put("userWorkRatesQtyMap", userWorkRateSummarizeService
+				.userWorkRateSummarizesMap(usernames));
 
 		map.put("userWorkRate", new UserWorkRateDTO());
 

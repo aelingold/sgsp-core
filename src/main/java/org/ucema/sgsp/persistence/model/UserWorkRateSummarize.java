@@ -14,11 +14,12 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.ucema.sgsp.security.model.User;
 
 @Entity
-@Table(name = "user_work_rate_summarizes")
+@Table(name = "user_work_rate_summarizes", uniqueConstraints = @UniqueConstraint(name = "uq_user_work_rate_summarizes_id", columnNames = { "user_id" }))
 public class UserWorkRateSummarize {
 
 	@Id
@@ -29,7 +30,7 @@ public class UserWorkRateSummarize {
 	private User user;
 	private Long positiveQuantity;
 	private Long negativeQuantity;
-	private Long neutralQuantity;	
+	private Long neutralQuantity;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -45,18 +46,18 @@ public class UserWorkRateSummarize {
 		super();
 		this.id = id;
 	}
-	
-    @PrePersist
-    public void prePersist() {
-    	Date now = new Date();
-        this.createdAt = now;
-        this.updatedAt = now;
-    }
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = new Date();
-    }
+	@PrePersist
+	public void prePersist() {
+		Date now = new Date();
+		this.createdAt = now;
+		this.updatedAt = now;
+	}
+
+	@PreUpdate
+	public void preUpdate() {
+		this.updatedAt = new Date();
+	}
 
 	public Long getId() {
 		return id;
