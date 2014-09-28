@@ -2,11 +2,8 @@ function selectAllWorkAreas(){
 	$('.workAreaCheks').attr('checked',true);
 }
 
-function verifyUserTypeChecked(){
-	
-	console.log($("input[name='userType']").val() );
-	
-	if ($("input[name='userType']:checked").val() == "professional"){
+function verifyUserTypeChecked(){	
+	if ($("input[name='userType']:checked").length > 0){
 		$(".pro-field").show();
 	}else {
 		$(".pro-field").hide();

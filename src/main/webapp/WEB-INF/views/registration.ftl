@@ -47,78 +47,78 @@
     <section id="services" style="margin-top: 120px;">
         <div class="container no-top-border-radius">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <h2 class="section-heading">Registración</h2>                    
                 </div>
-                <div class="col-lg-12">                	
+                <div class="col-md-12">                	
                 	<form action="<@c.url value='/register'/>" method="POST" enctype="utf8">
                 		<@spring.bind "user" />      		
                 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 		<input type="hidden" name="signInProvider" value='${(user.signInProvider)!""}'/>
-                		<@spring.formRadioButtons "user.userType", userTypeMap,""/>
-                	
+                		                	
                 		<h3 class="text-muted">Ingresá estos datos y empezá a resolver tus problemas.</h3>
-                	
-                        <div class="row pro-field">
-                        	<div class="col-lg-12">
-                        		<label>Seleccione los rubros a los que se dedica</label>
-                        		<a href="javascript:selectAllWorkAreas();">Seleccionar todos</a>
-                        	</div>
-                            <div class="col-lg-12">
-                            	<@spring.formCheckboxes "user.workAreaCodes", workAreaMap,"","class='workAreaCheks'"/>                                                        	
-                            </div>
-                            <@spring.showErrors "<br>" />
-                        </div>                	
+                	                  	
 	                    <div class="row">
-	                        <div class="form-group col-lg-4">
+	                        <div class="form-group col-md-4">
 	                        	<label>Nombre</label>
 	                        	<@spring.formInput "user.firstName", 'class="form-control"'/>
 	                        	<@spring.showErrors "<br>" />
 	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="form-group col-lg-4">
+	                    
+	                        <div class="form-group col-md-4">
 	                            <label>Apellido</label>
 	                            <@spring.formInput "user.lastName", 'class="form-control"'/>
 	                        	<@spring.showErrors "<br>" />                        	
 	                        </div>
-	                    </div>
-                        <div class="row pro-field">
-                            <div class="form-group col-lg-4">
+	                    
+                            <div class="form-group col-md-4">
+                            	<label>Email</label>	                        	
+	                        	<@spring.formInput "user.email", 'class="form-control"'/>
+	                        	<@spring.showErrors "<br>" />	
+                            </div>
+                            
+	                        <div class="form-group col-md-4">	                            
                                 <label>Teléfono</label>
                                 <@spring.formInput "user.telephone", 'class="form-control"'/>
-                                <@spring.showErrors "<br>" />
-                            </div>
-                        </div>	                    
-	                    <div class="row">
-	                        <div class="form-group col-lg-4">
-	                            <label>Email</label>	                        	
-	                        	<@spring.formInput "user.email", 'class="form-control"'/>
-	                        	<@spring.showErrors "<br>" />	                        	
+                                <@spring.showErrors "<br>" />                        	
 	                        </div>
-	                    </div>	                    
-                        <div class="row">
-                            <div class="form-group col-lg-4">
+	                    
+                            <div class="form-group col-md-4">
                                 <label>Contraseña</label>
                                 <@spring.formPasswordInput "user.password", 'class="form-control"'/>
                                 <@spring.showErrors "<br>" />	                        	
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-4">
+                        
+                            <div class="form-group col-md-4">
                                 <label>Repetir contraseña</label>
                                 <@spring.formPasswordInput "user.passwordVerification", 'class="form-control"'/>
 	                        	<@spring.showErrors "<br>" />
                             </div>
-                        </div>                        
-                        <div class="row">
-                            <div class="form-group col-lg-4">
+                            
+                            <div class="form-group col-md-4">
                                 <label>Pais</label>
                                 <@spring.formSingleSelect "user.countryCode", countriesMap, 'class="form-control"'/>
                                 <@spring.showErrors "<br>" />	                        	
                             </div>
                         </div>
-	                    <button type="submit" class="btn btn-default">Registrarme</button>
+                        
+                        <div class="row">
+                        	<div class="col-md-12">
+                        		<label style="font-weight: normal;"><input type="checkbox" name="userType" class="form-group"> Soy profesional</label>
+                        	</div>		
+                        </div>
+                        <div class="row pro-field form-group">
+                        	<div class="col-md-12">
+                        		<label>Seleccione los rubros a los que se dedica</label>
+                        		<a href="javascript:selectAllWorkAreas();">Seleccionar todos</a>
+                        	</div>
+                            <div class="col-md-12">
+                            	<@spring.formCheckboxes "user.workAreaCodes", workAreaMap,"","class='workAreaCheks'"/>                                                        	
+                            </div>
+                            <@spring.showErrors "<br>" />
+                        </div>  
+                        
+	                    <button type="submit" class="btn btn-warning pull-right">Registrarme</button>
 	                </form>
                	</div>                
             </div>
