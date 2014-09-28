@@ -47,9 +47,9 @@
             <div class="intro-text">
                 <div class="intro-lead-in">Resolvé los problemas de tu hogar</div>
                 <div class="intro-heading">Qué servicio necesitas?</div>
-                <div class="col-lg-12">
+                <div class="col-md-12">
                 	<#list workAreas as workArea>
-                		<div class="col-lg-4 home-service">
+                		<div class="col-md-4 home-service">
 	                		<span class="home-service-option" data-code="${workArea.code}">
 	                			${workArea.description}
 	                		</span>
@@ -76,12 +76,23 @@
     <section id="howItWorks">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Cómo funciona?</h2>
-                    <h3 class="section-subheading text-muted">
-                    	Explicación de cómo funciona
-					</h3>
+                <div class="col-md-12 text-center">
+                    <h2 class="section-heading">Cómo funciona?</h2>                    					
                 </div>
+                <div class="row" style="margin-top: 100px;">
+	                <div class="col-md-4 text-center">
+	                	<img src="<@c.url value='/static/new/img/hworks/anuncio.png'/>" style="height: 100px;margin-left: 32px;">
+	                	<div class="explain-text">Pide un servicio</div>
+					</div>
+					<div class="col-md-4 text-center">
+						<img src="<@c.url value='/static/new/img/hworks/profesionales.png'/>" style="height: 100px;margin-left: 6px;">
+						<div class="explain-text">Recibe presupuestos</div>
+					</div>
+					<div class="col-md-4 text-center">
+						<img src="<@c.url value='/static/new/img/hworks/trato.png'/>" style="height: 100px;">
+						<div class="explain-text">Elije el mejor</div>
+					</div>
+				</div>
             </div>
        </div>
     </section>

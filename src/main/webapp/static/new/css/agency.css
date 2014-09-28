@@ -1046,3 +1046,12 @@ ul{
 .panel-heading.collapsed span.fa:before{
     content: "\f078";
 }
+
+.explain-text{
+	color: #777;
+	margin-top: 5px;
+}
+
+#howItWorks {
+	padding: 80px 0;
+}
