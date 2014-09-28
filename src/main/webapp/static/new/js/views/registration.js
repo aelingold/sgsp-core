@@ -3,14 +3,14 @@ function selectAllWorkAreas(){
 }
 
 function verifyUserTypeChecked(){	
-	if ($("input[name='userType']:checked").length > 0){
+	if ($("input[name='isProfessional']:checked").length > 0){
 		$(".pro-field").show();
 	}else {
 		$(".pro-field").hide();
 	}
 }
 
-$("input[name='userType']").change(function() {
+$("input[name='isProfessional']").change(function() {
     verifyUserTypeChecked();
 });
 

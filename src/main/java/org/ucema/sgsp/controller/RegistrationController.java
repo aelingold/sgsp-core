@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.api.dto.CountryDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
-import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.security.model.User;
@@ -124,7 +123,7 @@ public class RegistrationController {
 			return VIEW_NAME_REGISTRATION_PAGE;
 		}
 
-		if (userAccountData.getUserType().equals(UserTypeDTO.professional)
+		if (userAccountData.getIsProfessional()
 				&& (userAccountData.getWorkAreaCodes() == null || userAccountData
 						.getWorkAreaCodes().isEmpty())) {
 
@@ -135,7 +134,7 @@ public class RegistrationController {
 			return VIEW_NAME_REGISTRATION_PAGE;
 		}
 
-		if (userAccountData.getUserType().equals(UserTypeDTO.professional)
+		if (userAccountData.getIsProfessional()
 				&& (userAccountData.getTelephone() == null || userAccountData
 						.getTelephone().isEmpty())) {
 

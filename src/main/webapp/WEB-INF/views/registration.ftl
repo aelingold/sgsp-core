@@ -60,7 +60,8 @@
                 	                  	
                         <div class="row">
                         	<div class="col-md-12">
-                        		<label style="font-weight: normal;"><input type="checkbox" name="userType" class="form-group"> Soy profesional</label>
+                        		<label style="font-weight: normal;">
+                        		<@spring.formCheckbox "user.isProfessional", 'class="form-group"'/>Soy profesional</label>
                         	</div>		
                         </div>                	                  	
                 	                  	
@@ -118,8 +119,8 @@
 	                            	<input name="workAreaCodes" type="checkbox" value="${workArea.code}" class="workAreaCheks"> ${workArea.description}                                                        	
 	                            </div>
 	                         </#list>
-                            <@spring.showErrors "<br>" />
-                        </div>  
+                        </div>
+						<b><@form.errors path="user.workAreaCodes"/></b>
                         
 	                    <button type="submit" class="btn btn-warning pull-right">Registrarme</button>
 	                </form>

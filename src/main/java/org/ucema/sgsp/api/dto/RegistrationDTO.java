@@ -47,7 +47,7 @@ public class RegistrationDTO {
     private String telephone;
     
     @NotNull
-    private UserTypeDTO userType = UserTypeDTO.user;
+    private Boolean isProfessional = false;
     
     private List<String> workAreaCodes = new ArrayList<String>();
 
@@ -118,14 +118,6 @@ public class RegistrationDTO {
         this.signInProvider = signInProvider;
     }
 
-	public UserTypeDTO getUserType() {
-		return userType;
-	}
-
-	public void setUserType(UserTypeDTO userType) {
-		this.userType = userType;
-	}
-
 	public String getTelephone() {
 		return telephone;
 	}
@@ -150,6 +142,14 @@ public class RegistrationDTO {
 		this.countryCode = countryCode;
 	}
 
+	public Boolean getIsProfessional() {
+		return isProfessional;
+	}
+
+	public void setIsProfessional(Boolean isProfessional) {
+		this.isProfessional = isProfessional;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -161,8 +161,8 @@ public class RegistrationDTO {
 		builder.append(lastName);
 		builder.append(", telephone=");
 		builder.append(telephone);
-		builder.append(", userType=");
-		builder.append(userType);
+		builder.append(", isProfessional=");
+		builder.append(isProfessional);
 		builder.append(", workAreaCodes=");
 		builder.append(workAreaCodes);
 		builder.append(", password=");

@@ -22,7 +22,6 @@ import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
 import org.ucema.sgsp.api.dto.ReportUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
-import org.ucema.sgsp.api.dto.UserTypeDTO;
 import org.ucema.sgsp.api.transformation.UserTransformation;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.persistence.model.RatePlan;
@@ -273,8 +272,7 @@ public class RepositoryUserService implements UserService {
 				.password(encodedPassword)
 				.telephone(userAccountData.getTelephone())
 				.professional(
-						userAccountData.getUserType().equals(
-								UserTypeDTO.professional)).enabled(true)
+						userAccountData.getIsProfessional()).enabled(true)
 				.country(countryService.find(userAccountData.getCountryCode()));
 
 		if (userAccountData.getWorkAreaCodes() != null
@@ -287,7 +285,7 @@ public class RepositoryUserService implements UserService {
 			user.signInProvider(userAccountData.getSignInProvider());
 		}
 
-		if (userAccountData.getUserType().equals(UserTypeDTO.professional)) {
+		if (userAccountData.getIsProfessional()) {
 			user.userRatePlan(buildUserRatePlan(userAccountData));
 			user.userWorkRateSummarize(buildUserWorkRateSummarize(userAccountData));
 		}
