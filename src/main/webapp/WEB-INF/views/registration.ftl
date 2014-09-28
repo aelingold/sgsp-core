@@ -58,6 +58,12 @@
                 		                	
                 		<h3 class="text-muted">Ingresá estos datos y empezá a resolver tus problemas.</h3>
                 	                  	
+                        <div class="row">
+                        	<div class="col-md-12">
+                        		<label style="font-weight: normal;"><input type="checkbox" name="userType" class="form-group"> Soy profesional</label>
+                        	</div>		
+                        </div>                	                  	
+                	                  	
 	                    <div class="row">
 	                        <div class="form-group col-md-4">
 	                        	<label>Nombre</label>
@@ -102,19 +108,16 @@
                             </div>
                         </div>
                         
-                        <div class="row">
-                        	<div class="col-md-12">
-                        		<label style="font-weight: normal;"><input type="checkbox" name="userType" class="form-group"> Soy profesional</label>
-                        	</div>		
-                        </div>
                         <div class="row pro-field form-group">
                         	<div class="col-md-12">
                         		<label>Seleccione los rubros a los que se dedica</label>
                         		<a href="javascript:selectAllWorkAreas();">Seleccionar todos</a>
                         	</div>
-                            <div class="col-md-12">
-                            	<@spring.formCheckboxes "user.workAreaCodes", workAreaMap,"","class='workAreaCheks'"/>                                                        	
-                            </div>
+                        	<#list workAreas as workArea>
+	                            <div class="col-md-3">
+	                            	<input name="workAreaCodes" type="checkbox" value="${workArea.code}" class="workAreaCheks"> ${workArea.description}                                                        	
+	                            </div>
+	                         </#list>
                             <@spring.showErrors "<br>" />
                         </div>  
                         
