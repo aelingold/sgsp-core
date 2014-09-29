@@ -1,14 +1,17 @@
 package org.ucema.sgsp.service;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.QuoteDTO;
@@ -31,8 +34,8 @@ public class QuoteService {
 	@Transactional
 	public void updateStatus(Long quoteId, QuoteStatusType statusType) {
 		updateStatus(Arrays.asList(quoteId), statusType);
-	}	
-	
+	}
+
 	@Transactional
 	public void updateStatus(List<Long> quoteIds, QuoteStatusType statusType) {
 
@@ -47,14 +50,14 @@ public class QuoteService {
 	public List<QuoteDTO> findByOrder_Id(List<Long> orderIds) {
 		return quoteTransformation.transformToApi(quoteDAO
 				.findByOrder_Id(orderIds));
-	}	
-	
+	}
+
 	@Transactional
 	public List<QuoteDTO> findByOrder_Id(Long orderId) {
 		return quoteTransformation.transformToApi(quoteDAO
 				.findByOrder_Id(orderId));
-	}	
-	
+	}
+
 	@Transactional
 	public List<QuoteDTO> list(Long userId, QuoteStatusType statusType) {
 		return list(userService.get(userId).getEmail(), statusType);
@@ -67,12 +70,24 @@ public class QuoteService {
 	}
 
 	@Transactional
-	public Map<DateTime, ReportWorkAreaDTO> quotesServices(
-			QuoteStatusType quoteStatusType) {
+	public List<QuoteDTO> list(Set<QuoteStatusType> statusTypes) {
+		return quoteTransformation.transformToApi(quoteDAO
+				.findByStatusType(statusTypes));
+	}
+
+	@Transactional
+	public Collection<ReportWorkAreaDTO> quotesServices(
+			Set<QuoteStatusType> statusTypes) {
+
+		List<QuoteDTO> quotes = list(statusTypes);
+		return getReportWorkAreaMap(quotes);
+	}
+
+	private Collection<ReportWorkAreaDTO> getReportWorkAreaMap(
+			List<QuoteDTO> quotes) {
 
 		Map<DateTime, ReportWorkAreaDTO> response = new HashMap<DateTime, ReportWorkAreaDTO>();
 
-		List<QuoteDTO> quotes = list(quoteStatusType);
 		for (QuoteDTO quote : quotes) {
 			String workAreaDescription = quote.getOrder()
 					.getWorkAreaDescription();
@@ -86,6 +101,8 @@ public class QuoteService {
 			if (response.get(updatedAtCustom) == null) {
 
 				ReportWorkAreaDTO reportWorkAreaDTO = new ReportWorkAreaDTO();
+				reportWorkAreaDTO.setDate(updatedAtCustom
+						.toString(DateTimeFormat.forPattern("dd-MM-yyyy")));
 				reportWorkAreaDTO.setWorkAreaDescription(workAreaDescription);
 				reportWorkAreaDTO.setCount(reportWorkAreaDTO.getCount() + 1);
 
@@ -101,7 +118,7 @@ public class QuoteService {
 			}
 		}
 
-		return response;
+		return response.values();
 	}
 
 	@Transactional

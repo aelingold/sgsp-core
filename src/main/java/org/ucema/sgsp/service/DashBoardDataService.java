@@ -27,6 +27,8 @@ import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 
+import com.google.common.collect.Sets;
+
 @Service
 public class DashBoardDataService {
 
@@ -127,6 +129,14 @@ public class DashBoardDataService {
 		if (!connections.isEmpty()) {
 			map.put("connections", connections);
 		}
+
+		map.put("reportUsers", userService.countUsers());
+
+		map.put("quoteServicesDone", quoteService.quotesServices(Sets
+				.newHashSet(QuoteStatusType.DONE)));
+		map.put("quoteServicesReplied", quoteService.quotesServices(Sets
+				.newHashSet(QuoteStatusType.REPLIED, QuoteStatusType.ACCEPTED,
+						QuoteStatusType.CANCELLED, QuoteStatusType.INVALID)));
 
 		return map;
 	}

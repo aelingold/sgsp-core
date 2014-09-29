@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonth;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +123,7 @@ public class RepositoryUserService implements UserService {
 							.setUserCount(reportUserDTO.getUserCount() + 1);
 				}
 
-				reportUserDTO.setYearMonth(yearMonth.toString());
+				reportUserDTO.setYearMonth(yearMonth.toString(DateTimeFormat.forPattern("MM-yyyy")));
 				itemsMap.put(yearMonth, reportUserDTO);
 
 			} else {
