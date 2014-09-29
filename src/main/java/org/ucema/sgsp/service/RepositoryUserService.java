@@ -1,6 +1,7 @@
 package org.ucema.sgsp.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ public class RepositoryUserService implements UserService {
 	}
 
 	@Transactional
-	public Map<YearMonth, ReportUserDTO> countUsers() {
+	public Collection<ReportUserDTO> countUsers() {
 		List<Object> items = repository.countUsers();
 
 		Map<YearMonth, ReportUserDTO> itemsMap = new HashMap<YearMonth, ReportUserDTO>();
@@ -121,6 +122,7 @@ public class RepositoryUserService implements UserService {
 							.setUserCount(reportUserDTO.getUserCount() + 1);
 				}
 
+				reportUserDTO.setYearMonth(yearMonth.toString());
 				itemsMap.put(yearMonth, reportUserDTO);
 
 			} else {
@@ -139,7 +141,7 @@ public class RepositoryUserService implements UserService {
 			}
 		}
 
-		return itemsMap;
+		return itemsMap.values();
 	}
 
 	@Transactional
@@ -264,15 +266,13 @@ public class RepositoryUserService implements UserService {
 
 		String encodedPassword = encodePassword(userAccountData);
 
-		User.Builder user = User
-				.getBuilder()
-				.email(userAccountData.getEmail())
+		User.Builder user = User.getBuilder().email(userAccountData.getEmail())
 				.firstName(userAccountData.getFirstName())
 				.lastName(userAccountData.getLastName())
 				.password(encodedPassword)
 				.telephone(userAccountData.getTelephone())
-				.professional(
-						userAccountData.getIsProfessional()).enabled(true)
+				.professional(userAccountData.getIsProfessional())
+				.enabled(true)
 				.country(countryService.find(userAccountData.getCountryCode()));
 
 		if (userAccountData.getWorkAreaCodes() != null
@@ -301,11 +301,11 @@ public class RepositoryUserService implements UserService {
 			RegistrationDTO userAccountData) {
 
 		UserWorkRateSummarize result = new UserWorkRateSummarize();
-		
+
 		result.setNegativeQuantity(0L);
 		result.setPositiveQuantity(0L);
 		result.setNeutralQuantity(0L);
-		
+
 		return result;
 	}
 
@@ -359,10 +359,10 @@ public class RepositoryUserService implements UserService {
 	private String encodePassword(RegistrationDTO dto) {
 		String encodedPassword = null;
 
-	//	if (dto.isNormalRegistration()) {
-		//	LOGGER.debug("Registration is normal registration. Encoding password.");
-			encodedPassword = passwordEncoder.encode(dto.getPassword());
-	//	}
+		// if (dto.isNormalRegistration()) {
+		// LOGGER.debug("Registration is normal registration. Encoding password.");
+		encodedPassword = passwordEncoder.encode(dto.getPassword());
+		// }
 
 		return encodedPassword;
 	}

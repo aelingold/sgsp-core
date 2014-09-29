@@ -1,9 +1,8 @@
 package org.ucema.sgsp.service;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-import org.joda.time.YearMonth;
 import org.springframework.social.connect.Connection;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
@@ -17,7 +16,7 @@ public interface UserService {
 
 	RegistrationDTO createRegistrationDTO(Connection<?> connection);
 
-	Map<YearMonth, ReportUserDTO> countUsers();
+	Collection<ReportUserDTO> countUsers();
 
 	Long countByIsProfessional(Boolean isProfessional);
 

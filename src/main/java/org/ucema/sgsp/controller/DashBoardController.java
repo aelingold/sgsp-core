@@ -29,6 +29,7 @@ import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
+import org.ucema.sgsp.security.model.Role;
 import org.ucema.sgsp.service.DashBoardDataService;
 import org.ucema.sgsp.service.DashBoardRatingService;
 import org.ucema.sgsp.service.DashBoardUserService;
@@ -63,7 +64,20 @@ public class DashBoardController {
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
-		return dashboard(request, model, "profile");
+		
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();		
+		
+		String dashboard = "";
+		if (userDetails.getRole() != null && userDetails.getRole().equals(Role.ROLE_ADMIN)){
+			dashboard = dashboard(request, model, "admin");
+		}else{
+			dashboard = dashboard(request, model, "profile");	
+		}
+		
+		return dashboard;
 	}
 
 	@RequestMapping(value = "/dashboard/{tabToShow}", method = RequestMethod.GET)

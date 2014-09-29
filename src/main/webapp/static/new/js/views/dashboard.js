@@ -32,6 +32,10 @@ switch(tabToShow){
 	case "admin":
 		showPanel("#administracion-panel");
 		$("#administracion-option").addClass("active");		
+		break;
+	case "reports":
+		showPanel("#reportes-panel");
+		$("#reportes-option").addClass("active");		
 		break;		
 }
 

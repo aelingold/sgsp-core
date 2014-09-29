@@ -50,30 +50,51 @@
             	<div class="col-md-6">
             		<h1 class="pull-left" style="margin: 0px;">Panel de control</h1>
             	</div>
-            	<div class="col-md-6">            		
-            		<a href="<@c.url value='/'/>" class="button btn btn-info pull-right" style="margin-top: 3px;">Pedir nuevo presupuesto</a>
+            	<div class="col-md-6">
+            		<@security.authorize ifNotGranted="ROLE_ADMIN">	
+            			<a href="<@c.url value='/'/>" class="button btn btn-info pull-right" style="margin-top: 3px;">Pedir nuevo presupuesto</a>
+            		</@security.authorize>
             	</div>
             </div>
             <div class="row">
             	<div class="col-md-3">            	
             		<ul id="dash-menu" class="nav nav-pills nav-stacked">
-				      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
-				      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
-				      <#if user.isProfessional> 
-				      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
-				      </#if>	
-				      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
-				      <#if user.isProfessional> 
-				      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
-				      </#if>
-				      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
+            			<@security.authorize ifNotGranted="ROLE_ADMIN">
+					      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
+					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
+					      <#if user.isProfessional> 
+					      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
+					      </#if>	
+					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
+					      <#if user.isProfessional> 
+					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
+					      </#if>
+					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
+					  </@security.authorize>
 					  <@security.authorize ifAllGranted="ROLE_ADMIN">
         				<li id="administracion-option"><a href="<@c.url value='/dashboard/admin'/>">Administracion</a></li>
+        				<li id="reportes-option"><a href="<@c.url value='/dashboard/reports'/>">Reportes</a></li>
     				  </@security.authorize>				      
 				    </ul>
             	</div>
             	
             	<div class="col-md-9">
+
+            		<div id="reportes-panel" class="col-md-12 dashboard-panel">
+						<div class="row">
+							<div class="panel panel-default">
+					  			<div class="panel-heading">
+						    		<h3 class="panel-title">
+						    			Reportes
+						    		</h3>
+						  		</div>
+						  		<div class="panel-body">
+						  			<div class="col-lg-6">
+						  			</div>
+						  		</div>
+						  	</div>
+						</div>   		
+            		</div>
             		
             		<div id="administracion-panel" class="col-md-12 dashboard-panel">
 						<div class="row">
