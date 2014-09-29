@@ -36,6 +36,10 @@ switch(tabToShow){
 	case "reports":
 		showPanel("#reportes-panel");
 		$("#reportes-option").addClass("active");		
+		break;
+	case "payments":
+		showPanel("#pagos-panel");
+		$("#pagos-option").addClass("active");		
 		break;		
 }
 

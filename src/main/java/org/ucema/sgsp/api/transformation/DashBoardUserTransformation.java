@@ -17,6 +17,7 @@ public class DashBoardUserTransformation {
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
 		result.setIsProfessional(user.getIsProfessional());
+		result.setRatePlanCode(user.getRatePlanCode());
 
 		return result;
 	}
@@ -30,6 +31,7 @@ public class DashBoardUserTransformation {
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
 		result.setIsProfessional(user.isProfessional());
+		result.setRatePlanCode(user.getRatePlanCode());
 
 		return result;
 	}	

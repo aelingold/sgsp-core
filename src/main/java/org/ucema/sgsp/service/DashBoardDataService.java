@@ -22,6 +22,7 @@ import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
+import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
@@ -62,6 +63,10 @@ public class DashBoardDataService {
 	private UserWorkRateSummarizeService userWorkRateSummarizeService;
 	@Autowired
 	private QuoteQuestionReplyService quoteQuestionReplyService;
+	@Autowired
+	private PaymentService paymentService;
+	@Autowired
+	private RatePlanService ratePlanService;
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
@@ -138,6 +143,14 @@ public class DashBoardDataService {
 				.newHashSet(QuoteStatusType.REPLIED, QuoteStatusType.ACCEPTED,
 						QuoteStatusType.CANCELLED, QuoteStatusType.INVALID)));
 
+		map.put("payments", paymentService.findByUser_Email(username));
+		
+		if (user.getRatePlanCode() != null){
+			map.put("ratePlan", ratePlanService.findByCode(user.getRatePlanCode()));	
+		}else{
+			map.put("ratePlan", new RatePlanDTO());
+		}
+		
 		return map;
 	}
 

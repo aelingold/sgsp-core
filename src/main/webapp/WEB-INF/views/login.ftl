@@ -90,9 +90,6 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="<@c.url value='/static/new/js/classie.js'/>"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="<@c.url value='/static/new/js/jqBootstrapValidation.js'/>"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="<@c.url value='/static/new/js/views/registration.js'/>"></script>
 

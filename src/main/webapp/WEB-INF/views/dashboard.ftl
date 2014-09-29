@@ -66,10 +66,13 @@
 					      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
 					      </#if>	
 					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
+						  <#if user.isProfessional> 
+					      	<li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>
+					      </#if>					      
 					      <#if user.isProfessional> 
 					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 					      </#if>
-					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
+					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>					      
 					  </@security.authorize>
 					  <@security.authorize ifAllGranted="ROLE_ADMIN">
         				<li id="administracion-option"><a href="<@c.url value='/dashboard/admin'/>">Administracion</a></li>
@@ -79,104 +82,147 @@
             	</div>
             	
             	<div class="col-md-9">
-
-            		<div id="reportes-panel" class="col-md-12 dashboard-panel">
-						<div class="row">
-							<div class="panel panel-default">
-					  			<div class="panel-heading">
-						    		<h3 class="panel-title">
-						    			Reportes
-						    		</h3>
-						  		</div>
-						  		<div class="panel-body">
-						  			<div class="col-lg-12">
-						  				<h3 class="panel-title">
-											Cantidad de usuarios registrados por mes
-										</h3>						  				
-										<table class="table">  
-											<thead>  
-												<tr>  
-										        	<th>Año-mes</th>
-										            <th>Usuarios</th>
-										            <th>Profesionales</th>
-										        </tr>
-										    </thead>  
-										    <tbody>
-										    	<#list reportUsers as reportUser>  
-											    	<tr>  
-											        	<td>${reportUser.yearMonth}</td>
-											            <td>${reportUser.userCount}</td>
-											            <td>${reportUser.isProfessionalCount}</td>
+            		<#if user.isProfessional>
+	            		<div id="pagos-panel" class="col-md-12 dashboard-panel">
+							<div class="row">
+								<div class="panel panel-default">
+						  			<div class="panel-heading">
+							    		<h3 class="panel-title">
+							    			Pagos
+							    		</h3>
+							  		</div>
+							  		<div class="panel-body">
+							  			<div class="col-lg-12">						  				
+											<table class="table">  
+												<thead>  
+													<tr>  
+											        	<th>Fecha</th>
+											        	<th>Concepto</th>
+											            <th>Monto</th>
+											            <th>Estado</th>
 											        </tr>
-												</#list>
-										    </tbody>
-										</table>
-										
-						  				<h3 class="panel-title">
-											Cantidad de servicios concretados por dia
-										</h3>						  				
-										<table class="table">  
-											<thead>  
-												<tr>  
-										        	<th>Fecha</th>
-										            <th>Rubro</th>
-										            <th>Cantidad</th>
-										        </tr>
-										    </thead>  
-										    <tbody>
-										    	<#list quoteServicesDone as quoteServiceDone>  
-											    	<tr>  
-											        	<td>${quoteServiceDone.date}</td>
-											            <td>${quoteServiceDone.workAreaDescription}</td>
-											            <td>${quoteServiceDone.count}</td>
-											        </tr>
-												</#list>
-										    </tbody>
-										</table>
-										
-						  				<h3 class="panel-title">
-											Cantidad de profesionales postulados por rubro por dia
-										</h3>						  				
-										<table class="table">  
-											<thead>  
-												<tr>  
-										        	<th>Fecha</th>
-										            <th>Rubro</th>
-										            <th>Cantidad</th>
-										        </tr>
-										    </thead>  
-										    <tbody>
-										    	<#list quoteServicesReplied as quoteServicesReply>  
-											    	<tr>  
-											        	<td>${quoteServicesReply.date}</td>
-											            <td>${quoteServicesReply.workAreaDescription}</td>
-											            <td>${quoteServicesReply.count}</td>
-											        </tr>
-												</#list>
-										    </tbody>
-										</table>																										  			
-						  			</div>
-						  		</div>
-						  	</div>
-						</div>   		
-            		</div>
+											    </thead>  
+											    <tbody>
+											    	<#list payments as payment>  
+												    	<tr>  
+												        	<td>${payment.updatedAt?string("dd-MM-yyyy")}</td>
+												        	<td>${ratePlan.description}</td>
+												            <td>${payment.amount.currency.symbol} ${payment.amount.amount}</td>
+												            <td>
+												            	<#if payment.statusType="DONE">
+												            		PAGADO
+												            	<#else>
+												            		PENDIENTE
+												            	</#if>
+												            </td>
+												        </tr>
+													</#list>
+											    </tbody>
+											</table>					  			
+							  			</div>
+							  		</div>
+							  	</div>
+							</div>   		
+	            		</div>            	
+            		</#if>
             		
-            		<div id="administracion-panel" class="col-md-12 dashboard-panel">
-						<div class="row">
-							<div class="panel panel-default">
-					  			<div class="panel-heading">
-						    		<h3 class="panel-title">
-						    			Administrar usuarios
-						    		</h3>
-						  		</div>
-						  		<div class="panel-body">
-						  			<div class="col-lg-6">
-						  			</div>
-						  		</div>
-						  	</div>
-						</div>   		
-            		</div>            		
-            		
+            		<@security.authorize ifAllGranted="ROLE_ADMIN">
+	            		<div id="reportes-panel" class="col-md-12 dashboard-panel">
+							<div class="row">
+								<div class="panel panel-default">
+						  			<div class="panel-heading">
+							    		<h3 class="panel-title">
+							    			Reportes
+							    		</h3>
+							  		</div>
+							  		<div class="panel-body">
+							  			<div class="col-lg-12">
+							  				<h3 class="panel-title">
+												Cantidad de usuarios registrados por mes
+											</h3>						  				
+											<table class="table">  
+												<thead>  
+													<tr>  
+											        	<th>Año-mes</th>
+											            <th>Usuarios</th>
+											            <th>Profesionales</th>
+											        </tr>
+											    </thead>  
+											    <tbody>
+											    	<#list reportUsers as reportUser>  
+												    	<tr>  
+												        	<td>${reportUser.yearMonth}</td>
+												            <td>${reportUser.userCount}</td>
+												            <td>${reportUser.isProfessionalCount}</td>
+												        </tr>
+													</#list>
+											    </tbody>
+											</table>										
+							  				<h3 class="panel-title">
+												Cantidad de servicios concretados por dia
+											</h3>						  				
+											<table class="table">  
+												<thead>  
+													<tr>  
+											        	<th>Fecha</th>
+											            <th>Rubro</th>
+											            <th>Cantidad</th>
+											        </tr>
+											    </thead>  
+											    <tbody>
+											    	<#list quoteServicesDone as quoteServiceDone>  
+												    	<tr>  
+												        	<td>${quoteServiceDone.date}</td>
+												            <td>${quoteServiceDone.workAreaDescription}</td>
+												            <td>${quoteServiceDone.count}</td>
+												        </tr>
+													</#list>
+											    </tbody>
+											</table>										
+							  				<h3 class="panel-title">
+												Cantidad de profesionales postulados por rubro por dia
+											</h3>						  				
+											<table class="table">  
+												<thead>  
+													<tr>  
+											        	<th>Fecha</th>
+											            <th>Rubro</th>
+											            <th>Cantidad</th>
+											        </tr>
+											    </thead>  
+											    <tbody>
+											    	<#list quoteServicesReplied as quoteServicesReply>  
+												    	<tr>  
+												        	<td>${quoteServicesReply.date}</td>
+												            <td>${quoteServicesReply.workAreaDescription}</td>
+												            <td>${quoteServicesReply.count}</td>
+												        </tr>
+													</#list>
+											    </tbody>
+											</table>																										  			
+							  			</div>
+							  		</div>
+							  	</div>
+							</div>   		
+	            		</div>
+	            		
+	            		<div id="administracion-panel" class="col-md-12 dashboard-panel">
+							<div class="row">
+								<div class="panel panel-default">
+						  			<div class="panel-heading">
+							    		<h3 class="panel-title">
+							    			Administrar usuarios
+							    		</h3>
+							  		</div>
+							  		<div class="panel-body">
+							  			<div class="col-lg-6">
+							  			</div>
+							  		</div>
+							  	</div>
+							</div>   		
+	            		</div>            		
+					</@security.authorize>
+					
             		<div id="redessociales-panel" class="col-md-12 dashboard-panel">
 						<div class="row">
 							<div class="panel panel-default">
@@ -186,77 +232,79 @@
 						    		</h3>
 						  		</div>
 						  		<div class="panel-body">
-						  		<div class="col-lg-6">
-						  		<div class="social-column">
-						  			<#if connections??>
-										<form name="fb_disconnect" action="<@c.url value='/connect/facebook'/>" method="POST">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-											<input type="hidden" name="_method" value="delete" />							  			
-											<a href="javascript:document.fb_disconnect.submit()">
-				      							<div class="fb-button">
-				      								<span>Desconectar de facebook</span>
-				      							</div>
-				      						</a>
-										</form>						  		
-						  			<#else>
-										<form name="fb_connect" action="<@c.url value='/connect/facebook'/>" method="POST">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>							  			
-											<a href="javascript:document.fb_connect.submit()">
-				      							<div class="fb-button">
-				      								<span>Conectar con facebook</span>
-				      							</div>
-				      						</a>
-										</form>
-						  			</#if>
-						  			</div>	
+							  		<div class="col-lg-6">
+								  		<div class="social-column">
+								  			<#if connections??>
+												<form name="fb_disconnect" action="<@c.url value='/connect/facebook'/>" method="POST">
+													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+													<input type="hidden" name="_method" value="delete" />							  			
+													<a href="javascript:document.fb_disconnect.submit()">
+						      							<div class="fb-button">
+						      								<span>Desconectar de facebook</span>
+						      							</div>
+						      						</a>
+												</form>						  		
+								  			<#else>
+												<form name="fb_connect" action="<@c.url value='/connect/facebook'/>" method="POST">
+													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>							  			
+													<a href="javascript:document.fb_connect.submit()">
+						      							<div class="fb-button">
+						      								<span>Conectar con facebook</span>
+						      							</div>
+						      						</a>
+												</form>
+								  			</#if>
+							  			</div>	
 						  			</div>								  		
 						  		</div>
 						  	</div>
 						</div>   		
             		</div>
             		
-            		<div id="configuracion-panel" class="col-md-12 dashboard-panel">
-						<form name="configForm" action="<@c.url value='/dashboard/config' />" method="POST" enctype="utf8">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<@spring.bind "config" />            		
-		            		<div class="row">
-								<div class="panel panel-default">
-							  		<div class="panel-heading">
-								    	<h3 class="panel-title">
-								    		Configurar zona de trabajo
-								    	</h3>
+            		<#if user.isProfessional>
+	            		<div id="configuracion-panel" class="col-md-12 dashboard-panel">
+							<form name="configForm" action="<@c.url value='/dashboard/config' />" method="POST" enctype="utf8">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<@spring.bind "config" />            		
+			            		<div class="row">
+									<div class="panel panel-default">
+								  		<div class="panel-heading">
+									    	<h3 class="panel-title">
+									    		Configurar zona de trabajo
+									    	</h3>
+									  	</div>
+									  	<div class="panel-body">
+									  		<#list states as state>
+										  		<div class="row">
+											  		<div class="col-md-12 form-group">
+														<h4>${state.description}</h4>
+													</div>
+													<div class="col-md-12 form-group">
+														<label>Localidades:</label>
+														<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
+													</div>
+													<div class="col-md-12 form-group">
+														<#list cities as city>
+															<#if city.stateCode=state.code>									
+																<div class="col-md-3">
+																	<input ${config.cityCodes?seq_contains(city.code)?string("checked", "")} name="cityCodes" type="checkbox" value="${city.code}"> ${city.description}
+																</div>
+															</#if>
+														</#list>
+													</div>
+												</div>									
+											</#list>
+									  	</div>							  	
 								  	</div>
-								  	<div class="panel-body">
-								  		<#list states as state>
-									  		<div class="row">
-										  		<div class="col-md-12 form-group">
-													<h4>${state.description}</h4>
-												</div>
-												<div class="col-md-12 form-group">
-													<label>Localidades:</label>
-													<a class="btn btn-default pull-right select-all-cities">Seleccionar todas</a>
-												</div>
-												<div class="col-md-12 form-group">
-													<#list cities as city>
-														<#if city.stateCode=state.code>									
-															<div class="col-md-3">
-																<input ${config.cityCodes?seq_contains(city.code)?string("checked", "")} name="cityCodes" type="checkbox" value="${city.code}"> ${city.description}
-															</div>
-														</#if>
-													</#list>
-												</div>
-											</div>									
-										</#list>
-								  	</div>							  	
 							  	</div>
-						  	</div>
-						  	<div class="row">
-		                        <div class="col-md-12" style="text-align: center;">
-		                        	<a href="javascript:document.configForm.submit()" class="button btn btn-warning">Guardar</a>
-		                        </div>
-	                       	</div>
-	                	</form>
-					</div>
+							  	<div class="row">
+			                        <div class="col-md-12" style="text-align: center;">
+			                        	<a href="javascript:document.configForm.submit()" class="button btn btn-warning">Guardar</a>
+			                        </div>
+		                       	</div>
+		                	</form>
+						</div>
+            	    </#if>
             	            	
             		<div id="calificaciones-panel" class="col-md-12 dashboard-panel">
 	            		<div class="row">
@@ -571,38 +619,144 @@
 	                    </form>
                    	</div>
                    	
-                   	<div id="presupuestos-panel" class="col-md-12 dashboard-panel">
-            			<div class="row">
-		            		<div class="btn-group btn-group-justified">
-							  <div class="btn-group">
-							    <button type="button" class="btn btn-default active">Presupuestos pendientes</button>
-							  </div>
-							  <div class="btn-group">
-							    <button type="button" class="btn btn-default">Presupuestos realizados</button>
-							  </div>
+                   	<#if user.isProfessional>
+	                   	<div id="presupuestos-panel" class="col-md-12 dashboard-panel">
+	            			<div class="row">
+			            		<div class="btn-group btn-group-justified">
+								  <div class="btn-group">
+								    <button type="button" class="btn btn-default active">Presupuestos pendientes</button>
+								  </div>
+								  <div class="btn-group">
+								    <button type="button" class="btn btn-default">Presupuestos realizados</button>
+								  </div>
+								</div>
 							</div>
-						</div>
-																		
-						<#list quotes as quote>
-							<#if quote.statusType="PENDING">
-								<div class="row">
-									<div class="panel panel-default quote-${quote.statusType}">						
-										<form name="budgetsForm${quote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-											<input type="hidden" name="statusType" value="REPLIED">
-											<input type="hidden" name="id" value="${quote.id}">
-											<@spring.bind "quote" />																						
-											<#-- ejemplo de un presupuesto pedido -->
-									  		<div class="panel-heading">
-										    	<h3 class="panel-title">
-										    		Necesito un ${quote.order.workAreaDescription}
-										    		<#if quote.order.workDateType='URGENT'>
-										    			<span class="pull-right urgente">Es urgente</span>
-										    		</#if>
-										    	</h3>
-										  	</div>
-										  	<div class="panel-body">
-										  		<div class="row">
+																			
+							<#list quotes as quote>
+								<#if quote.statusType="PENDING">
+									<div class="row">
+										<div class="panel panel-default quote-${quote.statusType}">						
+											<form name="budgetsForm${quote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
+												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+												<input type="hidden" name="statusType" value="REPLIED">
+												<input type="hidden" name="id" value="${quote.id}">
+												<@spring.bind "quote" />																						
+												<#-- ejemplo de un presupuesto pedido -->
+										  		<div class="panel-heading">
+											    	<h3 class="panel-title">
+											    		Necesito un ${quote.order.workAreaDescription}
+											    		<#if quote.order.workDateType='URGENT'>
+											    			<span class="pull-right urgente">Es urgente</span>
+											    		</#if>
+											    	</h3>
+											  	</div>
+											  	<div class="panel-body">
+											  		<div class="row">
+											  			<#list quote.order.workAreaItemCodes as workAreaItemCode>
+											  				<#list workAreaItems as workAreaItem>
+																<#if workAreaItem.code=workAreaItemCode>
+																	<#list workAreaQuestions as workAreaQuestion>
+																		<#if workAreaQuestion.workAreaCode=workAreaItem.workAreaCode && workAreaQuestion.groupType=workAreaItem.groupType>
+									                        				<div class="form-group col-md-6">
+									                        					<label>${workAreaQuestion.description}</label> ${workAreaItem.description}
+									                        				</div>
+											    						</#if>
+											    					</#list>
+											    				</#if>								  					
+											  				</#list>
+								                   		</#list>						                        
+								                   </div>
+								                   <#if quote.order.squareMeters??>
+								                       <div class="row">
+									                        <div class="form-group col-md-12">
+									                        	<label>¿Que tamaño tiene la superficie?</label> ${quote.order.squareMeters} m2
+									                        </div>
+								                       </div>
+												   </#if>
+								                   <#if quote.order.airConditionerPower??>
+								                       <div class="row">
+									                        <div class="form-group col-md-12">
+									                        	<label>¿Cuantas frigorias tiene el aire?</label> ${quote.order.airConditionerPower} frigorias
+									                        </div>
+								                       </div>
+												   </#if>									   					                       					                   
+							                       <div class="row">
+								                        <div class="form-group col-md-12">
+								                        	<label>Trabajo a realizar en:</label> ${quote.order.stateDescription}, ${(quote.order.cityDescription)!""}
+								                        </div>
+							                       </div>				                       
+							                       <div class="row">
+								                        <div class="form-group col-md-12">
+								                        	<label>Detalle del trabajo:</label> ${quote.order.workDescription}
+								                        </div>
+							                       </div>
+							                       
+							                       <div class="row">
+						                       			<div class="col-md-12">
+						                       				<div class="budget-form-border">
+									                       		<div class="row budget-common-form">
+											                        <div class="form-group col-md-4">
+											                        	<label>Costo del trabajo</label> 
+											                        	<div class="input-group">
+																	      <span class="input-group-addon">${currency.symbol}</span>
+																	      <@spring.formInput "quote.amount.amount", 'class="form-control"'/>
+																	      <input type="hidden" name="amount.currency.code" value="${currency.code}">
+																	    </div>
+											                        </div>
+											                        <div class="form-group col-md-8">
+											                        	<label>Comentarios sobre el trabajo</label> 
+											                        	<@spring.formTextarea "quote.description", 'class="form-control"'/>
+											                        </div>
+										                       </div>
+										                       <div class="row budget-common-form">
+											                        <div class="form-group col-md-12">
+											                        	<label>Valido hasta</label>
+											                        	<div class="input-group">
+											                        		<@spring.formInput "quote.validDateUntil", 'class="form-control"'/>
+											                        	</div>
+											                        </div>
+											                   </div>
+										                       <div class="row">
+											                        <div class="form-group col-md-12">
+											                        	<label style="font-weight: initial;">
+											                        		<@spring.formCheckbox "quote.requireVisit",'class="need-visit"'/>
+											                        		Se necesita una visita para presupuestar
+											                        	</label>
+											                        </div>
+											                        <div class="form-group col-md-4 visit-form" style="display:none;">
+											                        	<label>Costo de la visita</label> 
+											                        	<div class="input-group">
+																	      <span class="input-group-addon">$</span>
+																	      <@spring.formInput "quote.visitAmount.amount", 'class="form-control"'/>
+																	      <input type="hidden" name="visitAmount.currency.code" value="${currency.code}">
+																	    </div>
+											                        </div>
+										                       </div>
+										                       <div class="row">
+											                        <div class="col-md-12">
+											                        	<a href="javascript:document.budgetsForm${quote_index}.submit()" class="button btn btn-warning pull-right">Presupuestar</a>
+											                        </div>
+										                       </div>
+									                      	</div>
+								                      	</div>
+										        	</div>						                    
+												</div>
+											</form>										  	
+										</div>
+									</div>
+								<#elseif quote.statusType="REPLIED" || quote.statusType="DONE">
+									<div class="row">
+										<div class="panel panel-default quote-${quote.statusType}">
+											<div class="panel-heading">
+												<h3 class="panel-title">
+											    	Necesito un ${quote.order.workAreaDescription}
+											    	<#if quote.order.workDateType='URGENT'>
+											    		<span class="pull-right urgente">Es urgente</span>
+											    	</#if>
+											    </h3>
+											</div>
+											<div class="panel-body">
+												<div class="row">
 										  			<#list quote.order.workAreaItemCodes as workAreaItemCode>
 										  				<#list workAreaItems as workAreaItem>
 															<#if workAreaItem.code=workAreaItemCode>
@@ -641,153 +795,49 @@
 							                        	<label>Detalle del trabajo:</label> ${quote.order.workDescription}
 							                        </div>
 						                       </div>
-						                       
-						                       <div class="row">
-					                       			<div class="col-md-12">
-					                       				<div class="budget-form-border">
-								                       		<div class="row budget-common-form">
-										                        <div class="form-group col-md-4">
-										                        	<label>Costo del trabajo</label> 
-										                        	<div class="input-group">
-																      <span class="input-group-addon">${currency.symbol}</span>
-																      <@spring.formInput "quote.amount.amount", 'class="form-control"'/>
-																      <input type="hidden" name="amount.currency.code" value="${currency.code}">
-																    </div>
-										                        </div>
-										                        <div class="form-group col-md-8">
-										                        	<label>Comentarios sobre el trabajo</label> 
-										                        	<@spring.formTextarea "quote.description", 'class="form-control"'/>
-										                        </div>
-									                       </div>
-									                       <div class="row budget-common-form">
-										                        <div class="form-group col-md-12">
-										                        	<label>Valido hasta</label>
-										                        	<div class="input-group">
-										                        		<@spring.formInput "quote.validDateUntil", 'class="form-control"'/>
-										                        	</div>
-										                        </div>
-										                   </div>
-									                       <div class="row">
-										                        <div class="form-group col-md-12">
-										                        	<label style="font-weight: initial;">
-										                        		<@spring.formCheckbox "quote.requireVisit",'class="need-visit"'/>
-										                        		Se necesita una visita para presupuestar
-										                        	</label>
-										                        </div>
-										                        <div class="form-group col-md-4 visit-form" style="display:none;">
-										                        	<label>Costo de la visita</label> 
-										                        	<div class="input-group">
-																      <span class="input-group-addon">$</span>
-																      <@spring.formInput "quote.visitAmount.amount", 'class="form-control"'/>
-																      <input type="hidden" name="visitAmount.currency.code" value="${currency.code}">
-																    </div>
-										                        </div>
-									                       </div>
-									                       <div class="row">
-										                        <div class="col-md-12">
-										                        	<a href="javascript:document.budgetsForm${quote_index}.submit()" class="button btn btn-warning pull-right">Presupuestar</a>
-										                        </div>
-									                       </div>
-								                      	</div>
-							                      	</div>
-									        	</div>						                    
-											</div>
-										</form>										  	
-									</div>
-								</div>
-							<#elseif quote.statusType="REPLIED" || quote.statusType="DONE">
-								<div class="row">
-									<div class="panel panel-default quote-${quote.statusType}">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-										    	Necesito un ${quote.order.workAreaDescription}
-										    	<#if quote.order.workDateType='URGENT'>
-										    		<span class="pull-right urgente">Es urgente</span>
-										    	</#if>
-										    </h3>
-										</div>
-										<div class="panel-body">
-											<div class="row">
-									  			<#list quote.order.workAreaItemCodes as workAreaItemCode>
-									  				<#list workAreaItems as workAreaItem>
-														<#if workAreaItem.code=workAreaItemCode>
-															<#list workAreaQuestions as workAreaQuestion>
-																<#if workAreaQuestion.workAreaCode=workAreaItem.workAreaCode && workAreaQuestion.groupType=workAreaItem.groupType>
-							                        				<div class="form-group col-md-6">
-							                        					<label>${workAreaQuestion.description}</label> ${workAreaItem.description}
-							                        				</div>
-									    						</#if>
-									    					</#list>
-									    				</#if>								  					
-									  				</#list>
-						                   		</#list>						                        
-						                   </div>
-						                   <#if quote.order.squareMeters??>
-						                       <div class="row">
-							                        <div class="form-group col-md-12">
-							                        	<label>¿Que tamaño tiene la superficie?</label> ${quote.order.squareMeters} m2
-							                        </div>
-						                       </div>
-										   </#if>
-						                   <#if quote.order.airConditionerPower??>
-						                       <div class="row">
-							                        <div class="form-group col-md-12">
-							                        	<label>¿Cuantas frigorias tiene el aire?</label> ${quote.order.airConditionerPower} frigorias
-							                        </div>
-						                       </div>
-										   </#if>									   					                       					                   
-					                       <div class="row">
-						                        <div class="form-group col-md-12">
-						                        	<label>Trabajo a realizar en:</label> ${quote.order.stateDescription}, ${(quote.order.cityDescription)!""}
-						                        </div>
-					                       </div>				                       
-					                       <div class="row">
-						                        <div class="form-group col-md-12">
-						                        	<label>Detalle del trabajo:</label> ${quote.order.workDescription}
-						                        </div>
-					                       </div>
-					                       <#if quote.amount??>
-											   <div class="row">
-							                   		<div class="form-group col-md-12">
-							                        	<label>Costo del trabajo:</label> ${(quote.amount.currency.symbol)!""} ${(quote.amount.amount)!""}
-							                        </div>
-						                       </div>
-						                   </#if>
-						                   <#if quote.description?? && quote.description!="">
-											   <div class="row">
-							                   		<div class="form-group col-md-12">
-							                        	<label>Comentarios sobre el trabajo:</label> ${quote.description}
-							                        </div>
-						                       </div>
-						                   </#if>
-					                       <#if quote.validDateUntil??>
-											   <div class="row">
-							                   		<div class="form-group col-md-12">
-							                        	<label>Valido hasta:</label> ${(quote.validDateUntil?string("dd/MM/yy"))!""}
-							                        </div>
-						                       </div>
-						                   </#if>
-						                   <#if quote.requireVisit??>
-											   <div class="row">
-							                   		<div class="form-group col-md-12">
-							                        	<label>Se necesita una visita para presupuestar:</label> ${quote.requireVisit?string('Si', 'No')}
-							                        </div>
-						                       </div>
-						                   </#if>
-						                   <#if quote.visitAmount??>
-											   <div class="row">
-							                   		<div class="form-group col-md-12">
-							                        	<label>Costo de la visita:</label> ${(quote.visitAmount.currency.symbol)!""} ${(quote.visitAmount.amount)!""}
-							                        </div>
-						                       </div>
-						                   </#if>				                       		                       					                       					                       
-					            		</div>
-					            	</div>
-					        	</div>														
-							</#if>
-							<#-- fin de ejemplo de un presupuesto pedido -->
-						</#list>
-					</div>										
+						                       <#if quote.amount??>
+												   <div class="row">
+								                   		<div class="form-group col-md-12">
+								                        	<label>Costo del trabajo:</label> ${(quote.amount.currency.symbol)!""} ${(quote.amount.amount)!""}
+								                        </div>
+							                       </div>
+							                   </#if>
+							                   <#if quote.description?? && quote.description!="">
+												   <div class="row">
+								                   		<div class="form-group col-md-12">
+								                        	<label>Comentarios sobre el trabajo:</label> ${quote.description}
+								                        </div>
+							                       </div>
+							                   </#if>
+						                       <#if quote.validDateUntil??>
+												   <div class="row">
+								                   		<div class="form-group col-md-12">
+								                        	<label>Valido hasta:</label> ${(quote.validDateUntil?string("dd/MM/yy"))!""}
+								                        </div>
+							                       </div>
+							                   </#if>
+							                   <#if quote.requireVisit??>
+												   <div class="row">
+								                   		<div class="form-group col-md-12">
+								                        	<label>Se necesita una visita para presupuestar:</label> ${quote.requireVisit?string('Si', 'No')}
+								                        </div>
+							                       </div>
+							                   </#if>
+							                   <#if quote.visitAmount??>
+												   <div class="row">
+								                   		<div class="form-group col-md-12">
+								                        	<label>Costo de la visita:</label> ${(quote.visitAmount.currency.symbol)!""} ${(quote.visitAmount.amount)!""}
+								                        </div>
+							                       </div>
+							                   </#if>				                       		                       					                       					                       
+						            		</div>
+						            	</div>
+						        	</div>														
+								</#if>
+								<#-- fin de ejemplo de un presupuesto pedido -->
+							</#list>
+						</div>
+					</#if>											
             	</div>            	
            </div>
         </div>
@@ -804,9 +854,6 @@
     <!-- Plugin JavaScript -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="<@c.url value='/static/new/js/classie.js'/>"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="<@c.url value='/static/new/js/jqBootstrapValidation.js'/>"></script>
     
     <script>
     	var tabToShow = "${tabToShow!""}";

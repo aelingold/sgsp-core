@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -77,6 +78,24 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
       return resolver;
     }
 
+    @Bean
+    public FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean(){
+    	FreeMarkerConfigurationFactoryBean fmcfb = new FreeMarkerConfigurationFactoryBean();
+    	fmcfb.setTemplateLoaderPaths("/WEB-INF/views/","classpath:/WEB-INF/views/");
+    	fmcfb.setDefaultEncoding("UTF-8");
+
+        Properties settings = new Properties();
+        settings.setProperty("number_format", "0.######");
+        settings.setProperty("auto_import", "/spring.ftl as spring");
+        fmcfb.setFreemarkerSettings(settings);
+        Map<String, Object> variables = new java.util.HashMap<String, Object>();
+
+        variables.put("xml_escape", new XmlEscape());
+        fmcfb.setFreemarkerVariables(variables);
+    	
+    	return fmcfb;
+    }
+    
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {      
       FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();

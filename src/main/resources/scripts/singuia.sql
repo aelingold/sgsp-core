@@ -2013,9 +2013,9 @@ INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_
 INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (2, 'ARS', 1, 'Peso Argentino', '$',11);
 INSERT INTO `currencies` (`id`, `code`, `is_enabled`, `name`, `symbol`,`country_id`) VALUES (3, 'BRL', 0, 'Real', 'R$',28);
 
-INSERT INTO `rate_plans` (`id`,`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`currency_id`) VALUES (1,0.00,'PLAN1','2014-09-27 00:00:00',1,'FIXED',NULL,'MONTH',2);
-INSERT INTO `rate_plans` (`id`,`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`currency_id`) VALUES (2,0.00,'PLAN2','2014-09-27 00:00:00',1,'SERVICE',NULL,NULL,2);
-INSERT INTO `rate_plans` (`id`,`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`currency_id`) VALUES (3,NULL,'PLAN3','2014-09-27 00:00:00',1,'PERCENTAGE',0.00,NULL,NULL);
+INSERT INTO `rate_plans` (`id`,`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`currency_id`,`description`) VALUES (1,0.00,'PLAN1','2014-09-27 00:00:00',1,'FIXED',NULL,'MONTH',2,'Cargo fijo mensual');
+INSERT INTO `rate_plans` (`id`,`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`currency_id`,`description`) VALUES (2,0.00,'PLAN2','2014-09-27 00:00:00',1,'SERVICE',NULL,NULL,2,'Cargo fijo por servicio concretado');
+INSERT INTO `rate_plans` (`id`,`amount`,`code`,`created_at`,`is_enabled`,`package_type`,`percentage_quantity`,`period_type`,`currency_id`,`description`) VALUES (3,NULL,'PLAN3','2014-09-27 00:00:00',1,'PERCENTAGE',0.00,NULL,NULL,'Porcentaje fijo sobre el precio por servicio concretado');
 
 UPDATE singuia.cities  set is_enabled=false where state_id=1;
 UPDATE singuia.cities set is_enabled=true where description in ('Almirante Brown','Avellaneda','Berazategui','Esteban Echeverría','Ezeiza','Florencio Varela','General San Martín','Hurlingham','Ituzaingó','José C. Paz','La Matanza','Lanús','Lomas de Zamora','Malvinas Argentinas','Merlo','Moreno','Morón','Quilmes','San Fernando','San Isidro','San Miguel','Tigre','Tres de Febrero','Vicente López','Pilar','Escobar','General Rodríguez','Presidente Perón','San Vicente','Marcos Paz','Cañuelas','La Plata') and state_id=1;

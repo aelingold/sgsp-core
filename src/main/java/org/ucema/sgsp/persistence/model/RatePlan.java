@@ -21,7 +21,8 @@ public class RatePlan {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String code;	
+	private String code;
+	private String description;
 	@Embedded
 	private Amount amount;
     @Enumerated(EnumType.STRING)
@@ -108,5 +109,13 @@ public class RatePlan {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

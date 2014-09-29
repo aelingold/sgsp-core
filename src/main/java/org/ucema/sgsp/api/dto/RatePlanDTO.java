@@ -13,6 +13,7 @@ public class RatePlanDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String code;
+	private String description;
 	private AmountDTO amount;
 	private String packageType;	
     private BigDecimal percentageQuantity;
@@ -35,12 +36,18 @@ public class RatePlanDTO implements Serializable {
 		result.setPackageType(packageType);
 		result.setPercentageQuantity(percentageQuantity);
 		result.setPeriodType(periodType);
+		result.setDescription(description);
 
 		return result;
 	}	
 	
 	public RatePlanDTO withId(Long id) {
 		this.id = id;
+		return this;
+	}	
+	
+	public RatePlanDTO withDescription(String description) {
+		this.description = description;
 		return this;
 	}	
 	
@@ -117,11 +124,19 @@ public class RatePlanDTO implements Serializable {
 		this.createdAt = createdAt;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
-		return "RatePlanDTO [id=" + id + ", code=" + code + ", amount="
-				+ amount + ", packageType=" + packageType
-				+ ", percentageQuantity=" + percentageQuantity
+		return "RatePlanDTO [id=" + id + ", code=" + code + ", description="
+				+ description + ", amount=" + amount + ", packageType="
+				+ packageType + ", percentageQuantity=" + percentageQuantity
 				+ ", periodType=" + periodType + ", isEnabled=" + isEnabled
 				+ ", createdAt=" + createdAt + "]";
 	}

@@ -45,6 +45,8 @@ public class DashBoardUserDTO {
     private String newPasswordVerification;
     
     private Boolean isProfessional;
+    
+    private String ratePlanCode;
 
 	public String getEmail() {
 		return email;
@@ -110,26 +112,21 @@ public class DashBoardUserDTO {
 		this.isProfessional = isProfessional;
 	}
 
+	public String getRatePlanCode() {
+		return ratePlanCode;
+	}
+
+	public void setRatePlanCode(String ratePlanCode) {
+		this.ratePlanCode = ratePlanCode;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("DashBoardUserDTO [email=");
-		builder.append(email);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", telephone=");
-		builder.append(telephone);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", newPassword=");
-		builder.append(newPassword);
-		builder.append(", newPasswordVerification=");
-		builder.append(newPasswordVerification);
-		builder.append(", isProfessional=");
-		builder.append(isProfessional);
-		builder.append("]");
-		return builder.toString();
+		return "DashBoardUserDTO [email=" + email + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", telephone=" + telephone
+				+ ", password=" + password + ", newPassword=" + newPassword
+				+ ", newPasswordVerification=" + newPasswordVerification
+				+ ", isProfessional=" + isProfessional + ", ratePlanCode="
+				+ ratePlanCode + "]";
 	}
 }
