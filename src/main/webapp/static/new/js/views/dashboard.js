@@ -40,6 +40,10 @@ switch(tabToShow){
 	case "payments":
 		showPanel("#pagos-panel");
 		$("#pagos-option").addClass("active");		
+		break;
+	case "questions":
+		showPanel("#preguntas-panel");
+		$("#preguntas-option").addClass("active");		
 		break;		
 }
 
@@ -76,6 +80,13 @@ $("#pedidos-panel .btn-group .btn").on("click", function(){
 	$("#pedidos-panel .panel."+showClass).parent().show();
 });
 $("#pedidos-panel .btn-group .btn:first").click();
+
+$("#presupuestos-panel .btn-group .btn").on("click", function(){
+	var showClass = $(this).attr("data-show-class");
+	$("#presupuestos-panel .panel").parent().hide();
+	$("#presupuestos-panel .panel."+showClass).parent().show();
+});
+$("#presupuestos-panel .btn-group .btn:first").click();
 
 
 $(".make-question").on("click", function(){

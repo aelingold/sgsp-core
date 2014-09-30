@@ -82,18 +82,64 @@
                 <div class="row" style="margin-top: 100px;">
 	                <div class="col-md-4 text-center">
 	                	<img src="<@c.url value='/static/new/img/hworks/anuncio.png'/>" style="height: 100px;margin-left: 32px;">
-	                	<div class="explain-text">Pide un servicio</div>
+	                	<div class="explain-text">Pedí un servicio</div>
 					</div>
 					<div class="col-md-4 text-center">
 						<img src="<@c.url value='/static/new/img/hworks/profesionales.png'/>" style="height: 100px;margin-left: 6px;">
-						<div class="explain-text">Recibe presupuestos</div>
+						<div class="explain-text">Recibí presupuestos</div>
 					</div>
 					<div class="col-md-4 text-center">
 						<img src="<@c.url value='/static/new/img/hworks/trato.png'/>" style="height: 100px;">
-						<div class="explain-text">Elije el mejor</div>
+						<div class="explain-text">Elejí el mejor</div>
 					</div>
 				</div>
             </div>
+       </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="usersBenefits">
+        <div class="container">
+        	<div class="row">
+           		 <div class="col-md-12 text-center">
+                    <h2 class="section-heading">Beneficios</h2>                    					
+                </div>
+           	</div>
+            <div class="row">                
+                <div class="col-md-6 text-center">
+                	<img src="<@c.url value='/static/new/img/characters/user.png'/>">	                	
+                	<div class="benefits-section">
+                		<ul class="benefits-list">
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                		</ul>
+                		<div style="text-align: center;">
+                			<a href="#" class="button btn btn-danger btn-lg">Registrarme</a>
+                		</div>
+                	</div>
+				</div>
+				<div class="col-md-6 text-center">
+                	<img src="<@c.url value='/static/new/img/characters/prof.png'/>">
+                	<div class="benefits-section">
+                		<ul class="benefits-list">
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                			<li>asdasdasda</li>
+                		</ul>
+                		<div style="text-align: center;">
+                			<a href="#" class="button btn btn-danger btn-lg">Ofrecer mi servicio</a>
+                		</div>
+                	</div>
+				</div>
+			</div>
+            
        </div>
     </section>
 

@@ -61,18 +61,15 @@
             		<ul id="dash-menu" class="nav nav-pills nav-stacked">
             			<@security.authorize ifNotGranted="ROLE_ADMIN">
 					      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
-					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Presupuestos pedidos</a></li>
+					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Mis presupuestos pedidos</a></li>
+					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>"><span class="badge pull-right">7</span> Calificaciones</a></li>
+					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
 					      <#if user.isProfessional> 
-					      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">Responder pedidos</a></li>
-					      </#if>	
-					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">Calificaciones</a></li>
-						  <#if user.isProfessional> 
+					      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>"><span class="badge pull-right">5</span> Responder pedidos</a></li>
+					      	<li id="preguntas-option"><a href="<@c.url value='/dashboard/questions'/>"><span class="badge pull-right">2</span> Preguntas</a></li>
 					      	<li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>
-					      </#if>					      
-					      <#if user.isProfessional> 
 					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
-					      </#if>
-					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>					      
+					      </#if>					      					      
 					  </@security.authorize>
 					  <@security.authorize ifAllGranted="ROLE_ADMIN">
         				<li id="administracion-option"><a href="<@c.url value='/dashboard/admin'/>">Administracion</a></li>
@@ -92,7 +89,7 @@
 							    		</h3>
 							  		</div>
 							  		<div class="panel-body">
-							  			<div class="col-lg-12">						  				
+							  			<div class="col-md-12">						  				
 											<table class="table">  
 												<thead>  
 													<tr>  
@@ -136,7 +133,7 @@
 							    		</h3>
 							  		</div>
 							  		<div class="panel-body">
-							  			<div class="col-lg-12">
+							  			<div class="col-md-12">
 							  				<h3 class="panel-title">
 												Cantidad de usuarios registrados por mes
 											</h3>						  				
@@ -215,7 +212,7 @@
 							    		</h3>
 							  		</div>
 							  		<div class="panel-body">
-							  			<div class="col-lg-6">
+							  			<div class="col-md-6">
 							  			</div>
 							  		</div>
 							  	</div>
@@ -232,7 +229,7 @@
 						    		</h3>
 						  		</div>
 						  		<div class="panel-body">
-							  		<div class="col-lg-6">
+							  		<div class="col-md-6">
 								  		<div class="social-column">
 								  			<#if connections??>
 												<form name="fb_disconnect" action="<@c.url value='/connect/facebook'/>" method="POST">
@@ -304,6 +301,38 @@
 		                       	</div>
 		                	</form>
 						</div>
+						
+						
+						<div id="preguntas-panel" class="col-md-12 dashboard-panel">
+							<div class="row">
+								<div class="panel panel-default">
+						  			<div class="panel-heading">
+							    		<h3 class="panel-title">
+							    			Nombre Usuario - 02/09/2014
+							    		</h3>
+							  		</div>
+							  		<div class="panel-body">
+								  		<div class="col-md-12 form-group">
+									  		MOSTRAR DETALLE DEL PEDIDO
+							  			</div>
+							  			<div class="col-md-12 form-group">
+									  		MOSTRAR PRESUPUESTO REALIZADO
+							  			</div>
+							  			<div class="col-md-12 form-group">
+									  		<label>Pregunta</label>
+									  		<div>Que pasa si tengo que aal lal lal all lalal alal la?</div>
+							  			</div>						  		
+							  			<div class="col-md-12 form-group">
+									  		<label>Respuesta</label>
+									  		<textarea class="form-control"></textarea>
+							  			</div>
+							  			<div class="col-md-12">
+							  				<a href="#" class="button btn btn-warning pull-right">Enviar respuesta</a>
+							  			</div>
+							  		</div>
+							  	</div>
+							</div>   		
+	            		</div>
             	    </#if>
             	            	
             		<div id="calificaciones-panel" class="col-md-12 dashboard-panel">
@@ -569,54 +598,56 @@
 					</div>
 					
 					<div id="perfil-panel" class="col-md-12 dashboard-panel">
-						<form action="<@c.url value='/dashboard/profile' />" method="POST" enctype="utf8">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<@spring.bind "user" />
-							<div class="row">
-		                        <div class="form-group col-md-6">	                        
-		                        	<label>Nombre</label>
-									<@spring.formInput "user.firstName", 'class="form-control"'/>
-		                        	<@spring.showErrors "<br>" />	                        	
-		                        </div>
-		                        <div class="form-group col-md-6">
-		                            <label>Apellido</label>
-									<@spring.formInput "user.lastName", 'class="form-control"'/>
-		                        	<@spring.showErrors "<br>" />
-		                        </div>
-		                    </div>
-		                    <div class="row">
-		                        <div class="form-group col-md-6">
-		                            <label>Email</label>
-		                        	<@spring.formInput "user.email", 'class="form-control" readonly'/>
-		                        	<@spring.showErrors "<br>" />	                                           	
-		                        </div>
-		                        <div class="form-group col-md-6">
-		                            <label>Telefono</label>
-	                                <@spring.formInput "user.telephone", 'class="form-control"'/>
-	                                <@spring.showErrors "<br>" />
-		                        </div>
-		                    </div>
-		                    <div class="row">
-		                        <div class="form-group col-md-6">
-		                            <label>Contraseña actual</label>
-	                                <@spring.formPasswordInput "user.password", 'class="form-control"'/>
-	                                <@spring.showErrors "<br>" />
-		                        </div>
-		                    </div>		                    	                    
-		                    <div class="row">
-		                        <div class="form-group col-md-6">
-		                            <label>Contraseña nueva</label>
-	                                <@spring.formPasswordInput "user.newPassword", 'class="form-control"'/>
-	                                <@spring.showErrors "<br>" />	                            
-		                        </div>
-		                        <div class="form-group col-md-6">
-		                            <label>Repetir contraseña nueva</label>
-	                                <@spring.formPasswordInput "user.newPasswordVerification", 'class="form-control"'/>
-	                                <@spring.showErrors "<br>" />	                            
-		                        </div>
-		                    </div>		                    
-		                    <button type="submit" class="btn btn-warning pull-right">Guardar</button>
-	                    </form>
+						<div class="row">
+							<form action="<@c.url value='/dashboard/profile' />" method="POST" enctype="utf8">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<@spring.bind "user" />
+								<div class="row">
+			                        <div class="form-group col-md-6">	                        
+			                        	<label>Nombre</label>
+										<@spring.formInput "user.firstName", 'class="form-control"'/>
+			                        	<@spring.showErrors "<br>" />	                        	
+			                        </div>
+			                        <div class="form-group col-md-6">
+			                            <label>Apellido</label>
+										<@spring.formInput "user.lastName", 'class="form-control"'/>
+			                        	<@spring.showErrors "<br>" />
+			                        </div>
+			                    </div>
+			                    <div class="row">
+			                        <div class="form-group col-md-6">
+			                            <label>Email</label>
+			                        	<@spring.formInput "user.email", 'class="form-control" readonly'/>
+			                        	<@spring.showErrors "<br>" />	                                           	
+			                        </div>
+			                        <div class="form-group col-md-6">
+			                            <label>Telefono</label>
+		                                <@spring.formInput "user.telephone", 'class="form-control"'/>
+		                                <@spring.showErrors "<br>" />
+			                        </div>
+			                    </div>
+			                    <div class="row">
+			                        <div class="form-group col-md-6">
+			                            <label>Contraseña actual</label>
+		                                <@spring.formPasswordInput "user.password", 'class="form-control"'/>
+		                                <@spring.showErrors "<br>" />
+			                        </div>
+			                    </div>		                    	                    
+			                    <div class="row">
+			                        <div class="form-group col-md-6">
+			                            <label>Contraseña nueva</label>
+		                                <@spring.formPasswordInput "user.newPassword", 'class="form-control"'/>
+		                                <@spring.showErrors "<br>" />	                            
+			                        </div>
+			                        <div class="form-group col-md-6">
+			                            <label>Repetir contraseña nueva</label>
+		                                <@spring.formPasswordInput "user.newPasswordVerification", 'class="form-control"'/>
+		                                <@spring.showErrors "<br>" />	                            
+			                        </div>
+			                    </div>		                    
+			                    <button type="submit" class="btn btn-warning pull-right">Guardar</button>
+		                    </form>
+	                   	</div>
                    	</div>
                    	
                    	<#if user.isProfessional>
@@ -624,10 +655,10 @@
 	            			<div class="row">
 			            		<div class="btn-group btn-group-justified">
 								  <div class="btn-group">
-								    <button type="button" class="btn btn-default active">Presupuestos pendientes</button>
+								    <button type="button" class="btn btn-default" data-show-class="quote-PENDING">Presupuestos pendientes</button>
 								  </div>
 								  <div class="btn-group">
-								    <button type="button" class="btn btn-default">Presupuestos realizados</button>
+								    <button type="button" class="btn btn-default" data-show-class="quote-REPLIED">Presupuestos realizados</button>
 								  </div>
 								</div>
 							</div>
@@ -638,7 +669,7 @@
 										<div class="panel panel-default quote-${quote.statusType}">						
 											<form name="budgetsForm${quote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
 												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												<input type="hidden" name="statusType" value="REPLIED">
+												<input type="hidden" name="statusType" value="${quote.statusType}">
 												<input type="hidden" name="id" value="${quote.id}">
 												<@spring.bind "quote" />																						
 												<#-- ejemplo de un presupuesto pedido -->
@@ -703,17 +734,15 @@
 																	      <input type="hidden" name="amount.currency.code" value="${currency.code}">
 																	    </div>
 											                        </div>
-											                        <div class="form-group col-md-8">
-											                        	<label>Comentarios sobre el trabajo</label> 
-											                        	<@spring.formTextarea "quote.description", 'class="form-control"'/>
+											                        <div class="form-group col-md-4">
+											                        	<label>Valido hasta</label>
+										                        		<@spring.formInput "quote.validDateUntil", 'class="form-control"'/>
 											                        </div>
 										                       </div>
 										                       <div class="row budget-common-form">
 											                        <div class="form-group col-md-12">
-											                        	<label>Valido hasta</label>
-											                        	<div class="input-group">
-											                        		<@spring.formInput "quote.validDateUntil", 'class="form-control"'/>
-											                        	</div>
+											                        	<label>Comentarios sobre el trabajo</label> 
+											                        	<@spring.formTextarea "quote.description", 'class="form-control"'/>
 											                        </div>
 											                   </div>
 										                       <div class="row">
