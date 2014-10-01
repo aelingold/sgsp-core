@@ -116,7 +116,7 @@
                 			<li><span class="glyphicon glyphicon-ok"></span> Elija mejor comparando precios y reputación de los profesionales</li>
                 		</ul>
                 		<div style="text-align: center;">
-                			<a href="#" class="button btn btn-danger btn-lg">Registrarme</a>
+                			<a href="<@c.url value='/register'/>" class="button btn btn-danger btn-lg">Registrarme</a>
                 		</div>
                 	</div>
 				</div>
@@ -130,7 +130,7 @@
                 			<li><span class="glyphicon glyphicon-ok"></span> Diferenciese de los demás gracias a las calificaciones por sus trabajos y sus tarifas</li>                			
                 		</ul>
                 		<div style="text-align: center;">
-                			<a href="#" class="button btn btn-danger btn-lg">Ofrecer mi servicio</a>
+                			<a href="<@c.url value='/register'/>" class="button btn btn-danger btn-lg">Ofrecer mi servicio</a>
                 		</div>
                 	</div>
 				</div>
