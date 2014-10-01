@@ -1,6 +1,5 @@
 package org.ucema.sgsp.controller;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -15,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -41,9 +39,6 @@ import org.ucema.sgsp.service.UserService;
 import org.ucema.sgsp.service.UserWorkRateService;
 import org.ucema.sgsp.service.UserWorkZoneService;
 
-import freemarker.template.Configuration;
-import freemarker.template.TemplateException;
-
 @Controller
 public class DashBoardController {
 
@@ -66,8 +61,6 @@ public class DashBoardController {
 	private DashBoardDataService dashBoardDataService;
 	@Autowired
 	private QuoteQuestionService quoteQuestionService;
-	@Autowired
-	private Configuration configuration;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
@@ -103,12 +96,6 @@ public class DashBoardController {
 		dataMap.forEach((k, v) -> {
 			model.addAttribute(k, v);
 		});
-		
-		try {
-			String processTemplateIntoString = FreeMarkerTemplateUtils.processTemplateIntoString(configuration.getTemplate("dashboard.ftl"), model);
-		} catch (IOException | TemplateException e) {
-			LOGGER.error(e.getMessage(),e);
-		}
 
 		return VIEW_NAME_DASHBOARD_PAGE;
 	}

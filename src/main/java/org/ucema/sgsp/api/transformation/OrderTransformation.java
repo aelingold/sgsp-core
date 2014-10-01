@@ -62,6 +62,8 @@ public class OrderTransformation {
 
 		if (order.getUser() != null) {
 			result.setUsername(order.getUser().getEmail());
+			result.setFirstName(order.getUser().getFirstName());
+			result.setLastName(order.getUser().getLastName());
 		}
 		if (order.getWorkArea() != null) {
 			result.setWorkAreaCode(order.getWorkArea().getCode());

@@ -101,7 +101,11 @@ public class DashBoardDataService {
 
 		List<QuoteQuestionReplyDTO> quoteQuestionReplies = quoteQuestionReplyService
 				.findByQuoteQuestion_Quote_User_Email(username);
-		map.put("quoteQuestionReplies", quoteQuestionReplies);
+
+		List<QuoteDTO> quotesWithQuoteQuestionReplies = quoteService.list(quoteQuestionReplies.stream()
+				.map(qqr -> qqr.getQuoteId()).collect(Collectors.toList()));
+		
+		map.put("quotesWithQuoteQuestionReplies", quotesWithQuoteQuestionReplies);
 
 		map.put("userWorkRatesQtyMap", userWorkRateSummarizeService
 				.userWorkRateSummarizesMap(usernames));
@@ -144,13 +148,14 @@ public class DashBoardDataService {
 						QuoteStatusType.CANCELLED, QuoteStatusType.INVALID)));
 
 		map.put("payments", paymentService.findByUser_Email(username));
-		
-		if (user.getRatePlanCode() != null){
-			map.put("ratePlan", ratePlanService.findByCode(user.getRatePlanCode()));	
-		}else{
+
+		if (user.getRatePlanCode() != null) {
+			map.put("ratePlan",
+					ratePlanService.findByCode(user.getRatePlanCode()));
+		} else {
 			map.put("ratePlan", new RatePlanDTO());
 		}
-		
+
 		return map;
 	}
 
