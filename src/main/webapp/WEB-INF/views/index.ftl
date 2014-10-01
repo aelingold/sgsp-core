@@ -110,7 +110,7 @@
                 	<img src="<@c.url value='/static/new/img/characters/user.png'/>">	                	
                 	<div class="benefits-section">
                 		<ul class="benefits-list">
-                			<li><span class="glyphicon glyphicon-ok"></span> Use de la plataforma totalmente GRATIS!</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Use la plataforma totalmente GRATIS!</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Encuentre profesionales de confianza para los trabajos del hogar</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Pida presupuestos online</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Elija mejor comparando precios y reputación de los profesionales</li>
@@ -124,7 +124,7 @@
                 	<img src="<@c.url value='/static/new/img/characters/prof.png'/>">
                 	<div class="benefits-section">
                 		<ul class="benefits-list">
-                			<li><span class="glyphicon glyphicon-ok"></span> Use de la plataforma totalmente GRATIS!</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Use la plataforma totalmente GRATIS!</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Consiga más clientes</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Reciba notificaciones de nuevos trabajos y arme presupuestos fácilmente</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Diferenciese de los demás gracias a las calificaciones por sus trabajos y sus tarifas</li>                			
