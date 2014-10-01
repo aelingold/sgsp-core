@@ -42,6 +42,11 @@ public class OrderService {
 	}
 
 	@Transactional
+	public List<OrderDTO> list(List<Long> ids) {
+		return orderTransformation.transformToApi(orderDAO.findAll(ids));
+	}
+
+	@Transactional
 	public List<OrderDTO> list(Long userId) {
 
 		List<Order> orders = orderDAO.findAll(new Sort(Sort.Direction.DESC,

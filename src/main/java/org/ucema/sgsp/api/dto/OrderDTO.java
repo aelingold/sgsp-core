@@ -9,6 +9,8 @@ public class OrderDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String username;
+	private String firstName;
+	private String lastName;
 	private String workAreaCode;
 	private String workAreaDescription;
 	private String workDescription;
@@ -263,6 +265,22 @@ public class OrderDTO implements Serializable {
 		this.statusType = statusType;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -270,6 +288,10 @@ public class OrderDTO implements Serializable {
 		builder.append(id);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
 		builder.append(", workAreaCode=");
 		builder.append(workAreaCode);
 		builder.append(", workAreaDescription=");
@@ -294,12 +316,6 @@ public class OrderDTO implements Serializable {
 		builder.append(pendingNotify);
 		builder.append(", workDateType=");
 		builder.append(workDateType);
-		builder.append(", orderItemIds=");
-		builder.append(orderItemIds);
-		builder.append(", workAreaItemCodes=");
-		builder.append(workAreaItemCodes);
-		builder.append(", quoteIds=");
-		builder.append(quoteIds);
 		builder.append(", statusType=");
 		builder.append(statusType);
 		builder.append("]");
