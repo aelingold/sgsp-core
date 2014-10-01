@@ -1076,3 +1076,9 @@ ul{
 .benefits-list li{
 	margin-top:5px;
 }
+
+.benefits-list .glyphicon-ok{
+	color: #fec503;
+	font-size: 20px;
+	margin: 5px;
+}

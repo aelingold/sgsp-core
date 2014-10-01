@@ -79,6 +79,21 @@
             	</div>
             	
             	<div class="col-md-9">
+            	
+            		<div class="alert alert-success alert-dismissible" role="alert">
+				  		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				  		<span class="glyphicon glyphicon-ok"></span> Su presupuesto fue enviado con exito.
+					</div>
+					<div class="alert alert-warning alert-dismissible" role="alert">
+				  		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				  		<span class="fa fa-exclamation-triangle"></span> Mensaje de atencion.
+					</div>
+					<div class="alert alert-warning alert-danger" role="alert">
+				  		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				  		<span class="glyphicon glyphicon-remove"></span> Mensaje de error.
+					</div>
+            	
+            	
             		<#if user.isProfessional>
 	            		<div id="pagos-panel" class="col-md-12 dashboard-panel">
 							<div class="row">

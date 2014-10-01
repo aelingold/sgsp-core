@@ -59,3 +59,7 @@
 	margin-top: 8px;
 	padding: 0.5em 10px;
 }
+
+.alert > span{
+	margin-right:5px;
+}
