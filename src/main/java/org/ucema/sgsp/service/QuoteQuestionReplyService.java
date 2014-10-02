@@ -45,6 +45,15 @@ public class QuoteQuestionReplyService {
 	}
 
 	@Transactional
+	public void update(QuoteQuestionReplyDTO quoteQuestionReplyDTO) {
+
+		QuoteQuestionReply quoteQuestionReply = quoteQuestionReplyDAO
+				.getOne(quoteQuestionReplyDTO.getId());
+		quoteQuestionReplyDAO.save(quoteQuestionReplyTransformation
+				.updateFields(quoteQuestionReply, quoteQuestionReplyDTO));
+	}
+
+	@Transactional
 	public QuoteQuestionReplyDTO saveOrUpdate(
 			QuoteQuestionReplyDTO quoteQuestionReply) {
 		QuoteQuestionReply response = quoteQuestionReplyDAO

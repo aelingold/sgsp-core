@@ -98,6 +98,8 @@ public class DashBoardDataService {
 		map.put("quote", new QuoteDTO());
 
 		map.put("quoteQuestion", new QuoteQuestionDTO());
+		
+		map.put("quoteQuestionReply", new QuoteQuestionReplyDTO());
 
 		List<QuoteQuestionReplyDTO> quoteQuestionReplies = quoteQuestionReplyService
 				.findByQuoteQuestion_Quote_User_Email(username);

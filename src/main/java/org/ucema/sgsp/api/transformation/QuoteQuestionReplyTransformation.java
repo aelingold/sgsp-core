@@ -42,8 +42,10 @@ public class QuoteQuestionReplyTransformation {
 		result.setDescription(quoteQuestionReply.getDescription());
 		result.setQuoteQuestionId(quoteQuestionReply.getQuoteQuestion().getId());
 		result.setStatusType(quoteQuestionReply.getStatusType().name());
-		result.setQuoteId(quoteQuestionReply.getQuoteQuestion().getQuote().getId());
-		result.setQuoteQuestionDescription(quoteQuestionReply.getQuoteQuestion().getDescription());
+		result.setQuoteId(quoteQuestionReply.getQuoteQuestion().getQuote()
+				.getId());
+		result.setQuoteQuestionDescription(quoteQuestionReply
+				.getQuoteQuestion().getDescription());
 
 		return result;
 	}
@@ -60,5 +62,16 @@ public class QuoteQuestionReplyTransformation {
 				.valueOf(quoteQuestionReply.getStatusType()));
 
 		return result;
+	}
+
+	public QuoteQuestionReply updateFields(
+			QuoteQuestionReply quoteQuestionReply,
+			QuoteQuestionReplyDTO quoteQuestionReplyDTO) {
+
+		quoteQuestionReply.setDescription(quoteQuestionReplyDTO
+				.getDescription());
+		quoteQuestionReply.setStatusType(QuoteQuestionReplyStatusType.DONE);
+
+		return quoteQuestionReply;
 	}
 }

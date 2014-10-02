@@ -26,6 +26,7 @@ import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
+import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
@@ -33,6 +34,7 @@ import org.ucema.sgsp.security.model.Role;
 import org.ucema.sgsp.service.DashBoardDataService;
 import org.ucema.sgsp.service.DashBoardRatingService;
 import org.ucema.sgsp.service.DashBoardUserService;
+import org.ucema.sgsp.service.QuoteQuestionReplyService;
 import org.ucema.sgsp.service.QuoteQuestionService;
 import org.ucema.sgsp.service.QuoteService;
 import org.ucema.sgsp.service.UserService;
@@ -61,22 +63,25 @@ public class DashBoardController {
 	private DashBoardDataService dashBoardDataService;
 	@Autowired
 	private QuoteQuestionService quoteQuestionService;
+	@Autowired
+	private QuoteQuestionReplyService quoteQuestionReplyService;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard(WebRequest request, Model model) {
-		
+
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 
-		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();		
-		
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+
 		String dashboard = "";
-		if (userDetails.getRole() != null && userDetails.getRole().equals(Role.ROLE_ADMIN)){
+		if (userDetails.getRole() != null
+				&& userDetails.getRole().equals(Role.ROLE_ADMIN)) {
 			dashboard = dashboard(request, model, "admin");
-		}else{
-			dashboard = dashboard(request, model, "profile");	
+		} else {
+			dashboard = dashboard(request, model, "profile");
 		}
-		
+
 		return dashboard;
 	}
 
@@ -84,6 +89,12 @@ public class DashBoardController {
 	public String dashboard(WebRequest request, Model model,
 			@PathVariable String tabToShow) {
 
+		putDataModelInfo(tabToShow, model);
+
+		return VIEW_NAME_DASHBOARD_PAGE;
+	}
+
+	private void putDataModelInfo(String tabToShow, Model model) {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 
@@ -96,8 +107,6 @@ public class DashBoardController {
 		dataMap.forEach((k, v) -> {
 			model.addAttribute(k, v);
 		});
-
-		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
 	@RequestMapping(value = "/dashboard/profile", method = RequestMethod.POST)
@@ -106,8 +115,6 @@ public class DashBoardController {
 			BindingResult result, WebRequest request, Model model) {
 
 		LOGGER.debug("Changing user data with information: {}", dashBoardUser);
-
-		model.addAttribute("tabToShow", "profile");
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
@@ -118,7 +125,12 @@ public class DashBoardController {
 
 		userService.update(dashBoardUser);
 
-		return "redirect:/dashboard/profile";
+		model.addAttribute("successMessage",
+				"La informacion de su perfil se ha actualizado correctamente.");		
+		
+		putDataModelInfo("profile", model);
+
+		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
 	@RequestMapping(value = "/dashboard/budgets/replied", method = RequestMethod.POST)
@@ -126,16 +138,19 @@ public class DashBoardController {
 			@Valid @ModelAttribute("quote") QuoteDTO quote,
 			BindingResult result, WebRequest request, Model model) {
 
-		model.addAttribute("tabToShow", "budgets");
-
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
 			return "redirect:/dashboard/budgets";
 		}
 
 		quoteService.update(quote);
+		
+		model.addAttribute("successMessage",
+				"El presupuesto ha sido respondido satisfactoriamente.");		
+		
+		putDataModelInfo("budgets", model);	
 
-		return "redirect:/dashboard/budgets";
+		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
 	@RequestMapping(value = "/dashboard/ratings", method = RequestMethod.POST)
@@ -143,24 +158,25 @@ public class DashBoardController {
 			@Valid @ModelAttribute("userWorkRate") UserWorkRateDTO userWorkRate,
 			BindingResult result, WebRequest request, Model model) {
 
-		model.addAttribute("tabToShow", "ratings");
-
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
 			return "redirect:/dashboard/ratings";
 		}
 
 		dashBoardRatingService.save(userWorkRate);
+		
+		model.addAttribute("successMessage",
+				"Su calificacion ha sido realizada correctamente.");	
+		
+		putDataModelInfo("ratings", model);		
 
-		return "redirect:/dashboard/ratings";
+		return VIEW_NAME_DASHBOARD_PAGE;
 	}
-	
+
 	@RequestMapping(value = "/dashboard/questions", method = RequestMethod.POST)
 	public String questions(
 			@Valid @ModelAttribute("quoteQuestion") QuoteQuestionDTO quoteQuestion,
 			BindingResult result, WebRequest request, Model model) {
-
-		model.addAttribute("tabToShow", "requests");
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
@@ -168,14 +184,37 @@ public class DashBoardController {
 		}
 
 		quoteQuestionService.save(quoteQuestion);
+		
+		model.addAttribute("successMessage",
+				"Su pregunta ha sido enviada correctamente.");	
+		
+		putDataModelInfo("requests", model);		
 
-		return "redirect:/dashboard/requests";
-	}	
+		return VIEW_NAME_DASHBOARD_PAGE;
+	}
+
+	@RequestMapping(value = "/dashboard/question-replies", method = RequestMethod.POST)
+	public String questionReplies(
+			@Valid @ModelAttribute("quoteQuestionReply") QuoteQuestionReplyDTO quoteQuestionReply,
+			BindingResult result, WebRequest request, Model model) {
+
+		if (result.hasErrors()) {
+			LOGGER.debug("Validation errors found. Rendering form view.");
+			return "redirect:/dashboard/requests";
+		}
+
+		quoteQuestionReplyService.update(quoteQuestionReply);
+		
+		model.addAttribute("successMessage",
+				"Su respuesta ha sido enviada correctamente.");	
+		
+		putDataModelInfo("questions", model);		
+
+		return VIEW_NAME_DASHBOARD_PAGE;
+	}
 
 	@RequestMapping(value = "/dashboard/requests/accepted/{quoteId}", method = RequestMethod.POST)
 	public String budgetsAccepted(@PathVariable Long quoteId, Model model) {
-
-		model.addAttribute("tabToShow", "requests");
 
 		quoteService.save(quoteId);
 
@@ -190,16 +229,19 @@ public class DashBoardController {
 		userWorkRate.setStatusType(UserWorkRateStatusType.PENDING.name());
 		userWorkRate.setSummarized(false);
 		userWorkRateService.saveOrUpdate(userWorkRate);
+		
+		model.addAttribute("successMessage",
+				"El presupuesto ha sido aceptado correctamente.");	
+		
+		putDataModelInfo("requests", model);		
 
-		return "redirect:/dashboard/requests";
+		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
 	@RequestMapping(value = "/dashboard/config", method = RequestMethod.POST)
 	public String config(
 			@Valid @ModelAttribute("config") DashBoardConfigDTO config,
 			BindingResult result, WebRequest request, Model model) {
-
-		model.addAttribute("tabToShow", "config");
 
 		if (result.hasErrors()) {
 			LOGGER.debug("Validation errors found. Rendering form view.");
@@ -213,8 +255,13 @@ public class DashBoardController {
 
 		userWorkZoneService.deleteByUser_Email(username);
 		userWorkZoneService.save(config, username);
+		
+		model.addAttribute("successMessage",
+				"La configuracion ha sido actualizada correctamente.");	
+		
+		putDataModelInfo("config", model);		
 
-		return "redirect:/dashboard/config";
+		return VIEW_NAME_DASHBOARD_PAGE;
 	}
 
 	@InitBinder
