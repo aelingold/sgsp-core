@@ -15,7 +15,7 @@ public class UserWorkZoneTest extends BaseTest {
 	@Test
 	public void insertAndVerifyUser() {
 
-		String cityCode = "RHZOG";
+		String cityCode = "JSIXZ";
 
 		UserWorkZoneDTO request = UserWorkZoneDTO.newInstance()
 				.withCityCode(cityCode).build();

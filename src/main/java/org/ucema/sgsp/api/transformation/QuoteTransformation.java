@@ -53,7 +53,10 @@ public class QuoteTransformation {
 		result.setId(quote.getId());
 		result.setRequireVisit(quote.getRequireVisit());
 		result.setStatusType(quote.getStatusType().name());
-		result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
+
+		if (quote.getOrder() != null) {
+			result.setOrder(orderTransformation.transformToApi(quote.getOrder()));
+		}
 		result.setCreatedAt(quote.getCreatedAt());
 		result.setUpdatedAt(quote.getUpdatedAt());
 

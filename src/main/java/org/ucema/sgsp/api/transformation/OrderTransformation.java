@@ -47,8 +47,10 @@ public class OrderTransformation {
 	public List<OrderDTO> transformToApi(List<Order> orders) {
 		List<OrderDTO> result = new ArrayList<OrderDTO>();
 
-		for (Order order : orders) {
-			result.add(transformToApi(order));
+		if (orders != null) {
+			for (Order order : orders) {
+				result.add(transformToApi(order));
+			}
 		}
 
 		return result;
@@ -95,11 +97,12 @@ public class OrderTransformation {
 			result.setCityCode(order.getCity().getCode());
 			result.setCityDescription(order.getCity().getDescription());
 		}
-		
-		if (order.getQuotes() != null){
-			result.setQuoteIds(order.getQuotes().stream().map(q-> q.getId()).collect(Collectors.toList()));
+
+		if (order.getQuotes() != null) {
+			result.setQuoteIds(order.getQuotes().stream().map(q -> q.getId())
+					.collect(Collectors.toList()));
 		}
-		
+
 		result.setStatusType(order.getStatusType().name());
 
 		return result;
@@ -189,7 +192,7 @@ public class OrderTransformation {
 	public Order updateFields(Order order, OrderDTO orderDTO) {
 
 		order.setPendingNotify(orderDTO.getPendingNotify());
-		
+
 		return order;
 	}
 }

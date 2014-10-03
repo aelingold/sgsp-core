@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.ucema.sgsp.BaseTest;
 import org.ucema.sgsp.api.dto.AmountDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
+import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.service.QuoteService;
 
 public class QuoteTest extends BaseTest{
@@ -25,7 +26,9 @@ public class QuoteTest extends BaseTest{
 		BigDecimal amount = BigDecimal.ZERO;
 		String currencyCode = "ARS";
 		AmountDTO amountDTO = AmountDTO.newInstance().withAmount(amount).withCurrencyCode(currencyCode);
-		QuoteDTO quote = QuoteDTO.newInstance().withId(id).withDescription(description).withValidDateUntil(validDateUntil).withAmount(amountDTO)
+		String statusType = QuoteStatusType.ACCEPTED.name();
+		
+		QuoteDTO quote = QuoteDTO.newInstance().withId(id).withDescription(description).withValidDateUntil(validDateUntil).withAmount(amountDTO).withStatusType(statusType)
 				.build();		
 		
 		QuoteDTO response = quoteService.saveOrUpdate(quote);

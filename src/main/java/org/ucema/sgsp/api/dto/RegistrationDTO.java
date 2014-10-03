@@ -61,6 +61,77 @@ public class RegistrationDTO {
 
     public RegistrationDTO() {
     }
+    
+	public static RegistrationDTO newInstance() {
+		return new RegistrationDTO();
+	}
+
+	public RegistrationDTO build() {
+		RegistrationDTO result = new RegistrationDTO();
+
+		result.setCountryCode(countryCode);
+		result.setEmail(email);
+		result.setFirstName(firstName);
+		result.setIsProfessional(isProfessional);
+		result.setLastName(lastName);
+		result.setPassword(password);
+		result.setPasswordVerification(passwordVerification);
+		result.setSignInProvider(signInProvider);
+		result.setTelephone(telephone);
+		result.setWorkAreaCodes(workAreaCodes);
+		
+		return result;
+	}
+	
+	public RegistrationDTO withWorkAreaCodes(List<String> workAreaCodes) {
+		this.workAreaCodes = workAreaCodes;
+		return this;
+	}	
+	
+	public RegistrationDTO withTelephone(String telephone) {
+		this.telephone = telephone;
+		return this;
+	}	
+	
+	public RegistrationDTO withSignInProvider(SocialMediaService signInProvider) {
+		this.signInProvider = signInProvider;
+		return this;
+	}	
+	
+	public RegistrationDTO withPasswordVerification(String passwordVerification) {
+		this.passwordVerification = passwordVerification;
+		return this;
+	}	
+	
+	public RegistrationDTO withPassword(String password) {
+		this.password = password;
+		return this;
+	}	
+	
+	public RegistrationDTO withLastName(String lastName) {
+		this.lastName = lastName;
+		return this;
+	}	
+	
+	public RegistrationDTO withIsProfessional(Boolean isProfessional) {
+		this.isProfessional = isProfessional;
+		return this;
+	}	
+	
+	public RegistrationDTO withFirstName(String firstName) {
+		this.firstName = firstName;
+		return this;
+	}	
+	
+	public RegistrationDTO withEmail(String email) {
+		this.email = email;
+		return this;
+	}	
+	
+	public RegistrationDTO withCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+		return this;
+	}	
 
     public boolean isNormalRegistration() {
         return signInProvider == null;
