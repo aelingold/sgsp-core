@@ -20,7 +20,7 @@
 				    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
 					      	<h4 class="panel-title">
 					        	<a  href="#collapse${userWorkRate_index}">
-					          		${userWorkRate.userFirstName} ${userWorkRate.userLastName}
+					          		${userWorkRate.userFirstName} ${userWorkRate.userLastName} - ${userWorkRate.updatedAt?string("dd/MM/yy")}
 					          		<span class="fa"></span>							          		
 					        	</a>							        	
 					      	</h4>

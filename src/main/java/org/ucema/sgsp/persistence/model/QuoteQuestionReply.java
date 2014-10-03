@@ -98,4 +98,12 @@ public class QuoteQuestionReply {
 	public void setStatusType(QuoteQuestionReplyStatusType statusType) {
 		this.statusType = statusType;
 	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 }

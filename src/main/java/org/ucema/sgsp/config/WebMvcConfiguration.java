@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -23,75 +24,100 @@ import freemarker.template.utility.XmlEscape;
 @ComponentScan("org.ucema.sgsp")
 public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-    }
-    
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
-    
-//    @Bean
-//    public SimpleMappingExceptionResolver exceptionResolver() {
-//        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-// 
-//        Properties exceptionMappings = new Properties();
-// 
-//        exceptionMappings.put("java.lang.Exception", "error/error");
-//        exceptionMappings.put("java.lang.RuntimeException", "error/error");
-// 
-//        exceptionResolver.setExceptionMappings(exceptionMappings);
-// 
-//        Properties statusCodes = new Properties();
-// 
-//        statusCodes.put("error/404", "404");
-//        statusCodes.put("error/error", "500");
-// 
-//        exceptionResolver.setStatusCodes(statusCodes);
-// 
-//        return exceptionResolver;
-//    }    
-    
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-// 
-//        viewResolver.setViewClass(JstlView.class);
-//        viewResolver.setPrefix("/WEB-INF/jsp/");
-//        viewResolver.setSuffix(".jsp");
-//        viewResolver.setOrder(2);
-// 
-//        return viewResolver;
-//    }
-    
-    @Bean
-    public ViewResolver freemarkerViewResolver() {
-      FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-      resolver.setCache(true);
-      resolver.setPrefix("");
-      resolver.setSuffix(".ftl");
-      resolver.setOrder(1);
-      resolver.setContentType("text/html;charset=UTF-8");
-      return resolver;
-    }
-    
-    @Bean
-    public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {      
-      FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
-      configurer.setTemplateLoaderPaths("/WEB-INF/views/","classpath:/WEB-INF/views/");
-      configurer.setDefaultEncoding("UTF-8");
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations(
+				"/static/");
+	}
 
-      Properties settings = new Properties();
-      settings.setProperty("number_format", "0.######");
-      settings.setProperty("auto_import", "spring.ftl as spring");
-      configurer.setFreemarkerSettings(settings);
-      Map<String, Object> variables = new java.util.HashMap<String, Object>();
+	@Override
+	public void configureDefaultServletHandling(
+			DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
 
-      variables.put("xml_escape", new XmlEscape());
-      configurer.setFreemarkerVariables(variables);
-      
-      return configurer;      
-    }    
+	// @Bean
+	// public SimpleMappingExceptionResolver exceptionResolver() {
+	// SimpleMappingExceptionResolver exceptionResolver = new
+	// SimpleMappingExceptionResolver();
+	//
+	// Properties exceptionMappings = new Properties();
+	//
+	// exceptionMappings.put("java.lang.Exception", "error/error");
+	// exceptionMappings.put("java.lang.RuntimeException", "error/error");
+	//
+	// exceptionResolver.setExceptionMappings(exceptionMappings);
+	//
+	// Properties statusCodes = new Properties();
+	//
+	// statusCodes.put("error/404", "404");
+	// statusCodes.put("error/error", "500");
+	//
+	// exceptionResolver.setStatusCodes(statusCodes);
+	//
+	// return exceptionResolver;
+	// }
+
+	// @Bean
+	// public ViewResolver viewResolver() {
+	// InternalResourceViewResolver viewResolver = new
+	// InternalResourceViewResolver();
+	//
+	// viewResolver.setViewClass(JstlView.class);
+	// viewResolver.setPrefix("/WEB-INF/jsp/");
+	// viewResolver.setSuffix(".jsp");
+	// viewResolver.setOrder(2);
+	//
+	// return viewResolver;
+	// }
+
+	@Bean
+	public ViewResolver freemarkerViewResolver() {
+		FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+		resolver.setCache(true);
+		resolver.setPrefix("");
+		resolver.setSuffix(".ftl");
+		resolver.setOrder(1);
+		resolver.setContentType("text/html;charset=UTF-8");
+		return resolver;
+	}
+
+	@Bean
+	public FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean() {
+		FreeMarkerConfigurationFactoryBean fmcfb = new FreeMarkerConfigurationFactoryBean();
+
+		fmcfb.setTemplateLoaderPaths("/WEB-INF/views/",
+				"classpath:/WEB-INF/views/");
+		fmcfb.setDefaultEncoding("UTF-8");
+
+		Properties settings = new Properties();
+		settings.setProperty("number_format", "0.######");
+		fmcfb.setFreemarkerSettings(settings);
+		Map<String, Object> variables = new java.util.HashMap<String, Object>();
+
+		variables.put("xml_escape", new XmlEscape());
+		fmcfb.setFreemarkerVariables(variables);		
+		
+		return fmcfb;
+	}
+
+	@Bean
+	public FreeMarkerConfigurer freemarkerConfig() throws IOException,
+			TemplateException {
+		FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
+		configurer.setTemplateLoaderPaths("/WEB-INF/views/",
+				"classpath:/WEB-INF/views/");
+		configurer.setDefaultEncoding("UTF-8");
+
+		Properties settings = new Properties();
+		settings.setProperty("number_format", "0.######");
+		settings.setProperty("auto_import", "spring.ftl as spring");
+		configurer.setFreemarkerSettings(settings);
+		Map<String, Object> variables = new java.util.HashMap<String, Object>();
+
+		variables.put("xml_escape", new XmlEscape());
+		configurer.setFreemarkerVariables(variables);
+
+		return configurer;
+	}
 }

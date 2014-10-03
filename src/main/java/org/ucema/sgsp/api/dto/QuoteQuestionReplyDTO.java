@@ -1,6 +1,7 @@
 package org.ucema.sgsp.api.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class QuoteQuestionReplyDTO implements Serializable {
 
@@ -11,6 +12,7 @@ public class QuoteQuestionReplyDTO implements Serializable {
 	private String quoteQuestionDescription;
 	private String description;
 	private String statusType;
+	private Date updatedAt;
 
 	public QuoteQuestionReplyDTO() {
 		super();
@@ -93,6 +95,14 @@ public class QuoteQuestionReplyDTO implements Serializable {
 		this.quoteId = quoteId;
 	}
 
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -108,6 +118,8 @@ public class QuoteQuestionReplyDTO implements Serializable {
 		builder.append(description);
 		builder.append(", statusType=");
 		builder.append(statusType);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
 		builder.append("]");
 		return builder.toString();
 	}

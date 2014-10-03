@@ -23,7 +23,7 @@
 						<#-- ejemplo de un presupuesto pedido -->
 				  		<div class="panel-heading">
 					    	<h3 class="panel-title">
-					    		Necesito un ${quote.order.workAreaDescription}
+					    		Necesito un ${quote.order.workAreaDescription} - ${quote.order.username}
 					    		<#if quote.order.workDateType='URGENT'>
 					    			<span class="pull-right urgente">Es urgente</span>
 					    		</#if>

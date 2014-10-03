@@ -50,7 +50,13 @@
 							  			<#elseif quote.statusType="ACCEPTED">
 							  				Aceptado(Pendiente calificacion)
 							  			</#if>
-						  				<a class="button btn btn-xs btn-default pull-right make-question" style="margin-right:10px;cursor:pointer;">Realizar pregunta</a>							  				
+					  					<a class="button btn btn-xs btn-default pull-right make-question" style="margin-right:10px;cursor:pointer;">
+											<#if quote.quoteQuestions?size != 0>
+					  							Ver preguntas
+					  						<#else>
+					  							Realizar pregunta
+						  					</#if>					  							
+					  					</a>
 						  			</div>
 						  			<form name="questionsForm${quote_index}" action="<@c.url value='/dashboard/questions' />" method="POST" enctype="utf8" style="display:none;">
 										<@spring.bind "quoteQuestion" />
@@ -60,8 +66,8 @@
 								  				<#list quote.quoteQuestions as quoteQuestion>
 									  				<li class="col-md-12">
 									  					<div class="question-message message">
-										  					<div class="user-name-message">${quoteQuestion.description}</div>
-										  					<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""}</div>
+										  					<div class="user-name-message">${quoteQuestion.description} - ${quoteQuestion.createdAt?string("dd/MM/yy")}</div>
+										  					<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""} - ${(quoteQuestion.quoteQuestionReply.updatedAt?string("dd/MM/yy"))!""}</div>
 										  				</div>
 									  				</li>
 									  			</#list>

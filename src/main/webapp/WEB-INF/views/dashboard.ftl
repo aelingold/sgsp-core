@@ -62,11 +62,23 @@
             			<@security.authorize ifNotGranted="ROLE_ADMIN">
 					      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
 					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Mis presupuestos pedidos</a></li>
-					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>"><span class="badge pull-right">7</span> Calificaciones</a></li>
+					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">
+					      	<#if pendingUserWorkRatesQty != 0>
+					      		<span class="badge pull-right">${pendingUserWorkRatesQty}</span>
+							</#if>
+							Calificaciones</a></li>
 					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
 					      <#if user.isProfessional> 
-					      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>"><span class="badge pull-right">5</span> Responder pedidos</a></li>
-					      	<li id="preguntas-option"><a href="<@c.url value='/dashboard/questions'/>"><span class="badge pull-right">2</span> Preguntas</a></li>
+					      	<li id="presupuestos-option"><a href="<@c.url value='/dashboard/budgets'/>">
+					      		<#if pendingQuotesQty != 0>
+					      			<span class="badge pull-right">${pendingQuotesQty}</span>
+					      		</#if> 
+					      		Responder pedidos</a></li>
+					      	<li id="preguntas-option"><a href="<@c.url value='/dashboard/questions'/>">
+					      		<#if pendingQuotesWithQuoteQuestionRepliesQty != 0>
+					      			<span class="badge pull-right">${pendingQuotesWithQuoteQuestionRepliesQty}</span>
+					      		</#if> 
+					      		Preguntas</a></li>
 					      	<li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>
 					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 					      </#if>					      					      

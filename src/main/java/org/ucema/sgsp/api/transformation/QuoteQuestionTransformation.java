@@ -43,6 +43,7 @@ public class QuoteQuestionTransformation {
 		result.setId(quoteQuestion.getId());
 		result.setDescription(quoteQuestion.getDescription());
 		result.setQuoteId(quoteQuestion.getQuote().getId());
+		result.setCreatedAt(quoteQuestion.getCreatedAt());
 
 		if (quoteQuestion.getQuoteQuestionReply() != null) {
 			result.setQuoteQuestionReply(quoteQuestionReplyTransformation

@@ -39,6 +39,7 @@ public class QuoteQuestionReplyTransformation {
 		QuoteQuestionReplyDTO result = new QuoteQuestionReplyDTO();
 
 		result.setId(quoteQuestionReply.getId());
+		result.setUpdatedAt(quoteQuestionReply.getUpdatedAt());
 		result.setDescription(quoteQuestionReply.getDescription());
 		result.setQuoteQuestionId(quoteQuestionReply.getQuoteQuestion().getId());
 		result.setStatusType(quoteQuestionReply.getStatusType().name());

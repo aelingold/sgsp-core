@@ -1,7 +1,9 @@
 package org.ucema.sgsp.job;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -82,8 +84,12 @@ public class SendOrderJob {
 		users.forEach(user -> {
 
 			if (env.getProperty("send.email.enabled", "false").equals("true")) {
-				mailService.sendEmail(user.getEmail(),
-						buildMessage(user, order));
+
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("orderUsername", order.getUsername());
+
+				mailService.sendEmail(user.getEmail(), "info@singuia.com",
+						"Nuevo presupuesto", "mail/sendOrder.ftl", model);
 			}
 
 			userNotifyService.saveOrUpdate(UserNotifyDTO.newInstance()
@@ -103,11 +109,5 @@ public class SendOrderJob {
 			order.setPendingNotify(false);
 			orderService.update(order);
 		}
-	}
-
-	private String buildMessage(UserDTO user, OrderDTO order) {
-
-		StringBuilder builder = new StringBuilder();
-		return builder.toString();
 	}
 }

@@ -47,6 +47,7 @@ public class UserWorkRateTransformation {
 
 		result.setId(userWorkRate.getId());
 		result.setComment(userWorkRate.getComment());
+		result.setUpdatedAt(userWorkRate.getUpdatedAt());
 
 		if (userWorkRate.getRatingType() != null) {
 			result.setRatingType(userWorkRate.getRatingType().name());

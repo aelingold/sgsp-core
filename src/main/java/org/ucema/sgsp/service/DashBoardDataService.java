@@ -26,6 +26,7 @@ import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
+import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 
 import com.google.common.collect.Sets;
@@ -93,28 +94,49 @@ public class DashBoardDataService {
 		Set<String> usernames = allQuotes.stream().map(aq -> aq.getUsername())
 				.collect(Collectors.toSet());
 
-		map.put("quotes", quotes(username, allQuotes));
+		List<QuoteDTO> quotes = quotes(username, allQuotes);
+		map.put("quotes", quotes);
+
+		long pendingQuotesQty = quotes
+				.stream()
+				.filter(q -> q.getStatusType().equals(
+						QuoteStatusType.PENDING.name())).count();
+		map.put("pendingQuotesQty", pendingQuotesQty);
 
 		map.put("quote", new QuoteDTO());
 
 		map.put("quoteQuestion", new QuoteQuestionDTO());
-		
+
 		map.put("quoteQuestionReply", new QuoteQuestionReplyDTO());
 
 		List<QuoteQuestionReplyDTO> quoteQuestionReplies = quoteQuestionReplyService
 				.findByQuoteQuestion_Quote_User_Email(username);
 
-		List<QuoteDTO> quotesWithQuoteQuestionReplies = quoteService.list(quoteQuestionReplies.stream()
-				.map(qqr -> qqr.getQuoteId()).collect(Collectors.toList()));
-		
-		map.put("quotesWithQuoteQuestionReplies", quotesWithQuoteQuestionReplies);
+		List<QuoteDTO> quotesWithQuoteQuestionReplies = quoteService
+				.list(quoteQuestionReplies.stream()
+						.map(qqr -> qqr.getQuoteId())
+						.collect(Collectors.toList()));
+
+		map.put("quotesWithQuoteQuestionReplies",
+				quotesWithQuoteQuestionReplies);
+
+		map.put("pendingQuotesWithQuoteQuestionRepliesQty",
+				quotesWithQuoteQuestionRepliesQty(quotesWithQuoteQuestionReplies));
 
 		map.put("userWorkRatesQtyMap", userWorkRateSummarizeService
 				.userWorkRateSummarizesMap(usernames));
 
 		map.put("userWorkRate", new UserWorkRateDTO());
 
-		map.put("userWorkRates", userWorkRateService.findByUser_Email(username));
+		List<UserWorkRateDTO> userWorkRates = userWorkRateService
+				.findByUser_Email(username);
+		map.put("userWorkRates", userWorkRates);
+
+		long pendingUserWorkRatesQty = userWorkRates
+				.stream()
+				.filter(uwr -> uwr.getStatusType().equals(
+						UserWorkRateStatusType.PENDING.name())).count();
+		map.put("pendingUserWorkRatesQty", pendingUserWorkRatesQty);
 
 		map.put("workAreaQuestions", workAreaQuestionService.list());
 
@@ -159,6 +181,26 @@ public class DashBoardDataService {
 		}
 
 		return map;
+	}
+
+	private Integer quotesWithQuoteQuestionRepliesQty(
+			List<QuoteDTO> quotesWithQuoteQuestionReplies) {
+		Integer result = 0;
+
+		for (QuoteDTO quoteDTO : quotesWithQuoteQuestionReplies) {
+			for (QuoteQuestionDTO quoteQuestionDTO : quoteDTO
+					.getQuoteQuestions()) {
+				if (quoteQuestionDTO.getQuoteQuestionReply() != null
+						&& (quoteQuestionDTO.getQuoteQuestionReply()
+								.getDescription() == null || quoteQuestionDTO
+								.getQuoteQuestionReply().getDescription()
+								.isEmpty())) {
+					result++;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	public List<QuoteDTO> quotes(String username, List<QuoteDTO> allQuotes) {

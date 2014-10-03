@@ -1,6 +1,7 @@
 package org.ucema.sgsp.api.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserWorkRateDTO implements Serializable {
 
@@ -19,6 +20,7 @@ public class UserWorkRateDTO implements Serializable {
 	private String statusType;
 	private Boolean workCompleted;
 	private Boolean summarized;
+	private Date updatedAt;
 
 	public Long getId() {
 		return id;
@@ -133,6 +135,14 @@ public class UserWorkRateDTO implements Serializable {
 		this.summarized = summarized;
 	}
 
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -164,6 +174,8 @@ public class UserWorkRateDTO implements Serializable {
 		builder.append(workCompleted);
 		builder.append(", summarized=");
 		builder.append(summarized);
+		builder.append(", updatedAt=");
+		builder.append(updatedAt);
 		builder.append("]");
 		return builder.toString();
 	}
