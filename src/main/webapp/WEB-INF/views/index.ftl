@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sin Guía - Profesionales de confianza</title>
+    <title>Sin Guía - Servcios de confianza</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<@c.url value='/static/new/css/bootstrap.min.css'/>" rel="stylesheet">
@@ -111,9 +111,9 @@
                 	<div class="benefits-section">
                 		<ul class="benefits-list">
                 			<li><span class="glyphicon glyphicon-ok"></span> Use la plataforma totalmente GRATIS!</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Encuentre profesionales de confianza para los trabajos del hogar</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Encuentre servicios de confianza para los trabajos del hogar</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Pida presupuestos online</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Elija mejor comparando precios y reputación de los profesionales</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Elija mejor comparando precios y reputación de los oferentes</li>
                 		</ul>
                 		<div style="text-align: center;">
                 			<a href="<@c.url value='/register'/>" class="button btn btn-danger btn-lg">Registrarme</a>

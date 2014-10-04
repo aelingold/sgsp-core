@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Registración en SinGuia</title>
-<link href="http://www.singuia.com/static/new/css/send-order-mail.css" rel="stylesheet">
+<link href="http://www.singuia.com/static/new/css/mail.css" rel="stylesheet">
 </head>
 <body bgcolor="#FFFFFF">
 	<!-- HEADER -->

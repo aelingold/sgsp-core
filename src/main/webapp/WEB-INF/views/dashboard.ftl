@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sin Guía - Profesionales de confianza</title>
+    <title>Sin Guía - Servicios de confianza</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<@c.url value='/static/new/css/bootstrap.min.css'/>" rel="stylesheet">
@@ -79,7 +79,7 @@
 					      			<span class="badge pull-right">${pendingQuotesWithQuoteQuestionRepliesQty}</span>
 					      		</#if> 
 					      		Preguntas</a></li>
-					      	<li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>
+					      	<!-- <li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>-->
 					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 					      </#if>					      					      
 					  </@security.authorize>

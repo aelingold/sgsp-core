@@ -28,7 +28,6 @@ import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
-import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.security.model.Role;
 import org.ucema.sgsp.service.DashBoardDataService;
@@ -203,7 +202,7 @@ public class DashBoardController {
 			return "redirect:/dashboard/requests";
 		}
 
-		quoteQuestionReplyService.update(quoteQuestionReply);
+		quoteQuestionReplyService.quoteQuestionReply(quoteQuestionReply);
 		
 		model.addAttribute("successMessage",
 				"Su respuesta ha sido enviada correctamente.");	
@@ -216,19 +215,12 @@ public class DashBoardController {
 	@RequestMapping(value = "/dashboard/requests/accepted/{quoteId}", method = RequestMethod.POST)
 	public String budgetsAccepted(@PathVariable Long quoteId, Model model) {
 
-		quoteService.save(quoteId);
-
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 
-		String username = auth.getName();
-
-		UserWorkRateDTO userWorkRate = new UserWorkRateDTO();
-		userWorkRate.setQuoteId(quoteId);
-		userWorkRate.setUsername(username);
-		userWorkRate.setStatusType(UserWorkRateStatusType.PENDING.name());
-		userWorkRate.setSummarized(false);
-		userWorkRateService.saveOrUpdate(userWorkRate);
+		String username = auth.getName();		
+		
+		quoteService.accept(quoteId,username);
 		
 		model.addAttribute("successMessage",
 				"El presupuesto ha sido aceptado correctamente.");	

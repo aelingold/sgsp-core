@@ -4,7 +4,7 @@
 <!-- If you delete this meta tag, Half Life 3 will never be released. -->
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Solicitud de Presupuesto</title>
+<title>Presupuesto aceptado</title>
 <link href="http://www.singuia.com/static/new/css/mail.css" rel="stylesheet">
 </head>
 <body bgcolor="#FFFFFF">
@@ -35,10 +35,19 @@
 				<table>
 					<tr>
 						<td>
-							<h3>Solicitud de Presupuesto</h3>
+							<h3>Presupuesto aceptado</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha solicitado que realice un presupuesto.
+								El usuario ${lastName} ${firstName} ha aceptado tu presupuesto.
 							</p>
+							<p class="lead">
+								Te adjuntamos la siguiente informacion para que te pongas en contacto:
+							</p>
+							<p class="lead">
+								Email: ${email}
+							</p>
+							<p class="lead">
+								Telefono: ${telephone}
+							</p>																					
 							<p class="callout">
 								Para acceder hace clic <a href="http://www.singuia.com/dashboard/budgets">aqui</a>
 							</p>

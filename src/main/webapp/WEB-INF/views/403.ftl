@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sin Guía - Profesionales de confianza</title>
+    <title>Sin Guía - Servicios de confianza</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<@c.url value='/static/new/css/bootstrap.min.css'/>" rel="stylesheet">

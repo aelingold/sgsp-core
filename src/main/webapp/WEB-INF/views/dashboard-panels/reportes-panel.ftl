@@ -16,7 +16,7 @@
 							<tr>  
 					        	<th>Año-mes</th>
 					            <th>Usuarios</th>
-					            <th>Profesionales</th>
+					            <th>Oferentes</th>
 					        </tr>
 					    </thead>  
 					    <tbody>
@@ -51,7 +51,7 @@
 					    </tbody>
 					</table>										
 	  				<h3 class="panel-title">
-						Cantidad de profesionales postulados por rubro por dia
+						Cantidad de oferentes postulados por rubro por dia
 					</h3>						  				
 					<table class="table">  
 						<thead>  

@@ -1,6 +1,8 @@
 package org.ucema.sgsp.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -17,9 +19,10 @@ public class QuoteQuestionReplyService {
 
 	@Autowired
 	private QuoteQuestionReplyTransformation quoteQuestionReplyTransformation;
-
 	@Autowired
 	private QuoteQuestionReplyDAO quoteQuestionReplyDAO;
+	@Autowired
+	private MailService mailService;
 
 	@Transactional
 	public List<QuoteQuestionReplyDTO> findByQuoteQuestion_Quote_User_Email(
@@ -45,12 +48,22 @@ public class QuoteQuestionReplyService {
 	}
 
 	@Transactional
-	public void update(QuoteQuestionReplyDTO quoteQuestionReplyDTO) {
+	public void quoteQuestionReply(QuoteQuestionReplyDTO quoteQuestionReplyDTO) {
 
 		QuoteQuestionReply quoteQuestionReply = quoteQuestionReplyDAO
 				.getOne(quoteQuestionReplyDTO.getId());
 		quoteQuestionReplyDAO.save(quoteQuestionReplyTransformation
 				.updateFields(quoteQuestionReply, quoteQuestionReplyDTO));
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("firstName", quoteQuestionReply.getQuoteQuestion().getQuote()
+				.getUser().getFirstName());
+		model.put("lastName", quoteQuestionReply.getQuoteQuestion().getQuote()
+				.getUser().getLastName());
+
+		mailService.sendEmail(quoteQuestionReply.getQuoteQuestion().getQuote()
+				.getOrder().getUser().getEmail(), MailService.FROM_EMAIL,
+				"Respuesta recibida", "mail/sendQuestionResponse.ftl", model);
 	}
 
 	@Transactional

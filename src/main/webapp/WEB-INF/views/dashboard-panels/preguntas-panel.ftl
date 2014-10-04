@@ -14,21 +14,25 @@
 				  		<@presupuestos quotesWithQuoteQuestionReply/>
 		  			</div>
 		  			<#list quotesWithQuoteQuestionReply.quoteQuestions as quoteQuestion>
-		  				<form name="quoteQuestions${quoteQuestion_index}" action="<@c.url value='/dashboard/question-replies' />" method="POST" enctype="utf8">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<@spring.bind "quoteQuestionReply" />
-							<input type="hidden" name="quoteQuestionId" value="${quoteQuestion.id}">
-							<input type="hidden" name="id" value="${quoteQuestion.quoteQuestionReply.id}">
+		  				<#if quoteQuestion.quoteQuestionReply.statusType="DONE">
 				  			<div class="col-md-12 form-group">
 						  		<label>Pregunta</label>
 						  		<div>${quoteQuestion.description}</div>
+				  			</div>				  		
+				  			<div class="col-md-12 form-group">
+						  		<label>Respuesta</label>
+						  		<div>${quoteQuestion.quoteQuestionReply.description}</div>
 				  			</div>
-				  			<#if quoteQuestion.quoteQuestionReply.statusType="DONE">				  		
+						<#else>				
+			  				<form name="quoteQuestions${quoteQuestion_index}" action="<@c.url value='/dashboard/question-replies' />" method="POST" enctype="utf8">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<@spring.bind "quoteQuestionReply" />
+								<input type="hidden" name="quoteQuestionId" value="${quoteQuestion.id}">
+								<input type="hidden" name="id" value="${quoteQuestion.quoteQuestionReply.id}">
 					  			<div class="col-md-12 form-group">
-							  		<label>Respuesta</label>
-							  		<div>${quoteQuestion.quoteQuestionReply.description}</div>
-					  			</div>
-					  		<#else>
+							  		<label>Pregunta</label>
+							  		<div>${quoteQuestion.description}</div>
+					  			</div>				  		
 					  			<div class="col-md-12 form-group">
 							  		<label>Respuesta</label>
 							  		<textarea name="description" class="form-control"></textarea>
@@ -36,8 +40,8 @@
 					  			<div class="col-md-12">
 					  				<a href="javascript:document.quoteQuestions${quoteQuestion_index}.submit()" class="button btn btn-warning pull-right">Enviar respuesta</a>
 					  			</div>					  			
-					  		</#if>
-				  		</form>
+					  		</form>
+						</#if>
 			  		</#list>
 		  		</div>
 		  	</div>

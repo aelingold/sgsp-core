@@ -30,6 +30,10 @@ public class QuoteService {
 	private QuoteDAO quoteDAO;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MailService mailService;
+	@Autowired
+	private UserWorkRateService userWorkRateService;
 
 	@Transactional
 	public void updateStatus(Long quoteId, QuoteStatusType statusType) {
@@ -144,11 +148,22 @@ public class QuoteService {
 	}
 
 	@Transactional
-	public void save(Long quoteId) {
-		QuoteDTO quote = get(quoteId);
-		quote.setStatusType(QuoteStatusType.ACCEPTED.name());
+	public void accept(Long quoteId, String username) {
+		Quote quote = quoteDAO.findOne(quoteId);
+		quote.setStatusType(QuoteStatusType.ACCEPTED);
+		quoteDAO.save(quote);
+		
+		userWorkRateService.accept(quoteId, username);
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("firstName", quote.getUser().getFirstName());
+		model.put("lastName", quote.getUser().getLastName());
+		model.put("email", quote.getUser().getEmail());
+		model.put("telephone", quote.getUser().getTelephone());
 
-		saveOrUpdate(quote);
+		mailService.sendEmail(quote.getOrder().getUser().getEmail(),
+				MailService.FROM_EMAIL, "Presupuesto aceptado",
+				"mail/quoteAccepted.ftl", model);		
 	}
 
 	@Transactional
@@ -163,6 +178,14 @@ public class QuoteService {
 	public void update(QuoteDTO quoteDTO) {
 		Quote quote = quoteDAO.getOne(quoteDTO.getId());
 		quoteDAO.save(quoteTransformation.updateFields(quote, quoteDTO));
+
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("firstName", quote.getUser().getFirstName());
+		model.put("lastName", quote.getUser().getLastName());
+
+		mailService.sendEmail(quote.getOrder().getUser().getEmail(),
+				MailService.FROM_EMAIL, "Presupuesto realizado",
+				"mail/sendQuote.ftl", model);
 	}
 
 	@Transactional

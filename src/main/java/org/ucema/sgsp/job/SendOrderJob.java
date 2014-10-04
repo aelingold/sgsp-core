@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.OrderDTO;
@@ -45,8 +43,6 @@ public class SendOrderJob {
 	private QuoteService quoteService;
 	@Autowired
 	private MailService mailService;
-	@Resource
-	private Environment env;
 
 	@Scheduled(fixedRate = 30000)
 	public void sendOrders() {
@@ -83,16 +79,12 @@ public class SendOrderJob {
 
 		users.forEach(user -> {
 
-			if (env.getProperty("send.email.enabled", "false").equals("true")) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("firstName", order.getFirstName());
+			model.put("lastName", order.getLastName());
 
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("orderUsername", order.getUsername());
-				model.put("orderFirstName", order.getFirstName());
-				model.put("orderLastName", order.getLastName());
-
-				mailService.sendEmail(user.getEmail(), "info@singuia.com",
-						"Nuevo presupuesto", "mail/sendOrder.ftl", model);
-			}
+			mailService.sendEmail(user.getEmail(), MailService.FROM_EMAIL,
+					"Nuevo presupuesto", "mail/sendOrder.ftl", model);
 
 			userNotifyService.saveOrUpdate(UserNotifyDTO.newInstance()
 					.withOrderId(order.getId())

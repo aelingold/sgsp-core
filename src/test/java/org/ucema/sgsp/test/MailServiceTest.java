@@ -22,8 +22,8 @@ public class MailServiceTest extends BaseTest {
 		String subject = "Nuevo presupuesto";
 
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("orderFirstName", "Juan");
-		model.put("orderLastName", "Gonzalez");
+		model.put("firstName", "Juan");
+		model.put("lastName", "Gonzalez");
 
 		mailService.sendEmail(to, MailService.FROM_EMAIL, subject,
 				"mail/sendOrder.ftl", model);

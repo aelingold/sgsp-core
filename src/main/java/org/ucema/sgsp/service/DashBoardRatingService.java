@@ -1,7 +1,9 @@
 package org.ucema.sgsp.service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -33,6 +35,8 @@ public class DashBoardRatingService {
 	private PaymentService paymentService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private MailService mailService;
 
 	@Transactional
 	public void save(UserWorkRateDTO userWorkRate) {
@@ -104,5 +108,12 @@ public class DashBoardRatingService {
 				paymentService.saveOrUpdate(payment);
 			}
 		}
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("firstName", quoteDTO.getOrder().getFirstName());
+		model.put("lastName", quoteDTO.getOrder().getLastName());
+
+		mailService.sendEmail(quoteDTO.getUsername(), MailService.FROM_EMAIL,
+				"Calificacion recibida", "mail/userWorkRateResponse.ftl", model);		
 	}
 }

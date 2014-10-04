@@ -8,15 +8,12 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
-
 import org.joda.time.DateTime;
 import org.joda.time.YearMonth;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
@@ -58,8 +55,6 @@ public class RepositoryUserService implements UserService {
 	private MailService mailService;
 	@Autowired
 	private UserTransformation userTransformation;
-	@Resource
-	private Environment env;
 
 	@Autowired
 	public RepositoryUserService(PasswordEncoder passwordEncoder,
@@ -315,15 +310,13 @@ public class RepositoryUserService implements UserService {
 		User userSaved = repository.save(registered);
 
 		if (!registered.getIsEnabled()) {
-			if (env.getProperty("send.email.enabled", "false").equals("true")) {
 
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("token", token);
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("token", token);
 
-				mailService.sendEmail(userSaved.getEmail(),
-						MailService.FROM_EMAIL, "Registración en SinGuia",
-						"mail/confirmRegistration.ftl", model);
-			}
+			mailService.sendEmail(userSaved.getEmail(), MailService.FROM_EMAIL,
+					"Registración en SinGuia", "mail/confirmRegistration.ftl",
+					model);
 		}
 
 		return userSaved;

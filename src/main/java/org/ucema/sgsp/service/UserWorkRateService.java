@@ -88,6 +88,19 @@ public class UserWorkRateService {
 
 		userWorkRateDAO.save(userWorkRate);
 	}
+	
+	@Transactional
+	public void accept(Long quoteId, String username) {
+		
+		UserWorkRateDTO userWorkRate = new UserWorkRateDTO();
+		userWorkRate.setQuoteId(quoteId);
+		userWorkRate.setUsername(username);
+		userWorkRate.setStatusType(UserWorkRateStatusType.PENDING.name());
+		userWorkRate.setSummarized(false);		
+		
+		userWorkRateDAO.save(userWorkRateTransformation
+				.transformToModel(userWorkRate));
+	}	
 
 	@Transactional
 	public void saveOrUpdate(UserWorkRateDTO userWorkRate) {

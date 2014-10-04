@@ -17,7 +17,7 @@
 				<div class="panel panel-default quote-${quote.statusType}">						
 					<form name="budgetsForm${quote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						<input type="hidden" name="statusType" value="${quote.statusType}">
+						<input type="hidden" name="statusType" value="REPLIED">
 						<input type="hidden" name="id" value="${quote.id}">
 						<@spring.bind "quote" />																						
 						<#-- ejemplo de un presupuesto pedido -->
