@@ -46,7 +46,7 @@
         <div class="container">
             <div class="intro-text">
                 <div class="intro-lead-in">Resolvé los problemas de tu casa</div>
-                <div class="intro-heading">Qué servicio necesitas?</div>
+                <div class="intro-heading">Qué servicio necesitás?</div>
                 <div class="col-md-12">
                 	<#list workAreas as workArea>
                 		<div class="col-md-4 home-service">
@@ -111,7 +111,7 @@
                 	<div class="benefits-section">
                 		<ul class="benefits-list">
                 			<li><span class="glyphicon glyphicon-ok"></span> Usá la plataforma totalmente GRATIS!</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Encuentrá profesionales de confianza para los trabajos del hogar</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Encontrá profesionales de confianza para los trabajos del hogar</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Pedí presupuestos online</li>
                 			<li><span class="glyphicon glyphicon-ok"></span> Elijí mejor comparando precios y reputación de los profesionales</li>
                 		</ul>
