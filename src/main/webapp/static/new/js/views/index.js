@@ -15,6 +15,27 @@ function hideBudgetForm(serviceType){
 		$("#"+serviceType+"-budget-form").hide();
 	});
 }
+function stateChange(combos){	
+	$.each(combos, function( index, element ) {
+		var stateCode = $(element).val();
+		var citiesCombo = $(element).parents(".row").find("select[name='cityCode']");
+		$.ajax({
+		  type: "GET",
+		  url: basePath+"cities/state/"+stateCode
+		}).done(function(data) {
+			var citiesHTML = "";
+			if (data){
+				for(var i=0;i<data.length;i++){
+					var code = data[i].code;
+					var desc = data[i].description;
+					citiesHTML += "<option value='"+code+"'>"+desc+"</option>";
+				}
+			}
+			$(citiesCombo).html(citiesHTML);
+		});
+	});
+}
+
 
 $(".home-service-option").on("click", function(){
 	var serviceType = $(this).attr("data-code");
@@ -71,20 +92,6 @@ $(".changeServiceType").on("click", function(){
 });
 
 $("select[name='stateCode']").change(function() {
-	var stateCode = $(this).val();
-	var citiesCombo = $(this).parents(".row").find("select[name='cityCode']");
-	$.ajax({
-	  type: "GET",
-	  url: basePath+"cities/state/"+stateCode
-	}).done(function(data) {
-		var citiesHTML = "";
-		if (data){
-			for(var i=0;i<data.length;i++){
-				var code = data[i].code;
-				var desc = data[i].description;
-				citiesHTML += "<option value='"+code+"'>"+desc+"</option>";
-			}
-		}
-		$(citiesCombo).html(citiesHTML);
-	});
+	stateChange($(this));
 });
+stateChange($("select[name='stateCode']"));
