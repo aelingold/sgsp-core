@@ -161,7 +161,7 @@ public class QuoteService {
 		model.put("email", quote.getUser().getEmail());
 		model.put("telephone", quote.getUser().getTelephone());
 
-		mailService.sendEmail(quote.getOrder().getUser().getEmail(),
+		mailService.save(quote.getOrder().getUser().getEmail(),
 				MailService.FROM_EMAIL, "Presupuesto aceptado",
 				"mail/quoteAccepted.ftl", model);		
 	}
@@ -183,7 +183,7 @@ public class QuoteService {
 		model.put("firstName", quote.getUser().getFirstName());
 		model.put("lastName", quote.getUser().getLastName());
 
-		mailService.sendEmail(quote.getOrder().getUser().getEmail(),
+		mailService.save(quote.getOrder().getUser().getEmail(),
 				MailService.FROM_EMAIL, "Presupuesto realizado",
 				"mail/sendQuote.ftl", model);
 	}

@@ -61,7 +61,7 @@ public class QuoteQuestionReplyService {
 		model.put("lastName", quoteQuestionReply.getQuoteQuestion().getQuote()
 				.getUser().getLastName());
 
-		mailService.sendEmail(quoteQuestionReply.getQuoteQuestion().getQuote()
+		mailService.save(quoteQuestionReply.getQuoteQuestion().getQuote()
 				.getOrder().getUser().getEmail(), MailService.FROM_EMAIL,
 				"Respuesta recibida", "mail/sendQuestionResponse.ftl", model);
 	}

@@ -314,7 +314,7 @@ public class RepositoryUserService implements UserService {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("token", token);
 
-			mailService.sendEmail(userSaved.getEmail(), MailService.FROM_EMAIL,
+			mailService.save(userSaved.getEmail(), MailService.FROM_EMAIL,
 					"Registración en SinGuia", "mail/confirmRegistration.ftl",
 					model);
 		}
