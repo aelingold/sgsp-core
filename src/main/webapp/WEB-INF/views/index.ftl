@@ -45,8 +45,8 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">Resuelva los problemas de su hogar</div>
-                <div class="intro-heading">Qué servicio necesita?</div>
+                <div class="intro-lead-in">Resolvé los problemas de tu casa</div>
+                <div class="intro-heading">Qué servicio necesitas?</div>
                 <div class="col-md-12">
                 	<#list workAreas as workArea>
                 		<div class="col-md-4 home-service">
@@ -82,15 +82,15 @@
                 <div class="row" style="margin-top: 100px;">
 	                <div class="col-md-4 text-center">
 	                	<img src="<@c.url value='/static/new/img/hworks/anuncio.png'/>" style="height: 100px;margin-left: 32px;">
-	                	<div class="explain-text">Pida un servicio</div>
+	                	<div class="explain-text">Pedí un servicio</div>
 					</div>
 					<div class="col-md-4 text-center">
 						<img src="<@c.url value='/static/new/img/hworks/profesionales.png'/>" style="height: 100px;margin-left: 6px;">
-						<div class="explain-text">Reciba presupuestos</div>
+						<div class="explain-text">Recibí presupuestos</div>
 					</div>
 					<div class="col-md-4 text-center">
 						<img src="<@c.url value='/static/new/img/hworks/trato.png'/>" style="height: 100px;">
-						<div class="explain-text">Elija el mejor</div>
+						<div class="explain-text">Elejí el mejor</div>
 					</div>
 				</div>
             </div>
@@ -110,10 +110,10 @@
                 	<img src="<@c.url value='/static/new/img/characters/user.png'/>">	                	
                 	<div class="benefits-section">
                 		<ul class="benefits-list">
-                			<li><span class="glyphicon glyphicon-ok"></span> Use la plataforma totalmente GRATIS!</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Encuentre profesionales de confianza para los trabajos del hogar</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Pida presupuestos online</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Elija mejor comparando precios y reputación de los profesionales</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Usá la plataforma totalmente GRATIS!</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Encuentrá profesionales de confianza para los trabajos del hogar</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Pedí presupuestos online</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Elijí mejor comparando precios y reputación de los profesionales</li>
                 		</ul>
                 		<div style="text-align: center;">
                 			<a href="<@c.url value='/register'/>" class="button btn btn-danger btn-lg">Registrarme</a>
@@ -124,10 +124,10 @@
                 	<img src="<@c.url value='/static/new/img/characters/prof.png'/>">
                 	<div class="benefits-section">
                 		<ul class="benefits-list">
-                			<li><span class="glyphicon glyphicon-ok"></span> Use la plataforma totalmente GRATIS!</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Consiga más clientes</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Reciba notificaciones de nuevos trabajos y arme presupuestos fácilmente</li>
-                			<li><span class="glyphicon glyphicon-ok"></span> Diferenciese de los demás gracias a las calificaciones por sus trabajos y sus tarifas</li>                			
+                			<li><span class="glyphicon glyphicon-ok"></span> Usá la plataforma totalmente GRATIS!</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Conseguí más clientes</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Recibí notificaciones de nuevos trabajos y armá presupuestos fácilmente</li>
+                			<li><span class="glyphicon glyphicon-ok"></span> Diferenciate de los demás gracias a las calificaciones por tus trabajos y tus tarifas</li>                			
                 		</ul>
                 		<div style="text-align: center;">
                 			<a href="<@c.url value='/register'/>" class="button btn btn-danger btn-lg">Ofrecer mi servicio</a>

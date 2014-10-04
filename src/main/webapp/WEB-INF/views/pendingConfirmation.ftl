@@ -50,13 +50,15 @@
             <div class="row">
            	 	<div class="col-lg-12">     
            	 		<div>
-		      			Gracias por registrarte!
+           	 			<h1>
+		      				Gracias por registrarte!
+		      			</h1>
 		      		</div>	      		
            		</div>              
            	 	<div class="col-lg-12">     
-           	 		<div>
-		      			Te hemos enviado un email a tu direccion de correo electronico para confirmar tu cuenta. Por favor verifica tu correo.
-		      		</div>	      		
+           	 		<h3 style="text-transform: none;">
+		      			Te hemos enviado un email a tu dirección de correo electrónico para confirmar tu cuenta. Por favor verificá tu correo.
+		      		</h3>	      		
            		</div>               
             </div>
         </div>

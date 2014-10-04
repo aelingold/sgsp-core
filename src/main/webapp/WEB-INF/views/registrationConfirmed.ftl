@@ -48,15 +48,25 @@
     <section id="services" style="margin-top: 120px;">
         <div class="container no-top-border-radius">
             <div class="row">
-           	 	<div class="col-lg-12">     
-           	 		<div>
-		      			Tu cuenta se ha verificado correctamente, te damos la bienvenida!
-		      		</div>	      		
-           		</div>              
-           	 	<div class="col-lg-12">     
-           	 		<div>
-		      			Haz clic en Ingresar para poder comenzar a disfrutar de nuestros servicios.
-		      		</div>	      		
+            	<div class="col-lg-2">    
+            		<img src="<@c.url value='/static/new/img/characters/wellcome-character.png'/>" style="margin-top: 15px;">
+            	</div>  
+            	<div class="col-lg-10">            
+	           	 	<div class="col-lg-12">     
+	           	 		<h1>
+	           	 			Bienvenido!		      			
+			      		</h1>	      		
+	           		</div>      
+	           		<div class="col-lg-12">     
+	           	 		<h3 style="text-transform: none;">
+			      			Tu cuenta se ha verificado correctamente.		      			
+			      		</h3>	      		
+	           		</div>
+	           		<div class="col-lg-12">     
+	           	 		<h3 style="text-transform: none;">
+			      			<a href="<@c.url value='/login'/>">Ingresá</a> para poder comenzar a disfrutar de nuestros servicios.
+			      		</h3>	      		
+	           		</div>   
            		</div>               
             </div>
         </div>
