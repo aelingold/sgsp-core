@@ -1,4 +1,4 @@
-package org.ucema.sgsp.security.persistence;
+package org.ucema.sgsp.security.config;
 
 import javax.sql.DataSource;
 
@@ -21,12 +21,12 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.ucema.sgsp.controller.CustomConnectController;
-import org.ucema.sgsp.security.service.SpringSecuritySignInAdapter;
+import org.ucema.sgsp.security.adapter.SpringSecuritySignInAdapter;
 import org.ucema.sgsp.service.UserService;
 
 @Configuration
 @EnableSocial
-public class SocialContext implements SocialConfigurer {
+public class SocialConfig implements SocialConfigurer {
 
 	@Autowired
 	private DataSource dataSource;

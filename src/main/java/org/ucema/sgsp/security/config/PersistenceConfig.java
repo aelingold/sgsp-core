@@ -1,4 +1,4 @@
-package org.ucema.sgsp.security.persistence;
+package org.ucema.sgsp.security.config;
 
 import java.util.Properties;
 
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableJpaRepositories(basePackages = { "org.ucema.sgsp" })
 @EnableTransactionManagement
-public class PersistenceContext {
+public class PersistenceConfig {
 
 	@Resource
 	private Environment env;

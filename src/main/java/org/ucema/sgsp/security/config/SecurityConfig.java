@@ -29,9 +29,9 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
+import org.ucema.sgsp.security.persistence.UserRepository;
 import org.ucema.sgsp.security.service.RepositoryUserDetailsService;
 import org.ucema.sgsp.security.service.SimpleSocialUserDetailsService;
-import org.ucema.sgsp.security.service.UserRepository;
 
 @Configuration
 @EnableWebSecurity

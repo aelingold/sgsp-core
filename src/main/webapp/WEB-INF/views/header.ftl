@@ -34,8 +34,8 @@
 			<@security.authorize access="isAnonymous()">
 				<li>	
                		<div>
-            			<a href="register" class="button btn btn-danger">Registrarme</a>
-                    	<a href="login" class="button btn btn-info">Ingresar</a>
+            			<a href="<@c.url value='/register'/>" class="button btn btn-danger">Registrarme</a>
+                    	<a href="<@c.url value='/login'/>" class="button btn btn-info">Ingresar</a>
                 	</div>
                 </li>
 			</@security.authorize>                 

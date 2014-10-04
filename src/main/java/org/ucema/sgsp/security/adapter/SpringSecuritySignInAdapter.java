@@ -1,4 +1,4 @@
-package org.ucema.sgsp.security.service;
+package org.ucema.sgsp.security.adapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

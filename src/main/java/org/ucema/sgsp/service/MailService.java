@@ -21,6 +21,7 @@ public class MailService {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MailService.class);
+	public static final String FROM_EMAIL = "no-reply@singuia.com";
 	@Autowired
 	private JavaMailSender javaMailSender;
 	@Autowired
@@ -43,7 +44,7 @@ public class MailService {
 			message.setSubject(subject);
 			MimeMessageHelper helper;
 			helper = new MimeMessageHelper(message, true);
-			helper.setFrom(from);
+			helper.setFrom("SinGuia <"+from+">");
 			helper.setTo(to);
 			helper.setText(result, true);
 			javaMailSender.send(message);

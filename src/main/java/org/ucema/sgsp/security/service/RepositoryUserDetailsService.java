@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.security.persistence.UserRepository;
 import org.ucema.sgsp.security.util.SecurityUtil;
 
 public class RepositoryUserDetailsService implements UserDetailsService {

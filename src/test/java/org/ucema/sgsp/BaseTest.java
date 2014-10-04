@@ -8,12 +8,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.ucema.sgsp.config.WebMvcConfiguration;
+import org.ucema.sgsp.security.config.PersistenceConfig;
 import org.ucema.sgsp.security.config.SecurityConfig;
-import org.ucema.sgsp.security.persistence.PersistenceContext;
-import org.ucema.sgsp.security.persistence.SocialContext;
+import org.ucema.sgsp.security.config.SocialConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebMvcConfiguration.class,PersistenceContext.class,SecurityConfig.class,SocialContext.class})
+@ContextConfiguration(classes = {WebMvcConfiguration.class,PersistenceConfig.class,SecurityConfig.class,SocialConfig.class})
 @WebAppConfiguration
 @TransactionConfiguration
 @Transactional

@@ -84,6 +84,10 @@ public class User extends BaseEntity<Long> {
 	@OneToOne(mappedBy = "user", orphanRemoval = true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private UserWorkRateSummarize userWorkRateSummarize;
+	
+	@OneToOne(mappedBy = "user", orphanRemoval = true)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private UserToken userToken;	
 
 	public User() {
 	}
@@ -227,6 +231,14 @@ public class User extends BaseEntity<Long> {
 		this.userWorkRateSummarize = userWorkRateSummarize;
 	}
 
+	public UserToken getUserToken() {
+		return userToken;
+	}
+
+	public void setUserToken(UserToken userToken) {
+		this.userToken = userToken;
+	}
+
 	public static class Builder {
 
 		private User user;
@@ -306,6 +318,11 @@ public class User extends BaseEntity<Long> {
 			user.userWorkRateSummarize = userWorkRateSummarize;
 			return this;
 		}
+		
+		public Builder userToken(UserToken userToken) {
+			user.userToken = userToken;
+			return this;
+		}		
 
 		public User build() {
 			if (user.userRatePlan != null) {
@@ -313,6 +330,9 @@ public class User extends BaseEntity<Long> {
 			}
 			if (user.userWorkRateSummarize != null) {
 				user.userWorkRateSummarize.setUser(user);
+			}
+			if (user.userToken != null) {
+				user.userToken.setUser(user);
 			}			
 			return user;
 		}

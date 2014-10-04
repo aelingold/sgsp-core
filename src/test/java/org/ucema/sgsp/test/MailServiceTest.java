@@ -19,12 +19,13 @@ public class MailServiceTest extends BaseTest {
 	public void sendTestEmail() {
 
 		String to = "alexis.elingold@gmail.com";
-		String from = "info@singuia.com";
-		String subject = "Prueba";
+		String subject = "Nuevo presupuesto";
 
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("orderUsername", "prueba@gmail.com");
+		model.put("orderFirstName", "Juan");
+		model.put("orderLastName", "Gonzalez");
 
-		mailService.sendEmail(to, from, subject, "mail/sendOrder.ftl", model);
+		mailService.sendEmail(to, MailService.FROM_EMAIL, subject,
+				"mail/sendOrder.ftl", model);
 	}
 }

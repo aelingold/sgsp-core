@@ -1,4 +1,4 @@
-package org.ucema.sgsp.security.service;
+package org.ucema.sgsp.security.persistence;
 
 import java.util.List;
 

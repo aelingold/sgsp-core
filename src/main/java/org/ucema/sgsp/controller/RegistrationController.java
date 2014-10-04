@@ -16,15 +16,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.api.dto.CountryDTO;
 import org.ucema.sgsp.api.dto.RegistrationDTO;
+import org.ucema.sgsp.api.dto.UserTokenDTO;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
 import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.security.service.UserTokenService;
 import org.ucema.sgsp.security.util.SecurityUtil;
 import org.ucema.sgsp.service.CountryService;
 import org.ucema.sgsp.service.UserService;
@@ -44,11 +47,13 @@ public class RegistrationController {
 	protected static final String VIEW_NAME_REGISTRATION_PAGE = "registration";
 
 	@Autowired
-	private UserService service;
+	private UserService userService;
 	@Autowired
 	private WorkAreaService workAreaService;
 	@Autowired
 	private CountryService countryService;
+	@Autowired
+	private UserTokenService userTokenService;
 
 	private final ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
 
@@ -59,7 +64,7 @@ public class RegistrationController {
 		Connection<?> connection = providerSignInUtils
 				.getConnectionFromSession(request);
 
-		RegistrationDTO registration = service
+		RegistrationDTO registration = userService
 				.createRegistrationDTO(connection);
 		LOGGER.debug("Rendering registration form with information: {}",
 				registration);
@@ -158,17 +163,23 @@ public class RegistrationController {
 
 		LOGGER.debug("Registered user account with information: {}", registered);
 
-		// Logs the user in.
-		SecurityUtil.logInUser(registered);
-		LOGGER.debug("User {} has been signed in", registered);
-		// If the user is signing in by using a social provider, this method
-		// call stores
-		// the connection to the UserConnection table. Otherwise, this method
-		// does not
-		// do anything.
-		providerSignInUtils.doPostSignUp(registered.getEmail(), request);
+		String resultView = "pendingConfirmation";
+		if (registered.getIsEnabled()) {
+			// Logs the user in.
+			SecurityUtil.logInUser(registered);
+			LOGGER.debug("User {} has been signed in", registered);
+			// If the user is signing in by using a social provider, this method
+			// call stores
+			// the connection to the UserConnection table. Otherwise, this
+			// method
+			// does not
+			// do anything.
+			providerSignInUtils.doPostSignUp(registered.getEmail(), request);
+			
+			resultView = "redirect:/";
+		}
 
-		return "redirect:/";
+		return resultView;
 	}
 
 	/**
@@ -183,7 +194,7 @@ public class RegistrationController {
 		User registered = null;
 
 		try {
-			registered = service.registerNewUserAccount(userAccountData);
+			registered = userService.registerNewUserAccount(userAccountData);
 		} catch (DuplicateEmailException ex) {
 			LOGGER.debug("An email address: {} exists.",
 					userAccountData.getEmail());
@@ -206,5 +217,24 @@ public class RegistrationController {
 		result.addError(error);
 		LOGGER.debug("Added field error: {} to binding result: {}", error,
 				result);
+	}
+
+	@RequestMapping(value = "/register/confirm-user-account/{token}", method = RequestMethod.GET)
+	public String confirmUserAccount(@PathVariable String token) {
+		UserTokenDTO userToken = userTokenService.findByToken(token);
+		if (userToken != null){
+			userService.enable(userToken.getUsername());
+			userTokenService.update(userToken.getId(),false);
+			
+//			UserDTO user = userService.findByEmail(userToken.getUsername());
+//			
+//			// Logs the user in.
+//			SecurityUtil.logInUser(user);
+//			LOGGER.debug("User {} has been signed in", user);		
+			
+		}else{
+			return "redirect:/";
+		}
+		return "registrationConfirmed";
 	}
 }

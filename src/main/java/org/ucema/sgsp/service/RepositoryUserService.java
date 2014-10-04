@@ -5,7 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonth;
@@ -13,6 +16,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
@@ -33,7 +37,8 @@ import org.ucema.sgsp.persistence.model.UserWorkRateSummarize;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
-import org.ucema.sgsp.security.service.UserRepository;
+import org.ucema.sgsp.security.model.UserToken;
+import org.ucema.sgsp.security.persistence.UserRepository;
 
 @Service
 public class RepositoryUserService implements UserService {
@@ -49,9 +54,12 @@ public class RepositoryUserService implements UserService {
 	private CountryService countryService;
 	@Autowired
 	private RatePlanService ratePlanService;
-
+	@Autowired
+	private MailService mailService;
 	@Autowired
 	private UserTransformation userTransformation;
+	@Resource
+	private Environment env;
 
 	@Autowired
 	public RepositoryUserService(PasswordEncoder passwordEncoder,
@@ -123,7 +131,8 @@ public class RepositoryUserService implements UserService {
 							.setUserCount(reportUserDTO.getUserCount() + 1);
 				}
 
-				reportUserDTO.setYearMonth(yearMonth.toString(DateTimeFormat.forPattern("MM-yyyy")));
+				reportUserDTO.setYearMonth(yearMonth.toString(DateTimeFormat
+						.forPattern("MM-yyyy")));
 				itemsMap.put(yearMonth, reportUserDTO);
 
 			} else {
@@ -273,7 +282,7 @@ public class RepositoryUserService implements UserService {
 				.password(encodedPassword)
 				.telephone(userAccountData.getTelephone())
 				.professional(userAccountData.getIsProfessional())
-				.enabled(true)
+				.enabled(false)
 				.country(countryService.find(userAccountData.getCountryCode()));
 
 		if (userAccountData.getWorkAreaCodes() != null
@@ -282,8 +291,16 @@ public class RepositoryUserService implements UserService {
 					.getWorkAreaCodes()));
 		}
 
+		String token = UUID.randomUUID().toString();
+
 		if (userAccountData.isSocialSignIn()) {
 			user.signInProvider(userAccountData.getSignInProvider());
+			user.enabled(true);
+		} else {
+			UserToken userToken = new UserToken();
+			userToken.setToken(token);
+			userToken.setValid(true);
+			user.userToken(userToken);
 		}
 
 		if (userAccountData.getIsProfessional()) {
@@ -295,7 +312,21 @@ public class RepositoryUserService implements UserService {
 
 		LOGGER.debug("Persisting new user with information: {}", registered);
 
-		return repository.save(registered);
+		User userSaved = repository.save(registered);
+
+		if (!registered.getIsEnabled()) {
+			if (env.getProperty("send.email.enabled", "false").equals("true")) {
+
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("token", token);
+
+				mailService.sendEmail(userSaved.getEmail(),
+						MailService.FROM_EMAIL, "Registración en SinGuia",
+						"mail/confirmRegistration.ftl", model);
+			}
+		}
+
+		return userSaved;
 	}
 
 	private UserWorkRateSummarize buildUserWorkRateSummarize(

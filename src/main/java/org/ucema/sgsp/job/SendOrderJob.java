@@ -87,6 +87,8 @@ public class SendOrderJob {
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("orderUsername", order.getUsername());
+				model.put("orderFirstName", order.getFirstName());
+				model.put("orderLastName", order.getLastName());
 
 				mailService.sendEmail(user.getEmail(), "info@singuia.com",
 						"Nuevo presupuesto", "mail/sendOrder.ftl", model);
