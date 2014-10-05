@@ -28,7 +28,7 @@ public class UserWorkRate {
 	@GeneratedValue
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_user"))
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_rates_user"))
 	private User user;
 	private String comment;
     @Enumerated(EnumType.STRING)

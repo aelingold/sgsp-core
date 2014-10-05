@@ -26,7 +26,7 @@ public class UserWorkRateSummarize {
 	@GeneratedValue
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_user"))
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_summarizes_user"))
 	private User user;
 	private Long positiveQuantity;
 	private Long negativeQuantity;
