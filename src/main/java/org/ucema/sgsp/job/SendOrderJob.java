@@ -16,13 +16,10 @@ import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.OrderDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
-import org.ucema.sgsp.api.dto.UserNotifyDTO;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
-import org.ucema.sgsp.persistence.model.UserNotifyType;
 import org.ucema.sgsp.service.MailService;
 import org.ucema.sgsp.service.OrderService;
 import org.ucema.sgsp.service.QuoteService;
-import org.ucema.sgsp.service.UserNotifyService;
 import org.ucema.sgsp.service.UserService;
 
 import com.google.common.collect.Lists;
@@ -37,8 +34,6 @@ public class SendOrderJob {
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserNotifyService userNotifyService;
 	@Autowired
 	private QuoteService quoteService;
 	@Autowired
@@ -83,13 +78,13 @@ public class SendOrderJob {
 			model.put("firstName", order.getFirstName());
 			model.put("lastName", order.getLastName());
 
-			mailService.sendEmail(user.getEmail(), MailService.FROM_EMAIL,
+			mailService.save(user.getEmail(), MailService.FROM_EMAIL,
 					"Nuevo presupuesto", "mail/sendOrder.ftl", model);
 
-			userNotifyService.saveOrUpdate(UserNotifyDTO.newInstance()
-					.withOrderId(order.getId())
-					.withType(UserNotifyType.EMAIL.name())
-					.withUsername(user.getEmail()).build());
+//			userNotifyService.saveOrUpdate(UserNotifyDTO.newInstance()
+//					.withOrderId(order.getId())
+//					.withType(UserNotifyType.EMAIL.name())
+//					.withUsername(user.getEmail()).build());
 
 			quoteService.saveOrUpdate(QuoteDTO.newInstance()
 					.withOrderId(order.getId()).withUsername(user.getEmail())

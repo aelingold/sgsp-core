@@ -113,7 +113,7 @@ public class DashBoardRatingService {
 		model.put("firstName", quoteDTO.getOrder().getFirstName());
 		model.put("lastName", quoteDTO.getOrder().getLastName());
 
-		mailService.sendEmail(quoteDTO.getUsername(), MailService.FROM_EMAIL,
+		mailService.save(quoteDTO.getUsername(), MailService.FROM_EMAIL,
 				"Calificacion recibida", "mail/userWorkRateResponse.ftl", model);		
 	}
 }

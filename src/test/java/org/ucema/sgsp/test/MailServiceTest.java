@@ -25,7 +25,7 @@ public class MailServiceTest extends BaseTest {
 		model.put("firstName", "Juan");
 		model.put("lastName", "Gonzalez");
 
-		mailService.sendEmail(to, MailService.FROM_EMAIL, subject,
+		mailService.save(to, MailService.FROM_EMAIL, subject,
 				"mail/sendOrder.ftl", model);
 	}
 }

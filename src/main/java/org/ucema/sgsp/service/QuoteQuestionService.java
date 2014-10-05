@@ -54,7 +54,7 @@ public class QuoteQuestionService {
 		model.put("firstName", quoteDTO.getOrder().getFirstName());
 		model.put("lastName", quoteDTO.getOrder().getLastName());
 
-		mailService.sendEmail(quoteDTO.getUsername(),
+		mailService.save(quoteDTO.getUsername(),
 				MailService.FROM_EMAIL, "Nueva pregunta",
 				"mail/sendQuestion.ftl", model);
 

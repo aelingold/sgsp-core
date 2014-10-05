@@ -1,110 +1,58 @@
 package org.ucema.sgsp.service;
 
+import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-
-import freemarker.template.Configuration;
+import org.ucema.sgsp.api.dto.MailDTO;
+import org.ucema.sgsp.api.transformation.MailTransformation;
+import org.ucema.sgsp.persistence.MailDAO;
+import org.ucema.sgsp.persistence.model.Mail;
+import org.ucema.sgsp.persistence.model.MailStatusType;
 
 @Service
 public class MailService {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(MailService.class);
 	public static final String FROM_EMAIL = "no-reply@singuia.com";
-	@Autowired
-	private JavaMailSender javaMailSender;
-	@Autowired
-	private SimpleMailMessage templateMessage;
-	@Autowired
-	private Configuration configuration;
-	@Resource
-	private Environment env;
 
-	public void sendEmail(String to, String from, String subject,
+	@Autowired
+	private MailDAO mailDAO;
+	@Autowired
+	private MailTransformation mailTransformation;
+
+	@Transactional
+	public void updateStatus(Long id, MailStatusType statusType) {
+		Mail mail = mailDAO.getOne(id);
+		if (mail == null) {
+			throw new RuntimeException("mail not found");
+		}		
+		
+		mail.setStatusType(statusType);
+		mailDAO.save(mail);
+	}	
+	
+	@Transactional
+	public List<MailDTO> findByStatusType(MailStatusType mailStatusType) {
+		return mailTransformation.transformToApi(mailDAO
+				.findByStatusType(mailStatusType));
+	}
+
+	@Transactional
+	public void save(String to, String from, String subject,
 			String templatePath, Map<String, Object> model) {
 
-		if (env.getProperty("send.email.enabled", "false").equals("true")) {
+		Mail mail = new Mail();
+		mail.setMailFrom(from);
+		mail.setMailTo(to);
+		mail.setModel(JSONObject.toJSONString(model));
+		mail.setStatusType(MailStatusType.PENDING);
+		mail.setSubject(subject);
+		mail.setTemplatePath(templatePath);
 
-			try {
-
-				// Merge the model into the template
-				String result = "";
-				result = FreeMarkerTemplateUtils.processTemplateIntoString(
-						configuration.getTemplate(templatePath), model);
-
-				MimeMessage message = javaMailSender.createMimeMessage();
-
-				message.setSubject(subject);
-				MimeMessageHelper helper;
-				helper = new MimeMessageHelper(message, true);
-				helper.setFrom("SinGuia <" + from + ">");
-				helper.setTo(to);
-				helper.setText(result, true);
-				javaMailSender.send(message);
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		}
-	}
-
-	public void sendEmail(String to, String message) {
-
-		if (env.getProperty("send.email.enabled", "false").equals("true")) {
-
-			SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
-			msg.setTo(to);
-			msg.setText(message);
-			try {
-				this.javaMailSender.send(msg);
-			} catch (MailException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		}
-	}
-
-	public void sendEmail(String to, String subject, String message) {
-
-		if (env.getProperty("send.email.enabled", "false").equals("true")) {
-
-			SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
-			msg.setTo(to);
-			msg.setSubject(subject);
-			msg.setText(message);
-			try {
-				this.javaMailSender.send(msg);
-			} catch (MailException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		}
-	}
-
-	public void sendEmail(String to, String from, String subject, String message) {
-
-		if (env.getProperty("send.email.enabled", "false").equals("true")) {
-
-			SimpleMailMessage msg = new SimpleMailMessage();
-			msg.setTo(to);
-			msg.setFrom(from);
-			msg.setText(message);
-			msg.setSubject(subject);
-			try {
-				this.javaMailSender.send(msg);
-			} catch (MailException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		}
+		mailDAO.save(mail);
 	}
 }

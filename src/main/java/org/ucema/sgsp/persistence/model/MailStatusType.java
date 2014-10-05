@@ -1,5 +1,5 @@
 package org.ucema.sgsp.persistence.model;
 
-public enum UserNotifyType {
-	EMAIL
+public enum MailStatusType {
+	PENDING, SENT
 }

@@ -2036,6 +2036,36 @@ INSERT INTO `user_work_rate_summarizes` (`id`,`created_at`,`negative_quantity`,`
 INSERT INTO `user_work_rate_summarizes` (`id`,`created_at`,`negative_quantity`,`neutral_quantity`,`positive_quantity`,`updated_at`,`user_id`) VALUES (2,'2014-09-27 15:44:18',0,0,0,'2014-09-27 15:44:18',4);
 INSERT INTO `user_work_rate_summarizes` (`id`,`created_at`,`negative_quantity`,`neutral_quantity`,`positive_quantity`,`updated_at`,`user_id`) VALUES (3,'2014-09-27 15:44:18',0,0,0,'2014-09-27 15:44:18',5);
 
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,1);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,2);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,3);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,4);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,5);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,6);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,7);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,8);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,9);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (3,10);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,1);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,2);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,3);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,4);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,5);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,6);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,7);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,8);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,9);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (4,10);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,1);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,2);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,3);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,4);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,5);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,6);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,7);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,8);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,9);
+INSERT INTO `user_work_areas` (`user_id`,`work_area_id`) VALUES (5,10);
 
 INSERT INTO `user_work_zones` (`id`,`created_at`,`city_id`,`user_id`) VALUES (1,'2014-09-27 14:16:24',28,5);
 INSERT INTO `user_work_zones` (`id`,`created_at`,`city_id`,`user_id`) VALUES (2,'2014-09-27 14:16:24',67,5);
