@@ -8,12 +8,32 @@
 		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-DONE">Hechas</button>
 		  </div>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default">Recibidas</button>
+		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-RECEIVED">Recibidas</button>
 		  </div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="panel-group" id="accordion">
+			<#list userWorkRatesReceived as userWorkRateReceived>
+				<div class="rating-section user-work-rate-RECEIVED">
+					<div class="col-md-12" style="margin-top:15px;">
+						<#if userWorkRateReceived.ratingType="POSITIVE">
+    						<span class="glyphicon glyphicon-circle-arrow-up" style="font-size: 18px;color: #1616A8;"></span>
+    					<#else>
+    						<#if userWorkRateReceived.ratingType="NEUTRAL">
+	    						<span class="glyphicon glyphicon-circle-arrow-right" style="font-size: 18px;color: #E0E909;"></span>
+	    					<#else>
+    							<span class="glyphicon glyphicon-circle-arrow-down" style="font-size: 18px;color: #E70000;"></span>		
+    						</#if>	
+    					</#if>			    		
+			    		<span class="rating-user">${userWorkRateReceived.userFirstName} ${userWorkRateReceived.userLastName}</span> 
+						<span class="rating-date">(${userWorkRateReceived.updatedAt?string("dd/MM/yy hh:mm a")})</span>
+			    	</div>
+			    	<div class="col-md-12">
+			    		<span class="rating-comment-line-conection"></span>${userWorkRateReceived.comment}
+			    	</div>
+		    	</div>			
+			</#list>
 			<#list userWorkRates as userWorkRate>
 				<#if userWorkRate.statusType='DONE'>
 				
@@ -28,7 +48,7 @@
 	    							<span class="glyphicon glyphicon-circle-arrow-down" style="font-size: 18px;color: #E70000;"></span>		
 	    						</#if>	
 	    					</#if>			    		
-				    		<span class="rating-user">${userWorkRate.userFirstName} ${userWorkRate.userLastName}</span> 
+				    		<span class="rating-user">${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName}</span> 
 							<span class="rating-date">(${userWorkRate.updatedAt?string("dd/MM/yy hh:mm a")})</span>
 				    	</div>
 				    	<div class="col-md-12">

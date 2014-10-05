@@ -138,6 +138,12 @@ public class DashBoardDataService {
 						UserWorkRateStatusType.PENDING.name())).count();
 		map.put("pendingUserWorkRatesQty", pendingUserWorkRatesQty);
 
+		List<UserWorkRateDTO> userWorkRatesReceived = userWorkRateService
+				.findByQuote_User_EmailAndStatusType(username,
+						UserWorkRateStatusType.DONE);
+
+		map.put("userWorkRatesReceived", userWorkRatesReceived);
+		
 		map.put("workAreaQuestions", workAreaQuestionService.list());
 
 		map.put("workAreaItems", workAreaItemService.list());
