@@ -69,8 +69,8 @@ $(".btn-group .btn").on("click", function(){
 
 $("#calificaciones-panel .btn-group .btn").on("click", function(){
 	var showClass = $(this).attr("data-show-class");
-	$("#calificaciones-panel .panel-group .panel").hide();
-	$("#calificaciones-panel .panel-group .panel."+showClass).show();
+	$("#calificaciones-panel .panel-group .rating-section").hide();
+	$("#calificaciones-panel .panel-group .rating-section."+showClass).show();
 });
 $("#calificaciones-panel .btn-group .btn:first").click();
 

@@ -63,3 +63,23 @@
 .alert > span{
 	margin-right:5px;
 }
+
+.rating-comment-line-conection{
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin-top: -2px;
+	margin-left: 8px;
+	margin-right: 5px;
+}
+.rating-user{
+	font-size: 16px;
+	font-weight: bold;
+}
+.rating-date{
+	color: #C2C2C2;
+	font-size: 12px;
+	margin-left: 10px;
+}

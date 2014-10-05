@@ -16,44 +16,26 @@
 		<div class="panel-group" id="accordion">
 			<#list userWorkRates as userWorkRate>
 				<#if userWorkRate.statusType='DONE'>
-				  	<div class="panel panel-default user-work-rate-${userWorkRate.statusType}" id="panel${userWorkRate_index}">
-				    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
-					      	<h4 class="panel-title">
-					        	<a  href="#collapse${userWorkRate_index}">
-					          		${userWorkRate.userFirstName} ${userWorkRate.userLastName} - ${userWorkRate.updatedAt?string("dd/MM/yy")}
-					          		<span class="fa"></span>							          		
-					        	</a>							        	
-					      	</h4>
+				
+					<div class="rating-section user-work-rate-${userWorkRate.statusType}">
+						<div class="col-md-12" style="margin-top:15px;">
+							<#if userWorkRate.ratingType="POSITIVE">
+	    						<span class="glyphicon glyphicon-circle-arrow-up" style="font-size: 18px;color: #1616A8;"></span>
+	    					<#else>
+	    						<#if userWorkRate.ratingType="NEUTRAL">
+		    						<span class="glyphicon glyphicon-circle-arrow-right" style="font-size: 18px;color: #E0E909;"></span>
+		    					<#else>
+	    							<span class="glyphicon glyphicon-circle-arrow-down" style="font-size: 18px;color: #E70000;"></span>		
+	    						</#if>	
+	    					</#if>			    		
+				    		<span class="rating-user">${userWorkRate.userFirstName} ${userWorkRate.userLastName}</span> 
+							<span class="rating-date">(${userWorkRate.updatedAt?string("dd/MM/yy hh:mm a")})</span>
 				    	</div>
-					    <div id="collapse${userWorkRate_index}" class="panel-collapse collapse in">
-					      	<div class="panel-body">
-					      		<div class="col-md-12">
-			        				<div class="row form-group">
-			        					<div class="col-md-12">
-				        					<label>Trabajo realizado: </label> ${userWorkRate.workCompleted?string('Si', 'No')}
-				        				</div>
-				        			</div>
-				        			<div class="row form-group">
-			        					<div class="col-md-12">
-				        					<label>Calificacion: </label> 
-				        					<#if userWorkRate.ratingType="POSITIVE">
-				        						POSITIVA	
-				        					<#elseif userWorkRate.ratingType="NEUTRAL">
-				        						NEUTRAL
-				        					<#else>
-				        						NEGATIVA		
-				        					</#if>
-				        				</div>		
-				        			</div>
-				        			<div class="row form-group">
-			        					<div class="col-md-12">
-				        					<label>Comentario: </label> ${userWorkRate.comment}
-				        				</div>		
-				        			</div>
-			        			</div>						        	
-					      	</div>
+				    	<div class="col-md-12">
+				    		<span class="rating-comment-line-conection"></span>${userWorkRate.comment}
 				    	</div>
-				  	</div>
+			    	</div>
+			    	
 				<#else>
 					<form name="userWorkRatesForm${userWorkRate_index}" action="<@c.url value='/dashboard/ratings' />" method="POST" enctype="utf8">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -61,7 +43,7 @@
 						<input type="hidden" name="id" value="${userWorkRate.id}">
 						<input type="hidden" name="quoteId" value="${userWorkRate.quoteId}">
 					  	<div class="panel panel-default user-work-rate-${userWorkRate.statusType}" id="panel${userWorkRate_index}">
-					    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
+					    	<div class="rating-section panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
 						      	<h4 class="panel-title">
 						        	<a  href="#collapse${userWorkRate_index}">
 						          		${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName} (${userWorkRate.quoteUserWorkAreaDescription})
