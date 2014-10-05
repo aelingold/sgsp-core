@@ -19,6 +19,7 @@
 
     <!-- Custom CSS -->
     <link href="<@c.url value='/static/new/css/agency.css'/>" rel="stylesheet">
+    <link href="<@c.url value='/static/new/css/social-buttons.css'/>" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="<@c.url value='/static/new/font-awesome-4.1.0/css/font-awesome.min.css'/>" rel="stylesheet" type="text/css">
@@ -47,23 +48,29 @@
     <section id="services" style="margin-top: 120px;">
         <div class="container no-top-border-radius">
             <div class="row">
-                <div class="col-md-12">
-                    <h2 class="section-heading">Registración</h2>                    
+                <div class="col-md-8">
+                    <h2 class="section-heading">Registración</h2>             
                 </div>
-                <div class="col-md-12">                	
+                <div class="col-md-4">
+                	<a href="javascript:document.fb_signin.submit()">
+	                	<div class="fb-button" style="height: 44px;">
+		      				<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
+		      				<span style="margin-top: 11px;font-size: 16px;">Registrarme con facebook</span>
+		      			</div>  
+		      		</a>
+      			</div>  
+  			</div>  
+      		<div class="row">
+                <div class="col-md-2">
+                	<img src="<@c.url value='/static/new/img/characters/registration-character.png'/>" style="margin-top: 15px;">
+                </div>
+                <div class="col-md-10">                	
                 	<form action="<@c.url value='/register'/>" method="POST" enctype="utf8">
                 		<@spring.bind "user" />      		
                 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 		<input type="hidden" name="signInProvider" value='${(user.signInProvider)!""}'/>
                 		                	
-                		<h3 class="text-muted">Ingresá estos datos y empezá a resolver tus problemas.</h3>
-                	                  	
-                        <div class="row">
-                        	<div class="col-md-12">
-                        		<label style="font-weight: normal;">
-                        		<@spring.formCheckbox "user.isProfessional", 'class="form-group"'/>Ofrezco mi servicio</label>
-                        	</div>		
-                        </div>                	                  	
+                		<h3 class="text-muted" style="text-transform: none;">Ingresá estos datos y empezá a resolver tus problemas.</h3>
                 	                  	
 	                    <div class="row">
 	                        <div class="form-group col-md-4">
@@ -109,10 +116,16 @@
                             </div>
                         </div>
                         
+                        <div class="row">
+                        	<div class="col-md-12">
+                        		<label class="give-service-label">
+                        		<@spring.formCheckbox "user.isProfessional", 'class="form-group"'/>Quiero ofrecer mi servicio</label>
+                        	</div>		
+                        </div>    
                         <div class="row pro-field form-group">
                         	<div class="col-md-12">
                         		<label>Seleccione los rubros a los que se dedica</label>
-                        		<a href="javascript:selectAllWorkAreas();">Seleccionar todos</a>
+                        		<a href="javascript:selectAllWorkAreas();" class="btn btn-default btn-xs" style="margin-left: 10px;margin-top: -3px;">Seleccionar todos</a>
                         	</div>
                         	<#list workAreas as workArea>
 	                            <div class="col-md-3">
