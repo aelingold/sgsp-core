@@ -14,6 +14,7 @@
 	</div>
 	<div class="row">
 		<div class="panel-group" id="accordion">
+		
 			<#list userWorkRatesReceived as userWorkRateReceived>
 				<div class="rating-section user-work-rate-RECEIVED">
 					<div class="col-md-12" style="margin-top:15px;">
@@ -34,6 +35,7 @@
 			    	</div>
 		    	</div>			
 			</#list>
+			
 			<#list userWorkRates as userWorkRate>
 				<#if userWorkRate.statusType='DONE'>
 				
@@ -62,8 +64,8 @@
 						<@spring.bind "userWorkRate" />
 						<input type="hidden" name="id" value="${userWorkRate.id}">
 						<input type="hidden" name="quoteId" value="${userWorkRate.quoteId}">
-					  	<div class="panel panel-default user-work-rate-${userWorkRate.statusType}" id="panel${userWorkRate_index}">
-					    	<div class="rating-section panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
+					  	<div class="rating-section panel panel-default user-work-rate-${userWorkRate.statusType}" id="panel${userWorkRate_index}">
+					    	<div class="panel-heading" data-toggle="collapse" data-target="#collapse${userWorkRate_index}" style="cursor:pointer;">
 						      	<h4 class="panel-title">
 						        	<a  href="#collapse${userWorkRate_index}">
 						          		${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName} (${userWorkRate.quoteUserWorkAreaDescription})
