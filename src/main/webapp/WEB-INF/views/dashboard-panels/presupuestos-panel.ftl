@@ -10,6 +10,26 @@
 		  </div>
 		</div>
 	</div>
+	
+	<#if pendingQuotesQty == 0>
+		<div class="row">
+			<div class="panel quote-PENDING">
+				<div class="col-md-12" style="margin-top:15px;">
+					No tienes presupuestos pendientes.
+				</div>
+			</div>
+		</div>
+	</#if>
+	
+	<#if doneQuotesQty == 0>
+		<div class="row">
+			<div class="panel quote-REPLIED">
+				<div class="col-md-12" style="margin-top:15px;">
+					No tienes presupuestos realizados.
+				</div>
+			</div>
+		</div>
+	</#if>	
 													
 	<#list quotes as quote>
 		<#if quote.statusType="PENDING">
