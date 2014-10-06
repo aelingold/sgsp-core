@@ -161,12 +161,6 @@ public class DashBoardDataService {
 				.filter(uwr -> uwr.getStatusType().equals(
 						UserWorkRateStatusType.DONE.name())).count());
 
-		long pendingUserWorkRatesQty = userWorkRates
-				.stream()
-				.filter(uwr -> uwr.getStatusType().equals(
-						UserWorkRateStatusType.PENDING.name())).count();
-		map.put("pendingUserWorkRatesQty", pendingUserWorkRatesQty);
-
 		List<UserWorkRateDTO> userWorkRatesReceived = userWorkRateService
 				.findByQuote_User_EmailAndStatusType(username,
 						UserWorkRateStatusType.DONE);

@@ -15,21 +15,21 @@
 	<div class="row">
 		<div class="panel-group" id="accordion">
 		
-			<#if userWorkRatesReceived?size == 0>
+			<#if userWorkRatesPendingQty == 0>
 				<div class="rating-section user-work-rate-PENDING">
 					<div class="col-md-12" style="margin-top:15px;">
 						No tienes calificaciones pendientes.
 					</div>
 				</div>
 			</#if>
-			<#if userWorkRatesReceived?size == 0>
+			<#if userWorkRatesDoneQty == 0>
 				<div class="rating-section user-work-rate-DONE">
 					<div class="col-md-12" style="margin-top:15px;">
 						No tienes calificaciones hechas.
 					</div>
 				</div>
 			</#if>
-			<#if userWorkRatesReceived?size == 0>
+			<#if userWorkRatesReceivedQty == 0>
 				<div class="rating-section user-work-rate-RECEIVED">
 					<div class="col-md-12" style="margin-top:15px;">
 						No tienes calificaciones recibidas.
