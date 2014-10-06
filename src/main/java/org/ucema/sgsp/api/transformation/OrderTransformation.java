@@ -13,6 +13,7 @@ import org.ucema.sgsp.persistence.model.City;
 import org.ucema.sgsp.persistence.model.Order;
 import org.ucema.sgsp.persistence.model.OrderItem;
 import org.ucema.sgsp.persistence.model.OrderStatusType;
+import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.persistence.model.State;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
@@ -101,6 +102,20 @@ public class OrderTransformation {
 		if (order.getQuotes() != null) {
 			result.setQuoteIds(order.getQuotes().stream().map(q -> q.getId())
 					.collect(Collectors.toList()));
+			result.setQuoteAccepted(order
+					.getQuotes()
+					.stream()
+					.filter(q -> q.getStatusType().equals(
+							QuoteStatusType.ACCEPTED)).count() > 0);
+			result.setQuoteReplied(order
+					.getQuotes()
+					.stream()
+					.filter(q -> q.getStatusType().equals(
+							QuoteStatusType.ACCEPTED)
+							|| q.getStatusType().equals(
+									QuoteStatusType.REPLIED)
+							|| q.getStatusType().equals(
+									QuoteStatusType.DONE)).count() > 0);
 		}
 
 		result.setStatusType(order.getStatusType().name());
