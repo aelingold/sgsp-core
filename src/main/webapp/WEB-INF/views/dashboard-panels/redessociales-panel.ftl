@@ -15,7 +15,10 @@
 								<input type="hidden" name="_method" value="delete" />							  			
 								<a href="javascript:document.fb_disconnect.submit()">
 	      							<div class="fb-button">
-	      								<span>Desconectar de facebook</span>
+	      								<div class="fb-button" style="height: 44px;">
+						      				<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
+						      				<span style="margin-top: 11px;font-size: 16px;">Desconectar de facebook</span>
+						      			</div>
 	      							</div>
 	      						</a>
 							</form>						  		
@@ -23,9 +26,10 @@
 							<form name="fb_connect" action="<@c.url value='/connect/facebook'/>" method="POST">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>							  			
 								<a href="javascript:document.fb_connect.submit()">
-	      							<div class="fb-button">
-	      								<span>Conectar con facebook</span>
-	      							</div>
+									<div class="fb-button" style="height: 44px;">
+					      				<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
+					      				<span style="margin-top: 11px;font-size: 16px;">Conectar con facebook</span>
+					      			</div>
 	      						</a>
 							</form>
 			  			</#if>

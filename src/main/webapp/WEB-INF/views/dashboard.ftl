@@ -19,6 +19,7 @@
     <!-- Custom CSS -->
     <link href="<@c.url value='/static/new/css/agency.css'/>" rel="stylesheet">
     <link href="<@c.url value='/static/new/css/dashboard.css'/>" rel="stylesheet">
+    <link href="<@c.url value='/static/new/css/social-buttons.css'/>" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="<@c.url value='/static/new/font-awesome-4.1.0/css/font-awesome.min.css'/>" rel="stylesheet" type="text/css">
