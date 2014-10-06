@@ -37,10 +37,10 @@
 						<td>
 							<h3>Presupuesto realizado</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha realizado un presupuesto.
+								El usuario ${lastName} ${firstName} ha realizado un presupuesto para su pedido.
 							</p>
 							<p class="callout">
-								Para acceder hace clic <a href="http://www.singuia.com/dashboard/requests">aqui</a>
+								Para acceder hacé click <a href="http://www.singuia.com/dashboard/requests">aquí</a>.
 							</p>
 							<!-- social & contact -->
 							<table class="social" width="100%">

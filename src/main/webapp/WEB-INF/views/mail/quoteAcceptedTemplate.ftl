@@ -40,16 +40,16 @@
 								El usuario ${lastName} ${firstName} ha aceptado tu presupuesto.
 							</p>
 							<p class="lead">
-								Te adjuntamos la siguiente informacion para que te pongas en contacto:
+								Te adjuntamos la siguiente información para que te pongas en contacto:
 							</p>
 							<p class="lead">
 								Email: ${email}
 							</p>
 							<p class="lead">
-								Telefono: ${telephone}
+								Teléfono: ${telephone}
 							</p>																					
 							<p class="callout">
-								Para acceder hace clic <a href="http://www.singuia.com/dashboard/budgets">aqui</a>
+								Para acceder hacé clic <a href="http://www.singuia.com/dashboard/budgets">aquí</a>.
 							</p>
 							<!-- social & contact -->
 							<table class="social" width="100%">

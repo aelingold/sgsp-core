@@ -83,3 +83,12 @@
 	font-size: 12px;
 	margin-left: 10px;
 }
+
+.accepted-quote{
+	font-size: 13px;
+	font-weight: bold;
+}
+.pending-rate-quote{
+	font-size: 11px;
+	color:#666;
+}

@@ -21,7 +21,13 @@
 						<h5>Presupuestos</h5>
 					</div>
 					<ul class="response-list">
-						<#assign hasReplies=false />										
+						<#assign hasReplies=false />	
+						<#assign hasOneQuoteAccepted=false />	
+						<#list quotes as quote>
+							<#if quote.orderId==order.id && quote.statusType="ACCEPTED">
+								<#assign hasOneQuoteAccepted=true />
+							</#if>
+						</#list>							
 						<#list quotes as quote>
 							<#if quote.orderId==order.id && (quote.statusType="REPLIED" || quote.statusType="ACCEPTED" || quote.statusType="DONE")>
 								<#assign hasReplies=true />				
@@ -43,40 +49,46 @@
 						  			</div>
 						  			<div class="col-md-4">
 						  				<#if quote.statusType="REPLIED">
-							  				<form name="budgetsFormAccepted${quote_index}" action="<@c.url value='/dashboard/requests/accepted/${quote.id}' />" method="POST" enctype="utf8">
-							  					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							  					<a href="javascript:document.budgetsFormAccepted${quote_index}.submit()" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
-							  				</form>
+						  					<#if hasOneQuoteAccepted == false>
+								  				<form name="budgetsFormAccepted${quote_index}" action="<@c.url value='/dashboard/requests/accepted/${quote.id}' />" method="POST" enctype="utf8">
+								  					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								  					<a href="javascript:document.budgetsFormAccepted${quote_index}.submit()" class="button btn btn-xs btn-warning pull-right">Aceptar</a>
+								  				</form>
+								  			</#if>
 							  			<#elseif quote.statusType="ACCEPTED">
-							  				Aceptado(Pendiente calificacion)
+							  				<span class="accepted-quote">Aceptado</span> <span class="pending-rate-quote">(Calificación pendiente)</span>
 							  			</#if>
-					  					<a class="button btn btn-xs btn-default pull-right make-question" style="margin-right:10px;cursor:pointer;">
-											<#if quote.quoteQuestions?size != 0>
-					  							Ver preguntas
-					  						<#else>
-					  							Realizar pregunta
-						  					</#if>					  							
-					  					</a>
+							  			<#if hasOneQuoteAccepted == false || (quote.quoteQuestions?size > 0)>
+						  					<a class="button btn btn-xs btn-default pull-right make-question" style="margin-right:10px;cursor:pointer;">
+												<#if quote.quoteQuestions?size != 0>
+						  							Ver preguntas
+						  						<#else>
+					  								Realizar pregunta
+							  					</#if>		  							
+					  						</a>
+					  					</#if>
 						  			</div>
-						  			<form name="questionsForm${quote_index}" action="<@c.url value='/dashboard/questions' />" method="POST" enctype="utf8" style="display:none;">
-										<@spring.bind "quoteQuestion" />
-						  				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						  				<input type="hidden" name="quoteId" value="${quote.id}">
-							  			<ul class="messages-list">
-								  				<#list quote.quoteQuestions as quoteQuestion>
-									  				<li class="col-md-12">
-									  					<div class="question-message message">
-										  					<div class="user-name-message">${quoteQuestion.description} - ${quoteQuestion.createdAt?string("dd/MM/yy")}</div>
-										  					<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""} - ${(quoteQuestion.quoteQuestionReply.updatedAt?string("dd/MM/yy"))!""}</div>
-										  				</div>
-									  				</li>
-									  			</#list>
-							  			</ul>
-							  			<div class="col-md-12" style="margin-top:8px;">
-							  				<textarea name="description" class="form-control"></textarea>
-							  				<a href="javascript:document.questionsForm${quote_index}.submit()" class="button btn btn-xs btn-info pull-right" style="margin-top:5px;">Enviar mensaje</a>
-							  			</div>												  			
-								  	</form>
+						  			<#if hasOneQuoteAccepted == false>
+							  			<form name="questionsForm${quote_index}" action="<@c.url value='/dashboard/questions' />" method="POST" enctype="utf8" style="display:none;">
+											<@spring.bind "quoteQuestion" />
+							  				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							  				<input type="hidden" name="quoteId" value="${quote.id}">
+								  			<ul class="messages-list">
+									  				<#list quote.quoteQuestions as quoteQuestion>
+										  				<li class="col-md-12">
+										  					<div class="question-message message">
+											  					<div class="user-name-message">${quoteQuestion.description} - ${quoteQuestion.createdAt?string("dd/MM/yy")}</div>
+											  					<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""} - ${(quoteQuestion.quoteQuestionReply.updatedAt?string("dd/MM/yy"))!""}</div>
+											  				</div>
+										  				</li>
+										  			</#list>
+								  			</ul>
+								  			<div class="col-md-12" style="margin-top:8px;">
+								  				<textarea name="description" class="form-control"></textarea>
+								  				<a href="javascript:document.questionsForm${quote_index}.submit()" class="button btn btn-xs btn-info pull-right" style="margin-top:5px;">Enviar mensaje</a>
+								  			</div>												  			
+									  	</form>
+								  	</#if>	
 						  		</li>											  		
 						  	</#if>
 						</#list>

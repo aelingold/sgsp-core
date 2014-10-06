@@ -35,12 +35,12 @@
 				<table>
 					<tr>
 						<td>
-							<h3>Calificacion recibida</h3>
+							<h3>Calificación recibida</h3>
 							<p class="lead">
 								El usuario ${lastName} ${firstName} te ha calificado por tu servicio.
 							</p>							
 							<p class="callout">
-								Para acceder hace clic <a href="http://www.singuia.com/dashboard/ratings">aqui</a>
+								Para acceder hacé click <a href="http://www.singuia.com/dashboard/ratings">aquí</a>.
 							</p>
 							<!-- social & contact -->
 							<table class="social" width="100%">

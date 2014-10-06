@@ -40,10 +40,10 @@
 								Bienvenido a SinGuia.com!
 							</p>
 							<p class="lead">
-								El sitio donde vas a encontrar el servicio que estas buscando totalmente <b>gratis!</b> 
+								El sitio donde vas a encontrar el servicio que estás buscando totalmente <b>gratis!</b> 
 							</p>							
 							<p class="callout">
-								Para confirmar tu registración hace clic <a href="http://www.singuia.com/register/confirm-user-account/${token}">aqui</a>
+								Para confirmar tu registración hacé clic <a href="http://www.singuia.com/register/confirm-user-account/${token}">aquí</a>.
 							</p>
 							<!-- social & contact -->
 							<table class="social" width="100%">

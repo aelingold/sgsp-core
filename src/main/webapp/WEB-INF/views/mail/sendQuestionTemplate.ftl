@@ -40,7 +40,7 @@
 								El usuario ${lastName} ${firstName} ha solicitado que respondas una pregunta.
 							</p>
 							<p class="callout">
-								Para acceder hace clic <a href="http://www.singuia.com/dashboard/questions">aqui</a>
+								Para acceder hacé click <a href="http://www.singuia.com/dashboard/questions">aquí</a>.
 							</p>
 							<!-- social & contact -->
 							<table class="social" width="100%">

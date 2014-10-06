@@ -1092,3 +1092,7 @@ ul{
 	cursor: pointer;
 	font-weight: normal;
 }
+
+.form-group{
+	margin-bottom: 8px;
+}
