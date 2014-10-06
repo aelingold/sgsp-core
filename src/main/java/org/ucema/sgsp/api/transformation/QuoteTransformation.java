@@ -86,6 +86,13 @@ public class QuoteTransformation {
 					.transformToApi(quote.getQuoteQuestions()));
 			result.setQuoteQuestionIds(quote.getQuoteQuestions().stream()
 					.map(qq -> qq.getId()).collect(Collectors.toList()));
+			result.setPendingQuoteQuestionsReply(quote
+					.getQuoteQuestions()
+					.stream()
+					.filter(qq -> qq.getQuoteQuestionReply() == null
+							|| qq.getQuoteQuestionReply().getDescription() == null
+							|| qq.getQuoteQuestionReply().getDescription()
+									.isEmpty()).count() > 0);
 		}
 		result.setValidDateUntil(quote.getValidDateUntil());
 

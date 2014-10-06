@@ -141,6 +141,9 @@ public class DashBoardDataService {
 		map.put("pendingQuotesWithQuoteQuestionRepliesQty",
 				quotesWithQuoteQuestionRepliesQty(quotesWithQuoteQuestionReplies));
 
+		map.put("doneQuotesWithQuoteQuestionRepliesQty",
+				quotesWithQuoteQuestionDoneQty(quotesWithQuoteQuestionReplies));
+
 		map.put("userWorkRatesQtyMap", userWorkRateSummarizeService
 				.userWorkRateSummarizesMap(usernames));
 
@@ -156,10 +159,11 @@ public class DashBoardDataService {
 						.stream()
 						.filter(uwr -> uwr.getStatusType().equals(
 								UserWorkRateStatusType.PENDING.name())).count());
-		map.put("userWorkRatesDoneQty", userWorkRates
-				.stream()
-				.filter(uwr -> uwr.getStatusType().equals(
-						UserWorkRateStatusType.DONE.name())).count());
+		map.put("userWorkRatesDoneQty",
+				userWorkRates
+						.stream()
+						.filter(uwr -> uwr.getStatusType().equals(
+								UserWorkRateStatusType.DONE.name())).count());
 
 		List<UserWorkRateDTO> userWorkRatesReceived = userWorkRateService
 				.findByQuote_User_EmailAndStatusType(username,
@@ -233,6 +237,26 @@ public class DashBoardDataService {
 
 		return result;
 	}
+	
+	private Integer quotesWithQuoteQuestionDoneQty(
+			List<QuoteDTO> quotesWithQuoteQuestionReplies) {
+		Integer result = 0;
+
+		for (QuoteDTO quoteDTO : quotesWithQuoteQuestionReplies) {
+			for (QuoteQuestionDTO quoteQuestionDTO : quoteDTO
+					.getQuoteQuestions()) {
+				if (quoteQuestionDTO.getQuoteQuestionReply() != null
+						&& (quoteQuestionDTO.getQuoteQuestionReply()
+								.getDescription() != null && !quoteQuestionDTO
+								.getQuoteQuestionReply().getDescription()
+								.isEmpty())) {
+					result++;
+				}
+			}
+		}
+
+		return result;
+	}	
 
 	public List<QuoteDTO> quotes(String username, List<QuoteDTO> allQuotes) {
 
@@ -259,15 +283,15 @@ public class DashBoardDataService {
 	}
 
 	public List<QuoteDTO> repliedQuotes(List<QuoteDTO> allQuotes) {
-//		return allQuotes
-//				.stream()
-//				.filter(q -> q.getStatusType().equals(
-//						QuoteStatusType.REPLIED.name())
-//						|| q.getStatusType().equals(
-//								QuoteStatusType.ACCEPTED.name())
-//						|| q.getStatusType().equals(
-//								QuoteStatusType.INVALID.name()))
-//				.collect(Collectors.toList());
+		// return allQuotes
+		// .stream()
+		// .filter(q -> q.getStatusType().equals(
+		// QuoteStatusType.REPLIED.name())
+		// || q.getStatusType().equals(
+		// QuoteStatusType.ACCEPTED.name())
+		// || q.getStatusType().equals(
+		// QuoteStatusType.INVALID.name()))
+		// .collect(Collectors.toList());
 		return allQuotes;
 	}
 }

@@ -23,6 +23,7 @@ public class QuoteDTO implements Serializable {
 	private AmountDTO visitAmount;
 	private Date createdAt;
 	private Date updatedAt;
+	private Boolean pendingQuoteQuestionsReply;
 
 	public QuoteDTO() {
 		super();
@@ -224,6 +225,14 @@ public class QuoteDTO implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public Boolean getPendingQuoteQuestionsReply() {
+		return pendingQuoteQuestionsReply;
+	}
+
+	public void setPendingQuoteQuestionsReply(Boolean pendingQuoteQuestionsReply) {
+		this.pendingQuoteQuestionsReply = pendingQuoteQuestionsReply;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -259,6 +268,8 @@ public class QuoteDTO implements Serializable {
 		builder.append(createdAt);
 		builder.append(", updatedAt=");
 		builder.append(updatedAt);
+		builder.append(", pendingQuoteQuestionsReply=");
+		builder.append(pendingQuoteQuestionsReply);
 		builder.append("]");
 		return builder.toString();
 	}
