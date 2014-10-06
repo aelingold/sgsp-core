@@ -76,8 +76,9 @@ $("#calificaciones-panel .btn-group .btn:first").click();
 
 $("#pedidos-panel .btn-group .btn").on("click", function(){
 	var showClass = $(this).attr("data-show-class");
-	$("#pedidos-panel .panel").parent().hide();
-	$("#pedidos-panel .panel."+showClass).parent().show();
+	$("#pedidos-panel .order-IN_PROGRESS").parent().hide();
+	$("#pedidos-panel .order-FINISHED").parent().hide();
+	$("#pedidos-panel ."+showClass).parent().show();
 });
 $("#pedidos-panel .btn-group .btn:first").click();
 

@@ -12,17 +12,21 @@
 	</div>
 						
 	<#if inProgressOrdersQty == 0>
-		<div class="order-IN_PROGRESS">
-			<div class="col-md-12" style="margin-top:15px;">
-				No tienes presupuestos en curso.
+		<div class="row">
+			<div class="order-IN_PROGRESS">
+				<div class="col-md-12" style="margin-top:15px;">
+					No tienes presupuestos en curso.
+				</div>
 			</div>
 		</div>
 	</#if>
 	
 	<#if finishedOrdersQty == 0>
-		<div class="order-FINISHED">
-			<div class="col-md-12" style="margin-top:15px;">
-				No tienes presupuestos finalizados.
+		<div class="row">
+			<div class="order-FINISHED">
+				<div class="col-md-12" style="margin-top:15px;">
+					No tienes presupuestos finalizados.
+				</div>
 			</div>
 		</div>
 	</#if>							
