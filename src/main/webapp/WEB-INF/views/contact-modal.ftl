@@ -9,15 +9,18 @@
       			</div>
       			<div class="modal-body">
      				<div class="row">
-            			<div class="col-lg-12">
+     					<div class="col-md-3">
+		                	<img src="<@c.url value='/static/new/img/characters/mail-character.png'/>" >
+		                </div>
+            			<div class="col-lg-9">
 		                    <div class="row">
-		                        <div class="form-group col-md-6">
+		                        <div class="form-group col-md-8">
 		                        	<label>Nombre</label>
 		                            <input type="text" class="form-control" id="name" name="name">
 		                        </div>
 		                    </div>
 		                    <div class="row">
-		                        <div class="form-group col-md-6">
+		                        <div class="form-group col-md-8">
 		                        	<label>Email</label>
 		                            <input type="email" class="form-control" id="email" name="email">
 		                        </div>
@@ -25,7 +28,7 @@
 		                    <div class="row">
 		                        <div class="form-group col-md-12">
 		                        	<label>Mensaje</label>
-		                            <textarea class="form-control" id="message" name="message"></textarea>
+		                            <textarea class="form-control" id="message" name="message" style="height: 85px;"></textarea>
 		                        </div>
 		                    </div>
             			</div>

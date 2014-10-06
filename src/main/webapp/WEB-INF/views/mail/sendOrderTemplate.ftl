@@ -37,7 +37,7 @@
 						<td>
 							<h3>Solicitud de Presupuesto</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha solicitado un presupuesto.
+								El usuario ${firstName} ${lastName?substring(0, 1)} ha solicitado un presupuesto.
 							</p>
 							<p class="callout">
 								Para acceder hacé click <a href="http://www.singuia.com/dashboard/budgets">aquí</a>.

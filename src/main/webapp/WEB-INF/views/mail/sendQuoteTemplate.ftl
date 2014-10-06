@@ -37,7 +37,7 @@
 						<td>
 							<h3>Presupuesto realizado</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha realizado un presupuesto para su pedido.
+								El usuario ${firstName} ${lastName?substring(0, 1)} ha realizado un presupuesto para su pedido.
 							</p>
 							<p class="callout">
 								Para acceder hacé click <a href="http://www.singuia.com/dashboard/requests">aquí</a>.

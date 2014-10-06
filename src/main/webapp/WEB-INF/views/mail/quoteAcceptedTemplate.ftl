@@ -37,7 +37,7 @@
 						<td>
 							<h3>Presupuesto aceptado</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha aceptado tu presupuesto.
+								El usuario ${firstName} ${lastName?substring(0, 1)} ha aceptado tu presupuesto.
 							</p>
 							<p class="lead">
 								Te adjuntamos la siguiente información para que te pongas en contacto:

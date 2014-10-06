@@ -37,7 +37,7 @@
 						<td>
 							<h3>Te enviaron una respuesta!</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha respondido una pregunta.
+								El usuario ${firstName} ${lastName?substring(0, 1)} ha respondido una pregunta.
 							</p>
 							<p class="callout">
 								Para acceder hacé click <a href="http://www.singuia.com/dashboard/requests">aquí</a>.

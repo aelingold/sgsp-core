@@ -37,7 +37,7 @@
 						<td>
 							<h3>Calificación recibida</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} te ha calificado por tu servicio.
+								El usuario ${firstName} ${lastName?substring(0, 1)} te ha calificado por tu servicio.
 							</p>							
 							<p class="callout">
 								Para acceder hacé click <a href="http://www.singuia.com/dashboard/ratings">aquí</a>.

@@ -37,7 +37,7 @@
 						<td>
 							<h3>Te enviaron una pregunta!</h3>
 							<p class="lead">
-								El usuario ${lastName} ${firstName} ha solicitado que respondas una pregunta.
+								El usuario ${firstName} ${lastName} ha solicitado que respondas una pregunta.
 							</p>
 							<p class="callout">
 								Para acceder hacé click <a href="http://www.singuia.com/dashboard/questions">aquí</a>.
