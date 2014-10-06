@@ -93,9 +93,9 @@ $("#preguntas-panel .btn-group .btn").on("click", function(){
 	var showClass = $(this).attr("data-show-class");
 	$("#preguntas-panel .question-DONE").parent().hide();
 	$("#preguntas-panel .question-PENDING").parent().hide();
-	$("#presupuestos-panel ."+showClass).parent().show();
+	$("#preguntas-panel ."+showClass).parent().show();
 });
-$("#presupuestos-panel .btn-group .btn:first").click();
+$("#preguntas-panel .btn-group .btn:first").click();
 
 
 $(".make-question").on("click", function(){
