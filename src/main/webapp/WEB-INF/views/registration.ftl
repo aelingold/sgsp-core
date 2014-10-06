@@ -51,18 +51,20 @@
                 <div class="col-md-8">
                     <h2 class="section-heading">Registración</h2>             
                 </div>
-                <div class="col-md-4">
-       	 			<form name="fb_signin" id="fb_signin" action="<@c.url value='/signin/facebook'/>" method="POST">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    					<input type="hidden" name="scope" value="public_profile,email,offline_access,user_friends"/>                
-	                	<a href="javascript:document.fb_signin.submit()">
-		                	<div class="fb-button" style="height: 44px;">
-			      				<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
-			      				<span style="margin-top: 11px;font-size: 16px;">Registrarme con facebook</span>
-			      			</div>  
-			      		</a>
-			      	</form>
-      			</div>  
+                <#if !user.signInProvider??>
+		            <div class="col-md-4">
+		   	 			<form name="fb_signin" id="fb_signin" action="<@c.url value='/signin/facebook'/>" method="POST">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<input type="hidden" name="scope" value="public_profile,email,offline_access,user_friends"/>                
+		                	<a href="javascript:document.fb_signin.submit()">
+			                	<div class="fb-button" style="height: 44px;">
+				      				<img src="<@c.url value='/static/new/img/social/facebook.png'/>">
+				      				<span style="margin-top: 11px;font-size: 16px;">Registrarme con facebook</span>
+				      			</div>  
+				      		</a>
+				      	</form>
+		  			</div>
+		  		</#if>
   			</div>  
       		<div class="row">
                 <div class="col-md-2">

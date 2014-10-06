@@ -29,7 +29,7 @@ public class WorkAreaQuestion {
 	private GroupType groupType;
 	private String description;
 	@ManyToOne
-	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_work_area_items_work_area"))
+	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_work_area_questions_work_area"))
 	private WorkArea workArea;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)

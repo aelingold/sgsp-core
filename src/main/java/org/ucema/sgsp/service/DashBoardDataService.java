@@ -25,6 +25,7 @@ import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
 import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
+import org.ucema.sgsp.persistence.model.OrderStatusType;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
@@ -85,6 +86,15 @@ public class DashBoardDataService {
 		List<OrderDTO> orders = orderService.list(username);
 		map.put("orders", orders);
 
+		map.put("inProgressOrdersQty",
+				orders.stream()
+						.filter(o -> o.getStatusType().equals(
+								OrderStatusType.IN_PROGRESS.name())).count());
+		map.put("finishedOrdersQty",
+				orders.stream()
+						.filter(o -> o.getStatusType().equals(
+								OrderStatusType.FINISHED.name())).count());
+
 		List<Long> quoteIds = new ArrayList<>();
 		orders.forEach(o -> {
 			quoteIds.addAll(o.getQuoteIds());
@@ -102,6 +112,14 @@ public class DashBoardDataService {
 				.filter(q -> q.getStatusType().equals(
 						QuoteStatusType.PENDING.name())).count();
 		map.put("pendingQuotesQty", pendingQuotesQty);
+
+		long doneQuotesQty = quotes
+				.stream()
+				.filter(q -> q.getStatusType().equals(
+						QuoteStatusType.DONE.name())
+						|| q.getStatusType().equals(
+								QuoteStatusType.REPLIED.name())).count();
+		map.put("doneQuotesQty", doneQuotesQty);
 
 		map.put("quote", new QuoteDTO());
 
@@ -130,7 +148,18 @@ public class DashBoardDataService {
 
 		List<UserWorkRateDTO> userWorkRates = userWorkRateService
 				.findByUser_Email(username);
+
 		map.put("userWorkRates", userWorkRates);
+
+		map.put("userWorkRatesPendingQty",
+				userWorkRates
+						.stream()
+						.filter(uwr -> uwr.getStatusType().equals(
+								UserWorkRateStatusType.PENDING.name())).count());
+		map.put("userWorkRatesDoneQty", userWorkRates
+				.stream()
+				.filter(uwr -> uwr.getStatusType().equals(
+						UserWorkRateStatusType.DONE.name())).count());
 
 		long pendingUserWorkRatesQty = userWorkRates
 				.stream()
@@ -143,7 +172,9 @@ public class DashBoardDataService {
 						UserWorkRateStatusType.DONE);
 
 		map.put("userWorkRatesReceived", userWorkRatesReceived);
-		
+
+		map.put("userWorkRatesReceivedQty", userWorkRatesReceived.size());
+
 		map.put("workAreaQuestions", workAreaQuestionService.list());
 
 		map.put("workAreaItems", workAreaItemService.list());

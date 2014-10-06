@@ -3,10 +3,10 @@
 	<div class="row">
 		<div class="btn-group btn-group-justified">
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="quote-PENDING">Presupuestos pendientes</button>
+		    <button type="button" class="btn btn-default" data-show-class="quote-PENDING">Presupuestos pendientes (${pendingQuotesQty})</button>
 		  </div>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="quote-REPLIED">Presupuestos realizados</button>
+		    <button type="button" class="btn btn-default" data-show-class="quote-REPLIED">Presupuestos realizados (${doneQuotesQty})</button>
 		  </div>
 		</div>
 	</div>

@@ -25,7 +25,7 @@ public class State {
 	private String description;
 	@OneToMany(orphanRemoval=true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	@JoinColumn(name = "state_id", foreignKey = @ForeignKey(name = "fk_user_work_rate_user"))
+	@JoinColumn(name = "state_id", foreignKey = @ForeignKey(name = "fk_states_cities"))
 	private List<City> cities;	
 	@Column(name = "is_enabled")
 	private Boolean isEnabled;
