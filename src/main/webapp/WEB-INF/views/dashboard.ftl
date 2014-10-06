@@ -63,8 +63,8 @@
 					      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
 					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Mis presupuestos pedidos</a></li>
 					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">
-					      	<#if pendingUserWorkRatesQty != 0>
-					      		<span class="badge pull-right">${pendingUserWorkRatesQty}</span>
+					      	<#if userWorkRatesPendingQty != 0>
+					      		<span class="badge pull-right">${userWorkRatesPendingQty}</span>
 							</#if>
 							Calificaciones</a></li>
 					      <li id="redessociales-option"><a href="<@c.url value='/dashboard/socialmedia'/>">Redes Sociales</a></li>
