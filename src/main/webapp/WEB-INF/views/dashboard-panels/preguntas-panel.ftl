@@ -14,6 +14,22 @@
 
 	<div class="row">
 		<div class="panel panel-default">
+		
+			<#if pendingQuotesWithQuoteQuestionRepliesQty == 0>
+				<div class="question-PENDING">
+					<div class="panel-body" style="margin-top:15px;">
+						No tienes preguntas pendientes.
+					</div>
+				</div>
+			</#if>
+			<#if doneQuotesWithQuoteQuestionRepliesQty == 0>
+				<div class="question-DONE">
+					<div class="panel-body" style="margin-top:15px;">
+						No tienes preguntas respondidas.
+					</div>
+				</div>
+			</#if>		
+		
 			<#list quotesWithQuoteQuestionReplies as quotesWithQuoteQuestionReply>
 				<#if quotesWithQuoteQuestionReply.pendingQuoteQuestionsReply>
 					<div class="question-PENDING">
