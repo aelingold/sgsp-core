@@ -2,19 +2,40 @@
 	<div class="row">
 		<div class="btn-group btn-group-justified">
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-PENDING">Pendientes</button>
+		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-PENDING">Pendientes (${userWorkRatesPendingQty})</button>
 		  </div>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-DONE">Hechas</button>
+		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-DONE">Hechas (${userWorkRatesDoneQty})</button>
 		  </div>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-RECEIVED">Recibidas</button>
+		    <button type="button" class="btn btn-default" data-show-class="user-work-rate-RECEIVED">Recibidas (${userWorkRatesReceivedQty})</button>
 		  </div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="panel-group" id="accordion">
 		
+			<#if userWorkRatesReceived?size == 0>
+				<div class="rating-section user-work-rate-PENDING">
+					<div class="col-md-12" style="margin-top:15px;">
+						No tienes calificaciones pendientes.
+					</div>
+				</div>
+			</#if>
+			<#if userWorkRatesReceived?size == 0>
+				<div class="rating-section user-work-rate-DONE">
+					<div class="col-md-12" style="margin-top:15px;">
+						No tienes calificaciones hechas.
+					</div>
+				</div>
+			</#if>
+			<#if userWorkRatesReceived?size == 0>
+				<div class="rating-section user-work-rate-RECEIVED">
+					<div class="col-md-12" style="margin-top:15px;">
+						No tienes calificaciones recibidas.
+					</div>
+				</div>
+			</#if>						
 			<#list userWorkRatesReceived as userWorkRateReceived>
 				<div class="rating-section user-work-rate-RECEIVED">
 					<div class="col-md-12" style="margin-top:15px;">

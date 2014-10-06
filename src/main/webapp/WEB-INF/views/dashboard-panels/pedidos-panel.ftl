@@ -3,10 +3,10 @@
 	<div class="row">
 		<div class="btn-group btn-group-justified">
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default active" data-show-class="order-IN_PROGRESS">En curso</button>
+		    <button type="button" class="btn btn-default active" data-show-class="order-IN_PROGRESS">En curso (${inProgressOrdersQty})</button>
 		  </div>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="order-FINISHED">Finalizados</button>
+		    <button type="button" class="btn btn-default" data-show-class="order-FINISHED">Finalizados (${finishedOrdersQty})</button>
 		  </div>
 		</div>
 	</div>
@@ -37,7 +37,7 @@
 						  				</#if>
 						  			</div>
 						  			<div class="col-md-3" style="color: #bbb;">
-						  				<#if quote.requireVisit == false>
+						  				<#if quote.requireVisit == false && quote.validDateUntil??>
 						  					Válido hasta ${quote.validDateUntil?string("dd/MM/yy")}
 						  				</#if>
 						  			</div>

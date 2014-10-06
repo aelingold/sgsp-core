@@ -2,13 +2,18 @@
 <#include "presupuestos-macro.ftl">
 <div id="preguntas-panel" class="col-md-12 dashboard-panel">
 	<div class="row">
-		<#list quotesWithQuoteQuestionReplies as quotesWithQuoteQuestionReply>
-			<div class="panel panel-default">
-	  			<div class="panel-heading">
-		    		<h3 class="panel-title">
-		    			${quotesWithQuoteQuestionReply.order.username}
-		    		</h3>
-		  		</div>
+		<div class="panel panel-default">
+  			<div class="panel-heading">
+	    		<h3 class="panel-title">
+	    			Preguntas
+	    		</h3>
+	  		</div>
+	  		<#if quotesWithQuoteQuestionReplies?size == 0>
+	  			<div class="panel-body">
+	  				No se han encontrado preguntas.
+				</div>	  				
+	  		</#if>
+			<#list quotesWithQuoteQuestionReplies as quotesWithQuoteQuestionReply>
 		  		<div class="panel-body">
 		  			<div class="col-md-12 form-group">
 				  		<@presupuestos quotesWithQuoteQuestionReply/>
@@ -24,7 +29,7 @@
 						  		<div>${quoteQuestion.quoteQuestionReply.description}</div>
 				  			</div>
 						<#else>				
-			  				<form name="quoteQuestions${quoteQuestion_index}" action="<@c.url value='/dashboard/question-replies' />" method="POST" enctype="utf8">
+			  				<form name="quoteQuestions${quotesWithQuoteQuestionReply_index}${quoteQuestion_index}" action="<@c.url value='/dashboard/question-replies' />" method="POST" enctype="utf8">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<@spring.bind "quoteQuestionReply" />
 								<input type="hidden" name="quoteQuestionId" value="${quoteQuestion.id}">
@@ -38,13 +43,13 @@
 							  		<textarea name="description" class="form-control"></textarea>
 					  			</div>
 					  			<div class="col-md-12">
-					  				<a href="javascript:document.quoteQuestions${quoteQuestion_index}.submit()" class="button btn btn-warning pull-right">Enviar respuesta</a>
+					  				<a href="javascript:document.quoteQuestions${quotesWithQuoteQuestionReply_index}${quoteQuestion_index}.submit()" class="button btn btn-warning pull-right">Enviar respuesta</a>
 					  			</div>					  			
 					  		</form>
 						</#if>
 			  		</#list>
 		  		</div>
-		  	</div>
-		</#list>  	
+			</#list>
+		</div>  	
 	</div>   		
 </div>
