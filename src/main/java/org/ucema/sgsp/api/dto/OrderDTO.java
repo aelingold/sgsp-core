@@ -27,6 +27,8 @@ public class OrderDTO implements Serializable {
 	private List<String> workAreaItemCodes;
 	private List<Long> quoteIds;
 	private String statusType;
+	private Boolean quoteAccepted;
+	private Boolean quoteReplied;
 
 	public OrderDTO() {
 		super();
@@ -281,6 +283,22 @@ public class OrderDTO implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public Boolean getQuoteAccepted() {
+		return quoteAccepted;
+	}
+
+	public void setQuoteAccepted(Boolean quoteAccepted) {
+		this.quoteAccepted = quoteAccepted;
+	}
+
+	public void setQuoteReplied(Boolean quoteReplied) {
+		this.quoteReplied = quoteReplied;
+	}
+
+	public Boolean getQuoteReplied() {
+		return quoteReplied;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -316,8 +334,14 @@ public class OrderDTO implements Serializable {
 		builder.append(pendingNotify);
 		builder.append(", workDateType=");
 		builder.append(workDateType);
+		builder.append(", workAreaItemCodes=");
+		builder.append(workAreaItemCodes);
 		builder.append(", statusType=");
 		builder.append(statusType);
+		builder.append(", quoteAccepted=");
+		builder.append(quoteAccepted);
+		builder.append(", quoteReplied=");
+		builder.append(quoteReplied);		
 		builder.append("]");
 		return builder.toString();
 	}

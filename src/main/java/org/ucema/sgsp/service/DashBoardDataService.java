@@ -259,14 +259,15 @@ public class DashBoardDataService {
 	}
 
 	public List<QuoteDTO> repliedQuotes(List<QuoteDTO> allQuotes) {
-		return allQuotes
-				.stream()
-				.filter(q -> q.getStatusType().equals(
-						QuoteStatusType.REPLIED.name())
-						|| q.getStatusType().equals(
-								QuoteStatusType.ACCEPTED.name())
-						|| q.getStatusType().equals(
-								QuoteStatusType.INVALID.name()))
-				.collect(Collectors.toList());
+//		return allQuotes
+//				.stream()
+//				.filter(q -> q.getStatusType().equals(
+//						QuoteStatusType.REPLIED.name())
+//						|| q.getStatusType().equals(
+//								QuoteStatusType.ACCEPTED.name())
+//						|| q.getStatusType().equals(
+//								QuoteStatusType.INVALID.name()))
+//				.collect(Collectors.toList());
+		return allQuotes;
 	}
 }
