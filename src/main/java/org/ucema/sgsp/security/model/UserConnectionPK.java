@@ -26,6 +26,30 @@ public class UserConnectionPK implements Serializable {
 		this.providerUserId = providerUserId;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getProviderUserId() {
+		return providerUserId;
+	}
+
+	public void setProviderUserId(String providerUserId) {
+		this.providerUserId = providerUserId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
