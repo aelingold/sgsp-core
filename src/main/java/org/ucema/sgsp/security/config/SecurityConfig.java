@@ -85,13 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						defaultAccessDecisionManager(roleHierarchy()))
 				// Anyone can access the urls
 				.antMatchers("/connect/**", "/auth/**", "/login", "/signin/**",
-						"/signup/**", "/user/register/**", "/register/**",
-						"/workAreas/**", "/workAreaItems/**", "/users/**",
-						"/cities/**", "/states/**", "/countries/**",
-						"/currencies/**", "/quotes/**", "/quote-questions/**",
-						"/user-work-zones/**", "/user-notifies/**",
-						"/rate-plans/**", "/favicon.ico", "/",
-						"/contact-messages/**")
+						"/signup/**", "/register/**", "/cities/**",
+						"/states/**", "/countries/**", "/currencies/**",
+						"/favicon.ico", "/", "/contact-messages/**")
 				.permitAll()
 				// The rest of the our application is protected.
 				.antMatchers("/**")

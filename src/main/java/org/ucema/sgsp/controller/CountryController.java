@@ -32,8 +32,8 @@ public class CountryController {
 		return countryService.list();
 	}
 
-	@RequestMapping(value = "/countries/import", method = RequestMethod.POST)
-	public @ResponseBody void saveOrUpdateAll() {
-		countryService.importGeo();
-	}
+	// @RequestMapping(value = "/countries/import", method = RequestMethod.POST)
+	// public @ResponseBody void saveOrUpdateAll() {
+	// countryService.importGeo();
+	// }
 }

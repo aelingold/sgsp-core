@@ -70,7 +70,12 @@ public class SocialConfig implements SocialConfigurer {
 	public ProviderSignInController providerSignInController(
 			ConnectionFactoryLocator connectionFactoryLocator,
 			UsersConnectionRepository usersConnectionRepository) {
-		return new ProviderSignInController(connectionFactoryLocator,
+		ProviderSignInController providerSignInController = new ProviderSignInController(connectionFactoryLocator,
 				usersConnectionRepository, new SpringSecuritySignInAdapter(userService));
+		
+		providerSignInController.setSignInUrl("/register");
+		providerSignInController.setSignUpUrl("/register");
+		
+		return providerSignInController;
 	}
 }
