@@ -17,7 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.support.OAuth2Connection;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.PagedList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
@@ -34,8 +38,10 @@ import org.ucema.sgsp.persistence.model.UserWorkRateSummarize;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.security.model.UserConnection;
 import org.ucema.sgsp.security.model.UserToken;
 import org.ucema.sgsp.security.persistence.UserRepository;
+import org.ucema.sgsp.security.service.UserConnectionService;
 
 @Service
 public class RepositoryUserService implements UserService {
@@ -55,6 +61,10 @@ public class RepositoryUserService implements UserService {
 	private MailService mailService;
 	@Autowired
 	private UserTransformation userTransformation;
+	@Autowired
+	private ConnectionRepository connectionRepository;
+	@Autowired
+	private UserConnectionService userConnectionService;
 
 	@Autowired
 	public RepositoryUserService(PasswordEncoder passwordEncoder,
@@ -72,6 +82,7 @@ public class RepositoryUserService implements UserService {
 	 *         provider. Otherwise this method returns an empty form object
 	 *         (normal form registration).
 	 */
+	@SuppressWarnings("unchecked")
 	public RegistrationDTO createRegistrationDTO(Connection<?> connection) {
 		RegistrationDTO dto = new RegistrationDTO();
 
@@ -96,6 +107,29 @@ public class RepositoryUserService implements UserService {
 
 			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
 					.getProviderId().toUpperCase()));
+			
+			OAuth2Connection<Facebook> oauth2Connection = (OAuth2Connection<Facebook>)connection;		
+			Facebook facebook = oauth2Connection.getApi();
+			PagedList<String> friendIds = facebook.friendOperations().getFriendIds();
+			
+			List<Long> userFriendIds = new ArrayList<Long>();
+			friendIds.forEach(fi -> {
+				UserConnection userConnection = userConnectionService.findByUserConnectionPK_ProviderUserId(fi);
+				User user = repository.findByEmail(userConnection.getUserConnectionPK().getUserId());
+				userFriendIds.add(user.getId());
+			});
+			dto.setUserFriendIds(userFriendIds);			
+				
+//				Facebook facebook = facebookConnection.getApi();
+//				
+//				List<Long> userFriendIds = new ArrayList<Long>();
+//				List<String> friendIds = facebook.friendOperations().getFriendIds();
+//				friendIds.forEach(fi -> {
+//					UserConnection userConnection = userConnectionService.findByUserConnectionPK_ProviderUserId(fi);
+//					UserDTO user = findByEmail(userConnection.getUserConnectionPK().getUserId());
+//					userFriendIds.add(user.getId());
+//				});
+//				dto.setUserFriendIds(userFriendIds);			
 		}
 
 		return dto;
@@ -221,6 +255,11 @@ public class RepositoryUserService implements UserService {
 		userDTO.setId(response.getId());
 		return userDTO;
 	}
+	
+	@Transactional
+	public User update(User user) {
+		return repository.save(user);
+	}
 
 	@Transactional
 	public void update(DashBoardUserDTO dashBoardUserDTO) {
@@ -291,6 +330,14 @@ public class RepositoryUserService implements UserService {
 		if (userAccountData.isSocialSignIn()) {
 			user.signInProvider(userAccountData.getSignInProvider());
 			user.enabled(true);
+			
+			List<User> userFriends = new ArrayList<User>();
+			if (userAccountData.getUserFriendIds() != null){
+				userAccountData.getUserFriendIds().forEach(uf -> {
+					userFriends.add(new User(uf));
+				});				
+			}
+			user.userFriends(userFriends);
 		} else {
 			UserToken userToken = new UserToken();
 			userToken.setToken(token);

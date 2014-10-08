@@ -165,9 +165,7 @@ public class RegistrationController {
 
 		String resultView = "pendingConfirmation";
 		if (registered.getIsEnabled()) {
-			// Logs the user in.
-			SecurityUtil.logInUser(registered);
-			LOGGER.debug("User {} has been signed in", registered);
+			
 			// If the user is signing in by using a social provider, this method
 			// call stores
 			// the connection to the UserConnection table. Otherwise, this
@@ -175,6 +173,10 @@ public class RegistrationController {
 			// does not
 			// do anything.
 			providerSignInUtils.doPostSignUp(registered.getEmail(), request);
+			
+			// Logs the user in.
+			SecurityUtil.logInUser(registered);
+			LOGGER.debug("User {} has been signed in", registered);			
 			
 			resultView = "redirect:/";
 		}

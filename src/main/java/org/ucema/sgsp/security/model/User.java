@@ -65,6 +65,10 @@ public class User extends BaseEntity<Long> {
 	@ManyToMany
 	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "work_area_id"))
 	private List<WorkArea> workAreas;
+	
+	@ManyToMany
+	@JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_friend_id"))
+	private List<User> userFriends;	
 
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
@@ -239,6 +243,14 @@ public class User extends BaseEntity<Long> {
 		this.userToken = userToken;
 	}
 
+	public List<User> getUserFriends() {
+		return userFriends;
+	}
+
+	public void setUserFriends(List<User> userFriends) {
+		this.userFriends = userFriends;
+	}
+
 	public static class Builder {
 
 		private User user;
@@ -291,7 +303,7 @@ public class User extends BaseEntity<Long> {
 		public Builder enabled(boolean isEnabled) {
 			user.isEnabled = isEnabled;
 			return this;
-		}
+		}		
 
 		public Builder workAreas(List<WorkArea> workAreas) {
 			user.workAreas = workAreas;
@@ -321,6 +333,11 @@ public class User extends BaseEntity<Long> {
 		
 		public Builder userToken(UserToken userToken) {
 			user.userToken = userToken;
+			return this;
+		}
+		
+		public Builder userFriends(List<User> userFriends) {
+			user.userFriends = userFriends;
 			return this;
 		}		
 

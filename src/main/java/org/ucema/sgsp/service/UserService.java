@@ -33,6 +33,8 @@ public interface UserService {
 			List<String> cityCodes);
 
 	UserDTO saveOrUpdate(UserDTO user);
+	
+	User update(User user);
 
 	void update(DashBoardUserDTO dashBoardUserDTO);
 

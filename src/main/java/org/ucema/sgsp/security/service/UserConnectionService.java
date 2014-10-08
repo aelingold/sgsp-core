@@ -68,14 +68,20 @@ public class UserConnectionService {
 
 		userConnectionDAO.delete(connections);
 	}
-	
+
 	@Transactional
 	public void updateConnection(UserConnection userConnection) {
 		userConnectionDAO.save(userConnection);
 	}
-	
+
 	@Transactional
 	public void addConnection(UserConnection userConnection) {
 		userConnectionDAO.save(userConnection);
-	}	
+	}
+
+	@Transactional
+	public Integer rank(String userId, String providerId) {
+		Object object = userConnectionDAO.rank(userId, providerId);
+		return (Integer) object;
+	}
 }

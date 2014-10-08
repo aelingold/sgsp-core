@@ -1,8 +1,13 @@
 package org.ucema.sgsp.security.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
@@ -10,10 +15,14 @@ import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.DuplicateConnectionException;
+import org.springframework.social.connect.NoSuchConnectionException;
 import org.springframework.social.connect.NotConnectedException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.ucema.sgsp.security.model.UserConnection;
+import org.ucema.sgsp.security.model.UserConnectionPK;
 
 public class CustomConnectionRepository implements ConnectionRepository {
 
@@ -33,33 +42,33 @@ public class CustomConnectionRepository implements ConnectionRepository {
 	}
 
 	public MultiValueMap<String, Connection<?>> findAllConnections() {
-//		List<Connection<?>> resultList = jdbcTemplate.query(
-//				selectFromUserConnection()
-//						+ " where userId = ? order by providerId, rank",
-//				connectionMapper, userId);
-//		MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
-//		Set<String> registeredProviderIds = connectionFactoryLocator
-//				.registeredProviderIds();
-//		for (String registeredProviderId : registeredProviderIds) {
-//			connections.put(registeredProviderId,
-//					Collections.<Connection<?>> emptyList());
-//		}
-//		for (Connection<?> connection : resultList) {
-//			String providerId = connection.getKey().getProviderId();
-//			if (connections.get(providerId).size() == 0) {
-//				connections.put(providerId, new LinkedList<Connection<?>>());
-//			}
-//			connections.add(providerId, connection);
-//		}
-//		return connections;
-		return null;
+		List<UserConnection> userConnections = userConnectionService
+				.findAllConnections(userId);
+
+		List<Connection<?>> resultList = mapUserConnections(userConnections);
+
+		MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
+		Set<String> registeredProviderIds = connectionFactoryLocator
+				.registeredProviderIds();
+		for (String registeredProviderId : registeredProviderIds) {
+			connections.put(registeredProviderId,
+					Collections.<Connection<?>> emptyList());
+		}
+		for (Connection<?> connection : resultList) {
+			String providerId = connection.getKey().getProviderId();
+			if (connections.get(providerId).size() == 0) {
+				connections.put(providerId, new LinkedList<Connection<?>>());
+			}
+			connections.add(providerId, connection);
+		}
+		return connections;
 	}
 
 	public List<Connection<?>> findConnections(String providerId) {
-//		return jdbcTemplate.query(selectFromUserConnection()
-//				+ " where userId = ? and providerId = ? order by rank",
-//				connectionMapper, userId, providerId);
-		return null;
+		List<UserConnection> userConnections = userConnectionService
+				.findConnections(userId, providerId);
+
+		return mapUserConnections(userConnections);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,66 +79,63 @@ public class CustomConnectionRepository implements ConnectionRepository {
 
 	public MultiValueMap<String, Connection<?>> findConnectionsToUsers(
 			MultiValueMap<String, String> providerUsers) {
-//		if (providerUsers == null || providerUsers.isEmpty()) {
-//			throw new IllegalArgumentException(
-//					"Unable to execute find: no providerUsers provided");
-//		}
-//		StringBuilder providerUsersCriteriaSql = new StringBuilder();
-//		MapSqlParameterSource parameters = new MapSqlParameterSource();
-//		parameters.addValue("userId", userId);
-//		for (Iterator<Entry<String, List<String>>> it = providerUsers
-//				.entrySet().iterator(); it.hasNext();) {
-//			Entry<String, List<String>> entry = it.next();
-//			String providerId = entry.getKey();
-//			providerUsersCriteriaSql.append("providerId = :providerId_")
-//					.append(providerId)
-//					.append(" and providerUserId in (:providerUserIds_")
-//					.append(providerId).append(")");
-//			parameters.addValue("providerId_" + providerId, providerId);
-//			parameters.addValue("providerUserIds_" + providerId,
-//					entry.getValue());
-//			if (it.hasNext()) {
-//				providerUsersCriteriaSql.append(" or ");
-//			}
-//		}
-//		List<Connection<?>> resultList = new NamedParameterJdbcTemplate(
-//				jdbcTemplate).query(selectFromUserConnection()
-//				+ " where userId = :userId and " + providerUsersCriteriaSql
-//				+ " order by providerId, rank", parameters, connectionMapper);
-//		MultiValueMap<String, Connection<?>> connectionsForUsers = new LinkedMultiValueMap<String, Connection<?>>();
-//		for (Connection<?> connection : resultList) {
-//			String providerId = connection.getKey().getProviderId();
-//			List<String> userIds = providerUsers.get(providerId);
-//			List<Connection<?>> connections = connectionsForUsers
-//					.get(providerId);
-//			if (connections == null) {
-//				connections = new ArrayList<Connection<?>>(userIds.size());
-//				for (int i = 0; i < userIds.size(); i++) {
-//					connections.add(null);
-//				}
-//				connectionsForUsers.put(providerId, connections);
-//			}
-//			String providerUserId = connection.getKey().getProviderUserId();
-//			int connectionIndex = userIds.indexOf(providerUserId);
-//			connections.set(connectionIndex, connection);
-//		}
-//		return connectionsForUsers;
+		// if (providerUsers == null || providerUsers.isEmpty()) {
+		// throw new IllegalArgumentException(
+		// "Unable to execute find: no providerUsers provided");
+		// }
+		// StringBuilder providerUsersCriteriaSql = new StringBuilder();
+		// MapSqlParameterSource parameters = new MapSqlParameterSource();
+		// parameters.addValue("userId", userId);
+		// for (Iterator<Entry<String, List<String>>> it = providerUsers
+		// .entrySet().iterator(); it.hasNext();) {
+		// Entry<String, List<String>> entry = it.next();
+		// String providerId = entry.getKey();
+		// providerUsersCriteriaSql.append("providerId = :providerId_")
+		// .append(providerId)
+		// .append(" and providerUserId in (:providerUserIds_")
+		// .append(providerId).append(")");
+		// parameters.addValue("providerId_" + providerId, providerId);
+		// parameters.addValue("providerUserIds_" + providerId,
+		// entry.getValue());
+		// if (it.hasNext()) {
+		// providerUsersCriteriaSql.append(" or ");
+		// }
+		// }
+		// List<Connection<?>> resultList = new NamedParameterJdbcTemplate(
+		// jdbcTemplate).query(selectFromUserConnection()
+		// + " where userId = :userId and " + providerUsersCriteriaSql
+		// + " order by providerId, rank", parameters, connectionMapper);
+		// MultiValueMap<String, Connection<?>> connectionsForUsers = new
+		// LinkedMultiValueMap<String, Connection<?>>();
+		// for (Connection<?> connection : resultList) {
+		// String providerId = connection.getKey().getProviderId();
+		// List<String> userIds = providerUsers.get(providerId);
+		// List<Connection<?>> connections = connectionsForUsers
+		// .get(providerId);
+		// if (connections == null) {
+		// connections = new ArrayList<Connection<?>>(userIds.size());
+		// for (int i = 0; i < userIds.size(); i++) {
+		// connections.add(null);
+		// }
+		// connectionsForUsers.put(providerId, connections);
+		// }
+		// String providerUserId = connection.getKey().getProviderUserId();
+		// int connectionIndex = userIds.indexOf(providerUserId);
+		// connections.set(connectionIndex, connection);
+		// }
+		// return connectionsForUsers;
 		return null;
 	}
 
 	public Connection<?> getConnection(ConnectionKey connectionKey) {
-//		try {
-//			return jdbcTemplate
-//					.queryForObject(
-//							selectFromUserConnection()
-//									+ " where userId = ? and providerId = ? and providerUserId = ?",
-//							connectionMapper, userId,
-//							connectionKey.getProviderId(),
-//							connectionKey.getProviderUserId());
-//		} catch (EmptyResultDataAccessException e) {
-//			throw new NoSuchConnectionException(connectionKey);
-//		}
-		return null;
+		try {
+			UserConnection userConnection = userConnectionService
+					.getConnection(userId, connectionKey.getProviderId(),
+							connectionKey.getProviderUserId());
+			return mapUserConnection(userConnection);
+		} catch (EmptyResultDataAccessException e) {
+			throw new NoSuchConnectionException(connectionKey);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -158,60 +164,43 @@ public class CustomConnectionRepository implements ConnectionRepository {
 
 	@Transactional
 	public void addConnection(Connection<?> connection) {
-//		try {
-//			ConnectionData data = connection.createData();
-//			int rank = jdbcTemplate
-//					.queryForObject(
-//							"select coalesce(max(rank) + 1, 1) as rank from "
-//									+ tablePrefix
-//									+ "UserConnection where userId = ? and providerId = ?",
-//							new Object[] { userId, data.getProviderId() },
-//							Integer.class);
-//			jdbcTemplate
-//					.update("insert into "
-//							+ tablePrefix
-//							+ "UserConnection (userId, providerId, providerUserId, rank, displayName, profileUrl, imageUrl, accessToken, secret, refreshToken, expireTime) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-//							userId, data.getProviderId(),
-//							data.getProviderUserId(), rank,
-//							data.getDisplayName(), data.getProfileUrl(),
-//							data.getImageUrl(), encrypt(data.getAccessToken()),
-//							encrypt(data.getSecret()),
-//							encrypt(data.getRefreshToken()),
-//							data.getExpireTime());
-//		} catch (DuplicateKeyException e) {
-//			throw new DuplicateConnectionException(connection.getKey());
-//		}
+		try {
+			ConnectionData data = connection.createData();
+			int rank = userConnectionService.rank(userId, data.getProviderId());
+
+			UserConnection userConnection = mapUserConnection(data, rank);
+			userConnectionService.addConnection(userConnection);
+
+		} catch (DuplicateKeyException e) {
+			throw new DuplicateConnectionException(connection.getKey());
+		}
 	}
 
 	@Transactional
 	public void updateConnection(Connection<?> connection) {
-//		ConnectionData data = connection.createData();
-//		jdbcTemplate
-//				.update("update "
-//						+ tablePrefix
-//						+ "UserConnection set displayName = ?, profileUrl = ?, imageUrl = ?, accessToken = ?, secret = ?, refreshToken = ?, expireTime = ? where userId = ? and providerId = ? and providerUserId = ?",
-//						data.getDisplayName(), data.getProfileUrl(),
-//						data.getImageUrl(), encrypt(data.getAccessToken()),
-//						encrypt(data.getSecret()),
-//						encrypt(data.getRefreshToken()), data.getExpireTime(),
-//						userId, data.getProviderId(), data.getProviderUserId());
+		ConnectionData data = connection.createData();
+		UserConnection userConnection = userConnectionService.getConnection(
+				userId, data.getProviderId(), data.getProviderUserId());
+		userConnection.setDisplayName(data.getDisplayName());
+		userConnection.setProfileUrl(data.getProfileUrl());
+		userConnection.setImageUrl(data.getImageUrl());
+		userConnection.setAccessToken(encrypt(data.getAccessToken()));
+		userConnection.setSecret(encrypt(data.getSecret()));
+		userConnection.setRefreshToken(encrypt(data.getRefreshToken()));
+		userConnection.setExpireTime(data.getExpireTime());
+		userConnectionService.updateConnection(userConnection);
 	}
 
 	@Transactional
 	public void removeConnections(String providerId) {
-//		jdbcTemplate.update("delete from " + tablePrefix
-//				+ "UserConnection where userId = ? and providerId = ?", userId,
-//				providerId);
+		userConnectionService.removeConnections(userId, providerId);
 	}
 
 	@Transactional
 	public void removeConnection(ConnectionKey connectionKey) {
-//		jdbcTemplate
-//				.update("delete from "
-//						+ tablePrefix
-//						+ "UserConnection where userId = ? and providerId = ? and providerUserId = ?",
-//						userId, connectionKey.getProviderId(),
-//						connectionKey.getProviderUserId());
+		userConnectionService.removeConnection(userId,
+				connectionKey.getProviderId(),
+				connectionKey.getProviderUserId());
 	}
 
 	private Connection<?> findPrimaryConnection(String providerId) {
@@ -227,7 +216,7 @@ public class CustomConnectionRepository implements ConnectionRepository {
 		}
 	}
 
-	public List<Connection<?>> mapUserConnections(
+	private List<Connection<?>> mapUserConnections(
 			List<UserConnection> userConnections) {
 
 		List<Connection<?>> result = new ArrayList<>();
@@ -241,11 +230,34 @@ public class CustomConnectionRepository implements ConnectionRepository {
 		return result;
 	}
 
-	public Connection<?> mapUserConnection(UserConnection userConnection) {
+	private Connection<?> mapUserConnection(UserConnection userConnection) {
 		ConnectionData connectionData = mapConnectionData(userConnection);
 		ConnectionFactory<?> connectionFactory = connectionFactoryLocator
 				.getConnectionFactory(connectionData.getProviderId());
 		return connectionFactory.createConnection(connectionData);
+	}
+
+	private UserConnection mapUserConnection(ConnectionData connectionData,
+			Integer rank) {
+
+		UserConnection userConnection = new UserConnection();
+		userConnection.setAccessToken(encrypt(connectionData.getAccessToken()));
+		userConnection.setDisplayName(connectionData.getDisplayName());
+		userConnection.setExpireTime(connectionData.getExpireTime());
+		userConnection.setImageUrl(connectionData.getImageUrl());
+		userConnection.setProfileUrl(connectionData.getProfileUrl());
+		userConnection.setRank(rank);
+		userConnection
+				.setRefreshToken(encrypt(connectionData.getRefreshToken()));
+		userConnection.setSecret(encrypt(connectionData.getSecret()));
+
+		UserConnectionPK userConnectionPK = new UserConnectionPK();
+		userConnectionPK.setProviderId(connectionData.getProviderId());
+		userConnectionPK.setProviderUserId(connectionData.getProviderUserId());
+		userConnectionPK.setUserId(userId);
+		userConnection.setUserConnectionPK(userConnectionPK);
+
+		return userConnection;
 	}
 
 	private ConnectionData mapConnectionData(UserConnection userConnection) {

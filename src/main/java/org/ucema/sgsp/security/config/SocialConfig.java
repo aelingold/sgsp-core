@@ -14,7 +14,6 @@ import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
@@ -22,6 +21,8 @@ import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.ucema.sgsp.controller.CustomConnectController;
 import org.ucema.sgsp.security.adapter.SpringSecuritySignInAdapter;
+import org.ucema.sgsp.security.service.CustomsUsersConnectionRepository;
+import org.ucema.sgsp.security.service.UserConnectionService;
 import org.ucema.sgsp.service.UserService;
 
 @Configuration
@@ -32,6 +33,8 @@ public class SocialConfig implements SocialConfigurer {
 	private DataSource dataSource;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserConnectionService userConnectionService;
 
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig,
 			Environment env) {
@@ -54,9 +57,24 @@ public class SocialConfig implements SocialConfigurer {
 
 	public UsersConnectionRepository getUsersConnectionRepository(
 			ConnectionFactoryLocator connectionFactoryLocator) {
-		return new JdbcUsersConnectionRepository(dataSource,
+		return new CustomsUsersConnectionRepository(userConnectionService,
 				connectionFactoryLocator, Encryptors.noOpText());
 	}
+	
+//    /**
+//     * Request-scoped data access object providing access to the current user's connections.
+//     */
+//    @Bean
+//    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+//    public ConnectionRepository connectionRepository(UsersConnectionRepository usersConnectionRepository) {
+//		
+//    	Authentication auth = SecurityContextHolder.getContext()
+//				.getAuthentication();
+//
+//		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+//		
+//        return usersConnectionRepository.createConnectionRepository(userDetails.getUsername());
+//    }
 
 	@Bean
 	public ConnectController connectController(
@@ -70,12 +88,13 @@ public class SocialConfig implements SocialConfigurer {
 	public ProviderSignInController providerSignInController(
 			ConnectionFactoryLocator connectionFactoryLocator,
 			UsersConnectionRepository usersConnectionRepository) {
-		ProviderSignInController providerSignInController = new ProviderSignInController(connectionFactoryLocator,
-				usersConnectionRepository, new SpringSecuritySignInAdapter(userService));
-		
+		ProviderSignInController providerSignInController = new ProviderSignInController(
+				connectionFactoryLocator, usersConnectionRepository,
+				new SpringSecuritySignInAdapter(userService));
+
 		providerSignInController.setSignInUrl("/register");
 		providerSignInController.setSignUpUrl("/register");
-		
+
 		return providerSignInController;
 	}
 }

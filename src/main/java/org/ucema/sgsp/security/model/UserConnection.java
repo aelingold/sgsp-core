@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "UserConnection", uniqueConstraints = @UniqueConstraint(name = "UserConnectionRank", columnNames = {
+@Table(name = "UserConnections", uniqueConstraints = @UniqueConstraint(name = "UserConnectionsRank", columnNames = {
 		"userId", "providerId", "rank" }))
 public class UserConnection {
 
@@ -26,7 +26,7 @@ public class UserConnection {
 	private String secret;
 	@Column(length = 255)
 	private String refreshToken;
-	private Integer expireTime;
+	private Long expireTime;
 
 	public UserConnectionPK getUserConnectionPK() {
 		return userConnectionPK;
@@ -92,11 +92,11 @@ public class UserConnection {
 		this.refreshToken = refreshToken;
 	}
 
-	public Integer getExpireTime() {
+	public Long getExpireTime() {
 		return expireTime;
 	}
 
-	public void setExpireTime(Integer expireTime) {
+	public void setExpireTime(Long expireTime) {
 		this.expireTime = expireTime;
 	}
 }

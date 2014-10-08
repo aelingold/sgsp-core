@@ -58,6 +58,8 @@ public class RegistrationDTO {
     private SocialMediaService signInProvider;
     
     private String countryCode;
+    
+    private List<Long> userFriendIds = new ArrayList<Long>();
 
     public RegistrationDTO() {
     }
@@ -221,6 +223,14 @@ public class RegistrationDTO {
 		this.isProfessional = isProfessional;
 	}
 
+	public List<Long> getUserFriendIds() {
+		return userFriendIds;
+	}
+
+	public void setUserFriendIds(List<Long> userFriendIds) {
+		this.userFriendIds = userFriendIds;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -244,6 +254,8 @@ public class RegistrationDTO {
 		builder.append(signInProvider);
 		builder.append(", countryCode=");
 		builder.append(countryCode);
+		builder.append(", userFriendIds=");
+		builder.append(userFriendIds);
 		builder.append("]");
 		return builder.toString();
 	}
