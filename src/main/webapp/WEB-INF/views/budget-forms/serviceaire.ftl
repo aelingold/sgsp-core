@@ -79,11 +79,9 @@
 							</#if>
 						</#list>					
 					</select>
-				</div>							
-			</div>
-			<div class="row">
+				</div>
 				<div class="col-md-6">
-					<label>¿Cuantas frigorias tiene el aire?</label>
+					<label>¿Cuantas frigorías tiene el aire?</label>
 					<input type="text" name="airConditionerPower" placeholder="Ej 2000, 3000, etc." size="30" class="form-control" />
 				</div>
 			</div>			
