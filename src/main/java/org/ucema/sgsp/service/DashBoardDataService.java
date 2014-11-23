@@ -50,6 +50,8 @@ public class DashBoardDataService {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
+	private WorkAreaService workAreaService;
+	@Autowired
 	private WorkAreaQuestionService workAreaQuestionService;
 	@Autowired
 	private WorkAreaItemService workAreaItemService;
@@ -176,6 +178,8 @@ public class DashBoardDataService {
 		map.put("workAreaQuestions", workAreaQuestionService.list());
 
 		map.put("workAreaItems", workAreaItemService.list());
+		
+		map.put("workAreas", workAreaService.list());
 
 		String countryCode = userDetails.getCountryCode();
 		map.put("currency", currencyService.findByCountryCode(countryCode));

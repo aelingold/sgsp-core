@@ -1,5 +1,8 @@
 package org.ucema.sgsp.api.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -47,6 +50,16 @@ public class DashBoardUserDTO {
     private Boolean isProfessional;
     
     private String ratePlanCode;
+    
+    private List<String> workAreaCodes = new ArrayList<String>();
+
+	public List<String> getWorkAreaCodes() {
+		return workAreaCodes;
+	}
+
+	public void setWorkAreaCodes(List<String> workAreaCodes) {
+		this.workAreaCodes = workAreaCodes;
+	}
 
 	public String getEmail() {
 		return email;

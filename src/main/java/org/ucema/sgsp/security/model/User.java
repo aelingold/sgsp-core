@@ -20,10 +20,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.ucema.sgsp.persistence.model.Country;
 import org.ucema.sgsp.persistence.model.UserRatePlan;
+import org.ucema.sgsp.persistence.model.UserWorkArea;
 import org.ucema.sgsp.persistence.model.UserWorkRate;
 import org.ucema.sgsp.persistence.model.UserWorkRateSummarize;
 import org.ucema.sgsp.persistence.model.UserWorkZone;
-import org.ucema.sgsp.persistence.model.WorkArea;
 
 @Entity
 @Table(name = "user_accounts")
@@ -61,10 +61,11 @@ public class User extends BaseEntity<Long> {
 	@OneToOne
 	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_country_user"))
 	private Country country;
-
-	@ManyToMany
-	@JoinTable(name = "user_work_areas", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "work_area_id"))
-	private List<WorkArea> workAreas;
+	
+	@OneToMany(orphanRemoval=true)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user"))
+	private List<UserWorkArea> userWorkAreas;	
 	
 	@ManyToMany
 	@JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_friend_id"))
@@ -138,8 +139,8 @@ public class User extends BaseEntity<Long> {
 		return telephone;
 	}
 
-	public List<WorkArea> getWorkAreas() {
-		return workAreas;
+	public List<UserWorkArea> getUserWorkAreas() {
+		return userWorkAreas;
 	}
 
 	public List<UserWorkRate> getUserWorkRates() {
@@ -186,8 +187,8 @@ public class User extends BaseEntity<Long> {
 		this.telephone = telephone;
 	}
 
-	public void setWorkAreas(List<WorkArea> workAreas) {
-		this.workAreas = workAreas;
+	public void setUserWorkAreas(List<UserWorkArea> userWorkAreas) {
+		this.userWorkAreas = userWorkAreas;
 	}
 
 	public void setUserWorkRates(List<UserWorkRate> userWorkRates) {
@@ -305,8 +306,8 @@ public class User extends BaseEntity<Long> {
 			return this;
 		}		
 
-		public Builder workAreas(List<WorkArea> workAreas) {
-			user.workAreas = workAreas;
+		public Builder userWorkAreas(List<UserWorkArea> userWorkAreas) {
+			user.userWorkAreas = userWorkAreas;
 			return this;
 		}
 
@@ -350,6 +351,11 @@ public class User extends BaseEntity<Long> {
 			}
 			if (user.userToken != null) {
 				user.userToken.setUser(user);
+			}
+			if (user.userWorkAreas != null && user.userWorkAreas.size() > 0) {
+				for (UserWorkArea userWorkArea : user.userWorkAreas) {
+					userWorkArea.setUser(user);
+				}
 			}			
 			return user;
 		}

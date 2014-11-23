@@ -35,7 +35,7 @@ public class WorkAreaService {
 			}
 		}
 
-		return workAreaTransformation.transformToApi(workAreasFiltered);		
+		return workAreaTransformation.transformToApi2(workAreasFiltered);		
 	}
 
 	@Transactional

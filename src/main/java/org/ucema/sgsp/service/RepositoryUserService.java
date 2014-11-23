@@ -34,6 +34,7 @@ import org.ucema.sgsp.exception.DuplicateEmailException;
 import org.ucema.sgsp.persistence.model.RatePlan;
 import org.ucema.sgsp.persistence.model.RatePlanPackageType;
 import org.ucema.sgsp.persistence.model.UserRatePlan;
+import org.ucema.sgsp.persistence.model.UserWorkArea;
 import org.ucema.sgsp.persistence.model.UserWorkRateSummarize;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.SocialMediaService;
@@ -107,29 +108,35 @@ public class RepositoryUserService implements UserService {
 
 			dto.setSignInProvider(SocialMediaService.valueOf(providerKey
 					.getProviderId().toUpperCase()));
-			
-			OAuth2Connection<Facebook> oauth2Connection = (OAuth2Connection<Facebook>)connection;		
+
+			OAuth2Connection<Facebook> oauth2Connection = (OAuth2Connection<Facebook>) connection;
 			Facebook facebook = oauth2Connection.getApi();
-			PagedList<String> friendIds = facebook.friendOperations().getFriendIds();
-			
+			PagedList<String> friendIds = facebook.friendOperations()
+					.getFriendIds();
+
 			List<Long> userFriendIds = new ArrayList<Long>();
 			friendIds.forEach(fi -> {
-				UserConnection userConnection = userConnectionService.findByUserConnectionPK_ProviderUserId(fi);
-				User user = repository.findByEmail(userConnection.getUserConnectionPK().getUserId());
+				UserConnection userConnection = userConnectionService
+						.findByUserConnectionPK_ProviderUserId(fi);
+				User user = repository.findByEmail(userConnection
+						.getUserConnectionPK().getUserId());
 				userFriendIds.add(user.getId());
 			});
-			dto.setUserFriendIds(userFriendIds);			
-				
-//				Facebook facebook = facebookConnection.getApi();
-//				
-//				List<Long> userFriendIds = new ArrayList<Long>();
-//				List<String> friendIds = facebook.friendOperations().getFriendIds();
-//				friendIds.forEach(fi -> {
-//					UserConnection userConnection = userConnectionService.findByUserConnectionPK_ProviderUserId(fi);
-//					UserDTO user = findByEmail(userConnection.getUserConnectionPK().getUserId());
-//					userFriendIds.add(user.getId());
-//				});
-//				dto.setUserFriendIds(userFriendIds);			
+			dto.setUserFriendIds(userFriendIds);
+
+			// Facebook facebook = facebookConnection.getApi();
+			//
+			// List<Long> userFriendIds = new ArrayList<Long>();
+			// List<String> friendIds =
+			// facebook.friendOperations().getFriendIds();
+			// friendIds.forEach(fi -> {
+			// UserConnection userConnection =
+			// userConnectionService.findByUserConnectionPK_ProviderUserId(fi);
+			// UserDTO user =
+			// findByEmail(userConnection.getUserConnectionPK().getUserId());
+			// userFriendIds.add(user.getId());
+			// });
+			// dto.setUserFriendIds(userFriendIds);
 		}
 
 		return dto;
@@ -212,8 +219,8 @@ public class RepositoryUserService implements UserService {
 	public List<UserDTO> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
 			List<String> codes, Boolean isEnabled, Boolean isProfessional) {
 		List<User> users = repository
-				.findByWorkAreas_CodeAndIsEnabledAndIsProfessional(codes,
-						isEnabled, isProfessional);
+				.findByUserWorkAreas_WorkArea_CodeAndIsEnabledAndIsProfessional(
+						codes, isEnabled, isProfessional);
 		return userTransformation.transformToApi(users);
 	}
 
@@ -222,17 +229,18 @@ public class RepositoryUserService implements UserService {
 			List<String> codes, Boolean isEnabled, Boolean isProfessional,
 			List<String> cityCodes) {
 		List<User> users = repository
-				.findByWorkAreas_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
+				.findByUserWorkAreas_WorkArea_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
 						codes, isEnabled, isProfessional, cityCodes);
 		return userTransformation.transformToApi(users);
 	}
 
 	@Transactional
-	public List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(
-			RatePlanPackageType packageType, Boolean isProfessional) {
+	public List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+			RatePlanPackageType packageType, Boolean isProfessional,
+			Boolean isEnabled) {
 		List<User> users = repository
-				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(
-						packageType, isProfessional);
+				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+						packageType, isProfessional, isEnabled);
 		return userTransformation.transformToApi(users);
 	}
 
@@ -255,7 +263,7 @@ public class RepositoryUserService implements UserService {
 		userDTO.setId(response.getId());
 		return userDTO;
 	}
-	
+
 	@Transactional
 	public User update(User user) {
 		return repository.save(user);
@@ -264,9 +272,23 @@ public class RepositoryUserService implements UserService {
 	@Transactional
 	public void update(DashBoardUserDTO dashBoardUserDTO) {
 
+		User user = userTransformation.updateFields(
+				find(dashBoardUserDTO.getEmail()), dashBoardUserDTO);
+
+		user.getUserWorkAreas().clear();
+
+		repository.save(user);
+	}
+
+	@Transactional
+	public void updateUserWorkAreas(DashBoardUserDTO dashBoardUserDTO) {
+
 		User user = find(dashBoardUserDTO.getEmail());
-		repository
-				.save(userTransformation.updateFields(user, dashBoardUserDTO));
+		
+		//user.getUserWorkAreas().clear();
+		
+		repository.save(userTransformation.updateUserWorkAreas(
+				user, dashBoardUserDTO));
 	}
 
 	@Transactional
@@ -321,7 +343,7 @@ public class RepositoryUserService implements UserService {
 
 		if (userAccountData.getWorkAreaCodes() != null
 				&& userAccountData.getWorkAreaCodes().size() > 0) {
-			user = user.workAreas(buildWorkAreaCodes(userAccountData
+			user = user.userWorkAreas(buildUserWorkAreas(userAccountData
 					.getWorkAreaCodes()));
 		}
 
@@ -330,12 +352,12 @@ public class RepositoryUserService implements UserService {
 		if (userAccountData.isSocialSignIn()) {
 			user.signInProvider(userAccountData.getSignInProvider());
 			user.enabled(true);
-			
+
 			List<User> userFriends = new ArrayList<User>();
-			if (userAccountData.getUserFriendIds() != null){
+			if (userAccountData.getUserFriendIds() != null) {
 				userAccountData.getUserFriendIds().forEach(uf -> {
 					userFriends.add(new User(uf));
-				});				
+				});
 			}
 			user.userFriends(userFriends);
 		} else {
@@ -392,15 +414,20 @@ public class RepositoryUserService implements UserService {
 		return userRatePlan;
 	}
 
-	private List<WorkArea> buildWorkAreaCodes(List<String> workAreaCodes) {
+	private List<UserWorkArea> buildUserWorkAreas(List<String> workAreaCodes) {
 
-		List<WorkArea> result = new ArrayList<WorkArea>();
+		List<UserWorkArea> result = new ArrayList<UserWorkArea>();
 
 		if (workAreaCodes != null) {
 			for (String workAreaCode : workAreaCodes) {
 				if (workAreaCode != null) {
-					result.add(new WorkArea(workAreaService.findByCode(
-							workAreaCode).getId()));
+
+					UserWorkArea userWorkArea = new UserWorkArea();
+
+					userWorkArea.setWorkArea(new WorkArea(workAreaService
+							.findByCode(workAreaCode).getId()));
+
+					result.add(userWorkArea);
 				}
 			}
 		}

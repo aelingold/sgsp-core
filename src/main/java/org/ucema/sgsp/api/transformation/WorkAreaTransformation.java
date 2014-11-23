@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.WorkAreaDTO;
+import org.ucema.sgsp.persistence.model.UserWorkArea;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.persistence.model.WorkAreaItem;
 import org.ucema.sgsp.service.WorkAreaItemService;
@@ -17,8 +18,18 @@ public class WorkAreaTransformation {
 	private WorkAreaItemTransformation workAreaItemTransformation;
 	@Autowired
 	private WorkAreaItemService workAreaItemService;
+	
+	public List<WorkAreaDTO> transformToApi(List<UserWorkArea> userWorkAreas) {
+		List<WorkAreaDTO> result = new ArrayList<WorkAreaDTO>();
 
-	public List<WorkAreaDTO> transformToApi(List<WorkArea> workAreas) {
+		for (UserWorkArea userWorkArea : userWorkAreas) {
+			result.add(transformToApi(userWorkArea.getWorkArea()));
+		}
+
+		return result;
+	}
+	
+	public List<WorkAreaDTO> transformToApi2(List<WorkArea> workAreas) {
 		List<WorkAreaDTO> result = new ArrayList<WorkAreaDTO>();
 
 		for (WorkArea workArea : workAreas) {
@@ -26,7 +37,7 @@ public class WorkAreaTransformation {
 		}
 
 		return result;
-	}
+	}	
 
 	public List<WorkArea> transformToModel(List<WorkAreaDTO> workAreas) {
 		List<WorkArea> result = new ArrayList<WorkArea>();

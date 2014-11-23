@@ -57,7 +57,7 @@ public class OrderController {
 		orderService.saveOrUpdate(order);
 
 		model.addAttribute("successMessage",
-				"Su presupuesto se ha enviado correctamente.");
+				"Su solicitud de presupuesto ha sido enviada a los profesionales correctamente.");
 
 		putDataModelInfo("requests", model);
 

@@ -16,12 +16,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Long countByIsProfessional(Boolean isProfessional);
 
-	List<User> findByWorkAreas_CodeAndIsEnabledAndIsProfessional(
+	List<User> findByUserWorkAreas_WorkArea_CodeAndIsEnabledAndIsProfessional(
 			List<String> codes, Boolean isEnabled, Boolean isProfessional);
 
-	List<User> findByWorkAreas_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
+	List<User> findByUserWorkAreas_WorkArea_CodeAndIsEnabledAndIsProfessionalAndUserWorkZones_City_Code(
 			List<String> codes, Boolean isEnabled, Boolean isProfessional,
 			List<String> cityCodes);
 
-	List<User> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(RatePlanPackageType packageType, Boolean isProfessional);
+	List<User> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+			RatePlanPackageType packageType, Boolean isProfessional,
+			Boolean isEnabled);
 }

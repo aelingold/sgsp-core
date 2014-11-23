@@ -32,9 +32,9 @@ public class SecurityUtil {
 				user.getEmail(),
 				user.getTelephone(),
 				user.getIsProfessional(),
-				user.getWorkAreas() != null ? user.getWorkAreas().stream()
-						.map(wa -> wa.getCode()).collect(Collectors.toList())
-						: null,
+				user.getUserWorkAreas() != null ? user.getUserWorkAreas()
+						.stream().map(wa -> wa.getWorkArea().getCode())
+						.collect(Collectors.toList()) : null,
 				user.getCountry().getCode(),
 				user.getUserWorkZones() != null ? user.getUserWorkZones()
 						.stream().map(uwz -> uwz.getCity().getCode())
@@ -90,7 +90,7 @@ public class SecurityUtil {
 				.lastName(lastName).password(password).role(role)
 				.socialSignInProvider(socialMediaService).username(email)
 				.telephone(telephone).isProfessional(isProfessional)
-				.workAreasCodes(workAreaCodes).country(countryCode)
+				.workAreaCodes(workAreaCodes).country(countryCode)
 				.cityCodes(cityCodes).ratePlanCode(ratePlanCode).build();
 	}
 }

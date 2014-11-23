@@ -22,7 +22,7 @@ public class CustomUserDetails extends SocialUser {
 	private SocialMediaService socialSignInProvider;
 	private String telephone;
 	private boolean isProfessional;
-	private List<String> workAreasCodes;
+	private List<String> workAreaCodes;
 	private String countryCode;
 	private List<String> cityCodes;
 	private String ratePlanCode;
@@ -92,12 +92,12 @@ public class CustomUserDetails extends SocialUser {
 		this.isProfessional = isProfessional;
 	}
 
-	public List<String> getWorkAreasCodes() {
-		return workAreasCodes;
+	public List<String> getWorkAreaCodes() {
+		return workAreaCodes;
 	}
 
-	public void setWorkAreasCodes(List<String> workAreasCodes) {
-		this.workAreasCodes = workAreasCodes;
+	public void setWorkAreaCodes(List<String> workAreaCodes) {
+		this.workAreaCodes = workAreaCodes;
 	}
 
 	public void setCountryCode(String countryCode) {
@@ -136,7 +136,7 @@ public class CustomUserDetails extends SocialUser {
 		private Set<GrantedAuthority> authorities;
 		private String telephone;
 		private boolean isProfessional;
-		private List<String> workAreasCodes;
+		private List<String> workAreaCodes;
 		private String countryCode;
 		private List<String> cityCodes;
 		private String ratePlanCode;
@@ -179,8 +179,8 @@ public class CustomUserDetails extends SocialUser {
 			return this;
 		}
 		
-		public Builder workAreasCodes(List<String> workAreasCodes) {
-			this.workAreasCodes = workAreasCodes;
+		public Builder workAreaCodes(List<String> workAreaCodes) {
+			this.workAreaCodes = workAreaCodes;
 			return this;
 		}
 
@@ -194,7 +194,7 @@ public class CustomUserDetails extends SocialUser {
 				}
 			}
 
-			this.workAreasCodes = result;
+			this.workAreaCodes = result;
 			return this;
 		}
 
@@ -259,7 +259,7 @@ public class CustomUserDetails extends SocialUser {
 			user.socialSignInProvider = socialSignInProvider;
 			user.telephone = telephone;
 			user.isProfessional = isProfessional;
-			user.workAreasCodes = workAreasCodes;
+			user.workAreaCodes = workAreaCodes;
 			user.countryCode = countryCode;
 			user.cityCodes = cityCodes;
 			user.ratePlanCode = ratePlanCode;

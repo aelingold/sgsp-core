@@ -45,6 +45,18 @@
                     <@spring.formPasswordInput "user.newPasswordVerification", 'class="form-control"'/>
                     <@spring.showErrors "<br>" />	                            
                 </div>
+            </div>
+			<div class="row">
+                <#if user.isProfessional>
+	                <div class="form-group col-md-12">
+	                    <label>Servicios ofrecidos</label>
+	                </div>
+	                <div class="form-group col-md-12">
+	                	<#list workAreas as workArea>
+	                    	<input ${user.workAreaCodes?seq_contains(workArea.code)?string("checked", "")} name="workAreaCodes" type="checkbox" value="${workArea.code}"> ${workArea.description}
+	                    </#list>	                            
+	                </div>
+                </#if>
             </div>		                    
             <button type="submit" class="btn btn-warning pull-right">Guardar</button>
         </form>

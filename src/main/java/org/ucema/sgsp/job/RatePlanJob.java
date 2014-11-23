@@ -39,8 +39,8 @@ public class RatePlanJob {
 		LOGGER.info("Creating payments for users");
 
 		List<UserDTO> users = userService
-				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(
-						RatePlanPackageType.FIXED, true);
+				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+						RatePlanPackageType.FIXED, true, true);
 
 		LOGGER.info("Retrieved users[" + users.size() + "]");
 

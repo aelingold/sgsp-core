@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
+import org.ucema.sgsp.persistence.model.UserWorkArea;
+import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.User;
 import org.ucema.sgsp.service.CountryService;
+import org.ucema.sgsp.service.UserService;
+import org.ucema.sgsp.service.WorkAreaService;
 
 @Component
 public class UserTransformation {
@@ -20,6 +24,10 @@ public class UserTransformation {
 	private WorkAreaTransformation workAreaTransformation;
 	@Autowired
 	private CountryService countryService;
+	@Autowired
+	private WorkAreaService workAreaService;
+	@Autowired
+	private UserService userService;
 
 	public List<UserDTO> transformToApi(List<User> users) {
 		List<UserDTO> result = new ArrayList<UserDTO>();
@@ -41,14 +49,14 @@ public class UserTransformation {
 		result.setPassword(user.getPassword());
 		result.setLastName(user.getLastName());
 		result.setTelephone(user.getTelephone());
-		
-		if (user.getSignInProvider() != null){
+
+		if (user.getSignInProvider() != null) {
 			result.setSignInProvider(user.getSignInProvider().name());
 		}
 
-		if (user.getWorkAreas() != null) {
+		if (user.getUserWorkAreas() != null) {
 			result.setWorkAreas(workAreaTransformation.transformToApi(user
-					.getWorkAreas()));
+					.getUserWorkAreas()));
 		}
 
 		if (user.getCountry() != null) {
@@ -62,7 +70,8 @@ public class UserTransformation {
 		}
 
 		if (user.getUserRatePlan() != null) {
-			result.setRatePlanCode(user.getUserRatePlan().getRatePlan().getCode());
+			result.setRatePlanCode(user.getUserRatePlan().getRatePlan()
+					.getCode());
 		}
 
 		result.setRole(user.getRole());
@@ -88,5 +97,29 @@ public class UserTransformation {
 		user.setTelephone(dashBoardUserDTO.getTelephone());
 
 		return user;
+	}
+
+	public User updateUserWorkAreas(User user, DashBoardUserDTO dashBoardUserDTO) {
+
+		user.getUserWorkAreas().addAll(buildUserWorkAreas(dashBoardUserDTO.getEmail(),dashBoardUserDTO.getWorkAreaCodes()));		
+
+		return user;
+	}	private List<UserWorkArea> buildUserWorkAreas(String username,
+			List<String> workAreaCodes) {
+
+		List<UserWorkArea> userWorkAreas = new ArrayList<UserWorkArea>();
+
+		for (String workAreaCode : workAreaCodes) {
+			UserWorkArea userWorkArea = new UserWorkArea();
+
+			userWorkArea.setUser(new User(userService.findByEmail(username)
+					.getId()));
+			userWorkArea.setWorkArea(new WorkArea(workAreaService.findByCode(
+					workAreaCode).getId()));
+
+			userWorkAreas.add(userWorkArea);
+		}
+
+		return userWorkAreas;
 	}
 }

@@ -18,30 +18,30 @@ import javax.persistence.TemporalType;
 import org.ucema.sgsp.security.model.User;
 
 @Entity
-@Table(name = "user_work_zones")
-public class UserWorkZone {
+@Table(name = "user_work_areas")
+public class UserWorkArea {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user"))
 	private User user;
 	@ManyToOne
-	@JoinColumn(name = "city_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_city"))
-	private City city;
+	@JoinColumn(name = "work_area_id", foreignKey = @ForeignKey(name = "fk_user_work_area_city"))
+	private WorkArea workArea;
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatedAt;		
+	private Date updatedAt;	
 
-	public UserWorkZone() {
+	public UserWorkArea() {
 		super();
 	}
 
-	public UserWorkZone(Long id) {
+	public UserWorkArea(Long id) {
 		super();
 		this.id = id;
 	}
@@ -82,12 +82,12 @@ public class UserWorkZone {
 		this.createdAt = createdAt;
 	}
 
-	public City getCity() {
-		return city;
+	public WorkArea getWorkArea() {
+		return workArea;
 	}
 
-	public void setCity(City city) {
-		this.city = city;
+	public void setWorkArea(WorkArea workArea) {
+		this.workArea = workArea;
 	}
 
 	public Date getUpdatedAt() {
@@ -100,7 +100,8 @@ public class UserWorkZone {
 
 	@Override
 	public String toString() {
-		return "UserWorkZone [id=" + id + ", user=" + user + ", city=" + city
-				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+		return "UserWorkArea [id=" + id + ", user=" + user + ", workArea="
+				+ workArea + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + "]";
 	}
 }

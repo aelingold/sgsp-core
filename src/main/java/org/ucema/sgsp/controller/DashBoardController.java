@@ -27,9 +27,11 @@ import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.QuoteDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionDTO;
 import org.ucema.sgsp.api.dto.QuoteQuestionReplyDTO;
+import org.ucema.sgsp.api.dto.UserDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.security.model.CustomUserDetails;
 import org.ucema.sgsp.security.model.Role;
+import org.ucema.sgsp.security.util.SecurityUtil;
 import org.ucema.sgsp.service.DashBoardDataService;
 import org.ucema.sgsp.service.DashBoardRatingService;
 import org.ucema.sgsp.service.DashBoardUserService;
@@ -123,9 +125,15 @@ public class DashBoardController {
 		LOGGER.debug("No validation errors found. Continuing changing user data process.");
 
 		userService.update(dashBoardUser);
+		userService.updateUserWorkAreas(dashBoardUser);
 
 		model.addAttribute("successMessage",
 				"La informacion de su perfil se ha actualizado correctamente.");		
+		
+		UserDTO user = userService.findByEmail(dashBoardUser.getEmail());
+		
+		// Logs the user in.
+		SecurityUtil.logInUser(user);		
 		
 		putDataModelInfo("profile", model);
 
@@ -250,6 +258,11 @@ public class DashBoardController {
 		
 		model.addAttribute("successMessage",
 				"La configuracion ha sido actualizada correctamente.");	
+		
+		UserDTO user = userService.findByEmail(username);
+		
+		// Logs the user in.
+		SecurityUtil.logInUser(user);
 		
 		putDataModelInfo("config", model);		
 

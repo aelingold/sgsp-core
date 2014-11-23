@@ -33,10 +33,12 @@ public interface UserService {
 			List<String> cityCodes);
 
 	UserDTO saveOrUpdate(UserDTO user);
-	
+
 	User update(User user);
 
 	void update(DashBoardUserDTO dashBoardUserDTO);
+	
+	void updateUserWorkAreas(DashBoardUserDTO dashBoardUserDTO);
 
 	void delete(Long id);
 
@@ -52,5 +54,7 @@ public interface UserService {
 
 	UserDTO findByEmail(String email);
 
-	List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessional(RatePlanPackageType packageType, Boolean isProfessional);
+	List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+			RatePlanPackageType packageType, Boolean isProfessional,
+			Boolean isEnabled);
 }

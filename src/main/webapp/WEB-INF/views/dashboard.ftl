@@ -80,7 +80,7 @@
 					      			<span class="badge pull-right">${pendingQuotesWithQuoteQuestionRepliesQty}</span>
 					      		</#if> 
 					      		Preguntas</a></li>
-					      	<!-- <li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>-->
+					      	<li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>
 					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
 					      </#if>					      					      
 					  </@security.authorize>
