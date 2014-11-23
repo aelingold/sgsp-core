@@ -71,6 +71,8 @@ public class DashBoardDataService {
 	private PaymentService paymentService;
 	@Autowired
 	private RatePlanService ratePlanService;
+	@Autowired
+	private ContactMessageService contactMessageService;
 
 	@Transactional
 	public Map<String, Object> data(String username, String tabToShow,
@@ -218,6 +220,8 @@ public class DashBoardDataService {
 		} else {
 			map.put("ratePlan", new RatePlanDTO());
 		}
+		
+		map.put("contactMessages", contactMessageService.list());
 
 		return map;
 	}

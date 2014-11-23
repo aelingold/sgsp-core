@@ -5,7 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.ContactMessageDTO;
 import org.ucema.sgsp.api.transformation.ContactMessageTransformation;
@@ -22,7 +21,6 @@ public class ContactMessageService {
 	private ContactMessageDAO contactMessageDAO;
 
 	@Transactional
-	@Cacheable("cities")
 	public List<ContactMessageDTO> list() {
 		return contactMessageTransformation.transformToApi(contactMessageDAO.findAll());
 	}
