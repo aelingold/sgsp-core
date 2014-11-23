@@ -224,6 +224,8 @@ public class DashBoardDataService {
 			map.put("ratePlan", new RatePlanDTO());
 		}
 		
+		map.put("ratePlans", ratePlanService.list());
+		
 		map.put("contactMessages", contactMessageService.list());
 
 		return map;
