@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.ucema.sgsp.api.dto.DashBoardConfigDTO;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
@@ -288,13 +289,35 @@ public class DashBoardController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String enableUser(@PathVariable String username, Model model) {
 		
-		//UserDTO user = userService.get(userId);
 		userService.enable(username);
 		
 		model.addAttribute("successMessage",
 				"El usuario seleccionado ha sido habilitado correctamente.");		
 		
 		putDataModelInfo("admin", model);		
+
+		return VIEW_NAME_DASHBOARD_PAGE;		
+	}
+	
+	@RequestMapping(value = "/dashboard/plan", method = RequestMethod.POST)
+	public String changeRatePlan(@RequestParam(value="userRatePlan", required=true) String userRatePlan, Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		String username = auth.getName();
+		
+		userService.updateRatePlan(userRatePlan, username);
+		
+		model.addAttribute("successMessage",
+				"El plan de pago ha sido modificado satisfactoriamente.");		
+		
+		UserDTO user = userService.findByEmail(username);
+		
+		// Logs the user in.
+		SecurityUtil.logInUser(user);		
+		
+		putDataModelInfo("plan", model);		
 
 		return VIEW_NAME_DASHBOARD_PAGE;		
 	}	

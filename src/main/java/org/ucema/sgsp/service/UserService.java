@@ -35,6 +35,8 @@ public interface UserService {
 	UserDTO saveOrUpdate(UserDTO user);
 
 	User update(User user);
+	
+	void updateRatePlan(String ratePlanCode, String username);
 
 	void update(DashBoardUserDTO dashBoardUserDTO);
 	

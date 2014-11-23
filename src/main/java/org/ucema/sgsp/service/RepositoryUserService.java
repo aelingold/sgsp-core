@@ -279,13 +279,22 @@ public class RepositoryUserService implements UserService {
 
 		repository.save(user);
 	}
+	
+	@Transactional
+	public void updateRatePlan(String ratePlanCode, String username) {
+		User user = find(username);
+		
+		RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
+		
+		user.getUserRatePlan().setRatePlan(new RatePlan(ratePlan.getId()));
+		
+		repository.save(user);
+	}	
 
 	@Transactional
 	public void updateUserWorkAreas(DashBoardUserDTO dashBoardUserDTO) {
 
 		User user = find(dashBoardUserDTO.getEmail());
-		
-		//user.getUserWorkAreas().clear();
 		
 		repository.save(userTransformation.updateUserWorkAreas(
 				user, dashBoardUserDTO));
