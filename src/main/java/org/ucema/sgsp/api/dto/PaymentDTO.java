@@ -15,6 +15,8 @@ public class PaymentDTO implements Serializable {
 	private AmountDTO amount;
 	private Long userId;
 	private String username;
+	private Boolean userEnabled;
+	private Date paymentDateAllowedBefore;
 
 	public PaymentDTO() {
 		super();
@@ -34,6 +36,7 @@ public class PaymentDTO implements Serializable {
 		result.setId(id);
 		result.setStatusType(statusType);
 		result.setAmount(amount);
+		result.setPaymentDateAllowedBefore(paymentDateAllowedBefore);
 		
 		return result;
 	}
@@ -135,12 +138,30 @@ public class PaymentDTO implements Serializable {
 		this.username = username;
 	}
 
+	public Date getPaymentDateAllowedBefore() {
+		return paymentDateAllowedBefore;
+	}
+
+	public void setPaymentDateAllowedBefore(Date paymentDateAllowedBefore) {
+		this.paymentDateAllowedBefore = paymentDateAllowedBefore;
+	}
+
+	public Boolean getUserEnabled() {
+		return userEnabled;
+	}
+
+	public void setUserEnabled(Boolean userEnabled) {
+		this.userEnabled = userEnabled;
+	}
+
 	@Override
 	public String toString() {
 		return "PaymentDTO [id=" + id + ", quoteId=" + quoteId
 				+ ", paymentType=" + paymentType + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + ", statusType=" + statusType
 				+ ", amount=" + amount + ", userId=" + userId + ", username="
-				+ username + "]";
+				+ username + ", userEnabled=" + userEnabled
+				+ ", paymentDateAllowedBefore=" + paymentDateAllowedBefore
+				+ "]";
 	}
 }

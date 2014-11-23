@@ -65,7 +65,10 @@ public class PaymentTransformation {
 		if (payment.getUser() != null){
 			result.setUserId(payment.getUser().getId());
 			result.setUsername(payment.getUser().getEmail());
+			result.setUserEnabled(payment.getUser().getIsEnabled());
 		}
+		
+		result.setPaymentDateAllowedBefore(payment.getPaymentDateAllowedBefore());
 
 		return result;
 	}
@@ -74,6 +77,9 @@ public class PaymentTransformation {
 		Payment result = new Payment();
 
 		result.setId(payment.getId());
+		result.setCreatedAt(payment.getCreatedAt());
+		result.setUpdatedAt(payment.getUpdatedAt());		
+		
 		if (payment.getQuoteId() != null) {
 			result.setQuote(new Quote(payment.getQuoteId()));
 		}
@@ -93,7 +99,9 @@ public class PaymentTransformation {
 		
 		if (payment.getUsername() != null){
 			result.setUser(new User(userService.findByEmail(payment.getUsername()).getId()));
-		}		
+		}
+		
+		result.setPaymentDateAllowedBefore(payment.getPaymentDateAllowedBefore());
 
 		return result;
 	}

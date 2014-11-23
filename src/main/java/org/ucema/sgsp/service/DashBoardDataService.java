@@ -26,6 +26,7 @@ import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.api.dto.StateDTO;
 import org.ucema.sgsp.api.dto.UserWorkRateDTO;
 import org.ucema.sgsp.persistence.model.OrderStatusType;
+import org.ucema.sgsp.persistence.model.PaymentStatusType;
 import org.ucema.sgsp.persistence.model.QuoteStatusType;
 import org.ucema.sgsp.persistence.model.UserWorkRateStatusType;
 import org.ucema.sgsp.security.model.CustomUserDetails;
@@ -213,6 +214,8 @@ public class DashBoardDataService {
 						QuoteStatusType.CANCELLED, QuoteStatusType.INVALID)));
 
 		map.put("payments", paymentService.findByUser_Email(username));
+		
+		map.put("expiredPayments", paymentService.findByStatusType(PaymentStatusType.EXPIRED));
 
 		if (user.getRatePlanCode() != null) {
 			map.put("ratePlan",

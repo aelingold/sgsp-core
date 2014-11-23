@@ -11,7 +11,7 @@
 					<table class="table">  
 						<thead>  
 							<tr>  
-					        	<th>Fecha</th>
+					        	<th>Fecha Vencimiento</th>
 					        	<th>Concepto</th>
 					            <th>Monto</th>
 					            <th>Estado</th>
@@ -20,14 +20,16 @@
 					    <tbody>
 					    	<#list payments as payment>  
 						    	<tr>  
-						        	<td>${payment.updatedAt?string("dd-MM-yyyy")}</td>
+						        	<td>${payment.paymentDateAllowedBefore?string("dd-MM-yyyy")}</td>
 						        	<td>${ratePlan.description}</td>
 						            <td>${payment.amount.currency.symbol} ${payment.amount.amount}</td>
 						            <td>
 						            	<#if payment.statusType="DONE">
 						            		PAGADO
-						            	<#else>
+						            	<#elseif payment.statusType="PENDING">
 						            		PENDIENTE
+										<#else>
+						            		VENCIDO						            		
 						            	</#if>
 						            </td>
 						        </tr>

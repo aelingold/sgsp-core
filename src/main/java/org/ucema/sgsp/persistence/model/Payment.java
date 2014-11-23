@@ -46,7 +46,10 @@ public class Payment {
 	private Amount amount;
 	@ManyToOne
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_payment_user"))
-	private User user;	
+	private User user;
+	@Column(name = "payment_date_allowed_before")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date paymentDateAllowedBefore;	    	
 
 	public Payment(Long id) {
 		super();
@@ -131,5 +134,22 @@ public class Payment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Date getPaymentDateAllowedBefore() {
+		return paymentDateAllowedBefore;
+	}
+
+	public void setPaymentDateAllowedBefore(Date paymentDateAllowedBefore) {
+		this.paymentDateAllowedBefore = paymentDateAllowedBefore;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [id=" + id + ", quote=" + quote + ", paymentType="
+				+ paymentType + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", statusType=" + statusType + ", amount="
+				+ amount + ", user=" + user + ", paymentDateAllowedBefore="
+				+ paymentDateAllowedBefore + "]";
 	}
 }

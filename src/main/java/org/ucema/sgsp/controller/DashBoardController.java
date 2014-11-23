@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -268,6 +269,35 @@ public class DashBoardController {
 
 		return VIEW_NAME_DASHBOARD_PAGE;
 	}
+	
+	@RequestMapping(value = "/dashboard/disable/user/{username:.+}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String disableUser(@PathVariable String username, Model model) {
+		
+		userService.disable(username);
+		
+		model.addAttribute("successMessage",
+				"El usuario seleccionado ha sido inhabilitado correctamente.");		
+		
+		putDataModelInfo("admin", model);		
+
+		return VIEW_NAME_DASHBOARD_PAGE;		
+	}
+	
+	@RequestMapping(value = "/dashboard/enable/user/{username:.+}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String enableUser(@PathVariable String username, Model model) {
+		
+		//UserDTO user = userService.get(userId);
+		userService.enable(username);
+		
+		model.addAttribute("successMessage",
+				"El usuario seleccionado ha sido habilitado correctamente.");		
+		
+		putDataModelInfo("admin", model);		
+
+		return VIEW_NAME_DASHBOARD_PAGE;		
+	}	
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

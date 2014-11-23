@@ -11,6 +11,7 @@ import org.ucema.sgsp.api.dto.PaymentDTO;
 import org.ucema.sgsp.api.transformation.PaymentTransformation;
 import org.ucema.sgsp.persistence.PaymentDAO;
 import org.ucema.sgsp.persistence.model.Payment;
+import org.ucema.sgsp.persistence.model.PaymentStatusType;
 
 @Service
 public class PaymentService {
@@ -88,5 +89,16 @@ public class PaymentService {
 			result.add(paymentTransformation.transformToApi(payment));
 		});
 		return result;
-	}	
+	}
+	
+	@Transactional
+	public List<PaymentDTO> findByStatusType(PaymentStatusType paymentStatusType){
+		List<Payment> payments = paymentDAO.findByStatusType(paymentStatusType);
+		
+		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
+		payments.forEach(payment -> {
+			result.add(paymentTransformation.transformToApi(payment));
+		});
+		return result;		
+	}
 }
