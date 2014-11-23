@@ -87,6 +87,7 @@
 					  <@security.authorize ifAllGranted="ROLE_ADMIN">
         				<li id="administracion-option"><a href="<@c.url value='/dashboard/admin'/>">Administracion</a></li>
         				<li id="reportes-option"><a href="<@c.url value='/dashboard/reports'/>">Reportes</a></li>
+        				<li id="contacto-option"><a href="<@c.url value='/dashboard/contacts'/>">Contacto</a></li>
     				  </@security.authorize>				      
 				    </ul>
             	</div>
@@ -113,7 +114,8 @@
             	            		
             		<@security.authorize ifAllGranted="ROLE_ADMIN">	            		
 	            		<#include "dashboard-panels/reportes-panel.ftl">  
-	            		<#include "dashboard-panels/administracion-panel.ftl">	            		          		
+	            		<#include "dashboard-panels/administracion-panel.ftl">
+	            		<#include "dashboard-panels/contacto-panel.ftl">            		          		
 					</@security.authorize>
 					            		
             		<#if user.isProfessional>

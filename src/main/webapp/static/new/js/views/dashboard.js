@@ -44,6 +44,10 @@ switch(tabToShow){
 	case "questions":
 		showPanel("#preguntas-panel");
 		$("#preguntas-option").addClass("active");		
+		break;
+	case "contacts":
+		showPanel("#contacto-panel");
+		$("#contacto-option").addClass("active");		
 		break;		
 }
 
