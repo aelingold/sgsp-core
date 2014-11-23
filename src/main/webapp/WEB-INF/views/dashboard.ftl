@@ -49,7 +49,7 @@
         <div class="container no-top-border-radius">
             <div class="row" style="margin-bottom: 15px;">
             	<div class="col-md-6">
-            		<h1 class="pull-left" style="margin: 0px;">Panel de control</h1>
+            		<h1 class="pull-left" style="margin: 0px;">Panel de control</h1>            		
             	</div>
             	<div class="col-md-6">
             		<@security.authorize ifNotGranted="ROLE_ADMIN">	
@@ -82,6 +82,7 @@
 					      		Preguntas</a></li>
 					      	<li id="pagos-option"><a href="<@c.url value='/dashboard/payments'/>">Pagos</a></li>
 					      	<li id="configuracion-option"><a href="<@c.url value='/dashboard/config'/>">Configuración</a></li>
+					      	<li id="plan-option"><a href="<@c.url value='/dashboard/plan'/>">Plan de pago</a></li>
 					      </#if>					      					      
 					  </@security.authorize>
 					  <@security.authorize ifAllGranted="ROLE_ADMIN">
@@ -119,7 +120,8 @@
 					</@security.authorize>
 					            		
             		<#if user.isProfessional>
-            			<#include "dashboard-panels/pagos-panel.ftl">  
+            			<#include "dashboard-panels/pagos-panel.ftl">
+            			<#include "dashboard-panels/plan-panel.ftl">  
 	            		<#include "dashboard-panels/configuracion-panel.ftl">
 						<#include "dashboard-panels/preguntas-panel.ftl">		
 						<#include "dashboard-panels/presupuestos-panel.ftl">				

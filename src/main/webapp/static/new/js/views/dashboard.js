@@ -48,7 +48,11 @@ switch(tabToShow){
 	case "contacts":
 		showPanel("#contacto-panel");
 		$("#contacto-option").addClass("active");		
-		break;		
+		break;
+	case "plan":
+		showPanel("#plan-panel");
+		$("#plan-option").addClass("active");		
+		break;	
 }
 
 $(".need-visit").change(function() {
