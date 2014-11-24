@@ -56,30 +56,36 @@ public class PaymentTransformation {
 		if (payment.getQuote() != null) {
 			result.setQuoteId(payment.getQuote().getId());
 		}
-		
-		if (payment.getPaymentType() != null){
-			result.setPaymentType(payment.getPaymentType().name());	
+
+		if (payment.getPaymentType() != null) {
+			result.setPaymentType(payment.getPaymentType().name());
 		}
 		result.setStatusType(payment.getStatusType().name());
-		
-		if (payment.getAmount() != null && payment.getAmount().getAmount() != null){
-			result.setAmount(amountTransformation.buildAmount(payment.getAmount()));	
+
+		if (payment.getAmount() != null
+				&& payment.getAmount().getAmount() != null) {
+			result.setAmount(amountTransformation.buildAmount(payment
+					.getAmount()));
 		}
-		
-		if (payment.getUser() != null){
+
+		if (payment.getUser() != null) {
 			result.setUserId(payment.getUser().getId());
 			result.setUsername(payment.getUser().getEmail());
 			result.setUserEnabled(payment.getUser().getIsEnabled());
 		}
-		
-		result.setPaymentDateAllowedBefore(payment.getPaymentDateAllowedBefore());
+
+		result.setPaymentDateAllowedBefore(payment
+				.getPaymentDateAllowedBefore());
 		result.setPaymentEffectiveDate(payment.getPaymentEffectiveDate());
-		
-		String ratePlanCode = User.getRatePlanCode(payment.getUser().getUserRatePlans(), payment.getPaymentEffectiveDate());
-		result.setRatePlanCode(ratePlanCode);
-		
-		RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
-		result.setRatePlanDescription(ratePlan.getDescription());
+
+		if (payment.getUser() != null) {
+			String ratePlanCode = User.getRatePlanCode(payment.getUser()
+					.getUserRatePlans(), payment.getPaymentEffectiveDate());
+			result.setRatePlanCode(ratePlanCode);
+			
+			RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
+			result.setRatePlanDescription(ratePlan.getDescription());			
+		}
 
 		return result;
 	}
@@ -89,30 +95,34 @@ public class PaymentTransformation {
 
 		result.setId(payment.getId());
 		result.setCreatedAt(payment.getCreatedAt());
-		result.setUpdatedAt(payment.getUpdatedAt());		
-		
+		result.setUpdatedAt(payment.getUpdatedAt());
+
 		if (payment.getQuoteId() != null) {
 			result.setQuote(new Quote(payment.getQuoteId()));
 		}
-		
-		if (payment.getPaymentType() != null){
-			result.setPaymentType(PaymentType.valueOf(payment.getPaymentType()));	
+
+		if (payment.getPaymentType() != null) {
+			result.setPaymentType(PaymentType.valueOf(payment.getPaymentType()));
 		}
 		result.setStatusType(PaymentStatusType.valueOf(payment.getStatusType()));
-		
-		if (payment.getAmount() != null && payment.getAmount().getAmount() != null){
-			result.setAmount(amountTransformation.buildAmount(payment.getAmount()));	
+
+		if (payment.getAmount() != null
+				&& payment.getAmount().getAmount() != null) {
+			result.setAmount(amountTransformation.buildAmount(payment
+					.getAmount()));
 		}
-		
-		if (payment.getUserId() != null){
+
+		if (payment.getUserId() != null) {
 			result.setUser(new User(payment.getUserId()));
 		}
-		
-		if (payment.getUsername() != null){
-			result.setUser(new User(userService.findByEmail(payment.getUsername()).getId()));
+
+		if (payment.getUsername() != null) {
+			result.setUser(new User(userService.findByEmail(
+					payment.getUsername()).getId()));
 		}
-		
-		result.setPaymentDateAllowedBefore(payment.getPaymentDateAllowedBefore());
+
+		result.setPaymentDateAllowedBefore(payment
+				.getPaymentDateAllowedBefore());
 		result.setPaymentEffectiveDate(payment.getPaymentEffectiveDate());
 
 		return result;

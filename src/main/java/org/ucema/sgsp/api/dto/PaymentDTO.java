@@ -41,9 +41,31 @@ public class PaymentDTO implements Serializable {
 		result.setAmount(amount);
 		result.setPaymentDateAllowedBefore(paymentDateAllowedBefore);
 		result.setPaymentEffectiveDate(paymentEffectiveDate);
+		result.setRatePlanCode(ratePlanCode);
+		result.setRatePlanDescription(ratePlanDescription);
 		
 		return result;
 	}
+	
+	public PaymentDTO withPaymentDateAllowedBefore(Date paymentDateAllowedBefore) {
+		this.paymentDateAllowedBefore = paymentDateAllowedBefore;
+		return this;
+	}	
+	
+	public PaymentDTO withPaymentEffectiveDate(Date paymentEffectiveDate) {
+		this.paymentEffectiveDate = paymentEffectiveDate;
+		return this;
+	}	
+	
+	public PaymentDTO withRatePlanCode(String ratePlanCode) {
+		this.ratePlanCode = ratePlanCode;
+		return this;
+	}
+	
+	public PaymentDTO withRatePlanDescription(String ratePlanDescription) {
+		this.ratePlanDescription = ratePlanDescription;
+		return this;
+	}	
 	
 	public PaymentDTO withAmount(AmountDTO amount) {
 		this.amount	 = amount;
