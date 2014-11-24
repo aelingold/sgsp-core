@@ -39,8 +39,8 @@ public class SecurityUtil {
 				user.getUserWorkZones() != null ? user.getUserWorkZones()
 						.stream().map(uwz -> uwz.getCity().getCode())
 						.collect(Collectors.toList()) : null,
-				user.getUserRatePlan() != null ? user.getUserRatePlan()
-						.getRatePlan().getCode() : null);
+				user.getUserRatePlans() != null ? User
+						.getValidRatePlanCode(user.getUserRatePlans()) : null);
 
 		LOGGER.debug("Logging in principal: {}", userDetails);
 

@@ -37,7 +37,10 @@ public class UserRatePlan {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 	@Column(name = "is_enabled")
-	private Boolean isEnabled;		
+	private Boolean isEnabled;
+	@Column(name = "valid_to")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date validTo;	
 
 	public UserRatePlan() {
 		super();
@@ -106,5 +109,13 @@ public class UserRatePlan {
 
 	public void setIsEnabled(Boolean isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+
+	public Date getValidTo() {
+		return validTo;
+	}
+
+	public void setValidTo(Date validTo) {
+		this.validTo = validTo;
 	}
 }

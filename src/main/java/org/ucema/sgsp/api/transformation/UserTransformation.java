@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.DashBoardUserDTO;
 import org.ucema.sgsp.api.dto.UserDTO;
+import org.ucema.sgsp.persistence.model.UserRatePlan;
 import org.ucema.sgsp.persistence.model.UserWorkArea;
 import org.ucema.sgsp.persistence.model.WorkArea;
 import org.ucema.sgsp.security.model.User;
@@ -54,7 +55,7 @@ public class UserTransformation {
 			result.setSignInProvider(user.getSignInProvider().name());
 		}
 
-		if (user.getUserWorkAreas() != null) {
+		if (user.getUserWorkAreas() != null && !user.getUserWorkAreas().isEmpty()) {
 			result.setWorkAreas(workAreaTransformation.transformToApi(user
 					.getUserWorkAreas()));
 		}
@@ -63,15 +64,19 @@ public class UserTransformation {
 			result.setCountryCode(user.getCountry().getCode());
 		}
 
-		if (user.getUserWorkZones() != null) {
+		if (user.getUserWorkZones() != null && !user.getUserWorkZones().isEmpty()) {
 			result.setCityCodes(user.getUserWorkZones().stream()
 					.map(uwz -> uwz.getCity().getCode())
 					.collect(Collectors.toList()));
 		}
 
-		if (user.getUserRatePlan() != null) {
-			result.setRatePlanCode(user.getUserRatePlan().getRatePlan()
-					.getCode());
+		if (user.getUserRatePlans() != null && !user.getUserRatePlans().isEmpty()) {
+			
+			UserRatePlan validUserRatePlan = User.getValidUserRatePlan(user
+					.getUserRatePlans());
+			
+			result.setRatePlanCode(validUserRatePlan.getRatePlan().getCode());
+			result.setRatePlanValidFrom(validUserRatePlan.getCreatedAt());
 		}
 
 		result.setRole(user.getRole());
@@ -101,10 +106,14 @@ public class UserTransformation {
 
 	public User updateUserWorkAreas(User user, DashBoardUserDTO dashBoardUserDTO) {
 
-		user.getUserWorkAreas().addAll(buildUserWorkAreas(dashBoardUserDTO.getEmail(),dashBoardUserDTO.getWorkAreaCodes()));		
+		user.getUserWorkAreas().addAll(
+				buildUserWorkAreas(dashBoardUserDTO.getEmail(),
+						dashBoardUserDTO.getWorkAreaCodes()));
 
 		return user;
-	}	private List<UserWorkArea> buildUserWorkAreas(String username,
+	}
+
+	private List<UserWorkArea> buildUserWorkAreas(String username,
 			List<String> workAreaCodes) {
 
 		List<UserWorkArea> userWorkAreas = new ArrayList<UserWorkArea>();

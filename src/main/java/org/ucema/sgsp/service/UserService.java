@@ -56,7 +56,7 @@ public interface UserService {
 
 	UserDTO findByEmail(String email);
 
-	List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+	List<UserDTO> findByUserRatePlans_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
 			RatePlanPackageType packageType, Boolean isProfessional,
 			Boolean isEnabled);
 }

@@ -53,9 +53,9 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 				user.getCountry().getCode(),
 				user.getUserWorkZones() != null ? user.getUserWorkZones()
 						.stream().map(uwz -> uwz.getCity().getCode())
-						.collect(Collectors.toList()) : null, user
-						.getUserRatePlan() != null ? user.getUserRatePlan()
-						.getRatePlan().getCode() : null);
+						.collect(Collectors.toList()) : null,
+				user.getUserRatePlans() != null ? User
+						.getValidRatePlanCode(user.getUserRatePlans()) : null);
 
 		return principal;
 	}

@@ -17,6 +17,9 @@ public class PaymentDTO implements Serializable {
 	private String username;
 	private Boolean userEnabled;
 	private Date paymentDateAllowedBefore;
+	private Date paymentEffectiveDate;
+	private String ratePlanCode;
+	private String ratePlanDescription;
 
 	public PaymentDTO() {
 		super();
@@ -37,6 +40,7 @@ public class PaymentDTO implements Serializable {
 		result.setStatusType(statusType);
 		result.setAmount(amount);
 		result.setPaymentDateAllowedBefore(paymentDateAllowedBefore);
+		result.setPaymentEffectiveDate(paymentEffectiveDate);
 		
 		return result;
 	}
@@ -154,6 +158,30 @@ public class PaymentDTO implements Serializable {
 		this.userEnabled = userEnabled;
 	}
 
+	public Date getPaymentEffectiveDate() {
+		return paymentEffectiveDate;
+	}
+
+	public void setPaymentEffectiveDate(Date paymentEffectiveDate) {
+		this.paymentEffectiveDate = paymentEffectiveDate;
+	}
+
+	public String getRatePlanCode() {
+		return ratePlanCode;
+	}
+
+	public void setRatePlanCode(String ratePlanCode) {
+		this.ratePlanCode = ratePlanCode;
+	}
+
+	public String getRatePlanDescription() {
+		return ratePlanDescription;
+	}
+
+	public void setRatePlanDescription(String ratePlanDescription) {
+		this.ratePlanDescription = ratePlanDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "PaymentDTO [id=" + id + ", quoteId=" + quoteId
@@ -162,6 +190,8 @@ public class PaymentDTO implements Serializable {
 				+ ", amount=" + amount + ", userId=" + userId + ", username="
 				+ username + ", userEnabled=" + userEnabled
 				+ ", paymentDateAllowedBefore=" + paymentDateAllowedBefore
-				+ "]";
+				+ ", paymentEffectiveDate=" + paymentEffectiveDate
+				+ ", ratePlanCode=" + ratePlanCode + ", ratePlanDescription="
+				+ ratePlanDescription + "]";
 	}
 }

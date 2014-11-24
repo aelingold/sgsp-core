@@ -62,7 +62,11 @@
             		<ul id="dash-menu" class="nav nav-pills nav-stacked">
             			<@security.authorize ifNotGranted="ROLE_ADMIN">
 					      <li id="perfil-option"><a href="<@c.url value='/dashboard/profile'/>">Mi perfil</a></li>
-					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">Mis presupuestos pedidos</a></li>
+					      <li id="pedidos-option"><a href="<@c.url value='/dashboard/requests'/>">
+				      		<#if inProgressOrdersQty != 0>
+				      			<span class="badge pull-right">${inProgressOrdersQty}</span>
+				      		</#if>					      
+					      Mis presupuestos pedidos</a></li>
 					      <li id="calificaciones-option"><a href="<@c.url value='/dashboard/ratings'/>">
 					      	<#if userWorkRatesPendingQty != 0>
 					      		<span class="badge pull-right">${userWorkRatesPendingQty}</span>

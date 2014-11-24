@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ucema.sgsp.api.dto.PaymentDTO;
+import org.ucema.sgsp.api.dto.RatePlanDTO;
 import org.ucema.sgsp.persistence.model.Payment;
 import org.ucema.sgsp.persistence.model.PaymentStatusType;
 import org.ucema.sgsp.persistence.model.PaymentType;
 import org.ucema.sgsp.persistence.model.Quote;
 import org.ucema.sgsp.security.model.User;
+import org.ucema.sgsp.service.RatePlanService;
 import org.ucema.sgsp.service.UserService;
 
 @Component
@@ -22,6 +24,8 @@ public class PaymentTransformation {
 	private AmountTransformation amountTransformation;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RatePlanService ratePlanService;
 
 	public List<PaymentDTO> transformToApi(List<Payment> payments) {
 		List<PaymentDTO> result = new ArrayList<PaymentDTO>();
@@ -69,6 +73,13 @@ public class PaymentTransformation {
 		}
 		
 		result.setPaymentDateAllowedBefore(payment.getPaymentDateAllowedBefore());
+		result.setPaymentEffectiveDate(payment.getPaymentEffectiveDate());
+		
+		String ratePlanCode = User.getRatePlanCode(payment.getUser().getUserRatePlans(), payment.getPaymentEffectiveDate());
+		result.setRatePlanCode(ratePlanCode);
+		
+		RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
+		result.setRatePlanDescription(ratePlan.getDescription());
 
 		return result;
 	}
@@ -102,6 +113,7 @@ public class PaymentTransformation {
 		}
 		
 		result.setPaymentDateAllowedBefore(payment.getPaymentDateAllowedBefore());
+		result.setPaymentEffectiveDate(payment.getPaymentEffectiveDate());
 
 		return result;
 	}

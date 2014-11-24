@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			List<String> codes, Boolean isEnabled, Boolean isProfessional,
 			List<String> cityCodes);
 
-	List<User> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+	List<User> findByUserRatePlans_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
 			RatePlanPackageType packageType, Boolean isProfessional,
 			Boolean isEnabled);
 }

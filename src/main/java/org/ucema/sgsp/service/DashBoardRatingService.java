@@ -83,6 +83,7 @@ public class DashBoardRatingService {
 				payment.setUsername(quoteDTO.getUsername());
 				payment.setAmount(ratePlan.getAmount());
 				payment.setPaymentDateAllowedBefore(new DateTime().plusDays(allowedDays).toDate());
+				payment.setPaymentEffectiveDate(new DateTime().toDate());
 				paymentService.saveOrUpdate(payment);
 
 			} else if (ratePlanCode.equals(RatePlanDTO.PLAN3)) {
@@ -92,6 +93,7 @@ public class DashBoardRatingService {
 				payment.setQuoteId(userWorkRate.getQuoteId());
 				payment.setUsername(quoteDTO.getUsername());
 				payment.setPaymentDateAllowedBefore(new DateTime().plusDays(allowedDays).toDate());
+				payment.setPaymentEffectiveDate(new DateTime().toDate());
 
 				BigDecimal amount = BigDecimal.ZERO;
 				String currencyCode = "";

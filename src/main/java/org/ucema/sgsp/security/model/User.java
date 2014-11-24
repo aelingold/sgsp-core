@@ -1,5 +1,6 @@
 package org.ucema.sgsp.security.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -61,15 +62,15 @@ public class User extends BaseEntity<Long> {
 	@OneToOne
 	@JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_country_user"))
 	private Country country;
-	
-	@OneToMany(orphanRemoval=true)
+
+	@OneToMany(orphanRemoval = true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_area_user"))
-	private List<UserWorkArea> userWorkAreas;	
-	
+	private List<UserWorkArea> userWorkAreas;
+
 	@ManyToMany
 	@JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_friend_id"))
-	private List<User> userFriends;	
+	private List<User> userFriends;
 
 	@OneToMany(mappedBy = "user")
 	private List<UserWorkRate> userWorkRates;
@@ -82,17 +83,17 @@ public class User extends BaseEntity<Long> {
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_work_zone_user"))
 	private List<UserWorkZone> userWorkZones;
 
-	@OneToOne(mappedBy = "user", orphanRemoval = true)
+	@OneToMany(mappedBy = "user", orphanRemoval = true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private UserRatePlan userRatePlan;
+	private List<UserRatePlan> userRatePlans;
 
 	@OneToOne(mappedBy = "user", orphanRemoval = true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private UserWorkRateSummarize userWorkRateSummarize;
-	
+
 	@OneToOne(mappedBy = "user", orphanRemoval = true)
 	@Cascade(org.hibernate.annotations.CascadeType.ALL)
-	private UserToken userToken;	
+	private UserToken userToken;
 
 	public User() {
 	}
@@ -215,12 +216,12 @@ public class User extends BaseEntity<Long> {
 		this.userWorkZones = userWorkZones;
 	}
 
-	public UserRatePlan getUserRatePlan() {
-		return userRatePlan;
+	public List<UserRatePlan> getUserRatePlans() {
+		return userRatePlans;
 	}
 
-	public void setUserRatePlan(UserRatePlan userRatePlan) {
-		this.userRatePlan = userRatePlan;
+	public void setUserRatePlans(List<UserRatePlan> userRatePlans) {
+		this.userRatePlans = userRatePlans;
 	}
 
 	public void setProfessional(boolean isProfessional) {
@@ -250,6 +251,58 @@ public class User extends BaseEntity<Long> {
 
 	public void setUserFriends(List<User> userFriends) {
 		this.userFriends = userFriends;
+	}
+
+	public static String getValidRatePlanCode(List<UserRatePlan> userRatePlans) {
+
+		String result = null;
+
+		if (userRatePlans != null) {
+			for (UserRatePlan userRatePlan : userRatePlans) {
+				if (userRatePlan.getIsEnabled()) {
+					result = userRatePlan.getRatePlan().getCode();
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	public static String getRatePlanCode(List<UserRatePlan> userRatePlans,
+			Date validDate) {
+
+		String result = null;
+
+		if (userRatePlans != null) {
+			for (UserRatePlan userRatePlan : userRatePlans) {
+
+				Date createdAt = userRatePlan.getCreatedAt();
+				Date validTo = userRatePlan.getValidTo();
+
+				if (validDate.after(createdAt)
+						&& (validTo == null || validTo.after(validDate))) {
+					result = userRatePlan.getRatePlan().getCode();
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	public static UserRatePlan getValidUserRatePlan(
+			List<UserRatePlan> userRatePlans) {
+
+		UserRatePlan result = null;
+
+		if (userRatePlans != null) {
+			for (UserRatePlan userRatePlan : userRatePlans) {
+				if (userRatePlan.getIsEnabled()) {
+					result = userRatePlan;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	public static class Builder {
@@ -304,7 +357,7 @@ public class User extends BaseEntity<Long> {
 		public Builder enabled(boolean isEnabled) {
 			user.isEnabled = isEnabled;
 			return this;
-		}		
+		}
 
 		public Builder userWorkAreas(List<UserWorkArea> userWorkAreas) {
 			user.userWorkAreas = userWorkAreas;
@@ -321,8 +374,8 @@ public class User extends BaseEntity<Long> {
 			return this;
 		}
 
-		public Builder userRatePlan(UserRatePlan userRatePlan) {
-			user.userRatePlan = userRatePlan;
+		public Builder userRatePlans(List<UserRatePlan> userRatePlans) {
+			user.userRatePlans = userRatePlans;
 			return this;
 		}
 
@@ -331,20 +384,22 @@ public class User extends BaseEntity<Long> {
 			user.userWorkRateSummarize = userWorkRateSummarize;
 			return this;
 		}
-		
+
 		public Builder userToken(UserToken userToken) {
 			user.userToken = userToken;
 			return this;
 		}
-		
+
 		public Builder userFriends(List<User> userFriends) {
 			user.userFriends = userFriends;
 			return this;
-		}		
+		}
 
 		public User build() {
-			if (user.userRatePlan != null) {
-				user.userRatePlan.setUser(user);
+			if (user.userRatePlans != null) {
+				for (UserRatePlan userRatePlan : user.userRatePlans) {
+					userRatePlan.setUser(user);
+				}
 			}
 			if (user.userWorkRateSummarize != null) {
 				user.userWorkRateSummarize.setUser(user);
@@ -356,7 +411,7 @@ public class User extends BaseEntity<Long> {
 				for (UserWorkArea userWorkArea : user.userWorkAreas) {
 					userWorkArea.setUser(user);
 				}
-			}			
+			}
 			return user;
 		}
 	}

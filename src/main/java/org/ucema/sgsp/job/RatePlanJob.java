@@ -1,5 +1,6 @@
 package org.ucema.sgsp.job;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -36,14 +37,14 @@ public class RatePlanJob {
 	@Autowired
 	private PaymentService paymentService;
 	@Resource
-	private Environment env;	
+	private Environment env;
 
 	@Scheduled(fixedRate = 30000)
 	public void createPayments() {
 		LOGGER.info("Creating payments for users");
 
 		List<UserDTO> users = userService
-				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+				.findByUserRatePlans_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
 						RatePlanPackageType.FIXED, true, true);
 
 		LOGGER.info("Retrieved users[" + users.size() + "]");
@@ -61,30 +62,72 @@ public class RatePlanJob {
 		List<PaymentDTO> userPayments = paymentService
 				.findByUser_EmailOrderByCreatedAtDesc(user.getEmail());
 
-		if (userPayments.size() == 0) {
+		if (ratePlanCode.equals(RatePlanDTO.PLAN1)) {
 
-			RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
+			if (userPayments.size() == 0) {
 
-			paymentService.saveOrUpdate(buildPayment(ratePlan.getAmount(),
-					user.getEmail()));
-
-		} else {
-
-			PaymentDTO lastPayment = userPayments.get(0);
-
-			DateTime start = new DateTime(lastPayment.getCreatedAt().getTime())
-					.withDayOfMonth(1);
-			DateTime end = new DateTime().withDayOfMonth(1);
-			int months = Months.monthsBetween(start, end).getMonths();
-
-			if (months > 0) {
 				RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
 
 				paymentService.saveOrUpdate(buildPayment(ratePlan.getAmount(),
 						user.getEmail()));
+
+			} else {
+
+				PaymentDTO lastPayment = userPayments.get(0);
+
+				DateTime start = new DateTime(lastPayment.getCreatedAt()
+						.getTime()).withDayOfMonth(1);
+				DateTime end = new DateTime().withDayOfMonth(1);
+				int months = Months.monthsBetween(start, end).getMonths();
+
+				if (months > 0) {
+
+					RatePlanDTO ratePlan = ratePlanService
+							.findByCode(ratePlanCode);
+
+					paymentService.saveOrUpdate(buildPayment(
+							ratePlan.getAmount(), user.getEmail()));
+
+				} else if (!lastPaymentFromCurrentRatePlan(lastPayment,
+						user.getRatePlanValidFrom())) {
+
+					RatePlanDTO ratePlan = ratePlanService
+							.findByCode(ratePlanCode);
+
+					paymentService.saveOrUpdate(buildPayment(
+							ratePlan.getAmount(), user.getEmail()));
+				}
 			}
 		}
 	}
+
+	public Boolean lastPaymentFromCurrentRatePlan(PaymentDTO payment,
+			Date ratePlanValidFrom) {
+
+		Boolean result = true;
+
+		Date paymentEffectiveDate = payment.getPaymentEffectiveDate();
+		if (paymentEffectiveDate.before(ratePlanValidFrom)) {
+			result = false;
+		}
+
+		return result;
+	}
+
+	// public Boolean paymentsFromCurrentRatePlan(List<PaymentDTO> userPayments,
+	// Date ratePlanValidFrom) {
+	// Boolean result = true;
+	//
+	// for (PaymentDTO userPayment : userPayments) {
+	// Date paymentEffectiveDate = userPayment.getPaymentEffectiveDate();
+	// if (paymentEffectiveDate.before(ratePlanValidFrom)) {
+	// result = false;
+	// break;
+	// }
+	// }
+	//
+	// return result;
+	// }
 
 	public PaymentDTO buildPayment(AmountDTO amount, String email) {
 
@@ -93,10 +136,13 @@ public class RatePlanJob {
 		payment.setAmount(amount);
 		payment.setStatusType(PaymentStatusType.DONE.name());
 		payment.setUsername(email);
-		
-		Integer allowedDays = env.getProperty("payment.allowed.days.qty",Integer.class, 14);
-		payment.setPaymentDateAllowedBefore(new DateTime().plusDays(allowedDays).toDate());
-		
+
+		Integer allowedDays = env.getProperty("payment.allowed.days.qty",
+				Integer.class, 14);
+		payment.setPaymentDateAllowedBefore(new DateTime()
+				.plusDays(allowedDays).toDate());
+		payment.setPaymentEffectiveDate(new DateTime().toDate());
+
 		return payment;
 	}
 }

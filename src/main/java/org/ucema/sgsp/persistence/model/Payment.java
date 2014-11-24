@@ -49,7 +49,10 @@ public class Payment {
 	private User user;
 	@Column(name = "payment_date_allowed_before")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date paymentDateAllowedBefore;	    	
+	private Date paymentDateAllowedBefore;
+	@Column(name = "payment_effective_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date paymentEffectiveDate;
 
 	public Payment(Long id) {
 		super();
@@ -144,12 +147,21 @@ public class Payment {
 		this.paymentDateAllowedBefore = paymentDateAllowedBefore;
 	}
 
+	public Date getPaymentEffectiveDate() {
+		return paymentEffectiveDate;
+	}
+
+	public void setPaymentEffectiveDate(Date paymentEffectiveDate) {
+		this.paymentEffectiveDate = paymentEffectiveDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Payment [id=" + id + ", quote=" + quote + ", paymentType="
 				+ paymentType + ", createdAt=" + createdAt + ", updatedAt="
 				+ updatedAt + ", statusType=" + statusType + ", amount="
 				+ amount + ", user=" + user + ", paymentDateAllowedBefore="
-				+ paymentDateAllowedBefore + "]";
+				+ paymentDateAllowedBefore + ", paymentEffectiveDate="
+				+ paymentEffectiveDate + "]";
 	}
 }

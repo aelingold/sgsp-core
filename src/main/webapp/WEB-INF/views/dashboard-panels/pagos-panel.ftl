@@ -10,19 +10,20 @@
 	  			<div class="col-md-12">						  				
 					<table class="table">  
 						<thead>  
-							<tr>  
-					        	<th>Fecha Vencimiento</th>
+							<tr>  					        	
 					        	<th>Concepto</th>
 					            <th>Monto</th>
+								<th>Fecha Vencimiento</th>					            
 					            <th>Estado</th>
+					            <th>Fecha Pago</th>
 					        </tr>
 					    </thead>  
 					    <tbody>
 					    	<#list payments as payment>  
-						    	<tr>  
-						        	<td>${payment.paymentDateAllowedBefore?string("dd-MM-yyyy")}</td>
-						        	<td>${ratePlan.description}</td>
+						    	<tr>  						        	
+						        	<td>${payment.ratePlanDescription}</td>
 						            <td>${payment.amount.currency.symbol} ${payment.amount.amount}</td>
+						            <td>${payment.paymentDateAllowedBefore?string("dd-MM-yyyy")}</td>
 						            <td>
 						            	<#if payment.statusType="DONE">
 						            		PAGADO
@@ -32,6 +33,7 @@
 						            		VENCIDO						            		
 						            	</#if>
 						            </td>
+						            <td>${payment.paymentEffectiveDate?string("dd-MM-yyyy")}</td>
 						        </tr>
 							</#list>
 					    </tbody>

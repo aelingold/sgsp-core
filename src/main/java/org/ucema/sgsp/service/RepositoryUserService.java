@@ -2,6 +2,7 @@ package org.ucema.sgsp.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -235,11 +236,11 @@ public class RepositoryUserService implements UserService {
 	}
 
 	@Transactional
-	public List<UserDTO> findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+	public List<UserDTO> findByUserRatePlans_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
 			RatePlanPackageType packageType, Boolean isProfessional,
 			Boolean isEnabled) {
 		List<User> users = repository
-				.findByUserRatePlan_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
+				.findByUserRatePlans_RatePlan_PackageTypeAndIsProfessionalAndIsEnabled(
 						packageType, isProfessional, isEnabled);
 		return userTransformation.transformToApi(users);
 	}
@@ -286,7 +287,16 @@ public class RepositoryUserService implements UserService {
 		
 		RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
 		
-		user.getUserRatePlan().setRatePlan(new RatePlan(ratePlan.getId()));
+		UserRatePlan validUserRatePlan = User.getValidUserRatePlan(user.getUserRatePlans());
+		validUserRatePlan.setIsEnabled(false);
+		validUserRatePlan.setValidTo(new Date());
+		
+		UserRatePlan newUserRatePlan = new UserRatePlan();
+		newUserRatePlan.setRatePlan(new RatePlan(ratePlan.getId()));
+		newUserRatePlan.setIsEnabled(true);
+		newUserRatePlan.setUser(user);
+		
+		user.getUserRatePlans().add(newUserRatePlan);
 		
 		repository.save(user);
 	}	
@@ -377,7 +387,7 @@ public class RepositoryUserService implements UserService {
 		}
 
 		if (userAccountData.getIsProfessional()) {
-			user.userRatePlan(buildUserRatePlan(userAccountData));
+			user.userRatePlans(buildUserRatePlans(userAccountData));
 			user.userWorkRateSummarize(buildUserWorkRateSummarize(userAccountData));
 		}
 
@@ -412,15 +422,19 @@ public class RepositoryUserService implements UserService {
 		return result;
 	}
 
-	private UserRatePlan buildUserRatePlan(RegistrationDTO userAccountData) {
+	private List<UserRatePlan> buildUserRatePlans(RegistrationDTO userAccountData) {
 
+		List<UserRatePlan> result = new ArrayList<UserRatePlan>();
+		
 		UserRatePlan userRatePlan = new UserRatePlan();
 
 		userRatePlan.setIsEnabled(true);
 		userRatePlan.setRatePlan(new RatePlan(ratePlanService.findByCode(
 				RatePlanDTO.PLAN1).getId()));
+		
+		result.add(userRatePlan);
 
-		return userRatePlan;
+		return result;
 	}
 
 	private List<UserWorkArea> buildUserWorkAreas(List<String> workAreaCodes) {
