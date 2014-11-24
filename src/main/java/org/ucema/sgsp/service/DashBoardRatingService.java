@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.ucema.sgsp.api.dto.AmountDTO;
 import org.ucema.sgsp.api.dto.PaymentDTO;
@@ -37,6 +40,8 @@ public class DashBoardRatingService {
 	private OrderService orderService;
 	@Autowired
 	private MailService mailService;
+	@Resource
+	private Environment env;	
 
 	@Transactional
 	public void save(UserWorkRateDTO userWorkRate) {
@@ -68,6 +73,8 @@ public class DashBoardRatingService {
 			quoteService.updateStatus(quotes.stream().map(q -> q.getId())
 					.collect(Collectors.toList()), QuoteStatusType.CANCELLED);
 
+			Integer allowedDays = env.getProperty("payment.allowed.days.qty",Integer.class, 14);			
+			
 			if (ratePlanCode.equals(RatePlanDTO.PLAN2)) {
 
 				PaymentDTO payment = new PaymentDTO();
@@ -75,6 +82,7 @@ public class DashBoardRatingService {
 				payment.setQuoteId(userWorkRate.getQuoteId());
 				payment.setUsername(quoteDTO.getUsername());
 				payment.setAmount(ratePlan.getAmount());
+				payment.setPaymentDateAllowedBefore(new DateTime().plusDays(allowedDays).toDate());
 				paymentService.saveOrUpdate(payment);
 
 			} else if (ratePlanCode.equals(RatePlanDTO.PLAN3)) {
@@ -83,6 +91,7 @@ public class DashBoardRatingService {
 				payment.setStatusType(PaymentStatusType.DONE.name());
 				payment.setQuoteId(userWorkRate.getQuoteId());
 				payment.setUsername(quoteDTO.getUsername());
+				payment.setPaymentDateAllowedBefore(new DateTime().plusDays(allowedDays).toDate());
 
 				BigDecimal amount = BigDecimal.ZERO;
 				String currencyCode = "";
