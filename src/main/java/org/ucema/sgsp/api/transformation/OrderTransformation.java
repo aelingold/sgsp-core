@@ -162,7 +162,7 @@ public class OrderTransformation {
 
 		result.setAirConditionerPower(order.getAirConditionerPower());
 
-		if (order.getSquareMeters() != null) {
+		if (order.getSquareMeters() != null && !order.getSquareMeters().isEmpty()) {
 			result.setSquareMeters(new BigDecimal(order.getSquareMeters()));
 		}
 
