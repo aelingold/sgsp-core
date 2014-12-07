@@ -103,7 +103,7 @@
 											    </div>
 					                        </div>
 					                        <div class="form-group col-md-4">
-					                        	<label>Valido hasta</label>
+					                        	<label>Valido hasta (dd/mm/yyyy)</label>
 				                        		<@spring.formInput "quote.validDateUntil", 'class="form-control"'/>
 					                        </div>
 				                       </div>
