@@ -118,6 +118,9 @@ public class DashBoardRatingService {
 				payment.setAmount(amountDTO);
 				paymentService.saveOrUpdate(payment);
 			}
+		}else{
+			quoteService.updateStatus(quoteDTO.getId(),
+					QuoteStatusType.CANCELLED);			
 		}
 		
 		Map<String, Object> model = new HashMap<String, Object>();

@@ -6,7 +6,7 @@
 		    <button type="button" class="btn btn-default" data-show-class="quote-PENDING">Presupuestos pendientes (${pendingQuotesQty})</button>
 		  </div>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default" data-show-class="quote-REPLIED">Presupuestos realizados (${doneQuotesQty})</button>
+		    <button type="button" class="btn btn-default" data-show-class="quote-DONE">Presupuestos realizados (${doneQuotesQty})</button>
 		  </div>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 	<#list quotes as quote>
 		<#if quote.statusType="PENDING">
 			<div class="row">
-				<div class="panel panel-default quote-${quote.statusType}">						
+				<div id="quote-${quote.id}" class="panel panel-default quote-${quote.statusType}">						
 					<form name="budgetsForm${quote_index}" action="<@c.url value='/dashboard/budgets/replied' />" method="POST" enctype="utf8">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<input type="hidden" name="statusType" value="REPLIED">

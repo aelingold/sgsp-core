@@ -43,7 +43,7 @@
 					<ul class="response-list">
 						<#list quotes as quote>
 							<#if quote.orderId==order.id && (quote.statusType="REPLIED" || quote.statusType="ACCEPTED" || quote.statusType="DONE")>			
-						  		<li class="budget-response col-md-12">
+						  		<li id="quote-${quote.id}" class="budget-response col-md-12">
 						  			<div class="col-md-3">
 						  				${quote.firstName} ${quote.lastName} (${userWorkRatesQtyMap[quote.username]})
 						  			</div>

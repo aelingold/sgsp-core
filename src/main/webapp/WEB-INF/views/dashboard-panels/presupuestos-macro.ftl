@@ -1,5 +1,5 @@
 <#macro presupuestos quote>
-	<div class="panel panel-default quote-${quote.statusType}">
+	<div class="panel panel-default quote-DONE">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 		    	Necesito un ${quote.order.workAreaDescription} - ${quote.order.username}

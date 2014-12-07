@@ -37,7 +37,7 @@
 				</div>
 			</#if>						
 			<#list userWorkRatesReceived as userWorkRateReceived>
-				<div class="rating-section user-work-rate-RECEIVED">
+				<div id="userWorkRateReceived-${userWorkRateReceived.id}" class="rating-section user-work-rate-RECEIVED">
 					<div class="col-md-12" style="margin-top:15px;">
 						<#if userWorkRateReceived.ratingType="POSITIVE">
     						<span class="glyphicon glyphicon-circle-arrow-up" style="font-size: 18px;color: #1616A8;"></span>
@@ -48,7 +48,7 @@
     							<span class="glyphicon glyphicon-circle-arrow-down" style="font-size: 18px;color: #E70000;"></span>		
     						</#if>	
     					</#if>			    		
-			    		<span class="rating-user">${userWorkRateReceived.userFirstName} ${userWorkRateReceived.userLastName}</span> 
+			    		<span class="rating-user">${userWorkRateReceived.userFirstName} ${userWorkRateReceived.userLastName} (${userWorkRateReceived.quoteUserWorkAreaDescription})</span> 
 						<span class="rating-date">(${userWorkRateReceived.updatedAt?string("dd/MM/yy hh:mm a")})</span>
 			    	</div>
 			    	<#if userWorkRateReceived.comment?? && userWorkRateReceived.comment?has_content>
@@ -62,7 +62,7 @@
 			<#list userWorkRates as userWorkRate>
 				<#if userWorkRate.statusType='DONE'>
 				
-					<div class="rating-section user-work-rate-${userWorkRate.statusType}">
+					<div id="userWorkRate-${userWorkRate.id}" class="rating-section user-work-rate-${userWorkRate.statusType}">
 						<div class="col-md-12" style="margin-top:15px;">
 							<#if userWorkRate.ratingType="POSITIVE">
 	    						<span class="glyphicon glyphicon-circle-arrow-up" style="font-size: 18px;color: #1616A8;"></span>
@@ -73,7 +73,7 @@
 	    							<span class="glyphicon glyphicon-circle-arrow-down" style="font-size: 18px;color: #E70000;"></span>		
 	    						</#if>	
 	    					</#if>			    		
-				    		<span class="rating-user">${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName}</span> 
+				    		<span class="rating-user">${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName} (${userWorkRate.quoteUserWorkAreaDescription})</span> 
 							<span class="rating-date">(${userWorkRate.updatedAt?string("dd/MM/yy hh:mm a")})</span>
 				    	</div>
 				    	<#if userWorkRate.comment?? && userWorkRate.comment?has_content>
