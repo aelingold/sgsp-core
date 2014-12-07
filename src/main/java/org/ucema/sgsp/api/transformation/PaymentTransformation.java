@@ -80,7 +80,7 @@ public class PaymentTransformation {
 
 		if (payment.getUser() != null) {
 			String ratePlanCode = User.getRatePlanCode(payment.getUser()
-					.getUserRatePlans(), payment.getPaymentEffectiveDate());
+					.getUserRatePlans(), payment.getPaymentDateAllowedBefore());
 			result.setRatePlanCode(ratePlanCode);
 			
 			RatePlanDTO ratePlan = ratePlanService.findByCode(ratePlanCode);
