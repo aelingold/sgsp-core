@@ -1,4 +1,4 @@
-<#include "pedidos-macro.ftl">
+	<#include "pedidos-macro.ftl">
 <div id="pedidos-panel" class="col-md-12 dashboard-panel">
 	<div class="row">
 		<div class="btn-group btn-group-justified">
@@ -90,7 +90,9 @@
 										  				<li class="col-md-12">
 										  					<div class="question-message message">
 											  					<div class="user-name-message">${quoteQuestion.description} - ${quoteQuestion.createdAt?string("dd/MM/yy")}</div>
-											  					<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""} - ${(quoteQuestion.quoteQuestionReply.updatedAt?string("dd/MM/yy"))!""}</div>
+											  					<#if quoteQuestion.quoteQuestionReply?? && quoteQuestion.quoteQuestionReply.description??>
+											  						<div class="message-content">${(quoteQuestion.quoteQuestionReply.description)!""} - ${(quoteQuestion.quoteQuestionReply.updatedAt?string("dd/MM/yy"))!""}</div>
+											  					</#if>
 											  				</div>
 										  				</li>
 										  			</#list>

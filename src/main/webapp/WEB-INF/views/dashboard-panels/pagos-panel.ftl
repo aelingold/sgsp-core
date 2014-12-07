@@ -33,7 +33,7 @@
 						            		VENCIDO						            		
 						            	</#if>
 						            </td>
-						            <td>${payment.paymentEffectiveDate?string("dd-MM-yyyy")}</td>
+						            <td>${(payment.paymentEffectiveDate?string("dd-MM-yyyy"))!""}</td>
 						        </tr>
 							</#list>
 					    </tbody>

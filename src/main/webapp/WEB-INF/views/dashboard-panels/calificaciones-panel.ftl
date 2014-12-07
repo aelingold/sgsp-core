@@ -51,9 +51,11 @@
 			    		<span class="rating-user">${userWorkRateReceived.userFirstName} ${userWorkRateReceived.userLastName}</span> 
 						<span class="rating-date">(${userWorkRateReceived.updatedAt?string("dd/MM/yy hh:mm a")})</span>
 			    	</div>
-			    	<div class="col-md-12">
-			    		<span class="rating-comment-line-conection"></span>${userWorkRateReceived.comment}
-			    	</div>
+			    	<#if userWorkRateReceived.comment?? && userWorkRateReceived.comment?has_content>
+				    	<div class="col-md-12">
+				    		<span class="rating-comment-line-conection"></span>${userWorkRateReceived.comment}
+				    	</div>
+				    </#if>
 		    	</div>			
 			</#list>
 			
@@ -74,9 +76,11 @@
 				    		<span class="rating-user">${userWorkRate.quoteUserFirstName} ${userWorkRate.quoteUserLastName}</span> 
 							<span class="rating-date">(${userWorkRate.updatedAt?string("dd/MM/yy hh:mm a")})</span>
 				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="rating-comment-line-conection"></span>${userWorkRate.comment}
-				    	</div>
+				    	<#if userWorkRate.comment?? && userWorkRate.comment?has_content>
+					    	<div class="col-md-12">
+					    		<span class="rating-comment-line-conection"></span>${userWorkRate.comment}
+					    	</div>
+					    </#if>
 			    	</div>
 			    	
 				<#else>
