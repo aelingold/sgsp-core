@@ -4,7 +4,7 @@
 <!-- If you delete this meta tag, Half Life 3 will never be released. -->
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Registración en SinGuia</title>
+<title>Registraci&oacute;n en SinGuia</title>
 <link href="http://www.singuia.com/static/new/css/mail.css" rel="stylesheet">
 </head>
 <body bgcolor="#FFFFFF">
@@ -35,7 +35,7 @@
 				<table>
 					<tr>
 						<td>
-							<h3>Registración en SinGuia</h3>
+							<h3>Registraci&oacute;n en SinGuia</h3>
 							<p class="lead">
 								Bienvenido a SinGuia.com!
 							</p>
@@ -43,7 +43,7 @@
 								El sitio donde vas a encontrar el servicio que estás buscando totalmente <b>gratis!</b> 
 							</p>							
 							<p class="callout">
-								Para confirmar tu registración hacé clic <a href="http://www.singuia.com/register/confirm-user-account/${token}">aquí</a>.
+								Para confirmar tu registraci&oacute;n hacé clic <a href="http://www.singuia.com/register/confirm-user-account/${token}">aquí</a>.
 							</p>
 							<!-- social & contact -->
 							<table class="social" width="100%">
