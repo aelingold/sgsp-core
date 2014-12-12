@@ -403,7 +403,7 @@ public class RepositoryUserService implements UserService {
 			model.put("token", token);
 
 			mailService.save(userSaved.getEmail(), MailService.FROM_EMAIL,
-					"Registración en SinGuia", "mail/confirmRegistration.ftl",
+					"Registracion en SinGuia", "mail/confirmRegistration.ftl",
 					model);
 		}
 
