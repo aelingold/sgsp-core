@@ -49,6 +49,7 @@ public class MailTransformation {
 		
 		result.setStatusType(mail.getStatusType().name());
 		result.setSubject(mail.getSubject());
+		result.setTemplatePath(mail.getTemplatePath());
 
 		return result;
 	}
