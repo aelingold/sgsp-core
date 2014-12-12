@@ -47,6 +47,7 @@ public class Config {
 		javaMailSenderImpl.setUsername("AKIAIUWTPZNGYUOY4QGQ");
 		javaMailSenderImpl.setPassword("AtHmUW1MCdQ9Qzj0EPdMXmNm2glvwzvH+0/JqUle/rNh");
 		Properties properties = new Properties();
+		properties.put("mail.mime.charset", "UTF-8");
 		properties.put("mail.smtp.auth", true);
 		properties.put("mail.smtp.starttls.enable", true);
 		properties.put("mail.smtp.ssl.trust", "email-smtp.us-west-2.amazonaws.com");
