@@ -31,6 +31,8 @@ public class MailSenderJob {
 		List<MailDTO> mails = mailService.findByStatusType(MailStatusType.PENDING);
 		mails.forEach(m -> {
 			
+			LOGGER.info("Sending email with parameters ["+m+"]");
+			
 			mailSenderService.sendEmail(m);			
 			mailService.updateStatus(m.getId(), MailStatusType.SENT);
 		});

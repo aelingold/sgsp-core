@@ -50,6 +50,8 @@ public class MailSenderService {
 				String result = "";
 				result = FreeMarkerTemplateUtils.processTemplateIntoString(
 						configuration.getTemplate(templatePath), model);
+				
+				LOGGER.info("Template processed OK.");
 
 				MimeMessage message = javaMailSender.createMimeMessage();
 
@@ -59,9 +61,13 @@ public class MailSenderService {
 				helper.setFrom("SinGuia <" + from + ">");
 				helper.setTo(to);
 				helper.setText(result, true);
+				
+				LOGGER.info("Mail prepared for send.");
+				
 				javaMailSender.send(message);
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -77,6 +83,7 @@ public class MailSenderService {
 				this.javaMailSender.send(msg);
 			} catch (MailException e) {
 				LOGGER.error(e.getMessage(), e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -93,6 +100,7 @@ public class MailSenderService {
 				this.javaMailSender.send(msg);
 			} catch (MailException e) {
 				LOGGER.error(e.getMessage(), e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -110,6 +118,7 @@ public class MailSenderService {
 				this.javaMailSender.send(msg);
 			} catch (MailException e) {
 				LOGGER.error(e.getMessage(), e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
