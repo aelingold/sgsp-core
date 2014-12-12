@@ -41,6 +41,7 @@ public class Config {
 	@Bean
 	public JavaMailSenderImpl mailSender(){
 		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+		javaMailSenderImpl.setDefaultEncoding("UTF-8");
 		javaMailSenderImpl.setHost("email-smtp.us-west-2.amazonaws.com");
 		javaMailSenderImpl.setPort(587);
 		javaMailSenderImpl.setUsername("AKIAIUWTPZNGYUOY4QGQ");
